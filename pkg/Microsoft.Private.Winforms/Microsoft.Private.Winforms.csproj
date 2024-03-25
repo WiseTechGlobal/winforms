@@ -91,11 +91,11 @@
     <!-- Facade for System.Windows.Forms.Design.Editors -->
     <ProjectReference Include="..\..\src\System.Windows.Forms.Design.Editors\src\System.Windows.Forms.Design.Editors.Facade3x.csproj" />
     
-    <!-- Facade for Microsoft.VisualBasic -->
+    <!-- Facade for Microsoft.VisualBasic --><!--
     <ProjectReference Include="..\..\src\Microsoft.VisualBasic\src\Microsoft.VisualBasic.Facade.csproj" />
 
-    <!-- Reference and Source Microsoft.VisualBasic.Forms -->
-    <ProjectReference Include="..\..\src\Microsoft.VisualBasic.Forms\src\Microsoft.VisualBasic.Forms.vbproj" />
+    --><!-- Reference and Source Microsoft.VisualBasic.Forms --><!--
+    <ProjectReference Include="..\..\src\Microsoft.VisualBasic.Forms\src\Microsoft.VisualBasic.Forms.vbproj" />-->
 
     <ProjectReference Include="..\..\src\Accessibility\src\Accessibility.ilproj" />
 

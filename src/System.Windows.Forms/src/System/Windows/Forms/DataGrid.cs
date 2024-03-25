@@ -6462,7 +6462,7 @@ namespace System.Windows.Forms
         private void DrawSplitBar(Rectangle r)
         {
             Gdi32.HDC dc = User32.GetDCEx(this, IntPtr.Zero, User32.DCX.CACHE | User32.DCX.LOCKWINDOWUPDATE);
-            Gdi32.HBRUSH halftone = ControlPaint.CreateHalftoneHBRUSH();
+            Gdi32.HBRUSH halftone = ControlPaint.CreateHalftoneHBRUSH2();
             Gdi32.HGDIOBJ saveBrush = Gdi32.SelectObject(dc, halftone);
             Gdi32.PatBlt(dc, r.X, r.Y, r.Width, r.Height, Gdi32.ROP.PATINVERT);
             Gdi32.SelectObject(dc, saveBrush);

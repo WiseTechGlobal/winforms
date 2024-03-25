@@ -9,9 +9,9 @@ internal static partial class Interop
     internal static partial class User32
     {
         [DllImport(Libraries.User32, ExactSpelling = true)]
-        private static extern BOOL ScrollWindow(IntPtr hWnd, int nXAmount, int nYAmount, ref RECT rectScrollRegion, ref RECT rectClip);
+        private static extern BOOL ScrollWindow(HWND hWnd, int nXAmount, int nYAmount, ref RECT rectScrollRegion, ref RECT rectClip);
 
-        public static BOOL ScrollWindow(IHandle<IntPtr> hWnd, int nXAmount, int nYAmount, ref RECT rectScrollRegion, ref RECT rectClip)
+        public static BOOL ScrollWindow(IHandle<HWND> hWnd, int nXAmount, int nYAmount, ref RECT rectScrollRegion, ref RECT rectClip)
         {
             BOOL result = ScrollWindow(hWnd.Handle, nXAmount, nYAmount, ref rectScrollRegion, ref rectClip);
             GC.KeepAlive(hWnd);
