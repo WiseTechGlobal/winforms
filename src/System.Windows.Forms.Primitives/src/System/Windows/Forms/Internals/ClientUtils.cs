@@ -7,6 +7,15 @@ namespace System.Windows.Forms;
 
 internal static class ClientUtils
 {
+    // Sequential version
+    // assumes sequential enum members 0,1,2,3,4 -etc.
+    //
+    public static bool IsEnumValid(Enum enumValue, int value, int minValue, int maxValue)
+    {
+        bool valid = (value >= minValue) && (value <= maxValue);
+        return valid;
+    }
+
     private enum CharType
     {
         None,
