@@ -10,6 +10,8 @@ internal static class NativeMethods
 {
     public delegate IntPtr WndProc(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam);
 
+    public const int WHEEL_DELTA = 120;
+
     public delegate int ListViewCompareCallback(IntPtr lParam1, IntPtr lParam2, IntPtr lParamSort);
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
