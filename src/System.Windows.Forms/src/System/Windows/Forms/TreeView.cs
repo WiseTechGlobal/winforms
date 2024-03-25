@@ -12,6 +12,7 @@ using System.Windows.Forms.Layout;
 using System.Windows.Forms.VisualStyles;
 using static Interop;
 using static Interop.ComCtl32;
+using INITCOMMONCONTROLSEX = Windows.Win32.UI.Controls.INITCOMMONCONTROLSEX;
 
 namespace System.Windows.Forms;
 

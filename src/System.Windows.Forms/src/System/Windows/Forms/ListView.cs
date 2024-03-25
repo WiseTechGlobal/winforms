@@ -14,6 +14,7 @@ using Windows.Win32.UI.Input.KeyboardAndMouse;
 using static System.Windows.Forms.ListViewGroup;
 using static Interop;
 using static Interop.ComCtl32;
+using INITCOMMONCONTROLSEX = Windows.Win32.UI.Controls.INITCOMMONCONTROLSEX;
 
 namespace System.Windows.Forms;
 

@@ -8,6 +8,7 @@ using System.Windows.Forms.Layout;
 using Microsoft.Win32;
 using static Interop;
 using static Interop.ComCtl32;
+using INITCOMMONCONTROLSEX = Windows.Win32.UI.Controls.INITCOMMONCONTROLSEX;
 
 namespace System.Windows.Forms;
 

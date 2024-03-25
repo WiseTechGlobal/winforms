@@ -11,7 +11,7 @@ internal static partial class Interop
         [DllImport(Libraries.Gdi32, SetLastError = true, ExactSpelling = true)]
         public static extern HGDIOBJ SelectObject(HDC hdc, HGDIOBJ h);
 
-        public static HGDIOBJ SelectObject(IHandle hdc, HGDIOBJ h)
+        public static HGDIOBJ SelectObject(IHandle<HDC> hdc, HGDIOBJ h)
         {
             HGDIOBJ lastObject = SelectObject((HDC)hdc.Handle, h);
             GC.KeepAlive(hdc);

@@ -2432,6 +2432,11 @@
         <target state="new">Event raised when the value of the BorderStyle property is changed on DataGrid.</target>
         <note />
       </trans-unit>
+      <trans-unit id="DataGridOnBorderStyleChangedDescr">
+        <source>Event raised when the value of the BorderStyle property is changed on DataGrid.</source>
+        <target state="new">Event raised when the value of the BorderStyle property is changed on DataGrid.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="DataGridOnCaptionVisibleChangedDescr">
         <source>Event raised when the value of the CaptionVisible property is changed on DataGrid.</source>
         <target state="new">Event raised when the value of the CaptionVisible property is changed on DataGrid.</target>

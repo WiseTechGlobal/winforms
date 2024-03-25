@@ -20,7 +20,7 @@ internal static partial class Interop
             ScrollSW flags);
 
         public unsafe static int ScrollWindowEx(
-            IHandle hWnd,
+            IHandle<IntPtr> hWnd,
             int dx,
             int dy,
             RECT* prcScroll,

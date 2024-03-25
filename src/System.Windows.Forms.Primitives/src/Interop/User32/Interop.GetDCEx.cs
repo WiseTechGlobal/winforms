@@ -11,7 +11,7 @@ internal static partial class Interop
         [DllImport(Libraries.User32, ExactSpelling = true)]
         public static extern Gdi32.HDC GetDCEx(IntPtr hWnd, IntPtr hrgnClip, DCX flags);
 
-        public static Gdi32.HDC GetDCEx(IHandle hWnd, IntPtr hrgnClip, DCX flags)
+        public static Gdi32.HDC GetDCEx(IHandle<IntPtr> hWnd, IntPtr hrgnClip, DCX flags)
         {
             Gdi32.HDC result = GetDCEx(hWnd.Handle, hrgnClip, flags);
             GC.KeepAlive(hWnd);

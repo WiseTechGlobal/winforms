@@ -9,6 +9,7 @@ using System.Text;
 using System.Windows.Forms.Layout;
 using static Interop;
 using static Interop.ComCtl32;
+using INITCOMMONCONTROLSEX = Windows.Win32.UI.Controls.INITCOMMONCONTROLSEX;
 
 namespace System.Windows.Forms;
 

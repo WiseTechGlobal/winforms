@@ -11,7 +11,7 @@ internal static partial class Interop
         [DllImport(Libraries.User32, ExactSpelling = true)]
         private static extern BOOL ScrollWindow(IntPtr hWnd, int nXAmount, int nYAmount, ref RECT rectScrollRegion, ref RECT rectClip);
 
-        public static BOOL ScrollWindow(IHandle hWnd, int nXAmount, int nYAmount, ref RECT rectScrollRegion, ref RECT rectClip)
+        public static BOOL ScrollWindow(IHandle<IntPtr> hWnd, int nXAmount, int nYAmount, ref RECT rectScrollRegion, ref RECT rectClip)
         {
             BOOL result = ScrollWindow(hWnd.Handle, nXAmount, nYAmount, ref rectScrollRegion, ref rectClip);
             GC.KeepAlive(hWnd);

@@ -27,7 +27,7 @@ internal static partial class Interop
         }
 
         public static IntPtr SendMessageW(
-            IHandle hWnd,
+            IHandle<IntPtr> hWnd,
             WM Msg,
             IntPtr wParam = default,
             IntPtr lParam = default)
@@ -62,7 +62,7 @@ internal static partial class Interop
         }
 
         public unsafe static IntPtr SendMessageW(
-            IHandle hWnd,
+            IHandle<IntPtr> hWnd,
             WM Msg,
             IntPtr wParam,
             string lParam)
@@ -86,7 +86,7 @@ internal static partial class Interop
         }
 
         public unsafe static IntPtr SendMessageW<T>(
-            IHandle hWnd,
+            IHandle<IntPtr> hWnd,
             WM Msg,
             IntPtr wParam,
             ref T lParam) where T : unmanaged
@@ -98,7 +98,7 @@ internal static partial class Interop
         }
 
         public unsafe static IntPtr SendMessageW<TWParam, TLParam>(
-            IHandle hWnd,
+            IHandle<IntPtr> hWnd,
             WM Msg,
             ref TWParam wParam,
             ref TLParam lParam)
