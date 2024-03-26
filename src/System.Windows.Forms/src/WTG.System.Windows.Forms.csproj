@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <AssemblyName>System.Windows.Forms</AssemblyName>
+    <AssemblyName>WTG.System.Windows.Forms</AssemblyName>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <CLSCompliant>true</CLSCompliant>
     <Nullable>enable</Nullable>
@@ -11,11 +11,16 @@
       IL Trim warnings which should be removed in order to make WinForms trimmable
       See https://github.com/dotnet/winforms/issues/4649
     -->
-    <NoWarn>$(NoWarn);IL2026;IL2050;IL2057;IL2062;IL2067;IL2070;IL2072;IL2075;IL2077;IL2080;IL2092;IL2093;IL2094;IL2096;IL2111</NoWarn>
+    <NoWarn>$(NoWarn);IL2026;IL2050;IL2057;IL2062;IL2067;IL2070;IL2072;IL2075;IL2077;IL2080;IL2092;IL2093;IL2094;IL2096;IL2111;CSIsNull001;CSIsNull002;SA1129;WFDEV001;CA1822;CA1823;SA1518;SA1400;CA1066</NoWarn>
     <Win32Manifest>Resources\System\Windows\Forms\XPThemes.manifest</Win32Manifest>
     <Deterministic>true</Deterministic>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
-    <UsePublicApiAnalyzers>true</UsePublicApiAnalyzers>
+    <!--<UsePublicApiAnalyzers>true</UsePublicApiAnalyzers>-->
+	<!--<NoWarn>CSIsNull001</NoWarn>
+	<NoWarn>CSIsNull002</NoWarn>
+	<NoWarn>SA1129</NoWarn>
+	<NoWarn>WFDEV001</NoWarn>
+    <NoWarn>CA1822</NoWarn>-->
   </PropertyGroup>
 
   <ItemGroup>

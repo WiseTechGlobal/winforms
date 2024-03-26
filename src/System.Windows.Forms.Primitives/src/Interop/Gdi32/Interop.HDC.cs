@@ -4,6 +4,7 @@
 
 internal static partial class Interop
 {
+    [SuppressMessage("Usage", "CA1066:Type {0} should implement IEquatable<T> because it overrides Equals", Justification = "Reason for suppressing")]
     internal static partial class Gdi32
     {
         public readonly struct HDC

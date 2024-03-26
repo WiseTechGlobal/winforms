@@ -4,12 +4,13 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
-    <UseWindowsForms>true</UseWindowsForms>
+    <UseWindowsForms>false</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+    <NoWarn>SA1400</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\System.Windows.Forms\src\System.Windows.Forms.csproj" />
+    <ProjectReference Include="..\src\System.Windows.Forms\src\WTG.System.Windows.Forms.csproj" />
   </ItemGroup>
 
 </Project>
