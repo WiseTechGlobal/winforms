@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Runtime.InteropServices;
@@ -15,6 +15,17 @@ internal static class NativeMethods
     internal const int  DIB_RGB_COLORS = 0;
     internal const int BI_BITFIELDS = 3;
     internal const int BI_RGB = 0;
+
+    [StructLayout(LayoutKind.Sequential)]
+    public class TPMPARAMS
+    {
+        public int cbSize = Marshal.SizeOf<TPMPARAMS>();
+        // rcExclude was a by-value RECT structure
+        public int rcExclude_left;
+        public int rcExclude_top;
+        public int rcExclude_right;
+        public int rcExclude_bottom;
+    }
 
     [StructLayout(LayoutKind.Sequential)]
     internal struct BITMAPINFOHEADER

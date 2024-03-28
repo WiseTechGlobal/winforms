@@ -8,7 +8,7 @@ namespace System.Drawing;
 /// <summary>
 /// Simple wrapper to create a screen HDC within a using statement.
 /// </summary>
-internal struct ScreenDC : IDisposable
+public struct ScreenDC : IDisposable
 {
     private IntPtr _handle;
 

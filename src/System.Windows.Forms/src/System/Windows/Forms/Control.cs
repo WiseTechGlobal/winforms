@@ -65,6 +65,22 @@ public unsafe partial class Control :
         "TraceCanProcessMnemonic",
         "Trace mnemonic processing calls to assure right child-parent call ordering.");
 
+    internal static IntPtr SetUpPalette(IntPtr dc, bool force, bool realizePalette)
+    {
+        Debug.WriteLineIf(s_paletteTracing.TraceVerbose, "SetUpPalette(force:=" + force + ", ralizePalette:=" + realizePalette + ")");
+
+        IntPtr halftonePalette = Graphics.GetHalftonePalette();
+
+        Debug.WriteLineIf(s_paletteTracing.TraceVerbose, "select palette " + !force);
+        IntPtr result = Gdi32.SelectPalette(dc, halftonePalette, force ? BOOL.FALSE : BOOL.TRUE);
+        if (result != IntPtr.Zero && realizePalette)
+        {
+            Gdi32.RealizePalette(dc);
+        }
+
+        return result;
+    }
+
     private protected void TraceCanProcessMnemonic()
     {
         if (s_traceMnemonicProcessing.Enabled)
