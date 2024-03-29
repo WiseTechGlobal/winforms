@@ -988,7 +988,7 @@ namespace System.Windows.Forms
         ///  Frees the MSAAMENUINFO structure (in the unmanaged heap) for the current MenuObject
         ///  object, if one has previously been allocated. Takes care to free sub-structures too,
         ///  to avoid leaks!
-        /// <summary>
+        /// </summary>
         private void FreeMsaaMenuInfo()
         {
             if (_msaaMenuInfoPtr != IntPtr.Zero)

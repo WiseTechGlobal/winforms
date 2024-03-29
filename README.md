@@ -1,5 +1,17 @@
-# Introduction 
-TODO: Give a short introduction of your project. Let this section explain the objectives or the motivation behind this project. 
+# WTG Notes
+
+1. Due to some setting of this project, please run the following git command before you build this solution
+   ```git
+    git remote remove origin 
+    git remote add origin https://github.com/dotnet/winforms.git
+   ```
+1. When you want to push the code to DevOps, please reset the git remote:
+   ```git
+   git remote remove origin
+   git remote add origin https://devops.wisetechglobal.com/wtg/InternalTools/_git/WTG.Experimental
+   ```
+
+# Windows Forms
 
 # Getting Started
 TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:

@@ -17,17 +17,6 @@ internal static class NativeMethods
     internal const int BI_RGB = 0;
 
     [StructLayout(LayoutKind.Sequential)]
-    public class TPMPARAMS
-    {
-        public int cbSize = Marshal.SizeOf<TPMPARAMS>();
-        // rcExclude was a by-value RECT structure
-        public int rcExclude_left;
-        public int rcExclude_top;
-        public int rcExclude_right;
-        public int rcExclude_bottom;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
     internal struct BITMAPINFOHEADER
     {
         public int biSize;

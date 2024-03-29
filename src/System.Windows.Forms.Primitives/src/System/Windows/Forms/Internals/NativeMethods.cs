@@ -180,7 +180,7 @@ internal static class NativeMethods
         public IntPtr hbmpChecked;
         public IntPtr hbmpUnchecked;
         public IntPtr dwItemData;
-        public string dwTypeData;
+        public string? dwTypeData;
         public int cch;
     }
 
