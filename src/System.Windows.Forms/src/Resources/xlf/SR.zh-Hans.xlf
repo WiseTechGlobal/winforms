@@ -5860,6 +5860,11 @@ Do you want to replace it?</source>
         <target state="translated">为窗体指定主 MenuStrip。此属性用于键盘激活和 MDI 中的自动合并。</target>
         <note />
       </trans-unit>
+      <trans-unit id="FormMergedMenuDescr">
+        <source>The merged menu of this form, which is used when displaying a single merged MDI menu.</source>
+        <target state="new">The merged menu of this form, which is used when displaying a single merged MDI menu.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="FormMinimizeBoxDescr">
         <source>Determines whether a form has a minimize box in the upper-right corner of its caption bar.</source>
         <target state="translated">确定窗体标题栏的右上角是否有最小化框。</target>

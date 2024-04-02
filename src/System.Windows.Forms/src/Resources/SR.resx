@@ -7333,4 +7333,7 @@ Stack trace where the illegal operation occurred was:
   <data name="MenuRightToLeftDescr" xml:space="preserve">
     <value>Indicates if this menu should display right to left</value>
   </data>
+  <data name="FormMergedMenuDescr" xml:space="preserve">
+    <value>The merged menu of this form, which is used when displaying a single merged MDI menu.</value>
+  </data>
 </root>

@@ -81,6 +81,149 @@ public unsafe partial class Control :
         return result;
     }
 
+
+    /// <summary>
+    ///  Handles the WM_MENUSELECT message
+    /// </summary>
+    private void WmMenuSelect(ref Message m)
+    {
+        int item = NativeMethods.Util.LOWORD(m.WParam);
+        User32.MF flags = (User32.MF)NativeMethods.Util.HIWORD(m.WParam);
+        IntPtr hmenu = m.LParam;
+        MenuItem mi = null;
+
+        if ((flags & User32.MF.SYSMENU) != 0)
+        {
+            // nothing
+        }
+        else if ((flags & User32.MF.POPUP) == 0)
+        {
+            Command cmd = Command.GetCommandFromID(item);
+            if (cmd != null)
+            {
+                object reference = cmd.Target;
+                if (reference != null && reference is MenuItem.MenuItemData)
+                {
+                    mi = ((MenuItem.MenuItemData)reference).baseItem;
+                }
+            }
+        }
+        else
+        {
+            mi = GetMenuItemFromHandleId(hmenu, item);
+        }
+
+        if (mi != null)
+        {
+            mi.PerformSelect();
+        }
+
+        DefWndProc(ref m);
+    }
+
+    /// <summary>
+    ///  WM_DRAWITEM handler
+    /// </summary>
+    private void WmDrawItem(ref Message m)
+    {
+        // If the wparam is zero, then the message was sent by a menu.
+        // See WM_DRAWITEM in MSDN.
+        if (m.WParam == IntPtr.Zero)
+        {
+            WmDrawItemMenuItem(ref m);
+        }
+        else
+        {
+            WmOwnerDraw(ref m);
+        }
+    }
+
+    private unsafe void WmDrawItemMenuItem(ref Message m)
+    {
+        // Obtain the menu item object
+        User32.DRAWITEMSTRUCT* dis = (User32.DRAWITEMSTRUCT*)m.LParam;
+
+        // A pointer to the correct MenuItem is stored in the draw item
+        // information sent with the message.
+        // (See MenuItem.CreateMenuItemInfo)
+        MenuItem menuItem = MenuItem.GetMenuItemFromItemData(dis->itemData);
+
+        // Delegate this message to the menu item
+        menuItem?.WmDrawItem(ref m);
+    }
+
+    /// <summary>
+    ///  WM_MEASUREITEM handler
+    /// </summary>
+    private unsafe void WmMeasureItem(ref Message m)
+    {
+        // If the wparam is zero, then the message was sent by a menu.
+        // See WM_MEASUREITEM in MSDN.
+        if (m.WParam == IntPtr.Zero)
+        {
+            // Obtain the menu item object
+            Debug.Assert(m.LParam != IntPtr.Zero, "m.lparam is null");
+            User32.MEASUREITEMSTRUCT* mis = (User32.MEASUREITEMSTRUCT*)m.LParam;
+
+            // A pointer to the correct MenuItem is stored in the measure item
+            // information sent with the message.
+            // (See MenuItem.CreateMenuItemInfo)
+            MenuItem menuItem = MenuItem.GetMenuItemFromItemData(mis->itemData);
+            Debug.Assert(menuItem != null, "UniqueID is not associated with a menu item");
+
+            // Delegate this message to the menu item
+            menuItem?.WmMeasureItem(ref m);
+        }
+        else
+        {
+            WmOwnerDraw(ref m);
+        }
+    }
+
+    private MenuItem GetMenuItemFromHandleId(IntPtr hmenu, int item)
+    {
+        MenuItem mi = null;
+        int id = User32.GetMenuItemID(hmenu, item);
+        if (id == unchecked((int)0xFFFFFFFF))
+        {
+            IntPtr childMenu = IntPtr.Zero;
+            childMenu = User32.GetSubMenu(hmenu, item);
+            int count = User32.GetMenuItemCount(childMenu);
+            MenuItem found = null;
+            for (int i = 0; i < count; i++)
+            {
+                found = GetMenuItemFromHandleId(childMenu, i);
+                if (found != null)
+                {
+                    Menu parent = found.Parent;
+                    if (parent != null && parent is MenuItem)
+                    {
+                        found = (MenuItem)parent;
+                        break;
+                    }
+
+                    found = null;
+                }
+            }
+
+            mi = found;
+        }
+        else
+        {
+            Command cmd = Command.GetCommandFromID(id);
+            if (cmd != null)
+            {
+                object reference = cmd.Target;
+                if (reference != null && reference is MenuItem.MenuItemData)
+                {
+                    mi = ((MenuItem.MenuItemData)reference).baseItem;
+                }
+            }
+        }
+
+        return mi;
+    }
+
     private protected void TraceCanProcessMnemonic()
     {
         if (s_traceMnemonicProcessing.Enabled)

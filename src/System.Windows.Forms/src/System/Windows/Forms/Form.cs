@@ -787,7 +787,7 @@ public partial class Form : ContainerControl
                 {
                     if (menu == Menu && change == Windows.Forms.Menu.CHANGE_ITEMS)
                     {
-                        UpdateMenuHandles();
+                        UpdateMenuHandlesOldModified();
                     }
 
                     break;
@@ -5883,6 +5883,68 @@ public partial class Form : ContainerControl
         }
     }
 
+    private void UpdateMenuHandlesOld()
+    {
+        Form form;
+
+        // Forget the current menu.
+        if (Properties.GetObject(PropCurMenu) != null)
+        {
+            Properties.SetObject(PropCurMenu, null);
+        }
+
+        if (IsHandleCreated)
+        {
+            if (!TopLevel)
+            {
+                UpdateMenuHandles(null, true);
+            }
+            else
+            {
+                form = ActiveMdiChildInternal;
+
+                if (form != null)
+                {
+                    UpdateMenuHandles(form.MergedMenuPrivate, true);
+                }
+                else
+                {
+                    UpdateMenuHandles(Menu, true);
+                }
+            }
+        }
+    }
+
+    private void UpdateMenuHandlesOldModified()
+    {
+        Form form;
+
+        // Forget the current menu.
+        if (Properties.GetObject(PropCurMenu) != null)
+        {
+            Properties.SetObject(PropCurMenu, null);
+        }
+
+
+        if (!TopLevel)
+        {
+            UpdateMenuHandles(null, true);
+        }
+        else
+        {
+            form = ActiveMdiChildInternal;
+
+            if (form != null)
+            {
+                UpdateMenuHandles(form.MergedMenuPrivate, true);
+            }
+            else
+            {
+                UpdateMenuHandles(Menu, true);
+            }
+        }
+    }
+
     private void UpdateMenuHandles(bool recreateMenu = false)
     {
         if (!IsHandleCreated)
@@ -6017,6 +6079,66 @@ public partial class Form : ContainerControl
         // add in the control gadgets for the mdi child form to the first menu strip
         Form? activeMdiForm = ActiveMdiChildInternal;
         UpdateMdiControlStrip(activeMdiForm is not null && activeMdiForm.IsMaximized);
+    }
+
+    /// <summary>
+    ///  Gets the merged menu for the
+    ///  form.
+    /// </summary>
+    [
+        SRCategory(nameof(SR.CatWindowStyle)),
+        Browsable(false), EditorBrowsable(EditorBrowsableState.Advanced),
+        DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden),
+        SRDescription(nameof(SR.FormMergedMenuDescr)),
+    ]
+    public MainMenu MergedMenu
+    {
+        get
+        {
+            return MergedMenuPrivate;
+        }
+    }
+
+    private MainMenu MergedMenuPrivate
+    {
+        get
+        {
+            Form formMdiParent = (Form)Properties.GetObject(PropFormMdiParent);
+            if (formMdiParent == null)
+            {
+                return null;
+            }
+
+            MainMenu mergedMenu = (MainMenu)Properties.GetObject(PropMergedMenu);
+            if (mergedMenu != null)
+            {
+                return mergedMenu;
+            }
+
+            MainMenu parentMenu = formMdiParent.Menu;
+            MainMenu mainMenu = Menu;
+
+            if (mainMenu == null)
+            {
+                return parentMenu;
+            }
+
+            if (parentMenu == null)
+            {
+                return mainMenu;
+            }
+
+            // Create a menu that merges the two and save it for next time.
+            mergedMenu = new MainMenu
+            {
+                ownerForm = this
+            };
+
+            mergedMenu.MergeMenu(parentMenu);
+            mergedMenu.MergeMenu(mainMenu);
+            Properties.SetObject(PropMergedMenu, mergedMenu);
+            return mergedMenu;
+        }
     }
 
     private void UpdateMdiControlStrip(bool maximized)

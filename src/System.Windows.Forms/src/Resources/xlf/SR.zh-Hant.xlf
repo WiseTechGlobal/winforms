@@ -5860,6 +5860,11 @@ Do you want to replace it?</source>
         <target state="translated">指定表單的主要 MenuStrip。此屬性可用於鍵盤啟用，以及 MDI 中的自動合併。</target>
         <note />
       </trans-unit>
+      <trans-unit id="FormMergedMenuDescr">
+        <source>The merged menu of this form, which is used when displaying a single merged MDI menu.</source>
+        <target state="new">The merged menu of this form, which is used when displaying a single merged MDI menu.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="FormMinimizeBoxDescr">
         <source>Determines whether a form has a minimize box in the upper-right corner of its caption bar.</source>
         <target state="translated">決定表單在其標題列的右上角是否有最小化的方塊。</target>

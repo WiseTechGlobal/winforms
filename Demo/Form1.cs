@@ -18,6 +18,13 @@ namespace Demo
         private DataSet myDataSet;
         private bool TablesAlreadyAdded;
 
+        private MainMenu mainMenu;
+        private MenuItem fileMenuItem;
+        private MenuItem newMenuItem;
+        private MenuItem openMenuItem;
+        private MenuItem saveMenuItem;
+        private MenuItem exitMenuItem;
+
         /// <summary>
         /// Summary description for Form1.
         /// </summary>
@@ -210,6 +217,26 @@ namespace Demo
                     tOrders.Rows.Add(newRow2);
                 }
             }
+        }
+
+        private void NewMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("New menu item clicked!");
+        }
+
+        private void OpenMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Open menu item clicked!");
+        }
+
+        private void SaveMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Save menu item clicked!");
+        }
+
+        private void ExitMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

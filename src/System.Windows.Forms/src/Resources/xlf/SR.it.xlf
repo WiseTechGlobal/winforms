@@ -5860,6 +5860,11 @@ Sostituirlo?</target>
         <target state="translated">Specifica il MenuStrip principale per il form. Questa proprietà consente l'attivazione della tastiera e il merge automatico in MDI.</target>
         <note />
       </trans-unit>
+      <trans-unit id="FormMergedMenuDescr">
+        <source>The merged menu of this form, which is used when displaying a single merged MDI menu.</source>
+        <target state="new">The merged menu of this form, which is used when displaying a single merged MDI menu.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="FormMinimizeBoxDescr">
         <source>Determines whether a form has a minimize box in the upper-right corner of its caption bar.</source>
         <target state="translated">Determina se un form dispone di un pulsante di riduzione a icona nella parte superiore destra della barra del titolo.</target>

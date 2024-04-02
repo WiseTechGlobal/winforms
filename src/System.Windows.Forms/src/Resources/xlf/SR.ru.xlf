@@ -5861,6 +5861,11 @@ Do you want to replace it?</source>
         <target state="translated">Определяет для Form первичный MenuStrip. Данное свойство используется для активации клавиатуры и автоматического слияния в MDI.</target>
         <note />
       </trans-unit>
+      <trans-unit id="FormMergedMenuDescr">
+        <source>The merged menu of this form, which is used when displaying a single merged MDI menu.</source>
+        <target state="new">The merged menu of this form, which is used when displaying a single merged MDI menu.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="FormMinimizeBoxDescr">
         <source>Determines whether a form has a minimize box in the upper-right corner of its caption bar.</source>
         <target state="translated">Определяет, содержит ли форма в правом верхнем углу строки заголовка значок свертывания.</target>

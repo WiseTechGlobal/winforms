@@ -5860,6 +5860,11 @@ Möchten Sie sie ersetzen?</target>
         <target state="translated">Gibt den primären MenuStrip für das Formular an. Diese Eigenschaft wird für die Tastaturaktivierung und das automatische Zusammenführen in MDI verwendet.</target>
         <note />
       </trans-unit>
+      <trans-unit id="FormMergedMenuDescr">
+        <source>The merged menu of this form, which is used when displaying a single merged MDI menu.</source>
+        <target state="new">The merged menu of this form, which is used when displaying a single merged MDI menu.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="FormMinimizeBoxDescr">
         <source>Determines whether a form has a minimize box in the upper-right corner of its caption bar.</source>
         <target state="translated">Bestimmt, ob ein Formular ein Minimieren-Feld in der oberen rechten Ecke seiner Titelleiste hat.</target>

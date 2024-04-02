@@ -48,6 +48,7 @@ public sealed partial class NotifyIcon : Component
     private static uint s_nextId;
     private object? _userData;
     private bool _doubleClick; // checks if doubleclick is fired
+    private ContextMenu contextMenu = null;
 
     // Visible defaults to false, but the NotifyIconDesigner makes it seem like the default is
     // true.  We do this because while visible is the more common case, if it was a true default,
@@ -72,6 +73,29 @@ public sealed partial class NotifyIcon : Component
         ArgumentNullException.ThrowIfNull(container);
 
         container.Add(this);
+    }
+
+    /// <summary>
+    ///  Gets or sets context menu
+    ///  for the tray icon.
+    /// </summary>
+    [
+        Browsable(false),
+        DefaultValue(null),
+        SRCategory(nameof(SR.CatBehavior)),
+        SRDescription(nameof(SR.NotifyIconMenuDescr))
+    ]
+    public ContextMenu ContextMenu
+    {
+        get
+        {
+            return contextMenu;
+        }
+
+        set
+        {
+            contextMenu = value;
+        }
     }
 
     /// <summary>
@@ -398,6 +422,7 @@ public sealed partial class NotifyIcon : Component
                 _window.DestroyHandle();
                 _window = null!;
                 _contextMenuStrip = null;
+                contextMenu = null;
             }
         }
         else

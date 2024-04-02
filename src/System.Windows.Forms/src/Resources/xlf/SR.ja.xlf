@@ -5860,6 +5860,11 @@ Do you want to replace it?</source>
         <target state="translated">フォームの主要な MenuStrip を指定します。このプロパティは、キーボードのアクティブ化および MDI での自動マージのために使用されます。</target>
         <note />
       </trans-unit>
+      <trans-unit id="FormMergedMenuDescr">
+        <source>The merged menu of this form, which is used when displaying a single merged MDI menu.</source>
+        <target state="new">The merged menu of this form, which is used when displaying a single merged MDI menu.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="FormMinimizeBoxDescr">
         <source>Determines whether a form has a minimize box in the upper-right corner of its caption bar.</source>
         <target state="translated">フォームがキャプション バーの右上に最小化ボタンを指定するかどうかを決定します。</target>

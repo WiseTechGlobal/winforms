@@ -5860,6 +5860,11 @@ Bunu değiştirmek istiyor musunuz?</target>
         <target state="translated">Form için birincil MenuStrip'i belirtir. Bu özellik MDI'da klavye etkinleştirme ve otomatik birleştirme için kullanılır.</target>
         <note />
       </trans-unit>
+      <trans-unit id="FormMergedMenuDescr">
+        <source>The merged menu of this form, which is used when displaying a single merged MDI menu.</source>
+        <target state="new">The merged menu of this form, which is used when displaying a single merged MDI menu.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="FormMinimizeBoxDescr">
         <source>Determines whether a form has a minimize box in the upper-right corner of its caption bar.</source>
         <target state="translated">Formda başlık çubuğunun sağ üst köşesinde simge durumuna küçültme kutusunun bulunup bulunmadığını belirler.</target>

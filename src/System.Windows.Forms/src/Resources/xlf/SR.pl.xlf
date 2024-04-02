@@ -5860,6 +5860,11 @@ Czy chcesz go zamienić?</target>
         <target state="translated">Określa podstawowy element MenuStrip dla elementu Form. Ta właściwość jest używana do aktywacji klawiatury i automatycznego scalania w interfejsie MDI.</target>
         <note />
       </trans-unit>
+      <trans-unit id="FormMergedMenuDescr">
+        <source>The merged menu of this form, which is used when displaying a single merged MDI menu.</source>
+        <target state="new">The merged menu of this form, which is used when displaying a single merged MDI menu.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="FormMinimizeBoxDescr">
         <source>Determines whether a form has a minimize box in the upper-right corner of its caption bar.</source>
         <target state="translated">Określa, czy w prawym górnym rogu paska podpisu formularza znajduje się pole minimalizacji.</target>

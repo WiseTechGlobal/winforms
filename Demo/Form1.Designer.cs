@@ -46,16 +46,16 @@ namespace Demo
             this.myDataGrid = new DataGrid();
 
             button1.Location = new Point(24, 16);
-            button1.Size = new Size(120, 24);
+            button1.Size = new Size(380, 54);
             button1.Text = "Change Appearance";
             button1.Click += new System.EventHandler(Button1_Click);
 
-            button2.Location = new Point(150, 16);
-            button2.Size = new Size(120, 24);
+            button2.Location = new Point(400, 16);
+            button2.Size = new Size(420, 54);
             button2.Text = "Get Binding Manager";
             button2.Click += new System.EventHandler(Button2_Click);
 
-            myDataGrid.Location = new Point(24, 50);
+            myDataGrid.Location = new Point(24, 100);
             myDataGrid.Size = new Size(600, 400);
             myDataGrid.CaptionText = "Microsoft DataGrid Control";
             myDataGrid.MouseUp += new MouseEventHandler(Grid_MouseUp);
@@ -63,6 +63,34 @@ namespace Demo
             this.Controls.Add(button1);
             this.Controls.Add(button2);
             this.Controls.Add(myDataGrid);
+
+            // Create the main menu
+            mainMenu = new MainMenu();
+
+            // Create menu items
+            fileMenuItem = new MenuItem("File");
+            newMenuItem = new MenuItem("New");
+            openMenuItem = new MenuItem("Open");
+            saveMenuItem = new MenuItem("Save");
+            exitMenuItem = new MenuItem("Exit");
+
+            // Add sub-menu items to the "File" menu item
+            fileMenuItem.MenuItems.Add(newMenuItem);
+            fileMenuItem.MenuItems.Add(openMenuItem);
+            fileMenuItem.MenuItems.Add(saveMenuItem);
+            fileMenuItem.MenuItems.Add(exitMenuItem);
+
+            // Add "File" menu item to the main menu
+            mainMenu.MenuItems.Add(fileMenuItem);
+
+            // Set the form's main menu
+            this.Menu = mainMenu;
+
+            // Add event handlers for menu items
+            newMenuItem.Click += NewMenuItem_Click;
+            openMenuItem.Click += OpenMenuItem_Click;
+            saveMenuItem.Click += SaveMenuItem_Click;
+            exitMenuItem.Click += ExitMenuItem_Click;
         }
 
         #endregion

@@ -5860,6 +5860,11 @@ Do you want to replace it?</source>
         <target state="translated">폼의 주 MenuStrip을 지정합니다. 이 속성은 MDI에서 자동 병합 및 키보드 활성화에 사용됩니다.</target>
         <note />
       </trans-unit>
+      <trans-unit id="FormMergedMenuDescr">
+        <source>The merged menu of this form, which is used when displaying a single merged MDI menu.</source>
+        <target state="new">The merged menu of this form, which is used when displaying a single merged MDI menu.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="FormMinimizeBoxDescr">
         <source>Determines whether a form has a minimize box in the upper-right corner of its caption bar.</source>
         <target state="translated">폼의 캡션 표시줄 오른쪽 위 모퉁이에 최소화 상자를 포함할지 여부를 결정합니다.</target>

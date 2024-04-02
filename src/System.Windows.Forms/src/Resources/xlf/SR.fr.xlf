@@ -5860,6 +5860,11 @@ Voulez-vous le remplacer ?</target>
         <target state="translated">Spécifie le MenuStrip principal du formulaire. Cette propriété est utilisée pour l'activation clavier et la fusion automatique en MDI.</target>
         <note />
       </trans-unit>
+      <trans-unit id="FormMergedMenuDescr">
+        <source>The merged menu of this form, which is used when displaying a single merged MDI menu.</source>
+        <target state="new">The merged menu of this form, which is used when displaying a single merged MDI menu.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="FormMinimizeBoxDescr">
         <source>Determines whether a form has a minimize box in the upper-right corner of its caption bar.</source>
         <target state="translated">Détermine si un formulaire dispose d'un bouton de réduction dans le coin supérieur droit de sa barre de légende.</target>
