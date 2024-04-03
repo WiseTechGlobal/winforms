@@ -24,6 +24,9 @@ namespace Demo
         private MenuItem openMenuItem;
         private MenuItem saveMenuItem;
         private MenuItem exitMenuItem;
+        private MenuItem blankFileItem;
+        private MenuItem txtFileItem;
+        private MenuItem csvFileItem;
 
         /// <summary>
         /// Summary description for Form1.
@@ -237,6 +240,21 @@ namespace Demo
         private void ExitMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void BlankFileItem_Click(object sender, EventArgs e)
+        {
+            blankFileItem.Checked = !blankFileItem.Checked;
+        }
+
+        private void TxtFileItem_Click(object sender, EventArgs e)
+        {
+            txtFileItem.Checked = !txtFileItem.Checked;
+        }
+
+        private void CsvFileItem_Click(object sender, EventArgs e)
+        {
+            csvFileItem.Checked = !csvFileItem.Checked;
         }
     }
 }

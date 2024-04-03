@@ -74,6 +74,20 @@ namespace Demo
             saveMenuItem = new MenuItem("Save");
             exitMenuItem = new MenuItem("Exit");
 
+            blankFileItem = new MenuItem("Blank File");
+            csvFileItem = new MenuItem("CSV");
+            txtFileItem = new MenuItem("TXT");
+
+            newMenuItem.MenuItems.Add(blankFileItem);
+            newMenuItem.MenuItems.Add(csvFileItem);
+            newMenuItem.MenuItems.Add(txtFileItem);
+
+            openMenuItem.Shortcut = Shortcut.AltF12;
+            openMenuItem.ShowShortcut = true;
+
+            saveMenuItem.Checked = true;
+            saveMenuItem.RadioCheck = true;
+
             // Add sub-menu items to the "File" menu item
             fileMenuItem.MenuItems.Add(newMenuItem);
             fileMenuItem.MenuItems.Add(openMenuItem);
@@ -85,6 +99,10 @@ namespace Demo
 
             // Set the form's main menu
             this.Menu = mainMenu;
+
+            blankFileItem.Click += BlankFileItem_Click;
+            txtFileItem.Click += TxtFileItem_Click;
+            csvFileItem.Click += CsvFileItem_Click;
 
             // Add event handlers for menu items
             newMenuItem.Click += NewMenuItem_Click;
