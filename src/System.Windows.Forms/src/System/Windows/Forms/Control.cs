@@ -1536,6 +1536,90 @@ public unsafe partial class Control :
         }
     }
 
+    private static readonly int s_contextMenuProperty = PropertyStore.CreateKey();
+
+    private void DetachContextMenu(object sender, EventArgs e) => ContextMenu = null;
+
+    private static readonly object s_contextMenuEvent = new object();
+
+    [EditorBrowsable(EditorBrowsableState.Advanced)]
+    protected virtual void OnContextMenuChanged(EventArgs e)
+    {
+        if (Events[s_contextMenuEvent] is EventHandler eh)
+        {
+            eh(this, e);
+        }
+    }
+
+    /// <summary>
+    ///  Handles the WM_MENUCHAR message
+    /// </summary>
+    private void WmMenuChar(ref Message m)
+    {
+        Menu menu = ContextMenu;
+        if (menu != null)
+        {
+            menu.WmMenuChar(ref m);
+            if (m.Result != IntPtr.Zero)
+            {
+                // This char is a mnemonic on our menu.
+                return;
+            }
+        }
+    }
+
+    /// <summary>
+    ///  The contextMenu associated with this control. The contextMenu
+    ///  will be shown when the user right clicks the mouse on the control.
+    ///
+    ///  Whidbey: ContextMenu is browsable false.  In all cases where both a context menu
+    ///  and a context menu strip are assigned, context menu will be shown instead of context menu strip.
+    /// </summary>
+    [
+        SRCategory(nameof(SR.CatBehavior)),
+        DefaultValue(null),
+        SRDescription(nameof(SR.ControlContextMenuDescr)),
+        Browsable(false)
+    ]
+    public virtual ContextMenu? ContextMenu
+    {
+        get => (ContextMenu)Properties.GetObject(s_contextMenuProperty);
+        set
+        {
+            ContextMenu oldValue = (ContextMenu)Properties.GetObject(s_contextMenuProperty);
+
+            if (oldValue != value)
+            {
+                EventHandler disposedHandler = new EventHandler(DetachContextMenu);
+
+                if (oldValue != null)
+                {
+                    oldValue.Disposed -= disposedHandler;
+                }
+
+                Properties.SetObject(s_contextMenuProperty, value);
+
+                if (value != null)
+                {
+                    value.Disposed += disposedHandler;
+                }
+
+                OnContextMenuChanged(EventArgs.Empty);
+            }
+        }
+    }
+
+    [
+        SRCategory(nameof(SR.CatPropertyChanged)),
+        SRDescription(nameof(SR.ControlOnContextMenuChangedDescr)),
+        Browsable(false)
+    ]
+    public event EventHandler ContextMenuChanged
+    {
+        add => Events.AddHandler(s_contextMenuEvent, value);
+        remove => Events.RemoveHandler(s_contextMenuEvent, value);
+    }
+
     /// <summary>
     ///  The contextMenuStrip associated with this control. The contextMenuStrip
     ///  will be shown when the user right clicks the mouse on the control.
@@ -9389,6 +9473,12 @@ public unsafe partial class Control :
     protected virtual bool ProcessCmdKey(ref Message msg, Keys keyData)
     {
         s_controlKeyboardRouting.TraceVerbose($"Control.ProcessCmdKey {msg}");
+
+        ContextMenu contextMenu = (ContextMenu)Properties.GetObject(s_contextMenuProperty);
+        if (contextMenu != null && contextMenu.ProcessCmdKey(ref msg, keyData, this))
+        {
+            return true;
+        }
 
         if (_parent is not null)
         {

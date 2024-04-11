@@ -464,6 +464,20 @@ public abstract unsafe partial class AxHost : Control, ISupportInitialize, ICust
         }
     }
 
+    [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
+    public override ContextMenu ContextMenu
+    {
+        get
+        {
+            return base.ContextMenu;
+        }
+
+        set
+        {
+            base.ContextMenu = value;
+        }
+    }
+
     /// <summary>
     ///  Determines if the control is in edit mode.
     /// </summary>

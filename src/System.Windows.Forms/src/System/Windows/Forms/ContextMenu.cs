@@ -18,7 +18,7 @@ namespace System.Windows.Forms
     {
         private EventHandler onPopup;
         private EventHandler onCollapse;
-        internal Control sourceControl;
+        internal Control? sourceControl;
 
         private RightToLeft rightToLeft = System.Windows.Forms.RightToLeft.Inherit;
 
@@ -90,7 +90,7 @@ namespace System.Windows.Forms
             {
                 if (System.Windows.Forms.RightToLeft.Inherit == rightToLeft)
                 {
-                    if (sourceControl != null)
+                    if (sourceControl is not null)
                     {
                         return ((Control)sourceControl).RightToLeft;
                     }

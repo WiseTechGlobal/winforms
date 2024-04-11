@@ -268,6 +268,23 @@ public partial class PrintPreviewDialog : Form
     }
 
     /// <summary>
+    ///  The contextMenu associated with this control. The contextMenu
+    ///  will be shown when the user right clicks the mouse on the control.
+    /// </summary>
+    [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
+    public override ContextMenu? ContextMenu
+    {
+        get
+        {
+            return base.ContextMenu;
+        }
+        set
+        {
+            base.ContextMenu = value;
+        }
+    }
+
+    /// <summary>
     ///  Gets or Sets the maximum size the dialog can be resized to.
     /// </summary>
     [Browsable(false)]

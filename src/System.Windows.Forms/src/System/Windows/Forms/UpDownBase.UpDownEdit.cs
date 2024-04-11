@@ -87,7 +87,7 @@ public abstract partial class UpDownBase
         internal override void WmContextMenu(ref Message m)
         {
             // Want to make the SourceControl to be the UpDownBase, not the Edit.
-            if (ContextMenuStrip is not null)
+            if (ContextMenuStrip is not null || ContextMenu is not null)
             {
                 WmContextMenu(ref m, _parent);
             }
