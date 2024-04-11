@@ -73,14 +73,18 @@ namespace Demo
             openMenuItem = new MenuItem("Open");
             saveMenuItem = new MenuItem("Save");
             exitMenuItem = new MenuItem("Exit");
+            viewMenuItem = new MenuItem("View");
+            toolboxMenuItem = new MenuItem("Toolbox");
+            terminalMenuItem = new MenuItem("Terminal");
+            outputMenuItem = new MenuItem("Output");
 
-            blankFileItem = new MenuItem("Blank File");
-            csvFileItem = new MenuItem("CSV");
-            txtFileItem = new MenuItem("TXT");
+            newProjectItem = new MenuItem("Project...");
+            newRepositoryItem = new MenuItem("Repository...");
+            newFileItem = new MenuItem("File...");
 
-            newMenuItem.MenuItems.Add(blankFileItem);
-            newMenuItem.MenuItems.Add(csvFileItem);
-            newMenuItem.MenuItems.Add(txtFileItem);
+            newMenuItem.MenuItems.Add(newProjectItem);
+            newMenuItem.MenuItems.Add(newRepositoryItem);
+            newMenuItem.MenuItems.Add(newFileItem);
 
             openMenuItem.Shortcut = Shortcut.AltF12;
             openMenuItem.ShowShortcut = true;
@@ -94,21 +98,30 @@ namespace Demo
             fileMenuItem.MenuItems.Add(saveMenuItem);
             fileMenuItem.MenuItems.Add(exitMenuItem);
 
-            // Add "File" menu item to the main menu
+            viewMenuItem.MenuItems.Add(toolboxMenuItem);
+            viewMenuItem.MenuItems.Add(terminalMenuItem);
+            viewMenuItem.MenuItems.Add(outputMenuItem);
+
+            // Add "File" and "View" menu item to the main menu
             mainMenu.MenuItems.Add(fileMenuItem);
+            mainMenu.MenuItems.Add(viewMenuItem);
 
             // Set the form's main menu
             this.Menu = mainMenu;
 
-            blankFileItem.Click += BlankFileItem_Click;
-            txtFileItem.Click += TxtFileItem_Click;
-            csvFileItem.Click += CsvFileItem_Click;
+            newProjectItem.Click += NewProjectItem_Click;
+            newRepositoryItem.Click += NewRepositoryItem_Click;
+            newFileItem.Click += NewFileItem_Click;
 
             // Add event handlers for menu items
-            newMenuItem.Click += NewMenuItem_Click;
+            //newMenuItem.Click += NewMenuItem_Click;
             openMenuItem.Click += OpenMenuItem_Click;
             saveMenuItem.Click += SaveMenuItem_Click;
             exitMenuItem.Click += ExitMenuItem_Click;
+
+            toolboxMenuItem.Click += ToolboxMenuItem_Click;
+            terminalMenuItem.Click += TerminalMenuItem_Click;
+            outputMenuItem.Click += OutputMenuItem_Click;
         }
 
         #endregion

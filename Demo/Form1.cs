@@ -24,9 +24,13 @@ namespace Demo
         private MenuItem openMenuItem;
         private MenuItem saveMenuItem;
         private MenuItem exitMenuItem;
-        private MenuItem blankFileItem;
-        private MenuItem txtFileItem;
-        private MenuItem csvFileItem;
+        private MenuItem newProjectItem;
+        private MenuItem newRepositoryItem;
+        private MenuItem newFileItem;
+        private MenuItem viewMenuItem;
+        private MenuItem toolboxMenuItem;
+        private MenuItem terminalMenuItem;
+        private MenuItem outputMenuItem;
 
         /// <summary>
         /// Summary description for Form1.
@@ -222,10 +226,10 @@ namespace Demo
             }
         }
 
-        private void NewMenuItem_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("New menu item clicked!");
-        }
+        //private void NewMenuItem_Click(object sender, EventArgs e)
+        //{
+        //    MessageBox.Show("New menu item clicked!");
+        //}
 
         private void OpenMenuItem_Click(object sender, EventArgs e)
         {
@@ -242,19 +246,37 @@ namespace Demo
             Application.Exit();
         }
 
-        private void BlankFileItem_Click(object sender, EventArgs e)
+        private void NewProjectItem_Click(object sender, EventArgs e)
         {
-            blankFileItem.Checked = !blankFileItem.Checked;
+            newProjectItem.Checked = !newProjectItem.Checked;
+            MessageBox.Show("Project sub-menu item clicked!");
         }
 
-        private void TxtFileItem_Click(object sender, EventArgs e)
+        private void NewRepositoryItem_Click(object sender, EventArgs e)
         {
-            txtFileItem.Checked = !txtFileItem.Checked;
+            newRepositoryItem.Checked = !newRepositoryItem.Checked;
+            MessageBox.Show("Repository sub-menu item clicked!");
         }
 
-        private void CsvFileItem_Click(object sender, EventArgs e)
+        private void NewFileItem_Click(object sender, EventArgs e)
         {
-            csvFileItem.Checked = !csvFileItem.Checked;
+            newFileItem.Checked = !newFileItem.Checked;
+            MessageBox.Show("File sub-menu item clicked!");
+        }
+
+        private void ToolboxMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Toolbox menu item clicked!");
+        }
+
+        private void TerminalMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Terminal menu item clicked!");
+        }
+
+        private void OutputMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Output menu item clicked!");
         }
     }
 }
