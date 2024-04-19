@@ -15,7 +15,7 @@ namespace System.Windows.Forms
     /// </summary>
     [ToolboxItemFilter("System.Windows.Forms")]
     [ListBindable(false)]
-    public abstract class Menu : Component
+    public abstract class Menu : ScrollableControl
     {
         internal const int CHANGE_ITEMS = 0; // item(s) added or removed
         internal const int CHANGE_VISIBLE = 1; // item(s) hidden or shown

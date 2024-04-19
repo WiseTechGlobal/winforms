@@ -47,8 +47,6 @@ public partial class Form : ContainerControl
     private static readonly object EVENT_RIGHTTOLEFTLAYOUTCHANGED = new();
     private static readonly object EVENT_DPI_CHANGED = new();
 
-    private static readonly int PropMainMenu = PropertyStore.CreateKey();
-
     //
     // The following flags should be used with formState[..] not formStateEx[..]
     // Don't add any more sections to this vector, it is already full.
@@ -132,6 +130,8 @@ public partial class Form : ContainerControl
 
     private static readonly int PropOpacity = PropertyStore.CreateKey();
     private static readonly int PropTransparencyKey = PropertyStore.CreateKey();
+
+    private static readonly int PropMainMenu = PropertyStore.CreateKey();
 
     // Form per instance members
     // Note: Do not add anything to this list unless absolutely necessary.
@@ -787,7 +787,8 @@ public partial class Form : ContainerControl
                 {
                     if (menu == Menu && change == Windows.Forms.Menu.CHANGE_ITEMS)
                     {
-                        UpdateMenuHandlesOldModified();
+                        //UpdateMenuHandlesOldModified();
+                        UpdateMenuHandlesOld();
                     }
 
                     break;

@@ -1,0 +1,8 @@
+<Build xmlns="http://wisetechglobal.com/DevTools/Build.xsd" MSBuild="17">
+    <Solutions>
+      <Solution Filename="Winforms.sln"/>
+    </Solutions>
+    <DatSettings>
+      <TestAdapter Type="Dat.Implementation.VSTest.VSTestAdapter, Dat.Implementation.VSTest"/>
+    </DatSettings>
+  </Build>
