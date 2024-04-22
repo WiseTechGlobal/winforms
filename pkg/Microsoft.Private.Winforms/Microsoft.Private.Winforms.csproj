@@ -97,14 +97,17 @@
     --><!-- Reference and Source Microsoft.VisualBasic.Forms --><!--
     <ProjectReference Include="..\..\src\Microsoft.VisualBasic.Forms\src\Microsoft.VisualBasic.Forms.vbproj" />-->
 
-    <ProjectReference Include="..\..\src\Accessibility\src\Accessibility.ilproj" />
-
     <!-- 
       Analyzers
     -->
     <ProjectReference Include="..\..\src\System.Windows.Forms.Analyzers\src\System.Windows.Forms.Analyzers.csproj" />
     <ProjectReference Include="..\..\src\System.Windows.Forms.Analyzers.CSharp\src\System.Windows.Forms.Analyzers.CSharp.csproj" />
 
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Accessibility">
+      <HintPath>..\..\Accessibility.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <!-- Force the output item type for all project references to "TfmSpecificPackageFile", which makes them get packed -->

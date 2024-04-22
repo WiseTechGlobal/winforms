@@ -87,6 +87,11 @@
       <LogicalName>System.Windows.Forms.Design.%(FileName)</LogicalName>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Accessibility">
+      <HintPath>..\..\..\Accessibility.dll</HintPath>
+    </Reference>
+  </ItemGroup>
   
   <ItemGroup>
     <Compile Update="Resources\MaskDesignerDialog.Designer.cs">
