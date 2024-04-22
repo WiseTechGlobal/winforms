@@ -22,35 +22,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "facade", "facade", "{434C00
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Drawing.Facade", "src\System.Drawing\src\System.Drawing.Facade.csproj", "{F1B0790A-1A40-4487-A607-36D21D827E44}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Accessibility", "src\Accessibility\src\Accessibility.ilproj", "{351D8601-6E21-45E8-B3B9-847C4540BD4E}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Accessibility-version", "src\Accessibility\ver\Accessibility-version.csproj", "{6103E743-057D-41C6-946C-23A751A08748}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Accessibility", "Accessibility", "{088DD24C-DF6B-45F3-A8BC-592580A4B2A9}"
 	ProjectSection(SolutionItems) = preProject
 		src\Accessibility\readme.md = src\Accessibility\readme.md
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{462AD69A-9395-4E98-882D-569CDE562559}"
-	ProjectSection(SolutionItems) = preProject
-		azure-pipelines.yml = azure-pipelines.yml
-		eng\common\templates\job\build.yml = eng\common\templates\job\build.yml
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "documentation", "documentation", "{C029199F-7D5C-417C-AA52-913A214E3285}"
-	ProjectSection(SolutionItems) = preProject
-		docs\building.md = docs\building.md
-		CODE_OF_CONDUCT.md = CODE_OF_CONDUCT.md
-		CONTRIBUTING.md = CONTRIBUTING.md
-		docs\debugging.md = docs\debugging.md
-		docs\developer-guide.md = docs\developer-guide.md
-		docs\getting-started.md = docs\getting-started.md
-		docs\issue-guide.md = docs\issue-guide.md
-		docs\porting-guidelines.md = docs\porting-guidelines.md
-		README.md = README.md
-		docs\roadmap.md = docs\roadmap.md
-		docs\testing.md = docs\testing.md
-		THIRD-PARTY-NOTICES.TXT = THIRD-PARTY-NOTICES.TXT
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Windows.Forms.Primitives", "src\System.Windows.Forms.Primitives\src\System.Windows.Forms.Primitives.csproj", "{90B27178-F535-43F7-886E-0AB75203F246}"
