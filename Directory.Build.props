@@ -20,12 +20,12 @@
     <!--<EnforceCodeStyleInBuild>false</EnforceCodeStyleInBuild>-->
 
     <IsAnalyzerProject>false</IsAnalyzerProject>
-    <IsAnalyzerProject Condition="!$(IsTestProject) and
+    <IsAnalyzerProject Condition="!'$(IsTestProject)' == 'true' and
                                   ($(MSBuildProjectName.EndsWith('.Analyzers')) or $(MSBuildProjectName.EndsWith('.Analyzers.CSharp')))"
                                   >true</IsAnalyzerProject>
 
     <EnableTrimAnalyzer>true</EnableTrimAnalyzer>
-    <EnableTrimAnalyzer Condition="$(IsTestProject) 
+    <EnableTrimAnalyzer Condition="'$(IsTestProject)' == 'true' 
                         or $(IsAnalyzerProject) 
                         or $(MSBuildProjectDirectory.Contains('\tests\')) 
                         or $([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'netstandard2.0'))
