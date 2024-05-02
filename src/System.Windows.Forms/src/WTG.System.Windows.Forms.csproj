@@ -37,6 +37,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Accessibility" Version="4.6.0-preview3-27504-2" />
     <PackageReference Include="Microsoft.Win32.SystemEvents" Version="$(MicrosoftWin32SystemEventsPackageVersion)" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="$(SystemConfigurationConfigurationManagerPackageVersion)" />
     <PackageReference Include="System.Resources.Extensions" Version="$(SystemResourcesExtensionsPackageVersion)" />
@@ -87,11 +88,5 @@
     <None Update="comctl32.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Accessibility">
-      <HintPath>..\..\..\Accessibility.dll</HintPath>
-    </Reference>
   </ItemGroup>
 </Project>

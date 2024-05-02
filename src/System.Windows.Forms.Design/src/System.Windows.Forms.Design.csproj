@@ -63,6 +63,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Accessibility" Version="4.6.0-preview3-27504-2" />
     <PackageReference Include="System.CodeDom" Version="$(SystemCodeDomPackageVersion)" />
   </ItemGroup>
 
@@ -86,11 +87,6 @@
     <EmbeddedResource Include="Resources\System\WinForms\Design\*.ico">
       <LogicalName>System.Windows.Forms.Design.%(FileName)</LogicalName>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Accessibility">
-      <HintPath>..\..\..\Accessibility.dll</HintPath>
-    </Reference>
   </ItemGroup>
   
   <ItemGroup>
