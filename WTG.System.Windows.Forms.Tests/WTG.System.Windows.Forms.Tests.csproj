@@ -7,6 +7,9 @@
 
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
+	<!-- Additional suppressions relating to use of nullability were put in to handle the DAT warnings.  -->
+    <!-- ToDo: Remove the suppresions one at a time to adhere to the recommended coding styles. -->
+    <NoWarn>CS8625;CS8603;CS8600;CS8602;CS8604;CS8618;CS1591;CS8601;CS8619;CA1805;SA1507;SA1517;CSIsNull001;CA1825</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

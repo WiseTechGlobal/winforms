@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>false</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
-    <NoWarn>SA1400</NoWarn>
+    <NoWarn>SA1400;CS0649</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

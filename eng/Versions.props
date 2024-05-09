@@ -29,11 +29,11 @@
     <SystemSecurityCryptographyPkcsPackageVersion>8.0.0</SystemSecurityCryptographyPkcsPackageVersion>
     <SystemSecurityCryptographyProtectedDataPackageVersion>8.0.0</SystemSecurityCryptographyProtectedDataPackageVersion>
     <SystemTextEncodingsWebPackageVersion>8.0.0</SystemTextEncodingsWebPackageVersion>
-    <SystemTextJsonPackageVersion>8.0.3</SystemTextJsonPackageVersion>
+    <SystemTextJsonPackageVersion>8.0.0</SystemTextJsonPackageVersion>
     <SystemThreadingAccessControlPackageVersion>8.0.0</SystemThreadingAccessControlPackageVersion>
     <MicrosoftWin32RegistryAccessControlPackageVersion>8.0.0</MicrosoftWin32RegistryAccessControlPackageVersion>
-    <MicrosoftNETCoreAppRefPackageVersion>8.0.3</MicrosoftNETCoreAppRefPackageVersion>
-    <MicrosoftNETCoreAppRuntimewinx64PackageVersion>8.0.3</MicrosoftNETCoreAppRuntimewinx64PackageVersion>
+    <MicrosoftNETCoreAppRefPackageVersion>8.0.0</MicrosoftNETCoreAppRefPackageVersion>
+    <MicrosoftNETCoreAppRuntimewinx64PackageVersion>8.0.0</MicrosoftNETCoreAppRuntimewinx64PackageVersion>
     <MicrosoftNETCorePlatformsPackageVersion>8.0.3-servicing.24114.23</MicrosoftNETCorePlatformsPackageVersion>
     <MicrosoftWin32SystemEventsPackageVersion>8.0.0</MicrosoftWin32SystemEventsPackageVersion>
     <SystemCodeDomPackageVersion>8.0.0</SystemCodeDomPackageVersion>

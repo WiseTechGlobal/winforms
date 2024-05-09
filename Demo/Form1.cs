@@ -12,8 +12,6 @@ namespace Demo
     /// </summary>
     public partial class Form1 : Form
     {
-        private Button button1;
-        private Button button2;
         private DataGrid myDataGrid;
         private DataSet myDataSet;
         private bool TablesAlreadyAdded;

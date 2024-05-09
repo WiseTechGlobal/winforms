@@ -1428,28 +1428,6 @@ namespace System.Windows.Forms
             }
         }
 
-        internal unsafe void WmDrawItem(ref Message m)
-        {
-            // Handles the OnDrawItem message sent from ContainerControl
-            User32.DRAWITEMSTRUCT* dis = (User32.DRAWITEMSTRUCT*)m.LParam;
-            Debug.WriteLineIf(Control.s_paletteTracing.TraceVerbose, Handle + ": Force set palette in MenuItem drawitem");
-            IntPtr oldPal = Control.SetUpPalette(dis->hDC, force: false, realizePalette: false);
-            try
-            {
-                Graphics g = Graphics.FromHdcInternal(dis->hDC);
-                OnDrawItem(new DrawItemEventArgs(g, SystemInformation.MenuFont, dis->rcItem, Index, (DrawItemState)dis->itemState));
-            }
-            finally
-            {
-                if (oldPal != IntPtr.Zero)
-                {
-                    Gdi32.SelectPalette(dis->hDC, oldPal, BOOL.FALSE);
-                }
-            }
-
-            m.Result = (IntPtr)1;
-        }
-
         /// <summary>
         ///  Handles the OnMeasureItem message sent from ContainerControl
         /// </summary>
