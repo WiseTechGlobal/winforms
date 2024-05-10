@@ -65,6 +65,140 @@ public unsafe partial class Control :
         "TraceCanProcessMnemonic",
         "Trace mnemonic processing calls to assure right child-parent call ordering.");
 
+    private protected void TraceCanProcessMnemonic()
+    {
+        if (s_traceMnemonicProcessing.Enabled)
+        {
+            string str;
+            try
+            {
+                str = $"{GetType().Name}<{Text}>";
+                int maxFrameCount = new StackTrace().FrameCount;
+                if (maxFrameCount > 5)
+                {
+                    maxFrameCount = 5;
+                }
+
+                int frameIndex = 1;
+                while (frameIndex < maxFrameCount)
+                {
+                    StackFrame sf = new StackFrame(frameIndex);
+                    if (frameIndex == 2 && sf.GetMethod()!.Name.Equals("CanProcessMnemonic"))
+                    {
+                        // log immediate call if in a virtual/recursive call.
+                        break;
+                    }
+
+                    str += new StackTrace(sf).ToString().TrimEnd();
+                    frameIndex++;
+                }
+
+                if (frameIndex > 2)
+                {
+                    // new CanProcessMnemonic virtual/recursive call stack.
+                    str = "\r\n" + str;
+                }
+            }
+            catch (Exception ex)
+            {
+                str = ex.ToString();
+            }
+
+            Debug.WriteLine(str);
+        }
+    }
+#else
+    internal static readonly TraceSwitch? s_paletteTracing;
+    internal static readonly TraceSwitch? s_controlKeyboardRouting;
+    private protected readonly TraceSwitch? s_focusTracing;
+#endif
+
+#if DEBUG
+    private static readonly BooleanSwitch s_bufferPinkRect = new(
+        "BufferPinkRect",
+        "Renders a pink rectangle with painting double buffered controls");
+    private static readonly BooleanSwitch s_bufferDisabled = new(
+        "BufferDisabled",
+        "Makes double buffered controls non-double buffered");
+#endif
+
+    private static readonly uint WM_GETCONTROLNAME = PInvoke.RegisterWindowMessage("WM_GETCONTROLNAME");
+    private static readonly uint WM_GETCONTROLTYPE = PInvoke.RegisterWindowMessage("WM_GETCONTROLTYPE");
+
+    private static readonly object s_autoSizeChangedEvent = new();
+    private static readonly object s_keyDownEvent = new();
+    private static readonly object s_keyPressEvent = new();
+    private static readonly object s_keyUpEvent = new();
+    private static readonly object s_mouseDownEvent = new();
+    private static readonly object s_mouseEnterEvent = new();
+    private static readonly object s_mouseLeaveEvent = new();
+    private static readonly object s_dpiChangedBeforeParentEvent = new();
+    private static readonly object s_dpiChangedAfterParentEvent = new();
+    private static readonly object s_mouseHoverEvent = new();
+    private static readonly object s_mouseMoveEvent = new();
+    private static readonly object s_mouseUpEvent = new();
+    private static readonly object s_mouseWheelEvent = new();
+    private static readonly object s_clickEvent = new();
+    private static readonly object s_clientSizeEvent = new();
+    private static readonly object s_doubleClickEvent = new();
+    private static readonly object s_mouseClickEvent = new();
+    private static readonly object s_mouseDoubleClickEvent = new();
+    private static readonly object s_mouseCaptureChangedEvent = new();
+    private static readonly object s_moveEvent = new();
+    private static readonly object s_resizeEvent = new();
+    private static readonly object s_layoutEvent = new();
+    private static readonly object s_gotFocusEvent = new();
+    private static readonly object s_lostFocusEvent = new();
+    private static readonly object s_enterEvent = new();
+    private static readonly object s_leaveEvent = new();
+    private static readonly object s_handleCreatedEvent = new();
+    private static readonly object s_handleDestroyedEvent = new();
+    private static readonly object s_controlAddedEvent = new();
+    private static readonly object s_controlRemovedEvent = new();
+    private static readonly object s_changeUICuesEvent = new();
+    private static readonly object s_systemColorsChangedEvent = new();
+    private static readonly object s_validatingEvent = new();
+    private static readonly object s_validatedEvent = new();
+    private static readonly object s_styleChangedEvent = new();
+    private static readonly object s_imeModeChangedEvent = new();
+    private static readonly object s_helpRequestedEvent = new();
+    private static readonly object s_paintEvent = new();
+    private static readonly object s_invalidatedEvent = new();
+    private static readonly object s_queryContinueDragEvent = new();
+    private static readonly object s_giveFeedbackEvent = new();
+    private static readonly object s_dragEnterEvent = new();
+    private static readonly object s_dragLeaveEvent = new();
+    private static readonly object s_dragOverEvent = new();
+    private static readonly object s_dragDropEvent = new();
+    private static readonly object s_queryAccessibilityHelpEvent = new();
+    private static readonly object s_backgroundImageEvent = new();
+    private static readonly object s_backgroundImageLayoutEvent = new();
+    private static readonly object s_bindingContextEvent = new();
+    private static readonly object s_backColorEvent = new();
+    private static readonly object s_parentEvent = new();
+    private static readonly object s_visibleEvent = new();
+    private static readonly object s_textEvent = new();
+    private static readonly object s_tabStopEvent = new();
+    private static readonly object s_tabIndexEvent = new();
+    private static readonly object s_sizeEvent = new();
+    private static readonly object s_rightToLeftEvent = new();
+    private static readonly object s_locationEvent = new();
+    private static readonly object s_foreColorEvent = new();
+    private static readonly object s_fontEvent = new();
+    private static readonly object s_enabledEvent = new();
+    private static readonly object s_dockEvent = new();
+    private static readonly object s_cursorEvent = new();
+    private static readonly object s_contextMenuStripEvent = new();
+    private static readonly object s_causesValidationEvent = new();
+    private static readonly object s_regionChangedEvent = new();
+    private static readonly object s_marginChangedEvent = new();
+    private protected static readonly object s_paddingChangedEvent = new();
+    private static readonly object s_previewKeyDownEvent = new();
+    private static readonly object s_dataContextEvent = new();
+
+    private static MessageId s_threadCallbackMessage;
+    private static ContextCallback? s_invokeMarshaledCallbackHelperDelegate;
+
     internal static IntPtr SetUpPalette(IntPtr dc, bool force, bool realizePalette)
     {
         Debug.WriteLineIf(s_paletteTracing.TraceVerbose, "SetUpPalette(force:=" + force + ", ralizePalette:=" + realizePalette + ")");
@@ -223,140 +357,6 @@ public unsafe partial class Control :
 
         return mi;
     }
-
-    private protected void TraceCanProcessMnemonic()
-    {
-        if (s_traceMnemonicProcessing.Enabled)
-        {
-            string str;
-            try
-            {
-                str = $"{GetType().Name}<{Text}>";
-                int maxFrameCount = new StackTrace().FrameCount;
-                if (maxFrameCount > 5)
-                {
-                    maxFrameCount = 5;
-                }
-
-                int frameIndex = 1;
-                while (frameIndex < maxFrameCount)
-                {
-                    StackFrame sf = new StackFrame(frameIndex);
-                    if (frameIndex == 2 && sf.GetMethod()!.Name.Equals("CanProcessMnemonic"))
-                    {
-                        // log immediate call if in a virtual/recursive call.
-                        break;
-                    }
-
-                    str += new StackTrace(sf).ToString().TrimEnd();
-                    frameIndex++;
-                }
-
-                if (frameIndex > 2)
-                {
-                    // new CanProcessMnemonic virtual/recursive call stack.
-                    str = "\r\n" + str;
-                }
-            }
-            catch (Exception ex)
-            {
-                str = ex.ToString();
-            }
-
-            Debug.WriteLine(str);
-        }
-    }
-#else
-    internal static readonly TraceSwitch? s_paletteTracing;
-    internal static readonly TraceSwitch? s_controlKeyboardRouting;
-    private protected readonly TraceSwitch? s_focusTracing;
-#endif
-
-#if DEBUG
-    private static readonly BooleanSwitch s_bufferPinkRect = new(
-        "BufferPinkRect",
-        "Renders a pink rectangle with painting double buffered controls");
-    private static readonly BooleanSwitch s_bufferDisabled = new(
-        "BufferDisabled",
-        "Makes double buffered controls non-double buffered");
-#endif
-
-    private static readonly uint WM_GETCONTROLNAME = PInvoke.RegisterWindowMessage("WM_GETCONTROLNAME");
-    private static readonly uint WM_GETCONTROLTYPE = PInvoke.RegisterWindowMessage("WM_GETCONTROLTYPE");
-
-    private static readonly object s_autoSizeChangedEvent = new();
-    private static readonly object s_keyDownEvent = new();
-    private static readonly object s_keyPressEvent = new();
-    private static readonly object s_keyUpEvent = new();
-    private static readonly object s_mouseDownEvent = new();
-    private static readonly object s_mouseEnterEvent = new();
-    private static readonly object s_mouseLeaveEvent = new();
-    private static readonly object s_dpiChangedBeforeParentEvent = new();
-    private static readonly object s_dpiChangedAfterParentEvent = new();
-    private static readonly object s_mouseHoverEvent = new();
-    private static readonly object s_mouseMoveEvent = new();
-    private static readonly object s_mouseUpEvent = new();
-    private static readonly object s_mouseWheelEvent = new();
-    private static readonly object s_clickEvent = new();
-    private static readonly object s_clientSizeEvent = new();
-    private static readonly object s_doubleClickEvent = new();
-    private static readonly object s_mouseClickEvent = new();
-    private static readonly object s_mouseDoubleClickEvent = new();
-    private static readonly object s_mouseCaptureChangedEvent = new();
-    private static readonly object s_moveEvent = new();
-    private static readonly object s_resizeEvent = new();
-    private static readonly object s_layoutEvent = new();
-    private static readonly object s_gotFocusEvent = new();
-    private static readonly object s_lostFocusEvent = new();
-    private static readonly object s_enterEvent = new();
-    private static readonly object s_leaveEvent = new();
-    private static readonly object s_handleCreatedEvent = new();
-    private static readonly object s_handleDestroyedEvent = new();
-    private static readonly object s_controlAddedEvent = new();
-    private static readonly object s_controlRemovedEvent = new();
-    private static readonly object s_changeUICuesEvent = new();
-    private static readonly object s_systemColorsChangedEvent = new();
-    private static readonly object s_validatingEvent = new();
-    private static readonly object s_validatedEvent = new();
-    private static readonly object s_styleChangedEvent = new();
-    private static readonly object s_imeModeChangedEvent = new();
-    private static readonly object s_helpRequestedEvent = new();
-    private static readonly object s_paintEvent = new();
-    private static readonly object s_invalidatedEvent = new();
-    private static readonly object s_queryContinueDragEvent = new();
-    private static readonly object s_giveFeedbackEvent = new();
-    private static readonly object s_dragEnterEvent = new();
-    private static readonly object s_dragLeaveEvent = new();
-    private static readonly object s_dragOverEvent = new();
-    private static readonly object s_dragDropEvent = new();
-    private static readonly object s_queryAccessibilityHelpEvent = new();
-    private static readonly object s_backgroundImageEvent = new();
-    private static readonly object s_backgroundImageLayoutEvent = new();
-    private static readonly object s_bindingContextEvent = new();
-    private static readonly object s_backColorEvent = new();
-    private static readonly object s_parentEvent = new();
-    private static readonly object s_visibleEvent = new();
-    private static readonly object s_textEvent = new();
-    private static readonly object s_tabStopEvent = new();
-    private static readonly object s_tabIndexEvent = new();
-    private static readonly object s_sizeEvent = new();
-    private static readonly object s_rightToLeftEvent = new();
-    private static readonly object s_locationEvent = new();
-    private static readonly object s_foreColorEvent = new();
-    private static readonly object s_fontEvent = new();
-    private static readonly object s_enabledEvent = new();
-    private static readonly object s_dockEvent = new();
-    private static readonly object s_cursorEvent = new();
-    private static readonly object s_contextMenuStripEvent = new();
-    private static readonly object s_causesValidationEvent = new();
-    private static readonly object s_regionChangedEvent = new();
-    private static readonly object s_marginChangedEvent = new();
-    private protected static readonly object s_paddingChangedEvent = new();
-    private static readonly object s_previewKeyDownEvent = new();
-    private static readonly object s_dataContextEvent = new();
-
-    private static MessageId s_threadCallbackMessage;
-    private static ContextCallback? s_invokeMarshaledCallbackHelperDelegate;
 
 #pragma warning disable IDE1006 // Naming Styles
     [ThreadStatic]
