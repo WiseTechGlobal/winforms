@@ -11,7 +11,8 @@
       users won't be impacted. If some name becomes difficult to adapt to with the @ symbol we can
       cross that bridge when we hit it (if ever).
     -->
-    <NoWarn>$(NoWarn);CS8981;CS3016;CA1052;SA1507</NoWarn>
+    <!--Most of the suppresions have got to do with default values from code-analysis.--> 
+    <NoWarn>$(NoWarn);CS8981;CS3016;CA1052;SA1507;CA1805</NoWarn>
     <!--
       We don't care about CLS compliance since everything here is internal and we want to match native types.
     -->

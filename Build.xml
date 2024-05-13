@@ -2,7 +2,7 @@
     <Solutions>
       <Solution Filename="Winforms.sln"/>
     </Solutions>
-    <DatSettings>
+  <DatSettings>
       <TestAdapter Type="Dat.Implementation.VSTest.VSTestAdapter, Dat.Implementation.VSTest"/>
     </DatSettings>
   </Build>

@@ -14,6 +14,10 @@ internal static class UnsafeNativeMethods
     [DllImport(ExternDll.User32, CharSet = CharSet.Auto)]
     public static extern IntPtr SendMessage(HandleRef hWnd, int msg, IntPtr wParam, string lParam);
 
+
+    [DllImport(ExternDll.User32, CharSet = CharSet.Unicode)]
+    public extern static IntPtr SendMessage(HandleRef hWnd, int Msg, IntPtr wParam, ref RECT lParam);
+
     [DllImport(ExternDll.User32, CharSet = CharSet.Auto)]
     public static extern IntPtr SendMessage(HandleRef hWnd, int msg, HandleRef wParam, int lParam);
 
@@ -28,6 +32,9 @@ internal static class UnsafeNativeMethods
 
     [DllImport(ExternDll.User32, CharSet = CharSet.Auto)]
     public extern static bool SetMenuItemInfo(HandleRef hMenu, int uItem, bool fByPosition, NativeMethods.MENUITEMINFO_T lpmii);
+
+    [DllImport(ExternDll.User32, CharSet = CharSet.Auto)]
+    public static extern IntPtr SendMessage(HandleRef hWnd, int msg, int wParam, int[] lParam);
 
     public static BOOL GetMenuItemInfo(HandleRef hMenu, int uItem, bool fByPosition, NativeMethods.MENUITEMINFO_T lpmii)
     {

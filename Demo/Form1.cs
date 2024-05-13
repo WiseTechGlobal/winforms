@@ -15,6 +15,8 @@ namespace Demo
         private DataGrid myDataGrid;
         private DataSet myDataSet;
         private bool TablesAlreadyAdded;
+        private Button button1;
+        private Button button2;
 
         private MainMenu mainMenu;
         private MenuItem fileMenuItem;
@@ -37,19 +39,15 @@ namespace Demo
         {
             InitializeComponent();
 
-            // Call SetUp to bind the controls.
-            SetUp();
-
-            InitializeMenuStrip();
-
-            //InitializeMenu();
-
-            //this.Shown += MainForm_Shown;
+            this.Shown += MainForm_Shown;
         }
 
         private void MainForm_Shown(object sender, EventArgs e)
         {
+            InitializeDataGrid();
+            SetUp();
             InitializeMenu();
+            InitializeStatusBar();
             //InitializeMenuStrip();
         }
 
@@ -59,7 +57,7 @@ namespace Demo
             MakeDataSet();
             /* Bind the DataGrid to the DataSet. The dataMember
             specifies that the Customers table should be displayed.*/
-            //myDataGrid.SetDataBinding(myDataSet, "Customers");
+            myDataGrid.SetDataBinding(myDataSet, "Customers");
         }
 
         private void Button1_Click(object sender, System.EventArgs e)

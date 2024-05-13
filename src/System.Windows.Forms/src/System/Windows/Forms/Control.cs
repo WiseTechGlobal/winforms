@@ -215,7 +215,6 @@ public unsafe partial class Control :
         return result;
     }
 
-
     /// <summary>
     ///  Handles the WM_MENUSELECT message
     /// </summary>
@@ -1662,6 +1661,31 @@ public unsafe partial class Control :
     {
         add => Events.AddHandler(s_contextMenuStripEvent, value);
         remove => Events.RemoveHandler(s_contextMenuStripEvent, value);
+    }
+
+    /// <summary>
+    ///  Sends a Win32 message to this control.  If the control does not yet
+    ///  have a handle, it will be created.
+    /// </summary>
+    internal IntPtr SendMessage(int msg, int wparam, int lparam)
+    {
+        return UnsafeNativeMethods.SendMessage(new HandleRef(this, Handle), msg, wparam, lparam);
+    }
+
+    /// <summary>
+    ///  Sends a Win32 message to this control.  If the control does not yet
+    ///  have a handle, it will be created.
+    /// </summary>
+    internal IntPtr SendMessage(int msg, int wparam, string lparam)
+    {
+        Debug.Assert(IsHandleCreated, "Performance alert!  Calling Control::SendMessage and forcing handle creation.  Re-work control so handle creation is not required to set properties.  If there is no work around, wrap the call in an IsHandleCreated check.");
+        return UnsafeNativeMethods.SendMessage(new HandleRef(this, Handle), msg, wparam, lparam);
+    }
+
+    internal IntPtr SendMessage(int msg, IntPtr wparam, IntPtr lparam)
+    {
+        Debug.Assert(IsHandleCreated, "Performance alert!  Calling Control::SendMessage and forcing handle creation.  Re-work control so handle creation is not required to set properties.  If there is no work around, wrap the call in an IsHandleCreated check.");
+        return UnsafeNativeMethods.SendMessage(new HandleRef(this, Handle), msg, wparam, lparam);
     }
 
     /// <summary>

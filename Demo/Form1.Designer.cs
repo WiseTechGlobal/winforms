@@ -23,41 +23,58 @@ namespace Demo
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
-
-        /// <summary>
-        ///  Required method for Designer support - do not modify
-        ///  the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
+        private void InitializeStatusBar()
         {
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1024, 768);
-            this.Text = "WTG WinForms Demo";
+            StatusBar mainStatusBar = new StatusBar();
 
-            //this.button1 = new System.Windows.Forms.Button();
-            //this.button2 = new System.Windows.Forms.Button();
-            //this.myDataGrid = new DataGrid();
+            mainStatusBar.Dock = DockStyle.Bottom;
+            mainStatusBar.Height = 70;
 
-            //button1.Location = new Point(24, 16);
-            //button1.Size = new Size(380, 54);
-            //button1.Text = "Change Appearance";
-            //button1.Click += new System.EventHandler(Button1_Click);
+            StatusBarPanel statusPanel = new StatusBarPanel();
+            StatusBarPanel datetimePanel = new StatusBarPanel();
 
-            //button2.Location = new Point(400, 16);
-            //button2.Size = new Size(420, 54);
-            //button2.Text = "Get Binding Manager";
-            //button2.Click += new System.EventHandler(Button2_Click);
+            // Set first panel properties and add to StatusBar  
+            statusPanel.BorderStyle = StatusBarPanelBorderStyle.Sunken;
+            statusPanel.Text = "Status Bar Example";
+            statusPanel.AutoSize = StatusBarPanelAutoSize.Spring;
+            mainStatusBar.Panels.Add(statusPanel);
 
-            //myDataGrid.Location = new Point(24, 100);
-            //myDataGrid.Size = new Size(600, 400);
-            //myDataGrid.CaptionText = "Microsoft DataGrid Control";
-            //myDataGrid.MouseUp += new MouseEventHandler(Grid_MouseUp);
+            // Set second panel properties and add to StatusBar  
+            datetimePanel.BorderStyle = StatusBarPanelBorderStyle.Raised;
 
-            //this.Controls.Add(button1);
-            //this.Controls.Add(button2);
-            //this.Controls.Add(myDataGrid);
+            datetimePanel.Text = System.DateTime.Today.ToLongDateString();
+            datetimePanel.AutoSize = StatusBarPanelAutoSize.Contents;
+            mainStatusBar.Panels.Add(datetimePanel);
+
+            mainStatusBar.ShowPanels = true;
+
+            Controls.Add(mainStatusBar);
+        }
+
+        private void InitializeDataGrid()
+        {
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.myDataGrid = new DataGrid();
+
+            button1.Location = new Point(24, 16);
+            button1.Size = new Size(380, 54);
+            button1.Text = "Change Appearance";
+            button1.Click += new System.EventHandler(Button1_Click);
+
+            button2.Location = new Point(400, 16);
+            button2.Size = new Size(420, 54);
+            button2.Text = "Get Binding Manager";
+            button2.Click += new System.EventHandler(Button2_Click);
+
+            myDataGrid.Location = new Point(24, 100);
+            myDataGrid.Size = new Size(600, 400);
+            myDataGrid.CaptionText = "Microsoft DataGrid Control";
+            myDataGrid.MouseUp += new MouseEventHandler(Grid_MouseUp);
+
+            this.Controls.Add(button1);
+            this.Controls.Add(button2);
+            this.Controls.Add(myDataGrid);
         }
 
         private void InitializeMenu()
@@ -147,6 +164,20 @@ namespace Demo
             // Attach the MenuStrip to the form
             this.Controls.Add(menuStrip);
             this.MainMenuStrip = menuStrip;
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        ///  Required method for Designer support - do not modify
+        ///  the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.components = new System.ComponentModel.Container();
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(1024, 768);
+            this.Text = "WTG WinForms Demo";
         }
 
         #endregion
