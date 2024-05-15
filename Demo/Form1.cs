@@ -32,6 +32,8 @@ namespace Demo
         private MenuItem terminalMenuItem;
         private MenuItem outputMenuItem;
 
+        private ToolBar toolBar;
+
         /// <summary>
         /// Summary description for Form1.
         /// </summary>
@@ -39,7 +41,7 @@ namespace Demo
         {
             InitializeComponent();
 
-            this.Shown += MainForm_Shown;
+            Shown += MainForm_Shown;
         }
 
         private void MainForm_Shown(object sender, EventArgs e)
@@ -49,6 +51,41 @@ namespace Demo
             InitializeMenu();
             InitializeStatusBar();
             //InitializeMenuStrip();
+
+            InitializeToolBar();
+        }
+
+        private void InitializeToolBar()
+        {
+            toolBar = new ToolBar();
+            toolBar.Buttons.Add("1st button");
+            var btn1 = toolBar.Buttons[0];
+
+            var sep1 = new ToolBarButton("sep1");
+            sep1.Style = ToolBarButtonStyle.Separator;
+            toolBar.Buttons.Add(sep1);
+
+            var btn2 = new ToolBarButton("btn2 toggle");
+            btn2.Style = ToolBarButtonStyle.ToggleButton;
+            toolBar.Buttons.Add(btn2);
+
+            var btn3 = new ToolBarButton("btn3 drop-down");
+            btn3.Style = ToolBarButtonStyle.DropDownButton;
+
+            MenuItem menuItem1 = new MenuItem("Wave");
+            menuItem1.Click += (sender, e) => MessageBox.Show("Wave back");
+            ContextMenu contextMenu1 = new ContextMenu(new MenuItem[] { menuItem1 });
+            btn3.DropDownMenu = contextMenu1;
+            toolBar.Buttons.Add(btn3);
+
+            ToolBarButtonClickEventHandler clickHandler = (object sender, ToolBarButtonClickEventArgs e) =>
+            {
+                MessageBox.Show("Button clicked. text = " + e.Button.Text);
+            };
+
+            toolBar.ButtonClick += clickHandler;
+
+            Controls.Add(toolBar);
         }
 
         private void SetUp()

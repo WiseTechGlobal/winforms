@@ -57,13 +57,13 @@ namespace Demo
             this.button2 = new System.Windows.Forms.Button();
             this.myDataGrid = new DataGrid();
 
-            button1.Location = new Point(24, 16);
-            button1.Size = new Size(380, 54);
+            button1.Location = new Point(24, 60);
+            button1.Size = new Size(200, 30);
             button1.Text = "Change Appearance";
             button1.Click += new System.EventHandler(Button1_Click);
 
-            button2.Location = new Point(400, 16);
-            button2.Size = new Size(420, 54);
+            button2.Location = new Point(224, 60);
+            button2.Size = new Size(200, 30);
             button2.Text = "Get Binding Manager";
             button2.Click += new System.EventHandler(Button2_Click);
 

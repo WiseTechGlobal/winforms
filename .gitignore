@@ -9,6 +9,9 @@
 *.userosscache
 *.sln.docstates
 
+#Visual Studio creates .bak files when editing resource files. Ignore these
+*.bak
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 

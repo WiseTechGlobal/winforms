@@ -882,6 +882,57 @@ internal static class NativeMethods
         public int cch;
     }
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct NMTOOLBAR
+    {
+        public NMHDR hdr;
+        public int iItem;
+        public TBBUTTON tbButton;
+        public int cchText;
+        public IntPtr pszText;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct TBBUTTON
+    {
+        public int iBitmap;
+        public int idCommand;
+        public byte fsState;
+        public byte fsStyle;
+        public byte bReserved0;
+        public byte bReserved1;
+        public IntPtr dwData;
+        public IntPtr iString;
+    }
+
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+    public class TOOLTIPTEXT
+    {
+        public NMHDR hdr;
+        public string? lpszText;
+
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 80)]
+        public string? szText = null;
+
+        public IntPtr hinst;
+        public int uFlags;
+    }
+
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+    public struct TBBUTTONINFO
+    {
+        public int cbSize;
+        public int dwMask;
+        public int idCommand;
+        public int iImage;
+        public byte fsState;
+        public byte fsStyle;
+        public short cx;
+        public IntPtr lParam;
+        public IntPtr pszText;
+        public int cchTest;
+    }
+
     public static class Util
     {
         public static int MAKELONG(int low, int high)

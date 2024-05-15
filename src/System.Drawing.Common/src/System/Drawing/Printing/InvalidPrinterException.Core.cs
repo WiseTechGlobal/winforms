@@ -13,7 +13,7 @@ namespace System.Drawing.Printing;
 [Runtime.CompilerServices.TypeForwardedFrom(AssemblyRef.SystemDrawing)]
 public partial class InvalidPrinterException
 {
-#if NET8_0_OR_GREATER
+#if NET6_0_OR_GREATER
     [Obsolete(DiagnosticId = "SYSLIB0051")]
 #endif
     protected InvalidPrinterException(SerializationInfo info, StreamingContext context) : base(info, context)
@@ -21,7 +21,7 @@ public partial class InvalidPrinterException
         // Ignoring not deserializable input
     }
 
-#if NET8_0_OR_GREATER
+#if NET6_0_OR_GREATER
     [Obsolete(DiagnosticId = "SYSLIB0051")]
 #endif
     public override void GetObjectData(SerializationInfo info, StreamingContext context)

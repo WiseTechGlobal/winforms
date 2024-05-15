@@ -10394,6 +10394,136 @@ Stack trace where the illegal operation occurred was:
         <target state="translated">ResumeUpdateMenuHandles에 대한 호출이 너무 많습니다.</target>
         <note />
       </trans-unit>
+      <trans-unit id="ToolBarAppearanceDescr">
+        <source>Controls the appearance of the ToolBar control, using values from the ToolBarAppearance enumeration.</source>
+        <target state="translated">ToolBarAppearance 열거형의 값을 사용하여 ToolBar 컨트롤의 모양을 제어합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarAutoSizeDescr">
+        <source>Controls whether the ToolBar will automatically size itself based on Button size.</source>
+        <target state="translated">단추 크기에 따라 도구 모음의 크기를 자동으로 조정할지 여부를 제어합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarBadToolBarButton">
+        <source>Parameter must be of type ToolBarButton.</source>
+        <target state="translated">매개 변수는 ToolBarButton 형식이어야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarBorderStyleDescr">
+        <source>Controls what type of border the ToolBar control will have.</source>
+        <target state="translated">ToolBar 컨트롤의 테두리 형식을 제어합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonClickDescr">
+        <source>Occurs whenever a button in the ToolBar is clicked by the user.</source>
+        <target state="translated">사용자가 ToolBar의 단추를 클릭할 때마다 발생합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonDropDownDescr">
+        <source>Occurs whenever a button with the DropDownButton style is pressed.</source>
+        <target state="translated">DropDownButton 스타일의 단추를 누를 때마다 발생합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonEnabledDescr">
+        <source>Controls whether this button responds to user input.</source>
+        <target state="translated">이 단추가 사용자 입력에 응답하는지 여부를 제어합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonImageIndexDescr">
+        <source>Identifies the image displayed on the button.</source>
+        <target state="translated">단추에 표시되는 이미지를 식별합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonInvalidDropDownMenuType">
+        <source>The drop-down menu for a ToolBarButton must be of type ContextMenu.</source>
+        <target state="translated">ToolBarButton의 드롭다운 메뉴는 ContextMenu 형식이어야 합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonMenuDescr">
+        <source>The shortcut menu that will appear if this button's style is set to DropDownButton.</source>
+        <target state="translated">이 단추의 스타일을 DropDownButton으로 설정하면 표시되는 바로 가기 메뉴입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonNotFound">
+        <source>References that a non-existent ToolBarButton has been received.</source>
+        <target state="translated">존재하지 않는 ToolBarButton에 대한 참조를 받았습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonPartialPushDescr">
+        <source>Controls whether the button should be displayed as partially pushed or not, but only if the style of the button is ToggleButton.</source>
+        <target state="translated">단추 스타일이 ToggleButton인 경우에 한하여 단추를 부분적으로 눌린 상태로 표시할지 여부를 제어합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonPushedDescr">
+        <source>Indicates whether the button is pushed or not. This is most commonly seen for buttons with the TOGGLEBUTTON style.</source>
+        <target state="translated">단추의 누름 상태를 나타내며, 대개 TOGGLEBUTTON 스타일의 단추에서 볼 수 있습니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonSizeDescr">
+        <source>The size of the buttons on the control if the button contents do not require a larger size.</source>
+        <target state="translated">단추 크기가 단추 내용에 적합한 경우 컨트롤에 표시될 단추의 크기입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonStyleDescr">
+        <source>Indicates what style of ToolBarButton this will be.</source>
+        <target state="translated">구현될 ToolBarButton 스타일을 나타냅니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonTextDescr">
+        <source>The caption to be displayed for this button.</source>
+        <target state="translated">이 단추에 표시할 캡션입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonToolTipTextDescr">
+        <source>The ToolTip text to be displayed for this button.</source>
+        <target state="translated">이 단추에 표시할 ToolTip 텍스트입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonVisibleDescr">
+        <source>Indicates whether this button should be visible.</source>
+        <target state="translated">이 단추를 표시할지 여부를 나타냅니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonsDescr">
+        <source>The collection of ToolBarButtons that make up this ToolBar.</source>
+        <target state="translated">이 ToolBar를 구성하는 ToolBarButtons 컬렉션입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarDividerDescr">
+        <source>Controls whether the ToolBar will display a 3-D line at the top of its client area.</source>
+        <target state="translated">도구 모음에서 클라이언트 영역의 맨 위에 3D 선을 표시할지 여부를 제어합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarDropDownArrowsDescr">
+        <source>Controls whether the ToolBar will display an arrow on the side of drop-down buttons.</source>
+        <target state="translated">도구 모음에서 드롭다운 단추 옆에 화살표를 표시할지 여부를 제어합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarImageListDescr">
+        <source>The ImageList from which this ToolBar will get all of the button images.</source>
+        <target state="translated">이 ToolBar에서 모든 단추 이미지를 가져올 ImageList입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarImageSizeDescr">
+        <source>The size of the images within the ToolBar's ImageList.</source>
+        <target state="translated">도구 모음의 ImageList에 있는 이미지의 크기입니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarShowToolTipsDescr">
+        <source>Indicates whether ToolTips will be shown for each of the buttons, if available.</source>
+        <target state="translated">도구 설명을 사용할 수 있는 경우 각 단추의 도구 설명을 표시할지 여부를 나타냅니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarTextAlignDescr">
+        <source>Controls how the text is positioned relative to the Image in each button.</source>
+        <target state="translated">각 단추에서 이미지를 기준으로 하여 텍스트를 배치하는 방법을 제어합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarWrappableDescr">
+        <source>Indicates if more than one row of buttons is allowed.</source>
+        <target state="translated">두 행 이상의 단추를 사용할 수 있는지 여부를 나타냅니다.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="ToolStripAllowItemReorderAndAllowDropCannotBeSetToTrue">
         <source>AllowItemReorder and AllowDrop cannot both be true.</source>
         <target state="translated">AllowItemReorder 및 AllowDrop이 모두 true일 수 없습니다.</target>
