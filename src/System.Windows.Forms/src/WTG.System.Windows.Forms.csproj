@@ -17,6 +17,19 @@
     <Win32Manifest>Resources\System\Windows\Forms\XPThemes.manifest</Win32Manifest>
     <Deterministic>true</Deterministic>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+
+    <!--
+      Microsoft use Arcade to handle the building of WinForms (and other things .net).
+      See: https://github.com/dotnet/arcade/blob/main/Documentation/Overview.md
+
+      Arcade puts everything in the Artifacts folder of this repo.
+      DAT needs all output to be in the Bin folder of the repo, so we need to override Arcade
+
+      The RepoRoot variable was discovered by opening Developer Command Prompt for VS 2022 and running:
+        msbuild src\System.Windows.Forms\src\WTG.System.Windows.Forms.csproj -preprocess:out.xml
+    -->
+    <OutputPath>$([System.IO.Path]::GetFullPath('$(RepoRoot)Bin\$(OutDirName)\'))</OutputPath>
+
     <!--<UsePublicApiAnalyzers>true</UsePublicApiAnalyzers>-->
 	<!--<NoWarn>CSIsNull001</NoWarn>
 	<NoWarn>CSIsNull002</NoWarn>
