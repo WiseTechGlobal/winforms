@@ -678,7 +678,7 @@ public partial class ErrorProvider : Component, IExtenderProvider, ISupportIniti
     /// </summary>
     public bool CanExtend(object? extendee)
     {
-        return extendee is Control && extendee is not Form;
+        return extendee is Control && extendee is not Form && extendee is not ToolBar;
     }
 
     /// <summary>

@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms.VisualStyles;
 
-namespace WTG.System.Windows.Forms.VisualStyles.Tests
+namespace WTG.System.Windows.Forms.Tests.VisualStyles
 {
     public class VisualStyleElementTests
     {
@@ -384,6 +384,7 @@ namespace WTG.System.Windows.Forms.VisualStyles.Tests
 
             yield return new object[] { I(() => VisualStyleElement.ToolBar.Bar.Normal), "TOOLBAR", 0, 0 };
 
+            yield return new object[] { I(() => VisualStyleElement.ToolBar.Bar.Normal), "TOOLBAR", 0, 0 };
             yield return new object[] { I(() => VisualStyleElement.ToolBar.Button.Normal), "TOOLBAR", 1, 1 };
             yield return new object[] { I(() => VisualStyleElement.ToolBar.Button.Hot), "TOOLBAR", 1, 2 };
             yield return new object[] { I(() => VisualStyleElement.ToolBar.Button.Pressed), "TOOLBAR", 1, 3 };
