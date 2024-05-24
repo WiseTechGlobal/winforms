@@ -14,7 +14,9 @@ namespace Demo
             // see https://aka.ms/applicationconfiguration.
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.SetHighDpiMode(HighDpiMode.SystemAware);
+            // Set High DPI mode to DpiUnaware, as currently there are some scaling issues when setting to other values
+            // https://github.com/WiseTechGlobal/Modernization.Content/blob/main/Controls/work-items/Difference%20display%20between%20migrated%20forms%20and%20original%20forms.md
+            Application.SetHighDpiMode(HighDpiMode.DpiUnaware);
             //ApplicationConfiguration.Initialize();
             Application.Run(new Form1());
         }
