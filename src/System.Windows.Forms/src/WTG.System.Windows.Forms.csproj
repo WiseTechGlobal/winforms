@@ -31,11 +31,16 @@
     <OutputPath>$([System.IO.Path]::GetFullPath('$(RepoRoot)Bin\$(OutDirName)\'))</OutputPath>
 
     <!--<UsePublicApiAnalyzers>true</UsePublicApiAnalyzers>-->
-	<!--<NoWarn>CSIsNull001</NoWarn>
-	<NoWarn>CSIsNull002</NoWarn>
-	<NoWarn>SA1129</NoWarn>
-	<NoWarn>WFDEV001</NoWarn>
+    <!--<NoWarn>CSIsNull001</NoWarn>
+    <NoWarn>CSIsNull002</NoWarn>
+    <NoWarn>SA1129</NoWarn>
+    <NoWarn>WFDEV001</NoWarn>
     <NoWarn>CA1822</NoWarn>-->
+
+    <IsPackable>true</IsPackable>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageDescription>WiseTech Global forked version of System.Windows.Forms that includes controls that were deprecated in .NET Core 3.1 and .NET 5, like DataGrid, Menu, ToolBar and StatusBar.</PackageDescription>
+
   </PropertyGroup>
 
   <ItemGroup>
@@ -43,12 +48,21 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\System.Drawing.Common\src\System.Drawing.Common.csproj" />
+    <!--
+      Pack is set to true, because otherwise the output nuget package specifies a package reference.
+      As this is custom compiled code, we need to include the assembly in the final package instead.
+    -->
+    <ProjectReference Include="..\..\System.Drawing.Common\src\System.Drawing.Common.csproj" Pack="true" />
+    
     <ProjectReference Include="..\..\System.Windows.Forms.PrivateSourceGenerators\src\System.Windows.Forms.PrivateSourceGenerators.csproj" ReferenceOutputAssembly="false" OutputItemType="Analyzer" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\System.Windows.Forms.Primitives\src\System.Windows.Forms.Primitives.csproj" />
+    <!--
+      Pack is set to true, because otherwise the output nuget package specifies a package reference.
+      As this is custom compiled code, we need to include the assembly in the final package instead.
+    -->
+    <ProjectReference Include="..\..\System.Windows.Forms.Primitives\src\System.Windows.Forms.Primitives.csproj" Pack="true" />
   </ItemGroup>
 
   <ItemGroup>
@@ -104,4 +118,75 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+
+  <!--
+    For every ProjectReference with Pack=true, we include the assemblies from it in the output nuget package.
+
+    Adapted from similar solution for package references from https://github.com/kzu/til/blob/master/msbuild/how-to-include-package-reference-files-in-your-nuget-package.md
+  -->
+  <Target Name="AddPackProjectDependencies" DependsOnTargets="ResolveProjectReferences" BeforeTargets="GenerateNuspec" AfterTargets="ResolveProjectReferences"
+          Inputs="@(_ResolvedProjectReferencePaths)"
+          Outputs="%(_ResolvedProjectReferencePaths.OriginalItemSpec)">
+
+    <!--
+
+      binlogs are a good way of seeing these variables in action, for debugging.
+
+      _ResolvedProjectReferencePaths is the output of ResolveProjectReferences.
+      it contains the full path of the output assemblies, as well as other properties.
+      property OriginalItemSpec contains the relative path to the .csproj
+
+      The Inputs & Outputs attributes on the target itself effectively group by project reference.
+
+      The two commands below get the unique relative path of the project reference we are dealing with.
+    -->
+    <ItemGroup>
+      <OriginalItemSpec Include="@(_ResolvedProjectReferencePaths -> '%(OriginalItemSpec)')" />
+    </ItemGroup>
+    <PropertyGroup>
+      <ProjRefPath_OriginalItemSpec>@(OriginalItemSpec -&gt; Distinct())</ProjRefPath_OriginalItemSpec>
+    </PropertyGroup>
+
+    <!-- useful for debugging
+    <Message Importance="high" Text="_ResolvedProjectReferencePaths: @(_ResolvedProjectReferencePaths)" />
+    <Message Importance="high" Text="ProjRef: @(ProjectReference)" />
+    <Message Importance="high" Text="ProjRefPath_OriginalItemSpec: $(ProjRefPath_OriginalItemSpec)" />
+    -->
+
+    <!--
+      Get the original <ProjectReference> element matching this relative project path
+    -->
+    <ItemGroup>
+      <ProjectReferenceDependency Include="@(ProjectReference -> WithMetadataValue('Identity', '$(ProjRefPath_OriginalItemSpec)'))" />
+    </ItemGroup>
+
+    <!-- useful for debugging
+    <Message Importance="high" Text="ProjectReferenceDependency: @(ProjectReferenceDependency)" />
+    -->
+    
+    <!--
+      Get Pack attribute of this <ProjectReference>
+    -->
+    <PropertyGroup>
+      <NuGetProjectPack>@(ProjectReferenceDependency -> '%(Pack)')</NuGetProjectPack>
+    </PropertyGroup>
+
+    <!-- useful for debugging
+    <Message Importance="high" Text="NuGetProjectPack: $(NuGetProjectPack)" />
+    -->
+    
+    <!--
+      Does this <ProjectReference> have Pack="true" attribute?
+    -->
+    <ItemGroup Condition="'$(NuGetProjectPack)' == 'true'">
+      <!--
+        update the item groups used by GenerateNuspec target to include the compiled
+        assembly of the project reference.
+      -->
+      <_PackageFiles Include="@(_ResolvedProjectReferencePaths)" PackagePath="$(BuildOutputTargetFolder)/$(TargetFramework)/%(Filename)%(Extension)" />
+      <RuntimeCopyLocalItems Update="@(_ResolvedProjectReferencePaths)" CopyLocal="true" Private="true" />
+      <ResolvedFileToPublish Include="@(_ResolvedProjectReferencePaths)" CopyToPublishDirectory="PreserveNewest" RelativePath="%(Filename)%(Extension)" />
+    </ItemGroup>
+  </Target>
+
 </Project>
