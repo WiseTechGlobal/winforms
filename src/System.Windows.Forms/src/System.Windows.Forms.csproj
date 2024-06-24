@@ -1,7 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <AssemblyName>WTG.System.Windows.Forms</AssemblyName>
+    <AssemblyName>System.Windows.Forms</AssemblyName>
+    <AssemblyVersion>4.0.0.0</AssemblyVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <CLSCompliant>true</CLSCompliant>
     <Nullable>enable</Nullable>
@@ -124,9 +125,7 @@
 
     Adapted from similar solution for package references from https://github.com/kzu/til/blob/master/msbuild/how-to-include-package-reference-files-in-your-nuget-package.md
   -->
-  <Target Name="AddPackProjectDependencies" DependsOnTargets="ResolveProjectReferences" BeforeTargets="GenerateNuspec" AfterTargets="ResolveProjectReferences"
-          Inputs="@(_ResolvedProjectReferencePaths)"
-          Outputs="%(_ResolvedProjectReferencePaths.OriginalItemSpec)">
+  <Target Name="AddPackProjectDependencies" DependsOnTargets="InitializeStandardNuspecProperties" BeforeTargets="GenerateNuspec" Inputs="@(_ResolvedProjectReferencePaths)" Outputs="%(_ResolvedProjectReferencePaths.OriginalItemSpec)">
 
     <!--
 
@@ -157,7 +156,7 @@
       Get the original <ProjectReference> element matching this relative project path
     -->
     <ItemGroup>
-      <ProjectReferenceDependency Include="@(ProjectReference -> WithMetadataValue('Identity', '$(ProjRefPath_OriginalItemSpec)'))" />
+      <ProjectReferenceDependency Include="@(ProjectReference -&gt; WithMetadataValue('Identity', '$(ProjRefPath_OriginalItemSpec)'))" />
     </ItemGroup>
 
     <!-- useful for debugging

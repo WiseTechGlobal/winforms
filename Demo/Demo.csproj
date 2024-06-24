@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\System.Windows.Forms\src\WTG.System.Windows.Forms.csproj" />
+    <ProjectReference Include="..\src\System.Windows.Forms\src\System.Windows.Forms.csproj" />
   </ItemGroup>
 
 </Project>
