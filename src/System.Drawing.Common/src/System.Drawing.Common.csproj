@@ -2,7 +2,8 @@
   <PropertyGroup>
     <TargetFrameworks>$(NetCurrent);$(NetPrevious);$(NetMinimum);netstandard2.0;$(NetFrameworkMinimum)</TargetFrameworks>
     <TargetFramework />
-    <AssemblyVersion>4.0.0.0</AssemblyVersion>
+    <AssemblyVersion Condition="'$(TargetFramework)' != 'net8.0'">4.0.0.0</AssemblyVersion>
+    <AssemblyVersion Condition="'$(TargetFramework)' == 'net8.0'">8.0.0.0</AssemblyVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <WarningsNotAsErrors>CS0618</WarningsNotAsErrors>
     <EnableAOTAnalyzer>false</EnableAOTAnalyzer>

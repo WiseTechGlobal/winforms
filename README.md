@@ -2,6 +2,14 @@
 
 Migrating obsolete winforms controls to compile and run in Net 8 for CW1's ZArchitecture.
 
+# WTG ChangeLog
+
+| Version | What's changed |
+|------------------|-------------|
+| 0.0.6-dev.final  | initial version for net7 and net8 |
+| 0.0.7-dev.final  | System.Windows.Forms.Design.dll added to package |
+| 0.0.8-dev.final  | net8.0: changed version of System.Drawing.Common.dll (v4.0.0.0 -> v8.0.0.0) to fix Dev build |
+
 # Windows Forms
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/dotnet/winforms/blob/main/LICENSE.TXT)
