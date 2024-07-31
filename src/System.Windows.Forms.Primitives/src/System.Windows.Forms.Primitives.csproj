@@ -2,7 +2,7 @@
   
   <PropertyGroup>
     <AssemblyName>System.Windows.Forms.Primitives</AssemblyName>
-    <AssemblyVersion>4.0.0.0</AssemblyVersion>
+    <AssemblyVersion>8.0.0.0</AssemblyVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <CLSCompliant>true</CLSCompliant>
     <Nullable>enable</Nullable>
