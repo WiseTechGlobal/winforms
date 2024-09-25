@@ -10,11 +10,14 @@ Migrating obsolete winforms controls to compile and run in Net 8 for CW1's ZArch
 | 0.0.7-dev.final  | System.Windows.Forms.Design.dll added to package |
 | 0.0.8-dev.final  | net8.0: changed version of System.Drawing.Common.dll (v4.0.0.0 -> v8.0.0.0) to fix Dev build |
 | 0.0.9-dev.final  | net8.0: changed versions of all libraries in package to v8.0.0.0 |
+| 0.0.10-dev.final  | skipped due to error in publishing
+| 0.0.11-dev.final  | net8.0: remove warning WFDEV001
 
 # WTG How to publish new version
 
 * Do changes in code you want to be published
 * Increase version in $(LIB_ROOT)\eng\Versions.props
+* Run `git clean -fdx` to remove all possible artifacts of previous builds.
 * Run QGL Full Build
 * Go to $(LIB_ROOT)\artifacts\packages\Debug\Shipping\ and rename nupkg file to zip.
 * Unpack zip file to new directory
