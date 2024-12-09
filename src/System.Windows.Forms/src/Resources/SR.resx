@@ -7336,8 +7336,14 @@ Stack trace where the illegal operation occurred was:
   <data name="ContextMenuCollapseDescr" xml:space="preserve">
     <value>Raised when the context menu collapses.</value>
   </data>
+  <data name="ContextMenuImageListDescr" xml:space="preserve">
+    <value>Gets or sets the ImageList associated with this context menu.</value>
+  </data>
   <data name="ContextMenuInvalidParent" xml:space="preserve">
     <value>ContextMenu cannot be shown on an invisible control.</value>
+  </data>
+  <data name="ContextMenuIsImageMarginPresentDescr" xml:space="preserve">
+    <value>Gets or sets a value indicating whether the menu has an image margin.</value>
   </data>
   <data name="ContextMenuSourceControlDescr" xml:space="preserve">
     <value>The last control that caused this context menu to be displayed.</value>

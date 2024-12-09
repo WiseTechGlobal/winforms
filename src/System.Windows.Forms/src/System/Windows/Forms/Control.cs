@@ -5364,6 +5364,12 @@ public unsafe partial class Control :
                 DisposeAxControls();
                 ((ActiveXImpl?)Properties.GetObject(s_activeXImplProperty))?.Dispose();
 
+                ContextMenu contextMenu = (ContextMenu)Properties.GetObject(s_contextMenuProperty);
+                if (contextMenu != null)
+                {
+                    contextMenu.Disposed -= new EventHandler(DetachContextMenu);
+                }
+
                 ResetBindings();
 
                 if (IsHandleCreated)
@@ -12109,8 +12115,9 @@ public unsafe partial class Control :
     /// </summary>
     internal void WmContextMenu(ref Message m, Control sourceControl)
     {
+        var contextMenu = Properties.GetObject(s_contextMenuProperty) as ContextMenu;
         var contextMenuStrip = (ContextMenuStrip?)Properties.GetObject(s_contextMenuStripProperty);
-        if (contextMenuStrip is not null)
+        if (contextMenu != null || contextMenuStrip != null)
         {
             int x = PARAM.SignedLOWORD(m.LParamInternal);
             int y = PARAM.SignedHIWORD(m.LParamInternal);
@@ -12128,9 +12135,22 @@ public unsafe partial class Control :
                 client = PointToClient(new Point(x, y));
             }
 
+            // VisualStudio7 # 156, only show the context menu when clicked in the client area
             if (ClientRectangle.Contains(client))
             {
-                contextMenuStrip.ShowInternal(sourceControl, client, keyboardActivated);
+                if (contextMenu != null)
+                {
+                    contextMenu.Show(sourceControl, client);
+                }
+                else if (contextMenuStrip != null)
+                {
+                    contextMenuStrip.ShowInternal(sourceControl, client, keyboardActivated);
+                }
+                else
+                {
+                    Debug.Fail("contextmenu and contextmenustrip are both null... hmm how did we get here?");
+                    DefWndProc(ref m);
+                }
             }
             else
             {
@@ -12199,6 +12219,26 @@ public unsafe partial class Control :
         {
             DefWndProc(ref m);
         }
+    }
+
+    /// <summary>
+    ///  Handles the WM_EXITMENULOOP message. If this control has a context menu, its
+    ///  Collapse event is raised.
+    /// </summary>
+    private void WmExitMenuLoop(ref Message m)
+    {
+        bool isContextMenu = (unchecked((int)(long)m.WParam) == 0) ? false : true;
+
+        if (isContextMenu)
+        {
+            ContextMenu contextMenu = (ContextMenu)Properties.GetObject(s_contextMenuProperty);
+            if (contextMenu != null)
+            {
+                contextMenu.OnCollapse(EventArgs.Empty);
+            }
+        }
+
+        DefWndProc(ref m);
     }
 
     /// <summary>
@@ -12308,6 +12348,24 @@ public unsafe partial class Control :
         {
             DefWndProc(ref m);
         }
+    }
+
+    /// <summary>
+    ///  Handles the WM_INITMENUPOPUP message
+    /// </summary>
+    private void WmInitMenuPopup(ref Message m)
+    {
+        ContextMenu contextMenu = (ContextMenu)Properties.GetObject(s_contextMenuProperty);
+        if (contextMenu != null)
+        {
+
+            if (contextMenu.ProcessInitMenuPopup(m.WParam))
+            {
+                return;
+            }
+        }
+
+        DefWndProc(ref m);
     }
 
     /// <summary>
@@ -13239,6 +13297,10 @@ public unsafe partial class Control :
                 WmEraseBkgnd(ref m);
                 break;
 
+            case PInvoke.WM_EXITMENULOOP:
+                WmExitMenuLoop(ref m);
+                break;
+
             case PInvoke.WM_HELP:
                 WmHelp(ref m);
                 break;
@@ -13265,6 +13327,10 @@ public unsafe partial class Control :
                     DefWndProc(ref m);
                 }
 
+                break;
+
+            case WindowMessages.WM_INITMENUPOPUP:
+                WmInitMenuPopup(ref m);
                 break;
 
             case PInvoke.WM_SYSCOMMAND:
@@ -13515,9 +13581,9 @@ public unsafe partial class Control :
                 WmParentNotify(ref m);
                 break;
 
-            case PInvoke.WM_EXITMENULOOP:
-            case PInvoke.WM_INITMENUPOPUP:
             case PInvoke.WM_MENUSELECT:
+                WmMenuSelect(ref m);
+                break;
             default:
 
                 // If we received a thread execute message, then execute it.

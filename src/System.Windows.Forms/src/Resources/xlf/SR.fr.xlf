@@ -1314,22 +1314,32 @@
       </trans-unit>
       <trans-unit id="ContextMenuCollapseDescr">
         <source>Raised when the context menu collapses.</source>
-        <target state="new">Raised when the context menu collapses.</target>
+        <target state="translated">Déclenché lorsque le menu contextuel est réduit.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ContextMenuImageListDescr">
+        <source>Gets or sets the ImageList associated with this context menu.</source>
+        <target state="translated">Obtient ou définit le ImageList associé à ce menu contextuel.</target>
         <note />
       </trans-unit>
       <trans-unit id="ContextMenuInvalidParent">
         <source>ContextMenu cannot be shown on an invisible control.</source>
-        <target state="new">ContextMenu cannot be shown on an invisible control.</target>
+        <target state="translated">ContextMenu ne peut pas être affiché sur un contrôle invisible.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ContextMenuIsImageMarginPresentDescr">
+        <source>Gets or sets a value indicating whether the menu has an image margin.</source>
+        <target state="translated">Obtient ou définit une valeur indiquant si le menu dispose d'une marge d'image.</target>
         <note />
       </trans-unit>
       <trans-unit id="ContextMenuSourceControlDescr">
         <source>The last control that caused this context menu to be displayed.</source>
-        <target state="new">The last control that caused this context menu to be displayed.</target>
+        <target state="translated">Dernier contrôle ayant provoqué l'affichage de ce menu contextuel.</target>
         <note />
       </trans-unit>
       <trans-unit id="ContextMenuStripSourceControlDescr">
         <source>The last control that caused this context menu strip to be displayed.</source>
-        <target state="translated">Dernier contrôle ayant provoqué l'affichage de cette bande de menus contextuels.</target>
+        <target state="new">The last control that caused this context menu strip to be displayed.</target>
         <note />
       </trans-unit>
       <trans-unit id="ControlAccessibleObjectInvalid">

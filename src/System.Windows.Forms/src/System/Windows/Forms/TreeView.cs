@@ -1651,6 +1651,11 @@ public partial class TreeView : Control
     {
         if (disposing)
         {
+            foreach (TreeNode node in Nodes)
+            {
+                node.ContextMenu = null;
+            }
+
             lock (this)
             {
                 DetachImageListHandlers();
@@ -3166,7 +3171,7 @@ public partial class TreeView : Control
                     if ((int)nmtv->nmhdr.code == (int)NM.RCLICK)
                     {
                         TreeNode treeNode = NodeFromHandle(hnode);
-                        if (treeNode is not null && treeNode.ContextMenuStrip is not null)
+                        if (treeNode != null && (treeNode.ContextMenu != null || treeNode.ContextMenuStrip != null))
                         {
                             ShowContextMenu(treeNode);
                         }
@@ -3220,14 +3225,39 @@ public partial class TreeView : Control
     /// </summary>
     private void ShowContextMenu(TreeNode treeNode)
     {
-        if (treeNode.ContextMenuStrip is not null)
+        if (treeNode.ContextMenu != null || treeNode.ContextMenuStrip is not null)
         {
+            ContextMenu contextMenu = treeNode.ContextMenu;
             ContextMenuStrip menu = treeNode.ContextMenuStrip;
 
-            // Need to send TVM_SELECTITEM to highlight the node while the contextMenuStrip is being shown.
-            PInvoke.PostMessage(this, PInvoke.TVM_SELECTITEM, (WPARAM)PInvoke.TVGN_DROPHILITE, (LPARAM)treeNode.Handle);
-            menu.ShowInternal(this, PointToClient(MousePosition), /*keyboardActivated*/false);
-            menu.Closing += new ToolStripDropDownClosingEventHandler(ContextMenuStripClosing);
+            if (contextMenu != null)
+            {
+                PInvoke.GetCursorPos(out Point pt);
+
+                // Summary: the current window must be made the foreground window
+                // before calling TrackPopupMenuEx, and a task switch must be
+                // forced after the call.
+                PInvoke.SetForegroundWindow(this);
+
+                contextMenu.OnPopup(EventArgs.Empty);
+
+                SafeNativeMethods.TrackPopupMenuEx(new HandleRef(contextMenu, contextMenu.Handle),
+                                         NativeMethods.TPM_VERTICAL,
+                                         pt.X,
+                                         pt.Y,
+                                         new HandleRef(this, Handle),
+                                         null);
+
+                // Force task switch (see above)
+                PInvoke.PostMessage(this, PInvoke.WM_NULL, (WPARAM)IntPtr.Zero, IntPtr.Zero);
+            }
+            else if (menu is not null)
+            {
+                // Need to send TVM_SELECTITEM to highlight the node while the contextMenuStrip is being shown.
+                PInvoke.PostMessage(this, PInvoke.TVM_SELECTITEM, (WPARAM)PInvoke.TVGN_DROPHILITE, (LPARAM)treeNode.Handle);
+                menu.ShowInternal(this, PointToClient(MousePosition), /*keyboardActivated*/false);
+                menu.Closing += new ToolStripDropDownClosingEventHandler(ContextMenuStripClosing);
+            }
         }
     }
 
@@ -3536,15 +3566,22 @@ public partial class TreeView : Control
                 {
                     // this is the Shift + F10 Case....
                     TreeNode treeNode = SelectedNode;
-                    if (treeNode is not null && treeNode.ContextMenuStrip is not null)
+                    if (treeNode is not null && (treeNode.ContextMenu is not null || treeNode.ContextMenuStrip is not null))
                     {
                         Point client;
                         client = new Point(treeNode.Bounds.X, treeNode.Bounds.Y + treeNode.Bounds.Height / 2);
                         // VisualStudio7 # 156, only show the context menu when clicked in the client area
-                        if (ClientRectangle.Contains(client) && treeNode.ContextMenuStrip is not null)
+                        if (ClientRectangle.Contains(client))
                         {
-                            bool keyboardActivated = m.LParamInternal == -1;
-                            treeNode.ContextMenuStrip.ShowInternal(this, client, keyboardActivated);
+                            if (treeNode.ContextMenu is not null)
+                            {
+                                treeNode.ContextMenu.Show(this, client);
+                            }
+                            else if (ContextMenuStrip is not null)
+                            {
+                                bool keyboardActivated = m.LParamInternal == -1;
+                                treeNode.ContextMenuStrip.ShowInternal(this, client, keyboardActivated);
+                            }
                         }
                     }
                     else

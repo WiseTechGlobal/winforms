@@ -1314,17 +1314,27 @@
       </trans-unit>
       <trans-unit id="ContextMenuCollapseDescr">
         <source>Raised when the context menu collapses.</source>
-        <target state="new">Raised when the context menu collapses.</target>
+        <target state="translated">Generato quando si comprime il menu di scelta rapida.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ContextMenuImageListDescr">
+        <source>Gets or sets the ImageList associated with this context menu.</source>
+        <target state="translated">Ottiene o imposta il componente ImageList associato a questo menu di scelta rapida.</target>
         <note />
       </trans-unit>
       <trans-unit id="ContextMenuInvalidParent">
         <source>ContextMenu cannot be shown on an invisible control.</source>
-        <target state="new">ContextMenu cannot be shown on an invisible control.</target>
+        <target state="translated">Impossibile visualizzare il menu di scelta rapida su un controllo invisibile.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ContextMenuIsImageMarginPresentDescr">
+        <source>Gets or sets a value indicating whether the menu has an image margin.</source>
+        <target state="translated">Ottiene o imposta un valore che indica se è presente un margine nell'immagine del menu.</target>
         <note />
       </trans-unit>
       <trans-unit id="ContextMenuSourceControlDescr">
         <source>The last control that caused this context menu to be displayed.</source>
-        <target state="new">The last control that caused this context menu to be displayed.</target>
+        <target state="translated">Ultimo controllo che ha comportato la visualizzazione di questo menu di scelta rapida.</target>
         <note />
       </trans-unit>
       <trans-unit id="ContextMenuStripSourceControlDescr">

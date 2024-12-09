@@ -35,7 +35,7 @@
     <SystemThreadingAccessControlPackageVersion>8.0.0</SystemThreadingAccessControlPackageVersion>
     <MicrosoftWin32RegistryAccessControlPackageVersion>8.0.0</MicrosoftWin32RegistryAccessControlPackageVersion>
     <MicrosoftNETCoreAppRefPackageVersion>8.0.1</MicrosoftNETCoreAppRefPackageVersion>
-    <MicrosoftNETCoreAppRuntimewinx64PackageVersion>8.0.1</MicrosoftNETCoreAppRuntimewinx64PackageVersion>
+    <MicrosoftNETCoreAppRuntimewinx64PackageVersion>8.0.0</MicrosoftNETCoreAppRuntimewinx64PackageVersion>
     <MicrosoftNETCorePlatformsPackageVersion>8.0.1-servicing.23580.1</MicrosoftNETCorePlatformsPackageVersion>
     <MicrosoftWin32SystemEventsPackageVersion>8.0.0</MicrosoftWin32SystemEventsPackageVersion>
     <SystemCodeDomPackageVersion>8.0.0</SystemCodeDomPackageVersion>

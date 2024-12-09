@@ -33,6 +33,7 @@ namespace Demo
         private MenuItem outputMenuItem;
 
         private ToolBar toolBar;
+        private TreeView treeView;
 
         /// <summary>
         /// Summary description for Form1.
@@ -53,6 +54,69 @@ namespace Demo
             //InitializeMenuStrip();
 
             InitializeToolBar();
+            InitializeTreeView();
+        }
+
+        private void InitializeTreeView()
+        {
+            this.treeView = new TreeView();
+            this.treeView.Location = new Point(650, 100);
+            this.treeView.Size = new Size(200, 200);
+            this.treeView.CheckBoxes = true;
+
+            TreeNode rootNode = new TreeNode("Root Node")
+            {
+                Nodes =
+                {
+                    new TreeNode("Child Node 1")
+                    {
+                        Nodes =
+                        {
+                            new TreeNode("Sub Child Node 1"),
+                            new TreeNode("Sub Child Node 2")
+                        }
+                    },
+                    new TreeNode("Child Node 2")
+                    {
+                        Nodes =
+                        {
+                            new TreeNode("Sub Child Node 3"),
+                            new TreeNode("Sub Child Node 4")
+                        }
+                    },
+                    new TreeNode("Child Node 3")
+                }
+            };
+
+            this.treeView.Nodes.Add(rootNode);
+
+            this.treeView.ContextMenu = new ContextMenu(
+            [
+                new MenuItem("Option 1"),
+                new MenuItem("Option 2")
+            ]);
+
+            AddContextMenuToNodes(treeView.Nodes);
+
+            Controls.Add(this.treeView);
+        }
+
+        private static void AddContextMenuToNodes(TreeNodeCollection nodes)
+        {
+            foreach (TreeNode node in nodes)
+            {
+                node.ContextMenu = new ContextMenu(
+                new MenuItem[]
+                {
+                        new($"Option for {node.Text}"),
+                        new($"Option 2 for {node.Text}")
+                });
+
+                if (node.Nodes.Count > 0)
+                {
+                    AddContextMenuToNodes(node.Nodes);
+                }
+            }
         }
 
         private void InitializeToolBar()

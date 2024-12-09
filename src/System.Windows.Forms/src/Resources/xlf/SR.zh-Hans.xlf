@@ -1314,17 +1314,27 @@
       </trans-unit>
       <trans-unit id="ContextMenuCollapseDescr">
         <source>Raised when the context menu collapses.</source>
-        <target state="new">Raised when the context menu collapses.</target>
+        <target state="translated">在上下文菜单折叠时引发。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ContextMenuImageListDescr">
+        <source>Gets or sets the ImageList associated with this context menu.</source>
+        <target state="translated">获取或设置与此上下文菜单关联的 ImageList。</target>
         <note />
       </trans-unit>
       <trans-unit id="ContextMenuInvalidParent">
         <source>ContextMenu cannot be shown on an invisible control.</source>
-        <target state="new">ContextMenu cannot be shown on an invisible control.</target>
+        <target state="translated">ContextMenu 无法在不可见的控件上显示。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ContextMenuIsImageMarginPresentDescr">
+        <source>Gets or sets a value indicating whether the menu has an image margin.</source>
+        <target state="translated">获取或设置指示菜单是否有图像边距的值。</target>
         <note />
       </trans-unit>
       <trans-unit id="ContextMenuSourceControlDescr">
         <source>The last control that caused this context menu to be displayed.</source>
-        <target state="new">The last control that caused this context menu to be displayed.</target>
+        <target state="translated">使此上下文菜单显示的最后一个控件。</target>
         <note />
       </trans-unit>
       <trans-unit id="ContextMenuStripSourceControlDescr">

@@ -23,12 +23,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
+		Build.xml = Build.xml
 		Directory.Build.props = Directory.Build.props
 		Directory.Build.targets = Directory.Build.targets
+		..\..\..\wtg\CargoWise\Dev\EDI-Release-private.snk = ..\..\..\wtg\CargoWise\Dev\EDI-Release-private.snk
 		global.json = global.json
 		NuGet.Config = NuGet.Config
 		start-vs.cmd = start-vs.cmd
-		Build.xml = Build.xml
 		eng\Versions.props = eng\Versions.props
 	EndProjectSection
 EndProject
@@ -39,6 +40,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Drawing.Common", "src\System.Drawing.Common\src\System.Drawing.Common.csproj", "{90CC3A84-1087-48A0-8FDC-3A0F6D4D3B4D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo", "Demo\Demo.csproj", "{313D5215-7E76-4864-AEBF-0C15819D0B34}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D34EBBF2-C22B-4424-A275-0DC4E316AB21}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Windows.Forms.Tests", "Tests\System.Windows.Forms.Tests\System.Windows.Forms.Tests.csproj", "{EAF018D1-D51E-4F67-BC7F-6F7F5702C411}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -212,6 +217,22 @@ Global
 		{313D5215-7E76-4864-AEBF-0C15819D0B34}.Release|x64.Build.0 = Release|Any CPU
 		{313D5215-7E76-4864-AEBF-0C15819D0B34}.Release|x86.ActiveCfg = Release|Any CPU
 		{313D5215-7E76-4864-AEBF-0C15819D0B34}.Release|x86.Build.0 = Release|Any CPU
+		{EAF018D1-D51E-4F67-BC7F-6F7F5702C411}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAF018D1-D51E-4F67-BC7F-6F7F5702C411}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAF018D1-D51E-4F67-BC7F-6F7F5702C411}.Debug|arm64.ActiveCfg = Debug|Any CPU
+		{EAF018D1-D51E-4F67-BC7F-6F7F5702C411}.Debug|arm64.Build.0 = Debug|Any CPU
+		{EAF018D1-D51E-4F67-BC7F-6F7F5702C411}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{EAF018D1-D51E-4F67-BC7F-6F7F5702C411}.Debug|x64.Build.0 = Debug|Any CPU
+		{EAF018D1-D51E-4F67-BC7F-6F7F5702C411}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EAF018D1-D51E-4F67-BC7F-6F7F5702C411}.Debug|x86.Build.0 = Debug|Any CPU
+		{EAF018D1-D51E-4F67-BC7F-6F7F5702C411}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAF018D1-D51E-4F67-BC7F-6F7F5702C411}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAF018D1-D51E-4F67-BC7F-6F7F5702C411}.Release|arm64.ActiveCfg = Release|Any CPU
+		{EAF018D1-D51E-4F67-BC7F-6F7F5702C411}.Release|arm64.Build.0 = Release|Any CPU
+		{EAF018D1-D51E-4F67-BC7F-6F7F5702C411}.Release|x64.ActiveCfg = Release|Any CPU
+		{EAF018D1-D51E-4F67-BC7F-6F7F5702C411}.Release|x64.Build.0 = Release|Any CPU
+		{EAF018D1-D51E-4F67-BC7F-6F7F5702C411}.Release|x86.ActiveCfg = Release|Any CPU
+		{EAF018D1-D51E-4F67-BC7F-6F7F5702C411}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -227,6 +248,7 @@ Global
 		{3BB220A9-7BC9-4D45-9DC7-B5A1D659B478} = {77FEDB47-F7F6-490D-AF7C-ABB4A9E0B9D7}
 		{90CC3A84-1087-48A0-8FDC-3A0F6D4D3B4D} = {77FEDB47-F7F6-490D-AF7C-ABB4A9E0B9D7}
 		{313D5215-7E76-4864-AEBF-0C15819D0B34} = {77FEDB47-F7F6-490D-AF7C-ABB4A9E0B9D7}
+		{EAF018D1-D51E-4F67-BC7F-6F7F5702C411} = {D34EBBF2-C22B-4424-A275-0DC4E316AB21}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7B1B0433-F612-4E5A-BE7E-FCF5B9F6E136}

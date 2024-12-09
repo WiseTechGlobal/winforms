@@ -1314,17 +1314,27 @@
       </trans-unit>
       <trans-unit id="ContextMenuCollapseDescr">
         <source>Raised when the context menu collapses.</source>
-        <target state="new">Raised when the context menu collapses.</target>
+        <target state="translated">Se desencadena cuando se contrae el menú contextual.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ContextMenuImageListDescr">
+        <source>Gets or sets the ImageList associated with this context menu.</source>
+        <target state="translated">Obtiene o establece ImageList asociado con este menú contextual.</target>
         <note />
       </trans-unit>
       <trans-unit id="ContextMenuInvalidParent">
         <source>ContextMenu cannot be shown on an invisible control.</source>
-        <target state="new">ContextMenu cannot be shown on an invisible control.</target>
+        <target state="translated">No se puede mostrar ContextMenu en un control invisible.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ContextMenuIsImageMarginPresentDescr">
+        <source>Gets or sets a value indicating whether the menu has an image margin.</source>
+        <target state="translated">Obtiene o establece un valor que indica si el menú tiene un margen de imagen.</target>
         <note />
       </trans-unit>
       <trans-unit id="ContextMenuSourceControlDescr">
         <source>The last control that caused this context menu to be displayed.</source>
-        <target state="new">The last control that caused this context menu to be displayed.</target>
+        <target state="translated">Último control que hizo que se mostrara el menú contextual.</target>
         <note />
       </trans-unit>
       <trans-unit id="ContextMenuStripSourceControlDescr">
