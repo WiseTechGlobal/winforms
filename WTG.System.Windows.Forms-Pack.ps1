@@ -1,0 +1,1 @@
+nuget.exe pack src\System.Windows.Forms\src\WTG.System.Windows.Forms.nuspec -OutputDirectory Bin

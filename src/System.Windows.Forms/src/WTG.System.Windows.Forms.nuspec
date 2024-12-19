@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>WTG.System.Windows.Forms</id>
+    <version>0.0.11-dev.final</version>
+    <authors>WiseTech Global</authors>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <licenseUrl>https://licenses.nuget.org/MIT</licenseUrl>
+    <projectUrl>https://github.com/WiseTechGlobal/CargoWise.Controls.WinForms.Legacy.git</projectUrl>
+    <description>WiseTech Global forked version of System.Windows.Forms that includes controls that were deprecated in .NET Core 3.1 and .NET 5, like DataGrid, Menu, ToolBar and StatusBar.</description>
+    <copyright>© WiseTech Global Limited. All rights reserved.</copyright>
+    <serviceable>true</serviceable>
+    <repository type="git" url="https://github.com/WiseTechGlobal/CargoWise.Controls.WinForms.Legacy.git" commit="cc1b27da18be1ead5a9f479156204f948a566721" />
+    <dependencies>
+      <group targetFramework="net8.0">
+        <dependency id="Accessibility" version="4.6.0-preview3-27504-2" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Win32.SystemEvents" version="8.0.0" exclude="Build,Analyzers" />
+        <dependency id="System.Configuration.ConfigurationManager" version="8.0.0" exclude="Build,Analyzers" />
+        <dependency id="System.Resources.Extensions" version="8.0.0" exclude="Build,Analyzers" />
+        <dependency id="System.Runtime.CompilerServices.Unsafe" version="6.0.0" exclude="Build,Analyzers" />
+        <dependency id="System.Windows.Extensions" version="8.0.0" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="..\..\..\Bin\System.Windows.Forms\net8.0\System.Windows.Forms.dll" target="lib\net8.0" />
+    <file src="..\..\..\Bin\System.Windows.Forms\net8.0\System.Drawing.Common.dll" target="lib\net8.0" />
+	<file src="..\..\..\Bin\System.Windows.Forms\net8.0\System.Windows.Forms.Primitives.dll" target="lib\net8.0" />
+  </files>
+</package>
