@@ -107,7 +107,9 @@ public partial class PaintEventArgs : EventArgs, IDisposable, IDeviceContext, IG
             }
             else
             {
-                Debug.Fail("Called ResetGraphics more than once?");
+                //commented out. Getting thrown a lot when we run net8.0-windows\CargoWiseOneAnyCpu.exe in debug mode.
+                //see: WI00857973 - Comment out Debug.Fail in PaintEventArgs in forked WinForms
+                //Debug.Fail("Called ResetGraphics more than once?");
             }
         }
     }

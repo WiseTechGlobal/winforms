@@ -6,12 +6,14 @@ Migrating obsolete winforms controls to compile and run in Net 8 for CW1's ZArch
 
 | Version | What's changed |
 |------------------|-------------|
-| 0.0.6-dev.final  | initial version for net7 and net8 |
-| 0.0.7-dev.final  | System.Windows.Forms.Design.dll added to package |
-| 0.0.8-dev.final  | net8.0: changed version of System.Drawing.Common.dll (v4.0.0.0 -> v8.0.0.0) to fix Dev build |
-| 0.0.9-dev.final  | net8.0: changed versions of all libraries in package to v8.0.0.0 |
-| 0.0.10-dev.final  | skipped due to error in publishing
-| 0.0.11-dev.final  | net8.0: remove warning WFDEV001
+| 0.0.6-dev.final | initial version for net7 and net8 |
+| 0.0.7-dev.final | System.Windows.Forms.Design.dll added to package |
+| 0.0.8-dev.final | net8.0: changed version of System.Drawing.Common.dll (v4.0.0.0 -> v8.0.0.0) to fix Dev build |
+| 0.0.9-dev.final | net8.0: changed versions of all libraries in package to v8.0.0.0 |
+| 0.0.10-dev.final | skipped due to error in publishing |
+| 0.0.11-dev.final | net8.0: remove warning WFDEV001 |
+| 0.0.12-dev.final | avoid type issue when instanciated from ZBindingContext (WI00826420) |
+| 0.0.13-dev.final | comment out Debug.Fail in PaintEventArgs (WI00857973) |
 
 # WTG How to publish new version
 

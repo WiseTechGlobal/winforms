@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
     <id>WTG.System.Windows.Forms</id>
-    <version>0.0.11-dev.final</version>
+    <version>0.0.13-dev.final</version>
     <authors>WiseTech Global</authors>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <license type="expression">MIT</license>
@@ -26,6 +26,7 @@
   <files>
     <file src="..\..\..\Bin\System.Windows.Forms\net8.0\System.Windows.Forms.dll" target="lib\net8.0" />
     <file src="..\..\..\Bin\System.Windows.Forms\net8.0\System.Drawing.Common.dll" target="lib\net8.0" />
-	<file src="..\..\..\Bin\System.Windows.Forms\net8.0\System.Windows.Forms.Primitives.dll" target="lib\net8.0" />
+	  <file src="..\..\..\Bin\System.Windows.Forms\net8.0\System.Windows.Forms.Primitives.dll" target="lib\net8.0" />
+    <file src="..\..\..\artifacts\bin\System.Windows.Forms.Design\Debug\net8.0\System.Windows.Forms.Design.dll" target="lib\net8.0" />
   </files>
 </package>
