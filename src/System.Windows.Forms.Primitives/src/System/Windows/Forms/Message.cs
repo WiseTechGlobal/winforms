@@ -50,17 +50,11 @@ public struct Message : IEquatable<Message>, IHandle<HWND>
     // Marking it as obsolete in DEBUG to fail the build. In consuming projects you can skip this obsoletion
     // by adding the property <NoWarn>$(NoWarn),WFDEV001</NoWarn> to a property group in your project
     // file (or adding the warning via the project properties pages).
-/*
-Commented out because during multi-targeting, replacing WParam with WParamInternal
-triggered a warning: "Casting to/from IntPtr is unsafe, use WParamInternal.". WParamInternal
-likely ensures safer IntPtr handling. As this applies only in DEBUG mode, the warning is being
-disabled for now.
 #if DEBUG
     [Obsolete(
         $"Casting to/from IntPtr is unsafe, use {nameof(WParamInternal)}.",
         DiagnosticId = "WFDEV001")]
 #endif
-*/
     public IntPtr WParam
     {
         readonly get => (nint)(nuint)WParamInternal;

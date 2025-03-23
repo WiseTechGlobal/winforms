@@ -14,6 +14,7 @@ Migrating obsolete winforms controls to compile and run in Net 8 for CW1's ZArch
 | 0.0.11-dev.final | net8.0: remove warning WFDEV001 |
 | 0.0.12-dev.final | avoid type issue when instanciated from ZBindingContext (WI00826420) |
 | 0.0.13-dev.final | comment out Debug.Fail in PaintEventArgs (WI00857973) |
+| 0.0.14-dev.final | switched to using Release configuration assemblies instead of Debug, to avoid Microsoft's plentiful Debug.Assert checks (WI00876922) |
 
 # WTG How to publish new version
 

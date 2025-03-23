@@ -29,6 +29,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\..\..\wtg\CargoWise\Dev\EDI-Release-private.snk = ..\..\..\wtg\CargoWise\Dev\EDI-Release-private.snk
 		global.json = global.json
 		NuGet.Config = NuGet.Config
+		README.md = README.md
 		start-vs.cmd = start-vs.cmd
 		eng\Versions.props = eng\Versions.props
 	EndProjectSection
