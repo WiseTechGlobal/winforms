@@ -3,7 +3,7 @@
   <PropertyGroup>
     <MajorVersion>0</MajorVersion>
     <MinorVersion>0</MinorVersion>
-    <PatchVersion>14</PatchVersion>
+    <PatchVersion>15</PatchVersion>
     <!-- version in our package name #.#.#-below.#####.## -->
     <PreReleaseVersionLabel>preview</PreReleaseVersionLabel>
     <PreReleaseVersionIteration>1</PreReleaseVersionIteration>
@@ -21,6 +21,7 @@
     <VSRedistCommonNetCoreSharedFrameworkx6480PackageVersion>8.0.1-servicing.23580.1</VSRedistCommonNetCoreSharedFrameworkx6480PackageVersion>
     <SystemDiagnosticsEventLogPackageVersion>8.0.0</SystemDiagnosticsEventLogPackageVersion>
     <SystemDirectoryServicesPackageVersion>8.0.0</SystemDirectoryServicesPackageVersion>
+    <SystemDrawingCommonPackageVersion>8.0.0</SystemDrawingCommonPackageVersion>
     <SystemReflectionMetadataLoadContextPackageVersion>8.0.0</SystemReflectionMetadataLoadContextPackageVersion>
     <SystemSecurityCryptographyXmlPackageVersion>8.0.0</SystemSecurityCryptographyXmlPackageVersion>
     <SystemIOPackagingPackageVersion>8.0.0</SystemIOPackagingPackageVersion>

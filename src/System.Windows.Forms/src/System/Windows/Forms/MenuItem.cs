@@ -1459,7 +1459,7 @@ namespace System.Windows.Forms
             User32.MEASUREITEMSTRUCT* mis = (User32.MEASUREITEMSTRUCT*)m.LParam;
 
             // The OnMeasureItem handler now determines the height and width of the item
-            using ScreenDC screendc = ScreenDC.Create();
+            using var screendc = GetDcScope.ScreenDC;
             using Graphics graphics = Graphics.FromHdcInternal(screendc);
 
             var mie = new MeasureItemEventArgs(graphics, Index);

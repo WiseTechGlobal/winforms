@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
     <id>WTG.System.Windows.Forms</id>
-    <version>0.0.14-dev.final</version>
+    <version>0.0.15-dev.final</version>
     <authors>WiseTech Global</authors>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <license type="expression">MIT</license>
@@ -17,6 +17,7 @@
         <dependency id="Accessibility" version="4.6.0-preview3-27504-2" exclude="Build,Analyzers" />
         <dependency id="Microsoft.Win32.SystemEvents" version="8.0.0" exclude="Build,Analyzers" />
         <dependency id="System.Configuration.ConfigurationManager" version="8.0.0" exclude="Build,Analyzers" />
+        <dependency id="System.Drawing.Common" version="8.0.0" exclude="Build,Analyzers" />
         <dependency id="System.Resources.Extensions" version="8.0.0" exclude="Build,Analyzers" />
         <dependency id="System.Runtime.CompilerServices.Unsafe" version="6.0.0" exclude="Build,Analyzers" />
         <dependency id="System.Windows.Extensions" version="8.0.0" exclude="Build,Analyzers" />
@@ -25,7 +26,6 @@
   </metadata>
   <files>
     <file src="..\..\..\Bin\System.Windows.Forms\net8.0\System.Windows.Forms.dll" target="lib\net8.0" />
-    <file src="..\..\..\Bin\System.Windows.Forms\net8.0\System.Drawing.Common.dll" target="lib\net8.0" />
     <file src="..\..\..\Bin\System.Windows.Forms\net8.0\System.Windows.Forms.Primitives.dll" target="lib\net8.0" />
     <file src="..\..\..\artifacts\bin\System.Windows.Forms.Design\Release\net8.0\System.Windows.Forms.Design.dll" target="lib\net8.0" />
   </files>
