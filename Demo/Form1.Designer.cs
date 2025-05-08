@@ -86,7 +86,7 @@ namespace Demo
             fileMenuItem = new MenuItem("File");
             newMenuItem = new MenuItem("New");
             openMenuItem = new MenuItem("Open");
-            saveMenuItem = new MenuItem("Save");
+            saveMenuItem = new MenuItem("Save", SaveMenuItem_Click, Shortcut.CtrlS);
             exitMenuItem = new MenuItem("Exit");
             viewMenuItem = new MenuItem("View");
             toolboxMenuItem = new MenuItem("Toolbox");
@@ -106,6 +106,8 @@ namespace Demo
 
             saveMenuItem.Checked = true;
             saveMenuItem.RadioCheck = true;
+            //saveMenuItem.Shortcut = Shortcut.CtrlS;
+            //saveMenuItem.ShowShortcut = true;
 
             // Add sub-menu items to the "File" menu item
             fileMenuItem.MenuItems.Add(newMenuItem);
@@ -131,7 +133,7 @@ namespace Demo
             // Add event handlers for menu items
             //newMenuItem.Click += NewMenuItem_Click;
             openMenuItem.Click += OpenMenuItem_Click;
-            saveMenuItem.Click += SaveMenuItem_Click;
+            //saveMenuItem.Click += SaveMenuItem_Click;
             exitMenuItem.Click += ExitMenuItem_Click;
 
             toolboxMenuItem.Click += ToolboxMenuItem_Click;

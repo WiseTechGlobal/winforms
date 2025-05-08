@@ -16,6 +16,7 @@ Migrating obsolete winforms controls to compile and run in Net 8 for CW1's ZArch
 | 0.0.13-dev.final | comment out Debug.Fail in PaintEventArgs (WI00857973) |
 | 0.0.14-dev.final | switched to using Release configuration assemblies instead of Debug, to avoid Microsoft's plentiful Debug.Assert checks (WI00876922) |
 | 0.0.15-dev.final | removed need for forked System.Drawing.Common. We can use the public package listed on nuget.org now. |
+| 0.0.16-dev.final | fixed issue with keyboard shortcuts associated with menus not being captured (WI00895180) |
 
 # WTG How to publish new version
 

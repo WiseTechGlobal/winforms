@@ -4736,6 +4736,9 @@ public partial class Form : ContainerControl
         msg.LParamInternal = win32Message.lParam;
         msg.HWnd = win32Message.hwnd;
 
+        // Process main menu accelerator keys.
+        retValue = Menu?.ProcessCmdKey(ref msg, keyData) == true || retValue;
+
         return retValue;
     }
 
