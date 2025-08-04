@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
     <id>WTG.System.Windows.Forms</id>
-    <version>0.0.15-dev.final</version>
+    <version>0.0.17-dev.final</version>
     <authors>WiseTech Global</authors>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <license type="expression">MIT</license>

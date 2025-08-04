@@ -30,7 +30,7 @@ public unsafe class WebBrowserSiteBase :
     IPropertyNotifySink.Interface,
     IDisposable
 {
-    private readonly WebBrowserBase host;
+    private readonly WeakReference<WebBrowserBase> host;
     private AxHost.ConnectionPointCookie? connectionPoint;
 
     //
@@ -40,7 +40,7 @@ public unsafe class WebBrowserSiteBase :
     //
     internal WebBrowserSiteBase(WebBrowserBase h)
     {
-        host = h.OrThrowIfNull();
+        host = new(h.OrThrowIfNull());
     }
 
     /// <summary>
@@ -65,7 +65,18 @@ public unsafe class WebBrowserSiteBase :
     /// <summary>
     ///  Retrieves the WebBrowserBase object set in the constructor.
     /// </summary>
-    internal WebBrowserBase Host => host;
+    internal WebBrowserBase Host
+    {
+        get
+        {
+            if (host.TryGetTarget(out var target))
+            {
+                return target;
+            }
+
+            return null;
+        }
+    }
 
     // IOleControlSite methods:
     HRESULT IOleControlSite.Interface.OnControlInfoChanged() => HRESULT.S_OK;
