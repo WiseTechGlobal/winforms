@@ -23,18 +23,8 @@ Migrating obsolete winforms controls to compile and run in Net 8 for CW1's ZArch
 
 * Do changes in code you want to be published
 * Increase version in $(LIB_ROOT)\eng\Versions.props
-* Run `git clean -fdx` to remove all possible artifacts of previous builds.
-* Run QGL Full Build
-* Go to $(LIB_ROOT)\artifacts\packages\Debug\Shipping\ and rename nupkg file to zip.
-* Unpack zip file to new directory
-* Inside unpacked dir edit System.Windows.Forms.nuspec file and delete lines <dependency id="System.Drawing.Common" ... /> and <dependency id="System.Windows.Forms.Primitives" ... />
-* Copy $(LIB_ROOT)\artifacts\bin\System.Windows.Forms.Design\Debug\net8.0\System.Windows.Forms.Design.dll (and .xml) to $(Unpacked_nuget)\lib\net8.0\
-* [Optional] Copy $(LIB_ROOT)\artifacts\bin\System.Windows.Forms.Primitives\Debug\net8.0\System.Windows.Forms.Primitives.xml to $(Unpacked_nuget)\lib\net8.0\
-* [Optional] Copy $(LIB_ROOT)\artifacts\bin\System.Drawing.Common\Debug\net8.0\System.Drawing.Common.xml to $(Unpacked_nuget)\lib\net8.0\
-* Compress $(Unpacked_nuget) directory back to zip file (Note: Don't compress root $(Unpacked_nuget) dir, compress items inside that dir).
-* Rename zip file back to System.Windows.Forms.$(Version)-dev.final.nupkg
-* Found secret key for proget. For example, ask your colleagues.
-* Push new package to proget using: dotnet nuget push System.Windows.Forms.$(Version)-dev.final.nupkg --api-key "put-not-so-secret-key-here" --source "https://proget.wtg.zone/nuget/WTG-Internal/v3/index.json"
+* CH0 on DAT
+* Go to DAT deployments for the CH0 build and click deploy
 
 # End of WTG part, Microsoft part below
 

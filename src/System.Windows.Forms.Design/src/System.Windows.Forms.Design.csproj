@@ -17,6 +17,7 @@
     <NoWarn>$(NoWarn);IDE0090</NoWarn>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
     <UsePublicApiAnalyzers>true</UsePublicApiAnalyzers>
+    
   </PropertyGroup>
 
   <ItemGroup>
@@ -105,4 +106,8 @@
     <Compile Update="System\Windows\Forms\Design\FormatControl.cs" />
     <Compile Update="System\Windows\Forms\Design\FormatStringDialog.cs" />
   </ItemGroup>
+
+
+  <!-- Import custom packaging targets -->
+  <Import Project="$(RepositoryEngineeringDir)CustomPackaging.targets" />
 </Project>

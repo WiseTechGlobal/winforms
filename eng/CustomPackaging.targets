@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  
+  <!-- Custom packaging target that runs after the main package is created -->
+  <Target Name="CreateCustomNuGetPackage" 
+          AfterTargets="Build" 
+          Condition="'$(Configuration)' == 'Release' AND '$(MSBuildProjectName)' == 'System.Windows.Forms.Design'">
+    
+    <PropertyGroup>
+      <!-- Base paths -->
+      <PackagesOutputDir>$(ArtifactsDir)packages\$(Configuration)\Shipping</PackagesOutputDir>
+      <OriginalPackageName>WTG.System.Windows.Forms.$(PackageVersion).nupkg</OriginalPackageName>
+      <OriginalPackagePath>$(PackagesOutputDir)\$(OriginalPackageName)</OriginalPackagePath>
+      <CustomPackageName>System.Windows.Forms.$(PackageVersion).nupkg</CustomPackageName>
+      <CustomPackagePath>$(RepoRoot)\bin\$(CustomPackageName)</CustomPackagePath>
+      
+      <!-- Source directories for additional files -->
+      <DesignBinDir>$(ArtifactsDir)bin\System.Windows.Forms.Design\$(Configuration)\net8.0</DesignBinDir>
+      
+      <!-- PowerShell script path -->
+      <PowerShellScriptPath>$(RepoRoot)CreateCustomPackage.ps1</PowerShellScriptPath>
+    </PropertyGroup>
+
+    <Message Text="Starting custom NuGet package creation for System.Windows.Forms..." Importance="high" />
+    <Message Text="Original package: $(OriginalPackagePath)" Importance="normal" />
+    <Message Text="Target package: $(CustomPackagePath)" Importance="normal" />
+    <Message Text="Design bin directory: $(DesignBinDir)" Importance="normal" />
+
+    <!-- Ensure the original package exists -->
+    <Error Condition="!Exists('$(OriginalPackagePath)')" 
+           Text="Original package not found at: $(OriginalPackagePath)" />
+
+    <!-- Ensure the PowerShell script exists -->
+    <Error Condition="!Exists('$(PowerShellScriptPath)')" 
+           Text="PowerShell script not found at: $(PowerShellScriptPath)" />
+    
+    <!-- Call the PowerShell script to do the actual work -->
+    <Exec Command="powershell.exe -NoProfile -ExecutionPolicy Bypass -File &quot;$(PowerShellScriptPath)&quot; -OriginalPackagePath &quot;$(OriginalPackagePath)&quot; -CustomPackagePath &quot;$(CustomPackagePath)&quot; -DesignBinDir &quot;$(DesignBinDir)&quot;" 
+          ContinueOnError="false" />
+    
+    <Message Text="Custom NuGet package created successfully: $(CustomPackagePath)" Importance="high" />
+    
+  </Target>
+
+</Project>
