@@ -6,7 +6,7 @@
   <Dependencies>
     <Dependency Repository="https://github.com/WiseTechGlobal/CargoWiseCloud.Shared"
       Path="Deployment">
-      <Copy Source="*" Target="Deployment" />
+      <Copy Source="*" />
     </Dependency>
   </Dependencies>
 
