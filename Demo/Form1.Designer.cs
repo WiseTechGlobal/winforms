@@ -123,6 +123,11 @@ namespace Demo
             mainMenu.MenuItems.Add(fileMenuItem);
             mainMenu.MenuItems.Add(viewMenuItem);
 
+            var dynamicMenuItem = new MenuItem("Dynamic");
+            dynamicMenuItem.MenuItems.Add(new MenuItem("Dynamic code has not run yet"));
+            dynamicMenuItem.Popup += DynamicMenuItem_Popup;
+            mainMenu.MenuItems.Add(dynamicMenuItem);
+
             // Set the form's main menu
             this.Menu = mainMenu;
 
@@ -139,8 +144,19 @@ namespace Demo
             toolboxMenuItem.Click += ToolboxMenuItem_Click;
             terminalMenuItem.Click += TerminalMenuItem_Click;
             outputMenuItem.Click += OutputMenuItem_Click;
+        }
 
-            this.Controls.Add(mainMenu);
+        private void DynamicMenuItem_Popup(object sender, EventArgs e)
+        {
+            MenuItem dynamicMenuItem = sender as MenuItem;
+            if (dynamicMenuItem != null)
+            {
+                dynamicMenuItem.MenuItems.Clear();
+                for (int i = 1; i <= 5; i++)
+                {
+                    dynamicMenuItem.MenuItems.Add(new MenuItem($"Dynamic Item {i}"));
+                }
+            }
         }
 
         private void InitializeMenuStrip()
