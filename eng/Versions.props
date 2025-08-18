@@ -3,7 +3,7 @@
   <PropertyGroup>
     <MajorVersion>0</MajorVersion>
     <MinorVersion>0</MinorVersion>
-    <PatchVersion>18</PatchVersion>
+    <PatchVersion>19</PatchVersion>
     <!-- version in our package name #.#.#-below.#####.## -->
     <PreReleaseVersionLabel>preview</PreReleaseVersionLabel>
     <PreReleaseVersionIteration>1</PreReleaseVersionIteration>

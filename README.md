@@ -18,6 +18,8 @@ Migrating obsolete winforms controls to compile and run in Net 8 for CW1's ZArch
 | 0.0.15-dev.final | removed need for forked System.Drawing.Common. We can use the public package listed on nuget.org now. |
 | 0.0.16-dev.final | fixed issue with keyboard shortcuts associated with menus not being captured (WI00895180) |
 | 0.0.17-dev.final | temporarily fixed WebBrowser memory leak (WI00938771) |
+| 0.0.18-dev.final | fixed menu popup events not firing (WI00949199) |
+| 0.0.19-dev.final | fixed menu bar size not taken into account in form sizing (WI00949199) |
 
 # WTG How to publish new version
 
