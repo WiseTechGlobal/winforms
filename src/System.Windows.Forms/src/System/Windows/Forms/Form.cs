@@ -728,7 +728,7 @@ public partial class Form : ContainerControl
         TypeConverter(typeof(ReferenceConverter)),
         Browsable(false),
     ]
-    public MainMenu Menu
+    public MainMenu? Menu
     {
         get
         {
@@ -1254,6 +1254,26 @@ public partial class Form : ContainerControl
             SourceGenerated.EnumValidator.Validate(value);
 
             _dialogResult = value;
+        }
+    }
+
+    internal override bool HasMenu
+    {
+        get
+        {
+            bool hasMenu = false;
+
+            // Verify that the menu actually contains items so that any
+            // size calculations will only include a menu height if the menu actually exists.
+            // Note that Windows will not draw a menu bar for a menu that does not contain
+            // any items.
+            Menu menu = Menu;
+            if (TopLevel && menu != null && menu.ItemCount > 0)
+            {
+                hasMenu = true;
+            }
+
+            return hasMenu;
         }
     }
 
@@ -3344,7 +3364,7 @@ public partial class Form : ContainerControl
     private Size ComputeWindowSize(Size clientSize, WINDOW_STYLE style, WINDOW_EX_STYLE exStyle)
     {
         RECT result = new(clientSize);
-        AdjustWindowRectExForControlDpi(ref result, style, false, exStyle);
+        AdjustWindowRectExForControlDpi(ref result, style, HasMenu, exStyle);
         return result.Size;
     }
 

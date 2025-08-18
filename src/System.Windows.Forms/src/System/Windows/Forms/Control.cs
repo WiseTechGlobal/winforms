@@ -2726,6 +2726,8 @@ public unsafe partial class Control :
         }
     }
 
+    internal virtual bool HasMenu => false;
+
     /// <summary>
     ///  The height of this control
     /// </summary>
@@ -5979,11 +5981,11 @@ public unsafe partial class Control :
         CreateParams cp = CreateParams;
 
         // We would need to get adornments metrics for both (old and new) Dpi in case application is in PerMonitorV2 mode and Dpi changed.
-        AdjustWindowRectExForControlDpi(ref adornmentsAfterDpiChange, (WINDOW_STYLE)cp.Style, bMenu: false, (WINDOW_EX_STYLE)cp.ExStyle);
+        AdjustWindowRectExForControlDpi(ref adornmentsAfterDpiChange, (WINDOW_STYLE)cp.Style, bMenu: HasMenu, (WINDOW_EX_STYLE)cp.ExStyle);
 
         if (_oldDeviceDpi != _deviceDpi && OsVersion.IsWindows10_1703OrGreater())
         {
-            AdjustWindowRectExForDpi(ref adornmentsBeforeDpiChange, (WINDOW_STYLE)cp.Style, bMenu: false, (WINDOW_EX_STYLE)cp.ExStyle, _oldDeviceDpi);
+            AdjustWindowRectExForDpi(ref adornmentsBeforeDpiChange, (WINDOW_STYLE)cp.Style, bMenu: HasMenu, (WINDOW_EX_STYLE)cp.ExStyle, _oldDeviceDpi);
         }
         else
         {
@@ -10626,7 +10628,7 @@ public unsafe partial class Control :
     {
         CreateParams cp = CreateParams;
         RECT adornments = default;
-        AdjustWindowRectExForControlDpi(ref adornments, (WINDOW_STYLE)cp.Style, false, (WINDOW_EX_STYLE)cp.ExStyle);
+        AdjustWindowRectExForControlDpi(ref adornments, (WINDOW_STYLE)cp.Style, HasMenu, (WINDOW_EX_STYLE)cp.ExStyle);
         Size minSize = MinimumSize;
         Size maxSize = MaximumSize;
 
@@ -11108,7 +11110,7 @@ public unsafe partial class Control :
     {
         RECT rect = new(size);
         CreateParams cp = CreateParams;
-        AdjustWindowRectExForControlDpi(ref rect, (WINDOW_STYLE)cp.Style, false, (WINDOW_EX_STYLE)cp.ExStyle);
+        AdjustWindowRectExForControlDpi(ref rect, (WINDOW_STYLE)cp.Style, HasMenu, (WINDOW_EX_STYLE)cp.ExStyle);
         return rect.Size;
     }
 
