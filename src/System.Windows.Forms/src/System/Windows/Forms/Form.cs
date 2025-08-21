@@ -757,7 +757,7 @@ public partial class Form : ContainerControl
                     value._form = this;
                 }
 
-                if (formState[FormStateSetClientSize] == 1 && !IsHandleCreated)
+                if (_formState[FormStateSetClientSize] == 1 && !IsHandleCreated)
                 {
                     ClientSize = ClientSize;
                 }
@@ -766,8 +766,6 @@ public partial class Form : ContainerControl
             }
         }
     }
-
-    private MdiClient ctlClient;
 
     // Package scope for menu interop
     internal void MenuChanged(int change, Menu menu)
@@ -783,7 +781,7 @@ public partial class Form : ContainerControl
         {
             case Windows.Forms.Menu.CHANGE_ITEMS:
             case Windows.Forms.Menu.CHANGE_MERGE:
-                if (ctlClient == null || !ctlClient.IsHandleCreated)
+                if (_ctlClient == null || !_ctlClient.IsHandleCreated)
                 {
                     if (menu == Menu && change == Windows.Forms.Menu.CHANGE_ITEMS)
                     {
@@ -799,7 +797,7 @@ public partial class Form : ContainerControl
                     UpdateMenuHandles(null, false);
                 }
 
-                Control.ControlCollection children = ctlClient.Controls;
+                Control.ControlCollection children = _ctlClient.Controls;
                 for (int i = children.Count; i-- > 0;)
                 {
                     Control ctl = children[i];
@@ -824,7 +822,7 @@ public partial class Form : ContainerControl
 
                 break;
             case Windows.Forms.Menu.CHANGE_MDI:
-                if (ctlClient != null && ctlClient.IsHandleCreated)
+                if (_ctlClient != null && _ctlClient.IsHandleCreated)
                 {
                     UpdateMenuHandles();
                 }
@@ -833,7 +831,6 @@ public partial class Form : ContainerControl
         }
     }
 
-    private BitVector32 formStateEx = new BitVector32();
     private static readonly int PropCurMenu = PropertyStore.CreateKey();
     private static readonly int PropDummyMenu = PropertyStore.CreateKey();
 
@@ -872,10 +869,10 @@ public partial class Form : ContainerControl
     {
         Debug.Assert(IsHandleCreated, "shouldn't call when handle == 0");
 
-        int suspendCount = formStateEx[FormStateExUpdateMenuHandlesSuspendCount];
+        int suspendCount = _formStateEx[FormStateExUpdateMenuHandlesSuspendCount];
         if (suspendCount > 0 && menu != null)
         {
-            formStateEx[FormStateExUpdateMenuHandlesDeferred] = 1;
+            _formStateEx[FormStateExUpdateMenuHandlesDeferred] = 1;
             return;
         }
 
@@ -890,7 +887,7 @@ public partial class Form : ContainerControl
             Properties.SetObject(PropCurMenu, curMenu);
         }
 
-        if (ctlClient == null || !ctlClient.IsHandleCreated)
+        if (_ctlClient == null || !_ctlClient.IsHandleCreated)
         {
             if (menu != null)
             {
@@ -928,14 +925,14 @@ public partial class Form : ContainerControl
                     Properties.SetObject(PropDummyMenu, dummyMenu);
                 }
 
-                UnsafeNativeMethods.SendMessage(new HandleRef(ctlClient, ctlClient.Handle), WindowMessages.WM_MDISETMENU, dummyMenu.Handle, IntPtr.Zero);
+                UnsafeNativeMethods.SendMessage(new HandleRef(_ctlClient, _ctlClient.Handle), WindowMessages.WM_MDISETMENU, dummyMenu.Handle, IntPtr.Zero);
 
                 if (menu != null)
                 {
 
                     // Microsoft, 5/2/1998 - don't use Win32 native Mdi lists...
                     //
-                    UnsafeNativeMethods.SendMessage(new HandleRef(ctlClient, ctlClient.Handle), WindowMessages.WM_MDISETMENU, menu.Handle, IntPtr.Zero);
+                    UnsafeNativeMethods.SendMessage(new HandleRef(_ctlClient, _ctlClient.Handle), WindowMessages.WM_MDISETMENU, menu.Handle, IntPtr.Zero);
                 }
             }
 
@@ -972,11 +969,10 @@ public partial class Form : ContainerControl
             SafeNativeMethods.DrawMenuBar(new HandleRef(this, Handle));
         }
 
-        formStateEx[FormStateExUpdateMenuHandlesDeferred] = 0;
+        _formStateEx[FormStateExUpdateMenuHandlesDeferred] = 0;
     }
 
     private static readonly int PropMergedMenu = PropertyStore.CreateKey();
-    private BitVector32 formState = new BitVector32(0x21338);
 
     /// <summary>
     ///  Gets

@@ -252,5 +252,48 @@
             Assert.That(windowHeightDiff, Is.EqualTo(clientHeightDiff), 
                 "Window height difference should equal client height difference (menu bar height is constant)");
         }
+
+        [Test]
+        public void Form_MenuRemovedBeforeHandleCreated_SizeUpdatesImmediately()
+        {
+            // This test verifies the fix for the issue where setting Menu to null 
+            // before handle creation didn't update the form size immediately
+            
+            // Arrange
+            using var form = new Form();
+            
+            // Create menu with items
+            var menu = new MainMenu();
+            menu.MenuItems.Add(new MenuItem("File"));
+            menu.MenuItems.Add(new MenuItem("Edit"));
+            
+            // Set menu first
+            form.Menu = menu;
+            
+            // Set client size - this should trigger FormStateSetClientSize
+            var targetClientSize = new Size(400, 300);
+            form.ClientSize = targetClientSize;
+            
+            // Capture size with menu (before handle is created)
+            var sizeWithMenu = form.Size;
+            
+            // Act - Remove menu before handle is created
+            // This should trigger the fix in line 760: if FormStateSetClientSize == 1 && !IsHandleCreated
+            form.Menu = null;
+            
+            // Assert
+            var sizeWithoutMenu = form.Size;
+            
+            // The form size should be updated immediately when menu is removed
+            Assert.That(sizeWithoutMenu.Height, Is.LessThan(sizeWithMenu.Height), 
+                "Form height should decrease immediately when menu is removed before handle creation");
+            
+            Assert.That(form.ClientSize, Is.EqualTo(targetClientSize), 
+                "Client size should remain the target size after menu removal");
+            
+            // Width should remain the same
+            Assert.That(sizeWithoutMenu.Width, Is.EqualTo(sizeWithMenu.Width), 
+                "Form width should not change when menu is removed");
+        }
     }
 }
