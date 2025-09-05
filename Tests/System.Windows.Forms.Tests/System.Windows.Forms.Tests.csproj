@@ -8,6 +8,8 @@
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
     <OutputPath>$([System.IO.Path]::GetFullPath('$(RepoRoot)Bin\$(OutDirName)\'))</OutputPath>
+    <!-- Sign test assembly with the ECMA key to align with existing InternalsVisibleTo entries -->
+    <StrongNameKeyId>ECMA</StrongNameKeyId>
   </PropertyGroup>
 
   <ItemGroup>

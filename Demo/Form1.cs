@@ -124,6 +124,7 @@ namespace Demo
             toolBar = new ToolBar();
             toolBar.Buttons.Add("1st button");
             var btn1 = toolBar.Buttons[0];
+            btn1.ToolTipText = "This is the first button";
 
             var sep1 = new ToolBarButton("sep1");
             sep1.Style = ToolBarButtonStyle.Separator;
@@ -131,10 +132,12 @@ namespace Demo
 
             var btn2 = new ToolBarButton("btn2 toggle");
             btn2.Style = ToolBarButtonStyle.ToggleButton;
+            btn2.ToolTipText = "This is the second button";
             toolBar.Buttons.Add(btn2);
 
             var btn3 = new ToolBarButton("btn3 drop-down");
             btn3.Style = ToolBarButtonStyle.DropDownButton;
+            btn3.ToolTipText = "This is the third button";
 
             MenuItem menuItem1 = new MenuItem("Wave");
             menuItem1.Click += (sender, e) => MessageBox.Show("Wave back");

@@ -1747,7 +1747,7 @@ namespace System.Windows.Forms
                             // Prevent the tooltip from displaying in the upper left corner of the
                             // desktop when the control is nowhere near that location.
                             WINDOWPLACEMENT wndPlacement = new();
-                            int nRet = PInvoke.GetWindowPlacement(HWND, ref wndPlacement);
+                            int nRet = PInvoke.GetWindowPlacement(note.hwndFrom, ref wndPlacement);
 
                             // Is this tooltip going to be positioned in the upper left corner of the display,
                             // but nowhere near the toolbar button?
@@ -1798,7 +1798,7 @@ namespace System.Windows.Forms
                                     leftTop.X -= (ButtonSize.Width + tooltipWidth + 2);
                                 }
 
-                                PInvoke.SetWindowPos(HWND, HWND.Null, leftTop.X, leftTop.Y, 0, 0, SET_WINDOW_POS_FLAGS.SWP_NOSIZE | SET_WINDOW_POS_FLAGS.SWP_NOZORDER | SET_WINDOW_POS_FLAGS.SWP_NOACTIVATE);
+                                PInvoke.SetWindowPos(note.hwndFrom, HWND.Null, leftTop.X, leftTop.Y, 0, 0, SET_WINDOW_POS_FLAGS.SWP_NOSIZE | SET_WINDOW_POS_FLAGS.SWP_NOZORDER | SET_WINDOW_POS_FLAGS.SWP_NOACTIVATE);
                                 m.Result = (IntPtr)1;
                                 return;
                             }

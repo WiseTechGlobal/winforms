@@ -155,8 +155,6 @@ namespace System.Windows.Forms
 
                     if (parent != null && parent.IsHandleCreated)
                     {
-                        //parent.SendMessage(NativeMethods.TB_ENABLEBUTTON, FindButtonIndex(),
-                        //    enabled ? 1 : 0);
                         PInvoke.SendMessage(parent, PInvoke.TB_ENABLEBUTTON, (WPARAM)FindButtonIndex(),
                             enabled ? 1 : 0);
                     }
@@ -289,7 +287,6 @@ namespace System.Windows.Forms
                 }
                 else
                 {
-                    //if ((int)parent.SendMessage(NativeMethods.TB_ISBUTTONINDETERMINATE, FindButtonIndex(), 0) != 0)
                     if ((int)PInvoke.SendMessage(parent, PInvoke.TB_ISBUTTONINDETERMINATE, (WPARAM)FindButtonIndex(), 0) != 0)
                     {
                         partialPush = true;
@@ -353,7 +350,6 @@ namespace System.Windows.Forms
                 if (parent != null)
                 {
                     RECT rc = new RECT();
-                    //UnsafeNativeMethods.SendMessage(new HandleRef(parent, parent.Handle), PInvoke.TB_GETRECT, FindButtonIndex(), ref rc);
                     PInvoke.SendMessage(parent, PInvoke.TB_GETRECT, (WPARAM)FindButtonIndex(), ref rc);
                     return Rectangle.FromLTRB(rc.left, rc.top, rc.right, rc.bottom);
                 }
@@ -632,7 +628,6 @@ namespace System.Windows.Forms
 
         private bool GetPushedState()
         {
-            //if ((int)parent.SendMessage(NativeMethods.TB_ISBUTTONCHECKED, FindButtonIndex(), 0) != 0)
             if ((int)PInvoke.SendMessage(parent, PInvoke.TB_ISBUTTONCHECKED, (WPARAM)FindButtonIndex(), 0) != 0)
             {
                 pushed = true;
