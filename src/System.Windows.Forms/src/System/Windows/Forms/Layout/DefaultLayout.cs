@@ -790,24 +790,12 @@ internal partial class DefaultLayout : LayoutEngine
         AnchorStyles anchor = GetAnchor(element);
         if (IsAnchored(anchor, AnchorStyles.Right))
         {
-            if (DpiHelper.IsScalingRequirementMet && (anchorInfo.Right - parentWidth > 0) && (oldAnchorInfo.Right < 0))
-            {
-                // Parent was resized to fit its parent, or screen, we need to reuse old anchors info to prevent losing control beyond right edge.
-                anchorInfo.Right = oldAnchorInfo.Right;
-                if (!IsAnchored(anchor, AnchorStyles.Left))
-                {
-                    // Control might have been resized, update Left anchors.
-                    anchorInfo.Left = oldAnchorInfo.Right - cachedBounds.Width;
-                }
-            }
-            else
-            {
-                anchorInfo.Right -= parentWidth;
+            // This differs from the official WinForms implementation because we encountered an issue with DPI handling. See WI00955507.
+            anchorInfo.Right -= parentWidth;
 
-                if (!IsAnchored(anchor, AnchorStyles.Left))
-                {
-                    anchorInfo.Left -= parentWidth;
-                }
+            if (!IsAnchored(anchor, AnchorStyles.Left))
+            {
+                anchorInfo.Left -= parentWidth;
             }
         }
         else if (!IsAnchored(anchor, AnchorStyles.Left))
@@ -818,25 +806,12 @@ internal partial class DefaultLayout : LayoutEngine
 
         if (IsAnchored(anchor, AnchorStyles.Bottom))
         {
-            if (DpiHelper.IsScalingRequirementMet && (anchorInfo.Bottom - parentHeight > 0) && (oldAnchorInfo.Bottom < 0))
-            {
-                // The parent was resized to fit its parent or the screen, we need to reuse the old anchors info to prevent positioning the control beyond the bottom edge.
-                anchorInfo.Bottom = oldAnchorInfo.Bottom;
+            // This differs from the official WinForms implementation because we encountered an issue with DPI handling. See WI00955507.
+            anchorInfo.Bottom -= parentHeight;
 
-                if (!IsAnchored(anchor, AnchorStyles.Top))
-                {
-                    // The control might have been resized, update the Top anchor.
-                    anchorInfo.Top = oldAnchorInfo.Bottom - cachedBounds.Height;
-                }
-            }
-            else
+            if (!IsAnchored(anchor, AnchorStyles.Top))
             {
-                anchorInfo.Bottom -= parentHeight;
-
-                if (!IsAnchored(anchor, AnchorStyles.Top))
-                {
-                    anchorInfo.Top -= parentHeight;
-                }
+                anchorInfo.Top -= parentHeight;
             }
         }
         else if (!IsAnchored(anchor, AnchorStyles.Top))

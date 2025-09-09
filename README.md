@@ -22,6 +22,7 @@ Migrating obsolete winforms controls to compile and run in Net 8 for CW1's ZArch
 | 0.0.19-dev.final | fixed menu bar size not taken into account in form sizing (WI00949199) |
 | 0.0.20-dev.final | Menu property change should trigger size update (WI00949199) |
 | 0.0.21-dev.final | fixed ToolBar tooltip moving the position of the toolbar (WI00951596) |
+| 0.0.22-dev.final | fixed control's anchor info (WI00955507) |
 
 # WTG How to publish new version
 
