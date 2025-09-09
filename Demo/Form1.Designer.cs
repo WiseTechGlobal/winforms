@@ -128,6 +128,67 @@ namespace Demo
             dynamicMenuItem.Popup += DynamicMenuItem_Popup;
             mainMenu.MenuItems.Add(dynamicMenuItem);
 
+            // Add Owner Draw Demo menu
+            var ownerDrawDemoMenuItem = new MenuItem("Owner Draw Demo");
+            
+            // Create owner-draw menu items
+            var ownerDrawItem3 = new OwnerDrawMenuItem();
+            ownerDrawItem3.Text = "Custom Draw Item 1";
+            ownerDrawItem3.Click += (s, e) => MessageBox.Show("Custom Owner Draw Item 1 clicked!");
+            
+            // Add submenu items to ownerDrawItem3
+            var subItem1_1 = new OwnerDrawMenuItem();
+            subItem1_1.Text = "Submenu Item 1-1";
+            subItem1_1.Click += (s, e) => MessageBox.Show("Submenu Item 1-1 clicked!");
+            
+            var subItem1_2 = new OwnerDrawMenuItem();
+            subItem1_2.Text = "Submenu Item 1-2";
+            subItem1_2.Click += (s, e) => MessageBox.Show("Submenu Item 1-2 clicked!");
+            
+            ownerDrawItem3.MenuItems.Add(subItem1_1);
+            ownerDrawItem3.MenuItems.Add(subItem1_2);
+            
+            var ownerDrawItem4 = new OwnerDrawMenuItem();
+            ownerDrawItem4.Text = "Custom Draw Item 2"; 
+            ownerDrawItem4.Click += (s, e) => MessageBox.Show("Custom Owner Draw Item 2 clicked!");
+            
+            // Add submenu items to ownerDrawItem4
+            var subItem2_1 = new OwnerDrawMenuItem();
+            subItem2_1.Text = "Nested Custom Item A";
+            subItem2_1.Click += (s, e) => MessageBox.Show("Nested Custom Item A clicked!");
+            
+            var subItem2_2 = new OwnerDrawMenuItem();
+            subItem2_2.Text = "Nested Custom Item B";
+            subItem2_2.Click += (s, e) => MessageBox.Show("Nested Custom Item B clicked!");
+            
+            ownerDrawItem4.MenuItems.Add(subItem2_1);
+            ownerDrawItem4.MenuItems.Add(subItem2_2);
+            
+            // Add a sub-submenu to test deeper nesting
+            var deepSubmenu = new MenuItem("Deep Submenu");
+            var deepSubItem1 = new OwnerDrawMenuItem();
+            deepSubItem1.Text = "Deep Custom Item 1";
+            deepSubItem1.Click += (s, e) => MessageBox.Show("Deep Custom Item 1 clicked!\nThree levels deep with custom drawing!");
+            
+            var deepSubItem2 = new OwnerDrawMenuItem();
+            deepSubItem2.Text = "Deep Custom Item 2";
+            deepSubItem2.Click += (s, e) => MessageBox.Show("Deep Custom Item 2 clicked!\nCustom drawing works at any depth!");
+            
+            deepSubmenu.MenuItems.Add(deepSubItem1);
+            deepSubmenu.MenuItems.Add(deepSubItem2);
+            
+            ownerDrawItem4.MenuItems.Add(subItem2_1);
+            ownerDrawItem4.MenuItems.Add(subItem2_2);
+            ownerDrawItem4.MenuItems.Add(new MenuItem("-")); // Separator
+            ownerDrawItem4.MenuItems.Add(deepSubmenu);
+            
+            ownerDrawDemoMenuItem.MenuItems.Add(new MenuItem("Standard Item"));
+            ownerDrawDemoMenuItem.MenuItems.Add(new MenuItem("-"));
+            ownerDrawDemoMenuItem.MenuItems.Add(ownerDrawItem3);
+            ownerDrawDemoMenuItem.MenuItems.Add(ownerDrawItem4);
+            
+            mainMenu.MenuItems.Add(ownerDrawDemoMenuItem);
+
             // Set the form's main menu
             this.Menu = mainMenu;
 

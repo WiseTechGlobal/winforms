@@ -261,7 +261,7 @@ public unsafe partial class Control :
     {
         // If the wparam is zero, then the message was sent by a menu.
         // See WM_DRAWITEM in MSDN.
-        if (m.WParam == IntPtr.Zero)
+        if (m.WParamInternal == 0u)
         {
             WmDrawItemMenuItem(ref m);
         }
@@ -292,7 +292,7 @@ public unsafe partial class Control :
     {
         // If the wparam is zero, then the message was sent by a menu.
         // See WM_MEASUREITEM in MSDN.
-        if (m.WParam == IntPtr.Zero)
+        if (m.WParamInternal == 0u)
         {
             // Obtain the menu item object
             Debug.Assert(m.LParam != IntPtr.Zero, "m.lparam is null");
@@ -13288,11 +13288,7 @@ public unsafe partial class Control :
                 break;
 
             case PInvoke.WM_DRAWITEM:
-                if (m.WParamInternal != 0u)
-                {
-                    WmOwnerDraw(ref m);
-                }
-
+                WmDrawItem(ref m);
                 break;
 
             case PInvoke.WM_ERASEBKGND:
@@ -13361,11 +13357,7 @@ public unsafe partial class Control :
                 break;
 
             case PInvoke.WM_MEASUREITEM:
-                if (m.WParamInternal != 0u)
-                {
-                    WmOwnerDraw(ref m);
-                }
-
+                WmMeasureItem(ref m);
                 break;
 
             case PInvoke.WM_SETCURSOR:
