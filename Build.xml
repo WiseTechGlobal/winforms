@@ -7,7 +7,7 @@
     <Command cacheable="false">powershell.exe -ExecutionPolicy Bypass .\DeploymentSetup.ps1</Command>
   </PreBuild>
 
-	<DatSettings BuildDeployerType="CargoWiseCloud.Deployment.DotNetNuGetDeployer, CargoWiseCloud.Deployment">
+	<DatSettings BuildDeployerType="CargoWiseCloud.Deployment.DotNetNuGetDeployer, CargoWiseCloud.Deployment" BuildDeployerRuntime="DotNet64">
 		<TestAdapter Type="Dat.Implementation.VSTest.VSTestAdapter, Dat.Implementation.VSTest" />
 		<DeploymentTargets>
 			<DeploymentTarget Type="DeployOnDemand" BuildConfiguration="RELEASE" />
