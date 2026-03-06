@@ -12,6 +12,7 @@ using System.Windows.Forms.Layout;
 using System.Windows.Forms.VisualStyles;
 using static Interop;
 using static Interop.ComCtl32;
+using INITCOMMONCONTROLSEX = Windows.Win32.UI.Controls.INITCOMMONCONTROLSEX;
 
 namespace System.Windows.Forms;
 
@@ -1650,6 +1651,11 @@ public partial class TreeView : Control
     {
         if (disposing)
         {
+            foreach (TreeNode node in Nodes)
+            {
+                node.ContextMenu = null;
+            }
+
             lock (this)
             {
                 DetachImageListHandlers();
@@ -2206,9 +2212,9 @@ public partial class TreeView : Control
 
         // Raise an event to highlight & announce the edited node
         // if editing hasn't been canceled.
-        if (IsAccessibilityObjectCreated && !e.CancelEdit)
+        if (IsAccessibilityObjectCreated && !e.CancelEdit && e.Node is not null)
         {
-            e.Node.AccessibilityObject.RaiseAutomationEvent(UiaCore.UIA.AutomationFocusChangedEventId);
+            e.Node.AccessibilityObject?.RaiseAutomationEvent(UiaCore.UIA.AutomationFocusChangedEventId);
         }
     }
 
@@ -2228,9 +2234,14 @@ public partial class TreeView : Control
         onAfterCheck?.Invoke(this, e);
 
         // Raise an event to announce a toggle state change.
-        if (IsAccessibilityObjectCreated)
+        if (IsAccessibilityObjectCreated && e.Node is not null)
         {
-            AccessibleObject nodeAccessibleObject = e.Node.AccessibilityObject;
+            TreeNode.TreeNodeAccessibleObject nodeAccessibleObject = e.Node.AccessibilityObject;
+            if (nodeAccessibleObject is null)
+            {
+                return;
+            }
+
             UiaCore.ToggleState newState = nodeAccessibleObject.ToggleState;
             UiaCore.ToggleState oldState = newState == UiaCore.ToggleState.On
                 ? UiaCore.ToggleState.Off
@@ -2259,9 +2270,9 @@ public partial class TreeView : Control
         onAfterCollapse?.Invoke(this, e);
 
         // Raise an event to announce the expand-collapse state change.
-        if (IsAccessibilityObjectCreated)
+        if (IsAccessibilityObjectCreated && e.Node is not null)
         {
-            e.Node.AccessibilityObject.RaiseAutomationPropertyChangedEvent(
+            e.Node.AccessibilityObject?.RaiseAutomationPropertyChangedEvent(
                 UiaCore.UIA.ExpandCollapseExpandCollapseStatePropertyId,
                 oldValue: UiaCore.ExpandCollapseState.Expanded,
                 newValue: UiaCore.ExpandCollapseState.Collapsed);
@@ -2283,10 +2294,10 @@ public partial class TreeView : Control
     {
         onAfterExpand?.Invoke(this, e);
 
-        // Raise anevent to announce the expand-collapse state change.
-        if (IsAccessibilityObjectCreated)
+        // Raise an event to announce the expand-collapse state change.
+        if (IsAccessibilityObjectCreated && e.Node is not null)
         {
-            e.Node.AccessibilityObject.RaiseAutomationPropertyChangedEvent(
+            e.Node.AccessibilityObject?.RaiseAutomationPropertyChangedEvent(
                 UiaCore.UIA.ExpandCollapseExpandCollapseStatePropertyId,
                 oldValue: UiaCore.ExpandCollapseState.Collapsed,
                 newValue: UiaCore.ExpandCollapseState.Expanded);
@@ -2325,9 +2336,14 @@ public partial class TreeView : Control
         onAfterSelect?.Invoke(this, e);
 
         // Raise an event to highlight & announce the selected node.
-        if (IsAccessibilityObjectCreated)
+        if (IsAccessibilityObjectCreated && e.Node is not null)
         {
-            AccessibleObject nodeAccessibleObject = e.Node.AccessibilityObject;
+            TreeNode.TreeNodeAccessibleObject nodeAccessibleObject = e.Node.AccessibilityObject;
+            if (nodeAccessibleObject is null)
+            {
+                return;
+            }
+
             nodeAccessibleObject.RaiseAutomationEvent(UiaCore.UIA.AutomationFocusChangedEventId);
             nodeAccessibleObject.RaiseAutomationEvent(UiaCore.UIA.SelectionItem_ElementSelectedEventId);
 
@@ -2948,14 +2964,14 @@ public partial class TreeView : Control
                             {
                                 g.FillRectangle(SystemBrushes.Highlight, bounds);
                                 ControlPaint.DrawFocusRectangle(g, bounds, color, SystemColors.Highlight);
-                                TextRenderer.DrawText(g, e.Node.Text, font, bounds, color, TextFormatFlags.Default);
+                                TextRenderer.DrawText(g, node.Text, font, bounds, color, TextFormatFlags.Default);
                             }
                             else
                             {
                                 using var brush = BackColor.GetCachedSolidBrushScope();
                                 g.FillRectangle(brush, bounds);
 
-                                TextRenderer.DrawText(g, e.Node.Text, font, bounds, color, TextFormatFlags.Default);
+                                TextRenderer.DrawText(g, node.Text, font, bounds, color, TextFormatFlags.Default);
                             }
                         }
                     }
@@ -3155,7 +3171,7 @@ public partial class TreeView : Control
                     if ((int)nmtv->nmhdr.code == (int)NM.RCLICK)
                     {
                         TreeNode treeNode = NodeFromHandle(hnode);
-                        if (treeNode is not null && treeNode.ContextMenuStrip is not null)
+                        if (treeNode != null && (treeNode.ContextMenu != null || treeNode.ContextMenuStrip != null))
                         {
                             ShowContextMenu(treeNode);
                         }
@@ -3194,7 +3210,7 @@ public partial class TreeView : Control
         // Raise an event to highlight & announce the selected node.
         if (IsAccessibilityObjectCreated)
         {
-            SelectedNode?.AccessibilityObject.RaiseAutomationEvent(UiaCore.UIA.AutomationFocusChangedEventId);
+            SelectedNode?.AccessibilityObject?.RaiseAutomationEvent(UiaCore.UIA.AutomationFocusChangedEventId);
         }
     }
 
@@ -3209,14 +3225,39 @@ public partial class TreeView : Control
     /// </summary>
     private void ShowContextMenu(TreeNode treeNode)
     {
-        if (treeNode.ContextMenuStrip is not null)
+        if (treeNode.ContextMenu != null || treeNode.ContextMenuStrip is not null)
         {
+            ContextMenu contextMenu = treeNode.ContextMenu;
             ContextMenuStrip menu = treeNode.ContextMenuStrip;
 
-            // Need to send TVM_SELECTITEM to highlight the node while the contextMenuStrip is being shown.
-            PInvoke.PostMessage(this, PInvoke.TVM_SELECTITEM, (WPARAM)PInvoke.TVGN_DROPHILITE, (LPARAM)treeNode.Handle);
-            menu.ShowInternal(this, PointToClient(MousePosition), /*keyboardActivated*/false);
-            menu.Closing += new ToolStripDropDownClosingEventHandler(ContextMenuStripClosing);
+            if (contextMenu != null)
+            {
+                PInvoke.GetCursorPos(out Point pt);
+
+                // Summary: the current window must be made the foreground window
+                // before calling TrackPopupMenuEx, and a task switch must be
+                // forced after the call.
+                PInvoke.SetForegroundWindow(this);
+
+                contextMenu.OnPopup(EventArgs.Empty);
+
+                SafeNativeMethods.TrackPopupMenuEx(new HandleRef(contextMenu, contextMenu.Handle),
+                                         NativeMethods.TPM_VERTICAL,
+                                         pt.X,
+                                         pt.Y,
+                                         new HandleRef(this, Handle),
+                                         null);
+
+                // Force task switch (see above)
+                PInvoke.PostMessage(this, PInvoke.WM_NULL, (WPARAM)IntPtr.Zero, IntPtr.Zero);
+            }
+            else if (menu is not null)
+            {
+                // Need to send TVM_SELECTITEM to highlight the node while the contextMenuStrip is being shown.
+                PInvoke.PostMessage(this, PInvoke.TVM_SELECTITEM, (WPARAM)PInvoke.TVGN_DROPHILITE, (LPARAM)treeNode.Handle);
+                menu.ShowInternal(this, PointToClient(MousePosition), /*keyboardActivated*/false);
+                menu.Closing += new ToolStripDropDownClosingEventHandler(ContextMenuStripClosing);
+            }
         }
     }
 
@@ -3525,15 +3566,22 @@ public partial class TreeView : Control
                 {
                     // this is the Shift + F10 Case....
                     TreeNode treeNode = SelectedNode;
-                    if (treeNode is not null && treeNode.ContextMenuStrip is not null)
+                    if (treeNode is not null && (treeNode.ContextMenu is not null || treeNode.ContextMenuStrip is not null))
                     {
                         Point client;
                         client = new Point(treeNode.Bounds.X, treeNode.Bounds.Y + treeNode.Bounds.Height / 2);
                         // VisualStudio7 # 156, only show the context menu when clicked in the client area
-                        if (ClientRectangle.Contains(client) && treeNode.ContextMenuStrip is not null)
+                        if (ClientRectangle.Contains(client))
                         {
-                            bool keyboardActivated = m.LParamInternal == -1;
-                            treeNode.ContextMenuStrip.ShowInternal(this, client, keyboardActivated);
+                            if (treeNode.ContextMenu is not null)
+                            {
+                                treeNode.ContextMenu.Show(this, client);
+                            }
+                            else if (ContextMenuStrip is not null)
+                            {
+                                bool keyboardActivated = m.LParamInternal == -1;
+                                treeNode.ContextMenuStrip.ShowInternal(this, client, keyboardActivated);
+                            }
                         }
                     }
                     else

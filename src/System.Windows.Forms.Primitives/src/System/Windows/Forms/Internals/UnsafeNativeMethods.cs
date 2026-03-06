@@ -10,4 +10,36 @@ internal static class UnsafeNativeMethods
 {
     [DllImport(Libraries.Comdlg32, SetLastError = true, CharSet = CharSet.Auto)]
     public static extern HRESULT PrintDlgEx([In, Out] NativeMethods.PRINTDLGEX lppdex);
+
+    [DllImport(ExternDll.User32, CharSet = CharSet.Auto)]
+    public static extern IntPtr SendMessage(HandleRef hWnd, int msg, IntPtr wParam, string lParam);
+
+
+    [DllImport(ExternDll.User32, CharSet = CharSet.Unicode)]
+    public extern static IntPtr SendMessage(HandleRef hWnd, int Msg, IntPtr wParam, ref RECT lParam);
+
+    [DllImport(ExternDll.User32, CharSet = CharSet.Auto)]
+    public static extern IntPtr SendMessage(HandleRef hWnd, int msg, HandleRef wParam, int lParam);
+
+    [DllImport(ExternDll.User32, CharSet = CharSet.Auto)]
+    public static extern IntPtr SendMessage(HandleRef hWnd, int msg, IntPtr wParam, IntPtr lParam);
+
+    [DllImport(Libraries.User32, CharSet = CharSet.Auto)]
+    public static extern BOOL GetMenuItemInfo(IntPtr hMenu, int uItem, bool fByPosition, [In, Out] NativeMethods.MENUITEMINFO_T lpmii);
+
+    [DllImport(ExternDll.User32, CharSet = CharSet.Auto)]
+    public extern static bool InsertMenuItem(HandleRef hMenu, int uItem, bool fByPosition, NativeMethods.MENUITEMINFO_T lpmii);
+
+    [DllImport(ExternDll.User32, CharSet = CharSet.Auto)]
+    public extern static bool SetMenuItemInfo(HandleRef hMenu, int uItem, bool fByPosition, NativeMethods.MENUITEMINFO_T lpmii);
+
+    [DllImport(ExternDll.User32, CharSet = CharSet.Auto)]
+    public static extern IntPtr SendMessage(HandleRef hWnd, int msg, int wParam, int[] lParam);
+
+    public static BOOL GetMenuItemInfo(HandleRef hMenu, int uItem, bool fByPosition, NativeMethods.MENUITEMINFO_T lpmii)
+    {
+        BOOL result = GetMenuItemInfo(hMenu.Handle, uItem, fByPosition, lpmii);
+        GC.KeepAlive(hMenu.Wrapper);
+        return result;
+    }
 }

@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
+using static Interop;
 
 namespace System.Windows.Forms;
 
@@ -350,6 +351,26 @@ public static partial class ControlPaint
         };
 
         return PInvoke.CreateBrushIndirect(&lb);
+    }
+
+    internal static unsafe Interop.Gdi32.HBRUSH CreateHalftoneHBRUSH2()
+    {
+        short* grayPattern = stackalloc short[8];
+        for (int i = 0; i < 8; i++)
+        {
+            grayPattern[i] = (short)(0x5555 << (i & 1));
+        }
+
+        using PInvoke.CreateBitmapScope hBitmap = new(8, 8, 1, 1, grayPattern);
+
+        LOGBRUSH lb = new()
+        {
+            lbStyle = BRUSH_STYLE.BS_PATTERN,
+            lbColor = default, // color is ignored since style is BS.PATTERN
+            lbHatch = (nuint)(IntPtr)hBitmap
+        };
+
+        return Gdi32.CreateBrushIndirect(ref lb);
     }
 
     /// <summary>

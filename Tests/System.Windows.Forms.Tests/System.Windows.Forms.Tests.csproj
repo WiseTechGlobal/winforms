@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <OutputPath>$([System.IO.Path]::GetFullPath('$(RepoRoot)Bin\$(OutDirName)\'))</OutputPath>
+    <!-- Sign test assembly with the ECMA key to align with existing InternalsVisibleTo entries -->
+    <StrongNameKeyId>ECMA</StrongNameKeyId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="6.0.0" />
+    <PackageReference Include="NUnit" Version="3.14.0" />
+    <PackageReference Include="NUnit.Analyzers" Version="3.9.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.6.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\System.Windows.Forms.Primitives\src\System.Windows.Forms.Primitives.csproj" />
+    <ProjectReference Include="..\..\src\System.Windows.Forms\src\System.Windows.Forms.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="NUnit.Framework" />
+  </ItemGroup>
+
+</Project>

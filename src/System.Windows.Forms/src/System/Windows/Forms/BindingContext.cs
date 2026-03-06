@@ -13,7 +13,7 @@ namespace System.Windows.Forms;
 [DefaultEvent(nameof(CollectionChanged))]
 public partial class BindingContext : ICollection
 {
-    private readonly Dictionary<HashKey, WeakReference> _listManagers;
+    private readonly Hashtable _listManagers;
 
     /// <summary>
     ///  Initializes a new instance of the System.Windows.Forms.BindingContext class.
@@ -42,7 +42,7 @@ public partial class BindingContext : ICollection
     void ICollection.CopyTo(Array ar, int index)
     {
         ScrubWeakRefs();
-        _listManagers.HashtableCopyTo(ar, index);
+        _listManagers.CopyTo(ar, index);
     }
 
     /// <summary>
@@ -213,6 +213,7 @@ public partial class BindingContext : ICollection
     private BindingManagerBase EnsureListManager(object dataSource, string? dataMember)
     {
         BindingManagerBase? bindingManagerBase = null;
+        WeakReference? wRef = null;
 
         dataMember ??= string.Empty;
 
@@ -229,8 +230,9 @@ public partial class BindingContext : ICollection
 
         // Check for previously created binding manager
         HashKey key = GetKey(dataSource, dataMember);
-        if (_listManagers.TryGetValue(key, out WeakReference? wRef) && wRef is not null)
+        if (_listManagers.ContainsKey(key))
         {
+            wRef = (WeakReference)_listManagers[key];
             bindingManagerBase = (BindingManagerBase?)wRef.Target;
         }
 
@@ -320,13 +322,13 @@ public partial class BindingContext : ICollection
     private void ScrubWeakRefs()
     {
         List<HashKey>? cleanupList = null;
-        foreach (KeyValuePair<HashKey, WeakReference> de in _listManagers)
+        foreach (System.Collections.DictionaryEntry de in _listManagers)
         {
-            if (de.Value.Target is null)
+            if (((WeakReference)de.Value).Target is null)
             {
                 cleanupList ??= new();
 
-                cleanupList.Add(de.Key);
+                cleanupList.Add((HashKey)de.Key);
             }
         }
 

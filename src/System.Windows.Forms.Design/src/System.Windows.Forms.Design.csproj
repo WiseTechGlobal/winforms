@@ -1,7 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <AssemblyName>System.Windows.Forms.Design</AssemblyName>
+    <AssemblyVersion>8.0.0.0</AssemblyVersion>
     <CLSCompliant>true</CLSCompliant>
     <Deterministic>true</Deterministic>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -16,6 +17,7 @@
     <NoWarn>$(NoWarn);IDE0090</NoWarn>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
     <UsePublicApiAnalyzers>true</UsePublicApiAnalyzers>
+    
   </PropertyGroup>
 
   <ItemGroup>
@@ -63,6 +65,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Accessibility" Version="4.6.0-preview3-27504-2" />
     <PackageReference Include="System.CodeDom" Version="$(SystemCodeDomPackageVersion)" />
   </ItemGroup>
 
@@ -103,4 +106,8 @@
     <Compile Update="System\Windows\Forms\Design\FormatControl.cs" />
     <Compile Update="System\Windows\Forms\Design\FormatStringDialog.cs" />
   </ItemGroup>
+
+
+  <!-- Import custom packaging targets -->
+  <Import Project="$(RepositoryEngineeringDir)CustomPackaging.targets" />
 </Project>

@@ -184,6 +184,9 @@ csharp_style_allow_blank_line_after_token_in_arrow_expression_clause_experimenta
 dotnet_diagnostic.IDE0090.severity = error
 csharp_style_deconstructed_variable_declaration = true:suggestion
 
+# RS0016: Add public types and members to the declared API
+dotnet_diagnostic.RS0016.severity = silent
+
 # Visual Basic files
 
 [*.vb]

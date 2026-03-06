@@ -44,3 +44,8 @@ internal interface IHandle<THandle> where THandle : unmanaged
     /// </remarks>
     object? Wrapper => this;
 }
+
+//internal interface IHandle
+//{
+//    public IntPtr Handle { get; }
+//}

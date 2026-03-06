@@ -199,6 +199,164 @@ public unsafe partial class Control :
     private static MessageId s_threadCallbackMessage;
     private static ContextCallback? s_invokeMarshaledCallbackHelperDelegate;
 
+    internal static IntPtr SetUpPalette(IntPtr dc, bool force, bool realizePalette)
+    {
+        Debug.WriteLineIf(s_paletteTracing.TraceVerbose, "SetUpPalette(force:=" + force + ", ralizePalette:=" + realizePalette + ")");
+
+        IntPtr halftonePalette = Graphics.GetHalftonePalette();
+
+        Debug.WriteLineIf(s_paletteTracing.TraceVerbose, "select palette " + !force);
+        IntPtr result = Gdi32.SelectPalette(dc, halftonePalette, force ? BOOL.FALSE : BOOL.TRUE);
+        if (result != IntPtr.Zero && realizePalette)
+        {
+            Gdi32.RealizePalette(dc);
+        }
+
+        return result;
+    }
+
+    /// <summary>
+    ///  Handles the WM_MENUSELECT message
+    /// </summary>
+    private void WmMenuSelect(ref Message m)
+    {
+        int item = NativeMethods.Util.LOWORD(m.WParam);
+        User32.MF flags = (User32.MF)NativeMethods.Util.HIWORD(m.WParam);
+        IntPtr hmenu = m.LParam;
+        MenuItem mi = null;
+
+        if ((flags & User32.MF.SYSMENU) != 0)
+        {
+            // nothing
+        }
+        else if ((flags & User32.MF.POPUP) == 0)
+        {
+            Command cmd = Command.GetCommandFromID(item);
+            if (cmd != null)
+            {
+                object reference = cmd.Target;
+                if (reference != null && reference is MenuItem.MenuItemData)
+                {
+                    mi = ((MenuItem.MenuItemData)reference).baseItem;
+                }
+            }
+        }
+        else
+        {
+            mi = GetMenuItemFromHandleId(hmenu, item);
+        }
+
+        if (mi != null)
+        {
+            mi.PerformSelect();
+        }
+
+        DefWndProc(ref m);
+    }
+
+    /// <summary>
+    ///  WM_DRAWITEM handler
+    /// </summary>
+    private void WmDrawItem(ref Message m)
+    {
+        // If the wparam is zero, then the message was sent by a menu.
+        // See WM_DRAWITEM in MSDN.
+        if (m.WParamInternal == 0u)
+        {
+            WmDrawItemMenuItem(ref m);
+        }
+        else
+        {
+            WmOwnerDraw(ref m);
+        }
+    }
+
+    private unsafe void WmDrawItemMenuItem(ref Message m)
+    {
+        // Obtain the menu item object
+        User32.DRAWITEMSTRUCT* dis = (User32.DRAWITEMSTRUCT*)m.LParam;
+
+        // A pointer to the correct MenuItem is stored in the draw item
+        // information sent with the message.
+        // (See MenuItem.CreateMenuItemInfo)
+        MenuItem menuItem = MenuItem.GetMenuItemFromItemData(dis->itemData);
+
+        // Delegate this message to the menu item
+        menuItem?.WmDrawItem(ref m);
+    }
+
+    /// <summary>
+    ///  WM_MEASUREITEM handler
+    /// </summary>
+    private unsafe void WmMeasureItem(ref Message m)
+    {
+        // If the wparam is zero, then the message was sent by a menu.
+        // See WM_MEASUREITEM in MSDN.
+        if (m.WParamInternal == 0u)
+        {
+            // Obtain the menu item object
+            Debug.Assert(m.LParam != IntPtr.Zero, "m.lparam is null");
+            User32.MEASUREITEMSTRUCT* mis = (User32.MEASUREITEMSTRUCT*)m.LParam;
+
+            // A pointer to the correct MenuItem is stored in the measure item
+            // information sent with the message.
+            // (See MenuItem.CreateMenuItemInfo)
+            MenuItem menuItem = MenuItem.GetMenuItemFromItemData(mis->itemData);
+            Debug.Assert(menuItem != null, "UniqueID is not associated with a menu item");
+
+            // Delegate this message to the menu item
+            menuItem?.WmMeasureItem(ref m);
+        }
+        else
+        {
+            WmOwnerDraw(ref m);
+        }
+    }
+
+    private MenuItem GetMenuItemFromHandleId(IntPtr hmenu, int item)
+    {
+        MenuItem mi = null;
+        int id = User32.GetMenuItemID(hmenu, item);
+        if (id == unchecked((int)0xFFFFFFFF))
+        {
+            IntPtr childMenu = IntPtr.Zero;
+            childMenu = User32.GetSubMenu(hmenu, item);
+            int count = User32.GetMenuItemCount(childMenu);
+            MenuItem found = null;
+            for (int i = 0; i < count; i++)
+            {
+                found = GetMenuItemFromHandleId(childMenu, i);
+                if (found != null)
+                {
+                    Menu parent = found.Parent;
+                    if (parent != null && parent is MenuItem)
+                    {
+                        found = (MenuItem)parent;
+                        break;
+                    }
+
+                    found = null;
+                }
+            }
+
+            mi = found;
+        }
+        else
+        {
+            Command cmd = Command.GetCommandFromID(id);
+            if (cmd != null)
+            {
+                object reference = cmd.Target;
+                if (reference != null && reference is MenuItem.MenuItemData)
+                {
+                    mi = ((MenuItem.MenuItemData)reference).baseItem;
+                }
+            }
+        }
+
+        return mi;
+    }
+
 #pragma warning disable IDE1006 // Naming Styles
     [ThreadStatic]
     private static bool t_inCrossThreadSafeCall;
@@ -1377,6 +1535,90 @@ public unsafe partial class Control :
         }
     }
 
+    private static readonly int s_contextMenuProperty = PropertyStore.CreateKey();
+
+    private void DetachContextMenu(object sender, EventArgs e) => ContextMenu = null;
+
+    private static readonly object s_contextMenuEvent = new object();
+
+    [EditorBrowsable(EditorBrowsableState.Advanced)]
+    protected virtual void OnContextMenuChanged(EventArgs e)
+    {
+        if (Events[s_contextMenuEvent] is EventHandler eh)
+        {
+            eh(this, e);
+        }
+    }
+
+    /// <summary>
+    ///  Handles the WM_MENUCHAR message
+    /// </summary>
+    private void WmMenuChar(ref Message m)
+    {
+        Menu menu = ContextMenu;
+        if (menu != null)
+        {
+            menu.WmMenuChar(ref m);
+            if (m.Result != IntPtr.Zero)
+            {
+                // This char is a mnemonic on our menu.
+                return;
+            }
+        }
+    }
+
+    /// <summary>
+    ///  The contextMenu associated with this control. The contextMenu
+    ///  will be shown when the user right clicks the mouse on the control.
+    ///
+    ///  Whidbey: ContextMenu is browsable false.  In all cases where both a context menu
+    ///  and a context menu strip are assigned, context menu will be shown instead of context menu strip.
+    /// </summary>
+    [
+        SRCategory(nameof(SR.CatBehavior)),
+        DefaultValue(null),
+        SRDescription(nameof(SR.ControlContextMenuDescr)),
+        Browsable(false)
+    ]
+    public virtual ContextMenu? ContextMenu
+    {
+        get => (ContextMenu)Properties.GetObject(s_contextMenuProperty);
+        set
+        {
+            ContextMenu oldValue = (ContextMenu)Properties.GetObject(s_contextMenuProperty);
+
+            if (oldValue != value)
+            {
+                EventHandler disposedHandler = new EventHandler(DetachContextMenu);
+
+                if (oldValue != null)
+                {
+                    oldValue.Disposed -= disposedHandler;
+                }
+
+                Properties.SetObject(s_contextMenuProperty, value);
+
+                if (value != null)
+                {
+                    value.Disposed += disposedHandler;
+                }
+
+                OnContextMenuChanged(EventArgs.Empty);
+            }
+        }
+    }
+
+    [
+        SRCategory(nameof(SR.CatPropertyChanged)),
+        SRDescription(nameof(SR.ControlOnContextMenuChangedDescr)),
+        Browsable(false)
+    ]
+    public event EventHandler ContextMenuChanged
+    {
+        add => Events.AddHandler(s_contextMenuEvent, value);
+        remove => Events.RemoveHandler(s_contextMenuEvent, value);
+    }
+
     /// <summary>
     ///  The contextMenuStrip associated with this control. The contextMenuStrip
     ///  will be shown when the user right clicks the mouse on the control.
@@ -1419,6 +1661,31 @@ public unsafe partial class Control :
     {
         add => Events.AddHandler(s_contextMenuStripEvent, value);
         remove => Events.RemoveHandler(s_contextMenuStripEvent, value);
+    }
+
+    /// <summary>
+    ///  Sends a Win32 message to this control.  If the control does not yet
+    ///  have a handle, it will be created.
+    /// </summary>
+    internal IntPtr SendMessage(int msg, int wparam, int lparam)
+    {
+        return UnsafeNativeMethods.SendMessage(new HandleRef(this, Handle), msg, wparam, lparam);
+    }
+
+    /// <summary>
+    ///  Sends a Win32 message to this control.  If the control does not yet
+    ///  have a handle, it will be created.
+    /// </summary>
+    internal IntPtr SendMessage(int msg, int wparam, string lparam)
+    {
+        Debug.Assert(IsHandleCreated, "Performance alert!  Calling Control::SendMessage and forcing handle creation.  Re-work control so handle creation is not required to set properties.  If there is no work around, wrap the call in an IsHandleCreated check.");
+        return UnsafeNativeMethods.SendMessage(new HandleRef(this, Handle), msg, wparam, lparam);
+    }
+
+    internal IntPtr SendMessage(int msg, IntPtr wparam, IntPtr lparam)
+    {
+        Debug.Assert(IsHandleCreated, "Performance alert!  Calling Control::SendMessage and forcing handle creation.  Re-work control so handle creation is not required to set properties.  If there is no work around, wrap the call in an IsHandleCreated check.");
+        return UnsafeNativeMethods.SendMessage(new HandleRef(this, Handle), msg, wparam, lparam);
     }
 
     /// <summary>
@@ -2458,6 +2725,8 @@ public unsafe partial class Control :
             return controls is not null && controls.Count > 0;
         }
     }
+
+    internal virtual bool HasMenu => false;
 
     /// <summary>
     ///  The height of this control
@@ -5097,6 +5366,12 @@ public unsafe partial class Control :
                 DisposeAxControls();
                 ((ActiveXImpl?)Properties.GetObject(s_activeXImplProperty))?.Dispose();
 
+                ContextMenu contextMenu = (ContextMenu)Properties.GetObject(s_contextMenuProperty);
+                if (contextMenu != null)
+                {
+                    contextMenu.Disposed -= new EventHandler(DetachContextMenu);
+                }
+
                 ResetBindings();
 
                 if (IsHandleCreated)
@@ -5706,11 +5981,11 @@ public unsafe partial class Control :
         CreateParams cp = CreateParams;
 
         // We would need to get adornments metrics for both (old and new) Dpi in case application is in PerMonitorV2 mode and Dpi changed.
-        AdjustWindowRectExForControlDpi(ref adornmentsAfterDpiChange, (WINDOW_STYLE)cp.Style, bMenu: false, (WINDOW_EX_STYLE)cp.ExStyle);
+        AdjustWindowRectExForControlDpi(ref adornmentsAfterDpiChange, (WINDOW_STYLE)cp.Style, bMenu: HasMenu, (WINDOW_EX_STYLE)cp.ExStyle);
 
         if (_oldDeviceDpi != _deviceDpi && OsVersion.IsWindows10_1703OrGreater())
         {
-            AdjustWindowRectExForDpi(ref adornmentsBeforeDpiChange, (WINDOW_STYLE)cp.Style, bMenu: false, (WINDOW_EX_STYLE)cp.ExStyle, _oldDeviceDpi);
+            AdjustWindowRectExForDpi(ref adornmentsBeforeDpiChange, (WINDOW_STYLE)cp.Style, bMenu: HasMenu, (WINDOW_EX_STYLE)cp.ExStyle, _oldDeviceDpi);
         }
         else
         {
@@ -9231,6 +9506,12 @@ public unsafe partial class Control :
     {
         s_controlKeyboardRouting.TraceVerbose($"Control.ProcessCmdKey {msg}");
 
+        ContextMenu contextMenu = (ContextMenu)Properties.GetObject(s_contextMenuProperty);
+        if (contextMenu != null && contextMenu.ProcessCmdKey(ref msg, keyData, this))
+        {
+            return true;
+        }
+
         if (_parent is not null)
         {
             return _parent.ProcessCmdKey(ref msg, keyData);
@@ -10347,7 +10628,7 @@ public unsafe partial class Control :
     {
         CreateParams cp = CreateParams;
         RECT adornments = default;
-        AdjustWindowRectExForControlDpi(ref adornments, (WINDOW_STYLE)cp.Style, false, (WINDOW_EX_STYLE)cp.ExStyle);
+        AdjustWindowRectExForControlDpi(ref adornments, (WINDOW_STYLE)cp.Style, HasMenu, (WINDOW_EX_STYLE)cp.ExStyle);
         Size minSize = MinimumSize;
         Size maxSize = MaximumSize;
 
@@ -10829,7 +11110,7 @@ public unsafe partial class Control :
     {
         RECT rect = new(size);
         CreateParams cp = CreateParams;
-        AdjustWindowRectExForControlDpi(ref rect, (WINDOW_STYLE)cp.Style, false, (WINDOW_EX_STYLE)cp.ExStyle);
+        AdjustWindowRectExForControlDpi(ref rect, (WINDOW_STYLE)cp.Style, HasMenu, (WINDOW_EX_STYLE)cp.ExStyle);
         return rect.Size;
     }
 
@@ -11836,8 +12117,9 @@ public unsafe partial class Control :
     /// </summary>
     internal void WmContextMenu(ref Message m, Control sourceControl)
     {
+        var contextMenu = Properties.GetObject(s_contextMenuProperty) as ContextMenu;
         var contextMenuStrip = (ContextMenuStrip?)Properties.GetObject(s_contextMenuStripProperty);
-        if (contextMenuStrip is not null)
+        if (contextMenu != null || contextMenuStrip != null)
         {
             int x = PARAM.SignedLOWORD(m.LParamInternal);
             int y = PARAM.SignedHIWORD(m.LParamInternal);
@@ -11855,9 +12137,22 @@ public unsafe partial class Control :
                 client = PointToClient(new Point(x, y));
             }
 
+            // VisualStudio7 # 156, only show the context menu when clicked in the client area
             if (ClientRectangle.Contains(client))
             {
-                contextMenuStrip.ShowInternal(sourceControl, client, keyboardActivated);
+                if (contextMenu != null)
+                {
+                    contextMenu.Show(sourceControl, client);
+                }
+                else if (contextMenuStrip != null)
+                {
+                    contextMenuStrip.ShowInternal(sourceControl, client, keyboardActivated);
+                }
+                else
+                {
+                    Debug.Fail("contextmenu and contextmenustrip are both null... hmm how did we get here?");
+                    DefWndProc(ref m);
+                }
             }
             else
             {
@@ -11926,6 +12221,26 @@ public unsafe partial class Control :
         {
             DefWndProc(ref m);
         }
+    }
+
+    /// <summary>
+    ///  Handles the WM_EXITMENULOOP message. If this control has a context menu, its
+    ///  Collapse event is raised.
+    /// </summary>
+    private void WmExitMenuLoop(ref Message m)
+    {
+        bool isContextMenu = (unchecked((int)(long)m.WParam) == 0) ? false : true;
+
+        if (isContextMenu)
+        {
+            ContextMenu contextMenu = (ContextMenu)Properties.GetObject(s_contextMenuProperty);
+            if (contextMenu != null)
+            {
+                contextMenu.OnCollapse(EventArgs.Empty);
+            }
+        }
+
+        DefWndProc(ref m);
     }
 
     /// <summary>
@@ -12035,6 +12350,24 @@ public unsafe partial class Control :
         {
             DefWndProc(ref m);
         }
+    }
+
+    /// <summary>
+    ///  Handles the WM_INITMENUPOPUP message
+    /// </summary>
+    private void WmInitMenuPopup(ref Message m)
+    {
+        ContextMenu contextMenu = (ContextMenu)Properties.GetObject(s_contextMenuProperty);
+        if (contextMenu != null)
+        {
+
+            if (contextMenu.ProcessInitMenuPopup(m.WParam))
+            {
+                return;
+            }
+        }
+
+        DefWndProc(ref m);
     }
 
     /// <summary>
@@ -12955,15 +13288,15 @@ public unsafe partial class Control :
                 break;
 
             case PInvoke.WM_DRAWITEM:
-                if (m.WParamInternal != 0u)
-                {
-                    WmOwnerDraw(ref m);
-                }
-
+                WmDrawItem(ref m);
                 break;
 
             case PInvoke.WM_ERASEBKGND:
                 WmEraseBkgnd(ref m);
+                break;
+
+            case PInvoke.WM_EXITMENULOOP:
+                WmExitMenuLoop(ref m);
                 break;
 
             case PInvoke.WM_HELP:
@@ -12994,6 +13327,10 @@ public unsafe partial class Control :
 
                 break;
 
+            case WindowMessages.WM_INITMENUPOPUP:
+                WmInitMenuPopup(ref m);
+                break;
+
             case PInvoke.WM_SYSCOMMAND:
                 if ((m.WParamInternal & 0xFFF0) == PInvoke.SC_KEYMENU)
                 {
@@ -13020,11 +13357,7 @@ public unsafe partial class Control :
                 break;
 
             case PInvoke.WM_MEASUREITEM:
-                if (m.WParamInternal != 0u)
-                {
-                    WmOwnerDraw(ref m);
-                }
-
+                WmMeasureItem(ref m);
                 break;
 
             case PInvoke.WM_SETCURSOR:
@@ -13242,9 +13575,9 @@ public unsafe partial class Control :
                 WmParentNotify(ref m);
                 break;
 
-            case PInvoke.WM_EXITMENULOOP:
-            case PInvoke.WM_INITMENUPOPUP:
             case PInvoke.WM_MENUSELECT:
+                WmMenuSelect(ref m);
+                break;
             default:
 
                 // If we received a thread execute message, then execute it.

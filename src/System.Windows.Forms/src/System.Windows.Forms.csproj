@@ -1,7 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <AssemblyName>System.Windows.Forms</AssemblyName>
+    <AssemblyVersion>8.0.0.0</AssemblyVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <CLSCompliant>true</CLSCompliant>
     <Nullable>enable</Nullable>
@@ -11,11 +12,39 @@
       IL Trim warnings which should be removed in order to make WinForms trimmable
       See https://github.com/dotnet/winforms/issues/4649
     -->
-    <NoWarn>$(NoWarn);IL2026;IL2050;IL2057;IL2062;IL2067;IL2070;IL2072;IL2075;IL2077;IL2080;IL2092;IL2093;IL2094;IL2096;IL2111</NoWarn>
+    <!--CS0114;CS0108;CS8765;CS8622;CS0184;CS0169;CS0414;SA1507 Additional suppressions relating to use of nullability were put in to handle the DAT warnings. 
+    ToDo: Remove the suppresions one at a time to adhere to the recommended coding styles.-->
+    <NoWarn>$(NoWarn);CS8605;CA1052;CS0114;CS0108;CS8765;CS8622;CS0184;CS0169;CS0414;SA1507;IL2026;IL2050;IL2057;IL2062;IL2067;IL2070;IL2072;IL2075;IL2077;IL2080;IL2092;IL2093;IL2094;IL2096;IL2111;CSIsNull001;CSIsNull002;SA1129;WFDEV001;CA1822;CA1823;SA1518;SA1400;CA1066;CS8769;CS8625;CS8600;CS8603;CS8618;CS8601;CS8602;SA1508;SA1505;CA1507;CS8604;CS0649;CA1805;SA1131;</NoWarn>
     <Win32Manifest>Resources\System\Windows\Forms\XPThemes.manifest</Win32Manifest>
     <Deterministic>true</Deterministic>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
-    <UsePublicApiAnalyzers>true</UsePublicApiAnalyzers>
+
+    <!--
+      Microsoft use Arcade to handle the building of WinForms (and other things .net).
+      See: https://github.com/dotnet/arcade/blob/main/Documentation/Overview.md
+
+      Arcade puts everything in the Artifacts folder of this repo.
+      DAT needs all output to be in the Bin folder of the repo, so we need to override Arcade
+
+      The RepoRoot variable was discovered by opening Developer Command Prompt for VS 2022 and running:
+        msbuild src\System.Windows.Forms\src\WTG.System.Windows.Forms.csproj -preprocess:out.xml
+    -->
+    <OutputPath>$([System.IO.Path]::GetFullPath('$(RepoRoot)Bin\$(OutDirName)\'))</OutputPath>
+
+    <!--<UsePublicApiAnalyzers>true</UsePublicApiAnalyzers>-->
+    <!--<NoWarn>CSIsNull001</NoWarn>
+    <NoWarn>CSIsNull002</NoWarn>
+    <NoWarn>SA1129</NoWarn>
+    <NoWarn>WFDEV001</NoWarn>
+    <NoWarn>CA1822</NoWarn>-->
+
+    <IsPackable>true</IsPackable>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>WTG.System.Windows.Forms</PackageId>
+    <PackageDescription>WiseTech Global forked version of System.Windows.Forms that includes controls that were deprecated in .NET Core 3.1 and .NET 5, like DataGrid, Menu, ToolBar and StatusBar.</PackageDescription>
+    <Authors>WiseTech Global</Authors>
+    <Copyright>© WiseTech Global Limited. All rights reserved.</Copyright>
+
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,17 +52,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\System.Windows.Forms.Primitives\src\System.Windows.Forms.Primitives.csproj" />
     <ProjectReference Include="..\..\System.Windows.Forms.PrivateSourceGenerators\src\System.Windows.Forms.PrivateSourceGenerators.csproj" ReferenceOutputAssembly="false" OutputItemType="Analyzer" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Accessibility\src\Accessibility.ilproj" />
-    <ProjectReference Include="..\..\System.Windows.Forms.Primitives\src\System.Windows.Forms.Primitives.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <PackageReference Include="Accessibility" Version="4.6.0-preview3-27504-2" />
     <PackageReference Include="Microsoft.Win32.SystemEvents" Version="$(MicrosoftWin32SystemEventsPackageVersion)" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="$(SystemConfigurationConfigurationManagerPackageVersion)" />
+    <PackageReference Include="System.Drawing.Common" Version="$(SystemDrawingCommonPackageVersion)" />
     <PackageReference Include="System.Resources.Extensions" Version="$(SystemResourcesExtensionsPackageVersion)" />
     <PackageReference Include="System.Windows.Extensions" Version="$(SystemWindowsExtensionsPackageVersion)" />
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="$(SystemRuntimeCompilerServicesUnsafePackageVersion)" />
@@ -83,4 +110,5 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+
 </Project>

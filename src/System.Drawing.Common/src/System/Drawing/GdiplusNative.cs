@@ -20,6 +20,9 @@ internal static partial class SafeNativeMethods
     {
         private const string LibraryName = "gdiplus.dll";
 
+        //[LibraryImport(LibraryName)]
+        //public static extern bool TrackPopupMenuEx(HandleRef hmenu, int fuFlags, int x, int y, HandleRef hwnd, NativeMethods.TPMPARAMS tpm);
+
         // Imported functions
         [LibraryImport(LibraryName)]
         private static partial int GdiplusStartup(out IntPtr token, in StartupInputEx input, out StartupOutput output);

@@ -1832,7 +1832,7 @@ public partial class ComboBox : ListControl
                 _mousePressed = true;
                 _mouseEvents = true;
 
-                if (ContextMenuStrip is not null)
+                if (ContextMenuStrip is not null || ContextMenu is not null)
                 {
                     // Set the mouse capture as this is the child Wndproc.
                     Capture = true;
@@ -1858,6 +1858,11 @@ public partial class ComboBox : ListControl
                 _mousePressed = false;
                 _mouseEvents = false;
 
+                if (ContextMenu is not null)
+                {
+                    Capture = false;
+                }
+
                 DefChildWndProc(ref m);
 
                 // The message gets fired from Combo-box's WndPrc - convert to Combobox coordinates
@@ -1868,7 +1873,7 @@ public partial class ComboBox : ListControl
 
             case PInvoke.WM_CONTEXTMENU:
                 // Forward context menu messages to the parent control
-                if (ContextMenuStrip is not null)
+                if (ContextMenuStrip is not null || ContextMenu is not null)
                 {
                     PInvoke.SendMessage(this, PInvoke.WM_CONTEXTMENU, m.WParamInternal, m.LParamInternal);
                 }

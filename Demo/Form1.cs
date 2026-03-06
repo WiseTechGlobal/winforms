@@ -1,0 +1,394 @@
+﻿using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Windows.Forms;
+
+#nullable disable
+
+namespace Demo
+{
+    /// <summary>
+    /// Summary description for Form1.
+    /// </summary>
+    public partial class Form1 : Form
+    {
+        private DataGrid myDataGrid;
+        private DataSet myDataSet;
+        private bool TablesAlreadyAdded;
+        private Button button1;
+        private Button button2;
+
+        private MainMenu mainMenu;
+        private MenuItem fileMenuItem;
+        private MenuItem newMenuItem;
+        private MenuItem openMenuItem;
+        private MenuItem saveMenuItem;
+        private MenuItem exitMenuItem;
+        private MenuItem newProjectItem;
+        private MenuItem newRepositoryItem;
+        private MenuItem newFileItem;
+        private MenuItem viewMenuItem;
+        private MenuItem toolboxMenuItem;
+        private MenuItem terminalMenuItem;
+        private MenuItem outputMenuItem;
+
+        private ToolBar toolBar;
+        private TreeView treeView;
+
+        /// <summary>
+        /// Summary description for Form1.
+        /// </summary>
+        public Form1()
+        {
+            InitializeComponent();
+
+            Shown += MainForm_Shown;
+        }
+
+        private void MainForm_Shown(object sender, EventArgs e)
+        {
+            InitializeDataGrid();
+            SetUp();
+            InitializeMenu();
+            InitializeStatusBar();
+            //InitializeMenuStrip();
+
+            InitializeToolBar();
+            InitializeTreeView();
+        }
+
+        private void InitializeTreeView()
+        {
+            this.treeView = new TreeView();
+            this.treeView.Location = new Point(650, 100);
+            this.treeView.Size = new Size(200, 200);
+            this.treeView.CheckBoxes = true;
+
+            TreeNode rootNode = new TreeNode("Root Node")
+            {
+                Nodes =
+                {
+                    new TreeNode("Child Node 1")
+                    {
+                        Nodes =
+                        {
+                            new TreeNode("Sub Child Node 1"),
+                            new TreeNode("Sub Child Node 2")
+                        }
+                    },
+                    new TreeNode("Child Node 2")
+                    {
+                        Nodes =
+                        {
+                            new TreeNode("Sub Child Node 3"),
+                            new TreeNode("Sub Child Node 4")
+                        }
+                    },
+                    new TreeNode("Child Node 3")
+                }
+            };
+
+            this.treeView.Nodes.Add(rootNode);
+
+            this.treeView.ContextMenu = new ContextMenu(
+            [
+                new MenuItem("Option 1"),
+                new MenuItem("Option 2")
+            ]);
+
+            AddContextMenuToNodes(treeView.Nodes);
+
+            Controls.Add(this.treeView);
+        }
+
+        private static void AddContextMenuToNodes(TreeNodeCollection nodes)
+        {
+            foreach (TreeNode node in nodes)
+            {
+                node.ContextMenu = new ContextMenu(
+                new MenuItem[]
+                {
+                        new($"Option for {node.Text}"),
+                        new($"Option 2 for {node.Text}")
+                });
+
+                if (node.Nodes.Count > 0)
+                {
+                    AddContextMenuToNodes(node.Nodes);
+                }
+            }
+        }
+
+        private void InitializeToolBar()
+        {
+            toolBar = new ToolBar();
+            toolBar.Buttons.Add("1st button");
+            var btn1 = toolBar.Buttons[0];
+            btn1.ToolTipText = "This is the first button";
+
+            var sep1 = new ToolBarButton("sep1");
+            sep1.Style = ToolBarButtonStyle.Separator;
+            toolBar.Buttons.Add(sep1);
+
+            var btn2 = new ToolBarButton("btn2 toggle");
+            btn2.Style = ToolBarButtonStyle.ToggleButton;
+            btn2.ToolTipText = "This is the second button";
+            toolBar.Buttons.Add(btn2);
+
+            var btn3 = new ToolBarButton("btn3 drop-down");
+            btn3.Style = ToolBarButtonStyle.DropDownButton;
+            btn3.ToolTipText = "This is the third button";
+
+            MenuItem menuItem1 = new MenuItem("Wave");
+            menuItem1.Click += (sender, e) => MessageBox.Show("Wave back");
+            ContextMenu contextMenu1 = new ContextMenu(new MenuItem[] { menuItem1 });
+            btn3.DropDownMenu = contextMenu1;
+            toolBar.Buttons.Add(btn3);
+
+            ToolBarButtonClickEventHandler clickHandler = (object sender, ToolBarButtonClickEventArgs e) =>
+            {
+                MessageBox.Show("Button clicked. text = " + e.Button.Text);
+            };
+
+            toolBar.ButtonClick += clickHandler;
+
+            Controls.Add(toolBar);
+        }
+
+        private void SetUp()
+        {
+            // Create a DataSet with two tables and one relation.
+            MakeDataSet();
+            /* Bind the DataGrid to the DataSet. The dataMember
+            specifies that the Customers table should be displayed.*/
+            myDataGrid.SetDataBinding(myDataSet, "Customers");
+        }
+
+        private void Button1_Click(object sender, System.EventArgs e)
+        {
+            if (TablesAlreadyAdded)
+                return;
+            AddCustomDataTableStyle();
+        }
+
+        private void AddCustomDataTableStyle()
+        {
+            DataGridTableStyle ts1 = new DataGridTableStyle
+            {
+                MappingName = "Customers",
+                // Set other properties.
+                AlternatingBackColor = Color.LightGray
+            };
+
+            /* Add a GridColumnStyle and set its MappingName
+            to the name of a DataColumn in the DataTable.
+            Set the HeaderText and Width properties. */
+
+            DataGridColumnStyle boolCol = new DataGridBoolColumn
+            {
+                MappingName = "Current",
+                HeaderText = "IsCurrent Customer",
+                Width = 150
+            };
+            ts1.GridColumnStyles.Add(boolCol);
+
+            // Add a second column style.
+            DataGridColumnStyle TextCol = new DataGridTextBoxColumn
+            {
+                MappingName = "custName",
+                HeaderText = "Customer Name",
+                Width = 250
+            };
+            ts1.GridColumnStyles.Add(TextCol);
+
+            // Create the second table style with columns.
+            DataGridTableStyle ts2 = new DataGridTableStyle
+            {
+                MappingName = "Orders",
+
+                // Set other properties.
+                AlternatingBackColor = Color.LightBlue
+            };
+
+            // Create new ColumnStyle objects
+            DataGridColumnStyle cOrderDate =
+            new DataGridTextBoxColumn();
+            cOrderDate.MappingName = "OrderDate";
+            cOrderDate.HeaderText = "Order Date";
+            cOrderDate.Width = 100;
+            ts2.GridColumnStyles.Add(cOrderDate);
+
+            /* Use a PropertyDescriptor to create a formatted
+            column. First get the PropertyDescriptorCollection
+            for the data source and data member. */
+            PropertyDescriptorCollection pcol = this.BindingContext[myDataSet, "Customers.custToOrders"].GetItemProperties();
+
+            /* Create a formatted column using a PropertyDescriptor.
+            The formatting character "c" specifies a currency format. */
+            DataGridColumnStyle csOrderAmount =
+            new DataGridTextBoxColumn(pcol["OrderAmount"], "c", true);
+            csOrderAmount.MappingName = "OrderAmount";
+            csOrderAmount.HeaderText = "Total";
+            csOrderAmount.Width = 100;
+            ts2.GridColumnStyles.Add(csOrderAmount);
+
+            /* Add the DataGridTableStyle instances to
+            the GridTableStylesCollection. */
+            myDataGrid.TableStyles.Add(ts1);
+            myDataGrid.TableStyles.Add(ts2);
+
+            // Sets the TablesAlreadyAdded to true so this doesn't happen again.
+            TablesAlreadyAdded = true;
+        }
+
+        private void Button2_Click(object sender, System.EventArgs e)
+        {
+            BindingManagerBase bmGrid;
+            bmGrid = BindingContext[myDataSet, "Customers"];
+            MessageBox.Show("Current BindingManager Position: " + bmGrid.Position);
+        }
+
+        private void Grid_MouseUp(object sender, MouseEventArgs e)
+        {
+            // Create a HitTestInfo object using the HitTest method.
+
+            // Get the DataGrid by casting sender.
+            DataGrid myGrid = (DataGrid)sender;
+            DataGrid.HitTestInfo myHitInfo = myGrid.HitTest(e.X, e.Y);
+            Console.WriteLine(myHitInfo);
+            Console.WriteLine(myHitInfo.Type);
+            Console.WriteLine(myHitInfo.Row);
+            Console.WriteLine(myHitInfo.Column);
+        }
+
+        // Create a DataSet with two tables and populate it.
+        private void MakeDataSet()
+        {
+            // Create a DataSet.
+            myDataSet = new DataSet("myDataSet");
+
+            // Create two DataTables.
+            DataTable tCust = new DataTable("Customers");
+            DataTable tOrders = new DataTable("Orders");
+
+            // Create two columns, and add them to the first table.
+            DataColumn cCustID = new DataColumn("CustID", typeof(int));
+            DataColumn cCustName = new DataColumn("CustName");
+            DataColumn cCurrent = new DataColumn("Current", typeof(bool));
+            tCust.Columns.Add(cCustID);
+            tCust.Columns.Add(cCustName);
+            tCust.Columns.Add(cCurrent);
+
+            // Create three columns, and add them to the second table.
+            DataColumn cID =
+            new DataColumn("CustID", typeof(int));
+            DataColumn cOrderDate =
+            new DataColumn("orderDate", typeof(DateTime));
+            DataColumn cOrderAmount =
+            new DataColumn("OrderAmount", typeof(decimal));
+            tOrders.Columns.Add(cOrderAmount);
+            tOrders.Columns.Add(cID);
+            tOrders.Columns.Add(cOrderDate);
+
+            // Add the tables to the DataSet.
+            myDataSet.Tables.Add(tCust);
+            myDataSet.Tables.Add(tOrders);
+
+            // Create a DataRelation, and add it to the DataSet.
+            DataRelation dr = new DataRelation
+            ("custToOrders", cCustID, cID);
+            myDataSet.Relations.Add(dr);
+
+            /* Populates the tables. For each customer and order,
+            creates two DataRow variables. */
+            DataRow newRow1;
+            DataRow newRow2;
+
+            // Create three customers in the Customers Table.
+            for (int i = 1; i < 4; i++)
+            {
+                newRow1 = tCust.NewRow();
+                newRow1["custID"] = i;
+                // Add the row to the Customers table.
+                tCust.Rows.Add(newRow1);
+            }
+
+            // Give each customer a distinct name.
+            tCust.Rows[0]["custName"] = "Customer1";
+            tCust.Rows[1]["custName"] = "Customer2";
+            tCust.Rows[2]["custName"] = "Customer3";
+
+            // Give the Current column a value.
+            tCust.Rows[0]["Current"] = true;
+            tCust.Rows[1]["Current"] = true;
+            tCust.Rows[2]["Current"] = false;
+
+            // For each customer, create five rows in the Orders table.
+            for (int i = 1; i < 4; i++)
+            {
+                for (int j = 1; j < 6; j++)
+                {
+                    newRow2 = tOrders.NewRow();
+                    newRow2["CustID"] = i;
+                    newRow2["orderDate"] = new DateTime(2001, i, j * 2);
+                    newRow2["OrderAmount"] = i * 10 + j * .1;
+                    // Add the row to the Orders table.
+                    tOrders.Rows.Add(newRow2);
+                }
+            }
+        }
+
+        //private void NewMenuItem_Click(object sender, EventArgs e)
+        //{
+        //    MessageBox.Show("New menu item clicked!");
+        //}
+
+        private void OpenMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Open menu item clicked!");
+        }
+
+        private void SaveMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Save menu item clicked!");
+        }
+
+        private void ExitMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void NewProjectItem_Click(object sender, EventArgs e)
+        {
+            newProjectItem.Checked = !newProjectItem.Checked;
+            MessageBox.Show("Project sub-menu item clicked!");
+        }
+
+        private void NewRepositoryItem_Click(object sender, EventArgs e)
+        {
+            newRepositoryItem.Checked = !newRepositoryItem.Checked;
+            MessageBox.Show("Repository sub-menu item clicked!");
+        }
+
+        private void NewFileItem_Click(object sender, EventArgs e)
+        {
+            newFileItem.Checked = !newFileItem.Checked;
+            MessageBox.Show("File sub-menu item clicked!");
+        }
+
+        private void ToolboxMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Toolbox menu item clicked!");
+        }
+
+        private void TerminalMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Terminal menu item clicked!");
+        }
+
+        private void OutputMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Output menu item clicked!");
+        }
+    }
+}

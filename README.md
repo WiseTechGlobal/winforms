@@ -1,3 +1,41 @@
+# WTG Notes
+
+Migrating obsolete winforms controls to compile and run in Net 8 for CW1's ZArchitecture.
+
+# WTG ChangeLog
+
+| Version | What's changed |
+|------------------|-------------|
+| 0.0.6-dev.final | initial version for net7 and net8 |
+| 0.0.7-dev.final | System.Windows.Forms.Design.dll added to package |
+| 0.0.8-dev.final | net8.0: changed version of System.Drawing.Common.dll (v4.0.0.0 -> v8.0.0.0) to fix Dev build |
+| 0.0.9-dev.final | net8.0: changed versions of all libraries in package to v8.0.0.0 |
+| 0.0.10-dev.final | skipped due to error in publishing |
+| 0.0.11-dev.final | net8.0: remove warning WFDEV001 |
+| 0.0.12-dev.final | avoid type issue when instanciated from ZBindingContext (WI00826420) |
+| 0.0.13-dev.final | comment out Debug.Fail in PaintEventArgs (WI00857973) |
+| 0.0.14-dev.final | switched to using Release configuration assemblies instead of Debug, to avoid Microsoft's plentiful Debug.Assert checks (WI00876922) |
+| 0.0.15-dev.final | removed need for forked System.Drawing.Common. We can use the public package listed on nuget.org now. |
+| 0.0.16-dev.final | fixed issue with keyboard shortcuts associated with menus not being captured (WI00895180) |
+| 0.0.17-dev.final | temporarily fixed WebBrowser memory leak (WI00938771) |
+| 0.0.18-dev.final | fixed menu popup events not firing (WI00949199) |
+| 0.0.19-dev.final | fixed menu bar size not taken into account in form sizing (WI00949199) |
+| 0.0.20-dev.final | Menu property change should trigger size update (WI00949199) |
+| 0.0.21-dev.final | fixed ToolBar tooltip moving the position of the toolbar (WI00951596) |
+| 0.0.22-dev.final | fixed control's anchor info (WI00955507) |
+| 0.0.23-dev.final | fixed disappearing Owner Draw MenuItem (WI00948012) |
+| 0.0.24-dev.final | IT  Customs - NET8 NRE on Customs Declaration MISC Tab (WI01005730) |
+
+
+# WTG How to publish new version
+
+* Do changes in code you want to be published
+* Increase version in $(LIB_ROOT)\eng\Versions.props
+* CH0 on DAT
+* Go to DAT deployments for the CH0 build and click deploy
+
+# End of WTG part, Microsoft part below
+
 # Windows Forms
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/dotnet/winforms/blob/main/LICENSE.TXT)

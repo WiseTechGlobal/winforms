@@ -80,7 +80,7 @@
     <ProjectReference Include="..\..\src\System.Drawing.Common\src\System.Drawing.Common.csproj" />
 
     <!-- Reference and Source System.Windows.Forms -->
-    <ProjectReference Include="..\..\src\System.Windows.Forms\src\System.Windows.Forms.csproj" />
+    <ProjectReference Include="..\..\src\System.Windows.Forms\src\WTG.System.Windows.Forms.csproj" />
 
     <!-- Reference and Source System.Windows.Forms.Primitives -->
     <ProjectReference Include="..\..\src\System.Windows.Forms.Primitives\src\System.Windows.Forms.Primitives.csproj" />
@@ -91,13 +91,11 @@
     <!-- Facade for System.Windows.Forms.Design.Editors -->
     <ProjectReference Include="..\..\src\System.Windows.Forms.Design.Editors\src\System.Windows.Forms.Design.Editors.Facade3x.csproj" />
     
-    <!-- Facade for Microsoft.VisualBasic -->
+    <!-- Facade for Microsoft.VisualBasic --><!--
     <ProjectReference Include="..\..\src\Microsoft.VisualBasic\src\Microsoft.VisualBasic.Facade.csproj" />
 
-    <!-- Reference and Source Microsoft.VisualBasic.Forms -->
-    <ProjectReference Include="..\..\src\Microsoft.VisualBasic.Forms\src\Microsoft.VisualBasic.Forms.vbproj" />
-
-    <ProjectReference Include="..\..\src\Accessibility\src\Accessibility.ilproj" />
+    --><!-- Reference and Source Microsoft.VisualBasic.Forms --><!--
+    <ProjectReference Include="..\..\src\Microsoft.VisualBasic.Forms\src\Microsoft.VisualBasic.Forms.vbproj" />-->
 
     <!-- 
       Analyzers
@@ -105,6 +103,11 @@
     <ProjectReference Include="..\..\src\System.Windows.Forms.Analyzers\src\System.Windows.Forms.Analyzers.csproj" />
     <ProjectReference Include="..\..\src\System.Windows.Forms.Analyzers.CSharp\src\System.Windows.Forms.Analyzers.CSharp.csproj" />
 
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Accessibility">
+      <HintPath>..\..\Accessibility.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <!-- Force the output item type for all project references to "TfmSpecificPackageFile", which makes them get packed -->

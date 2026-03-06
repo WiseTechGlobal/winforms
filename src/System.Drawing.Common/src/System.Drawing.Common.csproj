@@ -2,6 +2,7 @@
   <PropertyGroup>
     <TargetFrameworks>$(NetCurrent);$(NetPrevious);$(NetMinimum);netstandard2.0;$(NetFrameworkMinimum)</TargetFrameworks>
     <TargetFramework />
+    <AssemblyVersion>8.0.0.0</AssemblyVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <WarningsNotAsErrors>CS0618</WarningsNotAsErrors>
     <EnableAOTAnalyzer>false</EnableAOTAnalyzer>
@@ -13,10 +14,15 @@
     <IsShipping>true</IsShipping>
     <IsShippingPackage>true</IsShippingPackage>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+
+    <!-- MG8: commented out for now. it clashes with the fact we have manually set
+      the assembly version to v4.0.0.0 above
+    -->
     <!-- This should point to the last stable released version of this package. -->
-    <PackageValidationBaselineVersion>7.0.0</PackageValidationBaselineVersion>
+    <!--<PackageValidationBaselineVersion>7.0.0</PackageValidationBaselineVersion>-->
+
     <AddXamarinPlaceholderFilesToPackage>true</AddXamarinPlaceholderFilesToPackage>
-    <NoWarn>$(NoWarn);IDE0090</NoWarn>
+    <NoWarn>$(NoWarn);IDE0090;CS0672;SYSLIB0051</NoWarn>
     <PackageDescription>Provides access to GDI+ graphics functionality.
 
 Commonly Used Types:

@@ -314,15 +314,64 @@ public partial class RichTextBox
             CHARRANGE* lpchrg,
             HMENU* hmenu)
         {
-            RichTextDbg.TraceVerbose("IRichEditOleCallback::GetContextMenu");
-
-            // Do nothing, we don't have ContextMenu any longer
-            if (hmenu is not null)
+            Debug.WriteLineIf(RichTextDbg.TraceVerbose, "IRichEditOleCallback::GetContextMenu");
+            ContextMenu cm = _owner.ContextMenu;
+            if (cm == null || _owner.ShortcutsEnabled == false)
             {
-                *hmenu = HMENU.Null;
+                hmenu = (HMENU*)IntPtr.Zero;
+            }
+            else
+            {
+                cm.sourceControl = _owner;
+                cm.OnPopup(EventArgs.Empty);
+                // RichEd calls DestroyMenu after displaying the context menu
+                IntPtr handle = cm.Handle;
+                // if another control shares the same context menu
+                // then we have to mark the context menu's handles empty because
+                // RichTextBox will delete the menu handles once the popup menu is dismissed.
+                Menu menu = cm;
+                while (true)
+                {
+                    int i = 0;
+                    int count = menu.ItemCount;
+                    for (; i < count; i++)
+                    {
+                        if (menu.items[i].handle != IntPtr.Zero)
+                        {
+                            menu = menu.items[i];
+                            break;
+                        }
+                    }
+
+                    if (i == count)
+                    {
+                        menu.handle = IntPtr.Zero;
+                        menu.created = false;
+                        if (menu == cm)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            menu = ((MenuItem)menu).Parent;
+                        }
+                    }
+                }
+
+                hmenu = (HMENU*)handle;
             }
 
             return HRESULT.S_OK;
+
+            //RichTextDbg.TraceVerbose("IRichEditOleCallback::GetContextMenu");
+
+            //// Do nothing, we don't have ContextMenu any longer
+            //if (hmenu is not null)
+            //{
+            //    *hmenu = HMENU.Null;
+            //}
+
+            //return HRESULT.S_OK;
         }
 
         private void UpdateDropDescription(DragEventArgs e)

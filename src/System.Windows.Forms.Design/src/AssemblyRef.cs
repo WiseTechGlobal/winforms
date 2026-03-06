@@ -5,7 +5,7 @@ internal static class FXAssembly
 {
     // NB: this must never-ever change to facilitate type-forwarding from
     // .NET Framework, if those are referenced in .NET project.
-    internal const string Version = "4.0.0.0";
+    internal const string Version = "8.0.0.0";
 }
 
 internal static class AssemblyRef

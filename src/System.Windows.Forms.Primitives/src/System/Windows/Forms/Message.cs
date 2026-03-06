@@ -61,22 +61,26 @@ public struct Message : IEquatable<Message>, IHandle<HWND>
         set => WParamInternal = (nuint)value;
     }
 
+/*
 #if DEBUG
     [Obsolete(
         $"Casting to/from IntPtr is unsafe, use {nameof(LParamInternal)}.",
         DiagnosticId = "WFDEV001")]
 #endif
+*/
     public IntPtr LParam
     {
         readonly get => LParamInternal;
         set => LParamInternal = value;
     }
 
+/*
 #if DEBUG
     [Obsolete(
         $"Casting to/from IntPtr is unsafe, use {nameof(ResultInternal)}.",
         DiagnosticId = "WFDEV001")]
 #endif
+*/
     public IntPtr Result
     {
         readonly get => ResultInternal;
