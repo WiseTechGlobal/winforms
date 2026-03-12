@@ -41,11 +41,11 @@
             using var form = new Form();
             var mainMenu = new MainMenu();
             var fileMenuItem = new MenuItem("File");
-            
+
             // Add popup event handler that adds a menu item when fired
             bool popupEventFired = false;
             MenuItem? addedMenuItem = null;
-            
+
             fileMenuItem.Popup += (sender, e) =>
             {
                 popupEventFired = true;
@@ -62,11 +62,11 @@
 
             // Create the handle so we can send Windows messages
             var handle = form.Handle; // Forces handle creation
-            
+
             // Act - Simulate WM_INITMENUPOPUP message to trigger popup event
             // This is what Windows sends when a menu is about to be displayed
             const uint WM_INITMENUPOPUP = 0x0117;
-            
+
             // Send the message to trigger the popup event
             // The wParam contains the handle to the menu, lParam contains position info
             SendMessage(handle, WM_INITMENUPOPUP, fileMenuItem.Handle, IntPtr.Zero);
@@ -74,13 +74,13 @@
             // Assert
             Assert.True(popupEventFired, "Popup event should have been fired");
             Assert.Single(fileMenuItem.MenuItems);
-            
+
             if (addedMenuItem is not null)
             {
                 Assert.Same(addedMenuItem, fileMenuItem.MenuItems[0]);
                 Assert.Equal("Dynamic Item", fileMenuItem.MenuItems[0].Text);
             }
-            
+
             // Clean up
             form.Dispose();
         }
@@ -93,14 +93,14 @@
             MainMenu mainMenu = new();
             MenuItem fileMenuItem = new("File");
             MenuItem submenu = new("Submenu");
-            
+
             // Add the submenu to the File menu first
             fileMenuItem.MenuItems.Add(submenu);
-            
+
             // Add popup event handler to the File menu (not the submenu)
             bool popupEventFired = false;
             MenuItem? addedMenuItem = null;
-            
+
             fileMenuItem.Popup += (sender, e) =>
             {
                 popupEventFired = true;
@@ -118,10 +118,10 @@
 
             // Create the handle so we can send Windows messages
             var handle = form.Handle; // Forces handle creation
-            
+
             // Act - Simulate WM_INITMENUPOPUP message to the File menu
             const uint WM_INITMENUPOPUP = 0x0117;
-            
+
             // Send the message to trigger the popup event on the File menu
             SendMessage(handle, WM_INITMENUPOPUP, fileMenuItem.Handle, IntPtr.Zero);
 
@@ -129,7 +129,7 @@
             Assert.True(popupEventFired, "Popup event should have been fired");
             Assert.Equal(2, fileMenuItem.MenuItems.Count);
             Assert.Same(submenu, fileMenuItem.MenuItems[0]);
-            
+
             if (addedMenuItem is not null)
             {
                 Assert.Same(addedMenuItem, fileMenuItem.MenuItems[1]);
