@@ -18,23 +18,6 @@ namespace Demo
         private Button button1;
         private Button button2;
 
-        private MainMenu mainMenu;
-        private MenuItem fileMenuItem;
-        private MenuItem newMenuItem;
-        private MenuItem openMenuItem;
-        private MenuItem saveMenuItem;
-        private MenuItem exitMenuItem;
-        private MenuItem newProjectItem;
-        private MenuItem newRepositoryItem;
-        private MenuItem newFileItem;
-        private MenuItem viewMenuItem;
-        private MenuItem toolboxMenuItem;
-        private MenuItem terminalMenuItem;
-        private MenuItem outputMenuItem;
-
-        private ToolBar toolBar;
-        private TreeView treeView;
-
         /// <summary>
         /// Summary description for Form1.
         /// </summary>
@@ -49,110 +32,7 @@ namespace Demo
         {
             InitializeDataGrid();
             SetUp();
-            InitializeMenu();
             InitializeStatusBar();
-            //InitializeMenuStrip();
-
-            InitializeToolBar();
-            InitializeTreeView();
-        }
-
-        private void InitializeTreeView()
-        {
-            this.treeView = new TreeView();
-            this.treeView.Location = new Point(650, 100);
-            this.treeView.Size = new Size(200, 200);
-            this.treeView.CheckBoxes = true;
-
-            TreeNode rootNode = new TreeNode("Root Node")
-            {
-                Nodes =
-                {
-                    new TreeNode("Child Node 1")
-                    {
-                        Nodes =
-                        {
-                            new TreeNode("Sub Child Node 1"),
-                            new TreeNode("Sub Child Node 2")
-                        }
-                    },
-                    new TreeNode("Child Node 2")
-                    {
-                        Nodes =
-                        {
-                            new TreeNode("Sub Child Node 3"),
-                            new TreeNode("Sub Child Node 4")
-                        }
-                    },
-                    new TreeNode("Child Node 3")
-                }
-            };
-
-            this.treeView.Nodes.Add(rootNode);
-
-            this.treeView.ContextMenu = new ContextMenu(
-            [
-                new MenuItem("Option 1"),
-                new MenuItem("Option 2")
-            ]);
-
-            AddContextMenuToNodes(treeView.Nodes);
-
-            Controls.Add(this.treeView);
-        }
-
-        private static void AddContextMenuToNodes(TreeNodeCollection nodes)
-        {
-            foreach (TreeNode node in nodes)
-            {
-                node.ContextMenu = new ContextMenu(
-                new MenuItem[]
-                {
-                        new($"Option for {node.Text}"),
-                        new($"Option 2 for {node.Text}")
-                });
-
-                if (node.Nodes.Count > 0)
-                {
-                    AddContextMenuToNodes(node.Nodes);
-                }
-            }
-        }
-
-        private void InitializeToolBar()
-        {
-            toolBar = new ToolBar();
-            toolBar.Buttons.Add("1st button");
-            var btn1 = toolBar.Buttons[0];
-            btn1.ToolTipText = "This is the first button";
-
-            var sep1 = new ToolBarButton("sep1");
-            sep1.Style = ToolBarButtonStyle.Separator;
-            toolBar.Buttons.Add(sep1);
-
-            var btn2 = new ToolBarButton("btn2 toggle");
-            btn2.Style = ToolBarButtonStyle.ToggleButton;
-            btn2.ToolTipText = "This is the second button";
-            toolBar.Buttons.Add(btn2);
-
-            var btn3 = new ToolBarButton("btn3 drop-down");
-            btn3.Style = ToolBarButtonStyle.DropDownButton;
-            btn3.ToolTipText = "This is the third button";
-
-            MenuItem menuItem1 = new MenuItem("Wave");
-            menuItem1.Click += (sender, e) => MessageBox.Show("Wave back");
-            ContextMenu contextMenu1 = new ContextMenu(new MenuItem[] { menuItem1 });
-            btn3.DropDownMenu = contextMenu1;
-            toolBar.Buttons.Add(btn3);
-
-            ToolBarButtonClickEventHandler clickHandler = (object sender, ToolBarButtonClickEventArgs e) =>
-            {
-                MessageBox.Show("Button clicked. text = " + e.Button.Text);
-            };
-
-            toolBar.ButtonClick += clickHandler;
-
-            Controls.Add(toolBar);
         }
 
         private void SetUp()
@@ -338,57 +218,10 @@ namespace Demo
             }
         }
 
-        //private void NewMenuItem_Click(object sender, EventArgs e)
-        //{
-        //    MessageBox.Show("New menu item clicked!");
-        //}
-
-        private void OpenMenuItem_Click(object sender, EventArgs e)
+        private void OpenMenuStackDemoButton_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Open menu item clicked!");
-        }
-
-        private void SaveMenuItem_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Save menu item clicked!");
-        }
-
-        private void ExitMenuItem_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
-        private void NewProjectItem_Click(object sender, EventArgs e)
-        {
-            newProjectItem.Checked = !newProjectItem.Checked;
-            MessageBox.Show("Project sub-menu item clicked!");
-        }
-
-        private void NewRepositoryItem_Click(object sender, EventArgs e)
-        {
-            newRepositoryItem.Checked = !newRepositoryItem.Checked;
-            MessageBox.Show("Repository sub-menu item clicked!");
-        }
-
-        private void NewFileItem_Click(object sender, EventArgs e)
-        {
-            newFileItem.Checked = !newFileItem.Checked;
-            MessageBox.Show("File sub-menu item clicked!");
-        }
-
-        private void ToolboxMenuItem_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Toolbox menu item clicked!");
-        }
-
-        private void TerminalMenuItem_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Terminal menu item clicked!");
-        }
-
-        private void OutputMenuItem_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Output menu item clicked!");
+            MenuStackForm menuStackForm = new();
+            menuStackForm.Show(this);
         }
     }
 }

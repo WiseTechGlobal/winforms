@@ -5,12 +5,6 @@ namespace System.Windows.Forms;
 
 public partial class TreeNode
 {
-    public ContextMenu ContextMenu
-    {
-        get => throw new PlatformNotSupportedException();
-        set => throw new PlatformNotSupportedException();
-    }
-
     // We need a special way to defer to the TreeView's image
     // list for indexing purposes.
     internal partial class TreeNodeImageIndexer : ImageList.Indexer

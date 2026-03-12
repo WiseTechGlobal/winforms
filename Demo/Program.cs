@@ -22,7 +22,7 @@ namespace Demo
             Application.SetHighDpiMode(HighDpiMode.DpiUnaware);
 #endif
             //ApplicationConfiguration.Initialize();
-            Application.Run(new Form1());
+            Application.Run(new MenuStackForm());
         }
     }
 }
