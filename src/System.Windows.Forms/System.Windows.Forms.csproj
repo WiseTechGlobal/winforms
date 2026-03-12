@@ -20,6 +20,24 @@
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
     <UsePublicApiAnalyzers>true</UsePublicApiAnalyzers>
     <StrongNameKeyId>ECMA</StrongNameKeyId>
+  
+    <!--
+      Microsoft use Arcade to handle the building of WinForms (and other things .net).
+      See: https://github.com/dotnet/arcade/blob/main/Documentation/Overview.md
+
+      Arcade puts everything in the Artifacts folder of this repo.
+      DAT needs all output to be in the Bin folder of the repo, so we need to override Arcade
+
+      The RepoRoot variable was discovered by opening Developer Command Prompt for VS 2022 and running:
+        msbuild src\System.Windows.Forms\src\WTG.System.Windows.Forms.csproj -preprocess:out.xml
+    -->
+    <OutputPath>$([System.IO.Path]::GetFullPath('$(RepoRoot)Bin\$(OutDirName)\'))</OutputPath>
+    <IsPackable>true</IsPackable>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>WTG.System.Windows.Forms</PackageId>
+    <PackageDescription>WiseTech Global forked version of System.Windows.Forms that includes controls that were deprecated in .NET Core 3.1 and .NET 5, like DataGrid, Menu, ToolBar and StatusBar.</PackageDescription>
+    <Authors>WiseTech Global</Authors>
+    <Copyright>© WiseTech Global Limited. All rights reserved.</Copyright>
   </PropertyGroup>
 
   <ItemGroup>

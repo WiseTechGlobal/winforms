@@ -2,9 +2,9 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="Version.Details.props" Condition="Exists('Version.Details.props')" />
   <PropertyGroup>
-    <MajorVersion>10</MajorVersion>
+    <MajorVersion>0</MajorVersion>
     <MinorVersion>0</MinorVersion>
-    <PatchVersion>6</PatchVersion>
+    <PatchVersion>25</PatchVersion>
     <!-- version in our package name #.#.#-below.#####.## -->
     <PreReleaseVersionLabel>servicing</PreReleaseVersionLabel>
     <PreReleaseVersionIteration></PreReleaseVersionIteration>
@@ -31,6 +31,9 @@
     <!-- This is needed for Verify.Xunit to pull correct version of System.Speech -->
     <MicrosoftWindowsCompatibilityVersion>7.0.0</MicrosoftWindowsCompatibilityVersion>
     <MoqPackageVersion>4.20.70</MoqPackageVersion>
+    <NUnitPackageVersion>3.14.0</NUnitPackageVersion>
+    <NUnitAnalyzersPackageVersion>3.9.0</NUnitAnalyzersPackageVersion>
+    <NUnit3TestAdapterPackageVersion>4.6.0</NUnit3TestAdapterPackageVersion>
     <AwesomeAssertionsVersion>8.0.2</AwesomeAssertionsVersion>
     <SystemComponentModelTypeConverterTestDataVersion>10.0.0-beta.24568.1</SystemComponentModelTypeConverterTestDataVersion>
     <SystemDrawingCommonTestDataVersion>10.0.0-beta.24568.1</SystemDrawingCommonTestDataVersion>
@@ -39,6 +42,7 @@
   </PropertyGroup>
   <!-- Code Coverage -->
   <PropertyGroup>
+    <CoverletCollectorPackageVersion>6.0.0</CoverletCollectorPackageVersion>
     <CoverletMSBuildPackageVersion>6.0.0</CoverletMSBuildPackageVersion>
     <CodecovVersion>1.12.3</CodecovVersion>
     <ReportGeneratorVersion>4.3.6</ReportGeneratorVersion>
