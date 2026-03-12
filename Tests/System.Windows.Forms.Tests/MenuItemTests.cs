@@ -1,10 +1,9 @@
 ﻿namespace System.Windows.Forms.Tests
 {
-    [TestFixture]
     public class MenuItemTests
     {
 #pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-        [Test]
+    [StaFact]
         public void MenuItem_OnDrawItem_Invoke_Success()
         {
             var menuItem = new SubMenuItem();
@@ -16,21 +15,21 @@
             int callCount = 0;
             DrawItemEventHandler handler = (sender, e) =>
             {
-                Assert.That(sender, Is.EqualTo(menuItem));
+                Assert.Same(menuItem, sender);
                 callCount++;
             };
 
             menuItem.DrawItem += handler;
             menuItem.OnDrawItem(null);
-            Assert.That(callCount, Is.EqualTo(1));
+            Assert.Equal(1, callCount);
 
             // Should not call if the handler is removed.
             menuItem.DrawItem -= handler;
             menuItem.OnDrawItem(null);
-            Assert.That(callCount, Is.EqualTo(1));
+            Assert.Equal(1, callCount);
         }
 
-        [Test]
+        [StaFact]
         public void MenuItem_OnDrawItem_Disposed_ThrowsObjectDisposedException()
         {
             var menuItem = new SubMenuItem();
@@ -38,7 +37,7 @@
             Assert.Throws<ObjectDisposedException>(() => menuItem.OnDrawItem(null));
         }
 
-        [Test]
+        [StaFact]
         public void MenuItem_DrawItem_Disposed_ThrowsObjectDisposedException()
         {
             var menuItem = new SubMenuItem();
@@ -48,7 +47,7 @@
             Assert.Throws<ObjectDisposedException>(() => menuItem.DrawItem -= handler);
         }
 
-        [Test]
+        [StaFact]
         public void MenuItem_OnMeasureItem_Invoke_Success()
         {
             var menuItem = new SubMenuItem();
@@ -60,21 +59,21 @@
             int callCount = 0;
             MeasureItemEventHandler handler = (sender, e) =>
             {
-                Assert.That(sender, Is.EqualTo(menuItem));
+                Assert.Same(menuItem, sender);
                 callCount++;
             };
 
             menuItem.MeasureItem += handler;
             menuItem.OnMeasureItem(null);
-            Assert.That(callCount, Is.EqualTo(1));
+            Assert.Equal(1, callCount);
 
             // Should not call if the handler is removed.
             menuItem.MeasureItem -= handler;
             menuItem.OnMeasureItem(null);
-            Assert.That(callCount, Is.EqualTo(1));
+            Assert.Equal(1, callCount);
         }
 
-        [Test]
+        [StaFact]
         public void MenuItem_OnMeasureItem_Disposed_ThrowsObjectDisposedException()
         {
             var menuItem = new SubMenuItem();
@@ -82,7 +81,7 @@
             Assert.Throws<ObjectDisposedException>(() => menuItem.OnMeasureItem(null));
         }
 
-        [Test]
+        [StaFact]
         public void MenuItem_MeasureItem_Disposed_ThrowsObjectDisposedException()
         {
             var menuItem = new SubMenuItem();

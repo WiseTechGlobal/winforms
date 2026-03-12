@@ -1,13 +1,12 @@
 ﻿namespace System.Windows.Forms.Tests
 {
-    [TestFixture]
-    [SingleThreaded]
     public class TabControlTests
     {
-        [Test]
+        [StaFact]
         public void TabControl_ClearTabsWhileSelected_DoesNotThrowNullReferenceException()
         {
             Exception? capturedException = null;
+            string? failureMessage = null;
             ThreadExceptionEventHandler handler = (_, e) => capturedException = e.Exception;
 
             Application.ThreadException += handler;
@@ -32,16 +31,21 @@
                 Application.DoEvents();
                 System.Threading.Thread.Sleep(10);
 
-                Assert.That(control.TabPages.Count, Is.EqualTo(0));
-                Assert.That(control.SelectedTab, Is.Null);
+                Assert.Empty(control.TabPages);
+                Assert.Null(control.SelectedTab);
             }
             finally
             {
                 Application.ThreadException -= handler;
                 if (capturedException is not null)
                 {
-                    Assert.Fail($"Unhandled exception: {capturedException.GetType().Name}\n{capturedException.Message}\n{capturedException.StackTrace}");
+                    failureMessage = $"Unhandled exception: {capturedException.GetType().Name}\n{capturedException.Message}\n{capturedException.StackTrace}";
                 }
+            }
+
+            if (failureMessage is not null)
+            {
+                throw new Xunit.Sdk.XunitException(failureMessage);
             }
         }
     }

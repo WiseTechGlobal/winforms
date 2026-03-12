@@ -1,10 +1,8 @@
 ﻿namespace System.Windows.Forms.Tests
 {
-    [TestFixture]
-    [SingleThreaded]
     public class TreeViewTests
     {
-        [Test]
+        [StaFact]
         public void ContextMenu_SetAndGet_ReturnsCorrectValue()
         {
             // Arrange
@@ -15,7 +13,7 @@
             treeView.ContextMenu = contextMenu;
 
             // Assert
-            Assert.That(treeView.ContextMenu, Is.EqualTo(contextMenu));
+            Assert.Same(contextMenu, treeView.ContextMenu);
         }
 
         // Commenting out this test, as it doesn't work in DAT
@@ -73,7 +71,7 @@
         //    form.ShowDialog();
         //}
 
-        [Test]
+        [StaFact]
         public void ContextMenu_ContainsExpectedItems()
         {
             // Arrange
@@ -87,8 +85,8 @@
             var items = treeView.ContextMenu.MenuItems;
 
             // Assert
-            Assert.That(items.Count, Is.EqualTo(1));
-            Assert.That(items[0].Text, Is.EqualTo("Test Item"));
+            Assert.Single(items);
+            Assert.Equal("Test Item", items[0].Text);
         }
     }
 }

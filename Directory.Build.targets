@@ -91,7 +91,9 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <RuntimeFrameworkVersion Condition="'$(MicrosoftNETCoreAppRefPackageVersion)'!='' And $(TargetFramework.StartsWith('$(RedistTargetFrameworkName)')) ">$(MicrosoftNETCoreAppRefPackageVersion)</RuntimeFrameworkVersion>
+    <RuntimeFrameworkVersion Condition="'$(DisablePinnedRuntimeFrameworkVersion)' == 'true' And $(TargetFramework.StartsWith('$(RedistTargetFrameworkName)'))" />
+
+    <RuntimeFrameworkVersion Condition="'$(DisablePinnedRuntimeFrameworkVersion)' != 'true' And '$(MicrosoftNETCoreAppRefPackageVersion)'!='' And $(TargetFramework.StartsWith('$(RedistTargetFrameworkName)')) ">$(MicrosoftNETCoreAppRefPackageVersion)</RuntimeFrameworkVersion>
 
     <!-- If TargetFramework is not net8.x, then reset RuntimeFrameworkVersion -->
     <RuntimeFrameworkVersion Condition="!$(TargetFramework.StartsWith('$(RedistTargetFrameworkName)'))" />

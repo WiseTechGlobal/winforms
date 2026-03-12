@@ -2,11 +2,9 @@
 {
     using System.Drawing;
 
-    [TestFixture]
-    [SingleThreaded]
     public class MenuSizeCalculationTests
     {
-        [Test]
+        [StaFact]
         public void Form_WithMenu_HasCorrectWindowSize()
         {
             // Arrange
@@ -24,19 +22,18 @@
             formWithoutMenu.ClientSize = clientSize;
             
             // Assert
-            Assert.That(formWithMenu.ClientSize, Is.EqualTo(clientSize), "Form with menu should have correct client size");
-            Assert.That(formWithoutMenu.ClientSize, Is.EqualTo(clientSize), "Form without menu should have correct client size");
+            Assert.Equal(clientSize, formWithMenu.ClientSize);
+            Assert.Equal(clientSize, formWithoutMenu.ClientSize);
             
             // The key test: form with menu should be taller due to menu bar
-            Assert.That(formWithMenu.Size.Height, Is.GreaterThan(formWithoutMenu.Size.Height), 
+            Assert.True(formWithMenu.Size.Height > formWithoutMenu.Size.Height,
                 "Form with menu should be taller than form without menu (accounts for menu bar height)");
                 
             // Width should be the same (menu doesn't affect width)
-            Assert.That(formWithMenu.Size.Width, Is.EqualTo(formWithoutMenu.Size.Width), 
-                "Form width should not be affected by menu presence");
+            Assert.Equal(formWithoutMenu.Size.Width, formWithMenu.Size.Width);
         }
 
-        [Test]
+        [StaFact]
         public void Form_WithEmptyMenu_SameHeightAsFormWithoutMenu()
         {
             // Arrange
@@ -54,11 +51,10 @@
             
             // Assert
             // According to the implementation, empty menus should not affect window height
-            Assert.That(formWithEmptyMenu.Size.Height, Is.EqualTo(formWithoutMenu.Size.Height), 
-                "Form with empty menu should have same height as form without menu");
+            Assert.Equal(formWithoutMenu.Size.Height, formWithEmptyMenu.Size.Height);
         }
 
-        [Test]
+        [StaFact]
         public void Form_MenuAddedAfterCreation_AdjustsSize()
         {
             // Arrange
@@ -75,13 +71,12 @@
             form.ClientSize = clientSize; // Trigger recalculation
             
             // Assert
-            Assert.That(form.Size.Height, Is.GreaterThan(initialHeight), 
+            Assert.True(form.Size.Height > initialHeight,
                 "Form height should increase when menu with items is added");
-            Assert.That(form.ClientSize, Is.EqualTo(clientSize), 
-                "Client size should remain consistent after menu addition");
+            Assert.Equal(clientSize, form.ClientSize);
         }
 
-        [Test]
+        [StaFact]
         public void Form_MenuRemovedAfterCreation_AdjustsSize()
         {
             // Arrange
@@ -99,13 +94,12 @@
             form.ClientSize = clientSize; // Trigger recalculation
             
             // Assert
-            Assert.That(form.Size.Height, Is.LessThan(heightWithMenu), 
+            Assert.True(form.Size.Height < heightWithMenu,
                 "Form height should decrease when menu is removed");
-            Assert.That(form.ClientSize, Is.EqualTo(clientSize), 
-                "Client size should remain consistent after menu removal");
+            Assert.Equal(clientSize, form.ClientSize);
         }
 
-        [Test]
+        [StaFact]
         public void Form_NonTopLevel_MenuDoesNotAffectSize()
         {
             // Arrange
@@ -131,11 +125,10 @@
             
             // Assert
             // Non-top-level forms should not account for menus in sizing
-            Assert.That(childForm.Size.Height, Is.EqualTo(childFormNoMenu.Size.Height), 
-                "Non-top-level forms should not be affected by menu presence");
+            Assert.Equal(childFormNoMenu.Size.Height, childForm.Size.Height);
         }
 
-        [Test]
+        [StaFact]
         public void MDIChild_MenuDoesNotAffectSize()
         {
             // Arrange
@@ -160,11 +153,10 @@
             
             // Assert
             // MDI children should not account for menus in sizing
-            Assert.That(mdiChild1.Size.Height, Is.EqualTo(mdiChild2.Size.Height), 
-                "MDI child forms should not be affected by menu presence");
+            Assert.Equal(mdiChild2.Size.Height, mdiChild1.Size.Height);
         }
 
-        [Test]
+        [StaFact]
         public void Form_MenuWithMultipleItems_SameHeightAsMenuWithOneItem()
         {
             // Arrange
@@ -189,11 +181,10 @@
             
             // Assert
             // Number of menu items shouldn't affect form height (all in same menu bar)
-            Assert.That(formWithMultipleMenuItems.Size.Height, Is.EqualTo(formWithOneMenuItem.Size.Height), 
-                "Forms should have same height regardless of number of menu items");
+            Assert.Equal(formWithOneMenuItem.Size.Height, formWithMultipleMenuItems.Size.Height);
         }
 
-        [Test]
+        [StaFact]
         public void Form_MenuWithSubmenus_SameHeightAsMenuWithoutSubmenus()
         {
             // Arrange
@@ -219,11 +210,10 @@
             
             // Assert
             // Submenus shouldn't affect form height (they're dropdowns)
-            Assert.That(formWithSubmenu.Size.Height, Is.EqualTo(formWithoutSubmenu.Size.Height), 
-                "Forms should have same height regardless of submenu complexity");
+            Assert.Equal(formWithoutSubmenu.Size.Height, formWithSubmenu.Size.Height);
         }
 
-        [Test]
+        [StaFact]
         public void Form_SetClientSizeMultipleTimes_ConsistentBehavior()
         {
             // Test that the HasMenu logic is consistently applied
@@ -239,21 +229,20 @@
             
             // Act & Assert
             form.ClientSize = clientSize1;
-            Assert.That(form.ClientSize, Is.EqualTo(clientSize1), "First client size setting should work correctly");
+            Assert.Equal(clientSize1, form.ClientSize);
             var height1 = form.Size.Height;
             
             form.ClientSize = clientSize2;
-            Assert.That(form.ClientSize, Is.EqualTo(clientSize2), "Second client size setting should work correctly");
+            Assert.Equal(clientSize2, form.ClientSize);
             var height2 = form.Size.Height;
             
             // The height difference should be proportional to client size difference
             var clientHeightDiff = clientSize2.Height - clientSize1.Height;
             var windowHeightDiff = height2 - height1;
-            Assert.That(windowHeightDiff, Is.EqualTo(clientHeightDiff), 
-                "Window height difference should equal client height difference (menu bar height is constant)");
+            Assert.Equal(clientHeightDiff, windowHeightDiff);
         }
 
-        [Test]
+        [StaFact]
         public void Form_MenuRemovedBeforeHandleCreated_SizeUpdatesImmediately()
         {
             // This test verifies the fix for the issue where setting Menu to null 
@@ -285,15 +274,13 @@
             var sizeWithoutMenu = form.Size;
             
             // The form size should be updated immediately when menu is removed
-            Assert.That(sizeWithoutMenu.Height, Is.LessThan(sizeWithMenu.Height), 
+            Assert.True(sizeWithoutMenu.Height < sizeWithMenu.Height,
                 "Form height should decrease immediately when menu is removed before handle creation");
             
-            Assert.That(form.ClientSize, Is.EqualTo(targetClientSize), 
-                "Client size should remain the target size after menu removal");
+            Assert.Equal(targetClientSize, form.ClientSize);
             
             // Width should remain the same
-            Assert.That(sizeWithoutMenu.Width, Is.EqualTo(sizeWithMenu.Width), 
-                "Form width should not change when menu is removed");
+            Assert.Equal(sizeWithMenu.Width, sizeWithoutMenu.Width);
         }
     }
 }

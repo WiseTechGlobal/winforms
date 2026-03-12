@@ -2,11 +2,9 @@
 {
     using System.Drawing;
 
-    [TestFixture]
-    [SingleThreaded]
     public class AdjustWindowRectTests
     {
-        [Test]
+        [StaFact]
         public void Form_WindowRectCalculation_HandlesDpiScaling()
         {
             // Test that menu consideration works across different DPI scenarios
@@ -32,11 +30,10 @@
             var clientSizeChange = new Size(200, 150); // 600-400, 450-300
             var windowSizeChange = new Size(newWindowSize.Width - windowSize.Width, newWindowSize.Height - windowSize.Height);
             
-            Assert.That(windowSizeChange, Is.EqualTo(clientSizeChange),
-                "Window size changes should match client size changes when menu is present");
+            Assert.Equal(clientSizeChange, windowSizeChange);
         }
 
-        [Test]
+        [StaFact]
         public void Form_CreateParams_MenuConsideredInWindowRectCalculation()
         {
             // Test that CreateParams and window rect calculations are consistent
@@ -64,11 +61,11 @@
             formWithMenu.ClientSize = new Size(250, 150);
             formWithoutMenu.ClientSize = new Size(250, 150);
             
-            Assert.That(formWithMenu.Size.Height, Is.GreaterThan(formWithoutMenu.Size.Height),
+            Assert.True(formWithMenu.Size.Height > formWithoutMenu.Size.Height,
                 "After handle creation, form with menu should still be taller");
         }
 
-        [Test]
+        [StaFact]
         public void ToolStripTextBox_InFormWithMenu_IndependentSizing()
         {
             // Test that ToolStripTextBox in a form with menu isn't affected by the form's menu
@@ -96,11 +93,10 @@
             textBox2.Size = new Size(120, 22);
             
             // Assert
-            Assert.That(textBox1.Size, Is.EqualTo(textBox2.Size),
-                "ToolStripTextBox should not be affected by parent form's menu");
+            Assert.Equal(textBox2.Size, textBox1.Size);
         }
 
-        [Test]
+        [StaFact]
         public void Control_SizeCalculations_ConsistentForDifferentControlTypes()
         {
             // Test various control types to ensure they handle menu considerations correctly
@@ -119,7 +115,7 @@
             form1.ClientSize = clientSize;
             form2.ClientSize = clientSize;
 
-            var controlTypes = new Func<Control>[]
+            Func<Control>[] controlTypes =
             {
                 () => new Button(),
                 () => new Label(),
@@ -140,12 +136,11 @@
                 form1.Controls.Add(control1);
                 form2.Controls.Add(control2);
 
-                Assert.That(control1.Size, Is.EqualTo(control2.Size),
-                    $"{control1.GetType().Name} controls should have consistent sizing behavior");
+                Assert.Equal(control2.Size, control1.Size);
             }
         }
 
-        [Test]
+            [StaFact]
         public void Form_MenuVisibility_AffectsWindowSizeCalculation()
         {
             // Test the specific logic: menu only affects size if it has items
@@ -171,14 +166,13 @@
             
             // Assert
             // Forms 1 and 2 should have same height (no menu or empty menu)
-            Assert.That(form1.Size.Height, Is.EqualTo(form2.Size.Height),
-                "Form with no menu and form with empty menu should have same height");
+            Assert.Equal(form2.Size.Height, form1.Size.Height);
                 
             // Form 3 should be taller (has menu items)
-            Assert.That(form3.Size.Height, Is.GreaterThan(form1.Size.Height),
+            Assert.True(form3.Size.Height > form1.Size.Height,
                 "Form with menu items should be taller than form without menu");
                 
-            Assert.That(form3.Size.Height, Is.GreaterThan(form2.Size.Height),
+            Assert.True(form3.Size.Height > form2.Size.Height,
                 "Form with menu items should be taller than form with empty menu");
         }
     }

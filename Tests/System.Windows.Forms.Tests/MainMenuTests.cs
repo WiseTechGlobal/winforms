@@ -3,40 +3,38 @@
     using System.Drawing;
     using System.Runtime.InteropServices;
 
-    [TestFixture]
-    [SingleThreaded]
     public class MainMenuTests
     {
-        [Test]
+        [StaFact]
         public void MainMenu_SetAndGet_ReturnsCorrectValue()
         {
             // Arrange
-            var form = new Form();
-            var mainMenu = new MainMenu();
+            using Form form = new();
+            MainMenu mainMenu = new();
 
             // Act
             form.Menu = mainMenu;
 
             // Assert
-            Assert.That(form.Menu, Is.EqualTo(mainMenu));
+            Assert.Same(mainMenu, form.Menu);
         }
 
-        [Test]
+        [StaFact]
         public void MainMenu_AddMenuItem_ReturnsCorrectMenuItem()
         {
             // Arrange
-            var mainMenu = new MainMenu();
-            var menuItem = new MenuItem("Test Item");
+            MainMenu mainMenu = new();
+            MenuItem menuItem = new("Test Item");
 
             // Act
             mainMenu.MenuItems.Add(menuItem);
 
             // Assert
-            Assert.That(mainMenu.MenuItems.Count, Is.EqualTo(1));
-            Assert.That(mainMenu.MenuItems[0], Is.EqualTo(menuItem));
+            Assert.Single(mainMenu.MenuItems);
+            Assert.Same(menuItem, mainMenu.MenuItems[0]);
         }
 
-        [Test]
+        [StaFact]
         public void MainMenu_FileMenuPopup_AddsMenuItemOnPopup()
         {
             // Arrange
@@ -60,7 +58,7 @@
             form.Size = new Size(400, 300);
 
             // Initially, the File menu should have no items
-            Assert.That(fileMenuItem.MenuItems.Count, Is.EqualTo(0));
+            Assert.Empty(fileMenuItem.MenuItems);
 
             // Create the handle so we can send Windows messages
             var handle = form.Handle; // Forces handle creation
@@ -71,30 +69,30 @@
             
             // Send the message to trigger the popup event
             // The wParam contains the handle to the menu, lParam contains position info
-            IntPtr result = SendMessage(handle, WM_INITMENUPOPUP, fileMenuItem.Handle, IntPtr.Zero);
+            SendMessage(handle, WM_INITMENUPOPUP, fileMenuItem.Handle, IntPtr.Zero);
 
             // Assert
-            Assert.That(popupEventFired, Is.True, "Popup event should have been fired");
-            Assert.That(fileMenuItem.MenuItems.Count, Is.EqualTo(1), "File menu should have one item after popup");
+            Assert.True(popupEventFired, "Popup event should have been fired");
+            Assert.Single(fileMenuItem.MenuItems);
             
             if (addedMenuItem is not null)
             {
-                Assert.That(fileMenuItem.MenuItems[0], Is.EqualTo(addedMenuItem), "The added item should be in the file menu");
-                Assert.That(fileMenuItem.MenuItems[0].Text, Is.EqualTo("Dynamic Item"), "The added item should have the correct text");
+                Assert.Same(addedMenuItem, fileMenuItem.MenuItems[0]);
+                Assert.Equal("Dynamic Item", fileMenuItem.MenuItems[0].Text);
             }
             
             // Clean up
             form.Dispose();
         }
 
-        [Test]
+        [StaFact]
         public void MainMenu_FileMenuWithSubmenu_PopupAddsItemToFileMenu()
         {
             // Arrange
-            var form = new Form();
-            var mainMenu = new MainMenu();
-            var fileMenuItem = new MenuItem("File");
-            var submenu = new MenuItem("Submenu");
+            using Form form = new();
+            MainMenu mainMenu = new();
+            MenuItem fileMenuItem = new("File");
+            MenuItem submenu = new("Submenu");
             
             // Add the submenu to the File menu first
             fileMenuItem.MenuItems.Add(submenu);
@@ -115,8 +113,8 @@
             form.Size = new Size(400, 300);
 
             // Initially, the File menu should have 1 item (the submenu)
-            Assert.That(fileMenuItem.MenuItems.Count, Is.EqualTo(1));
-            Assert.That(fileMenuItem.MenuItems[0], Is.EqualTo(submenu));
+            Assert.Single(fileMenuItem.MenuItems);
+            Assert.Same(submenu, fileMenuItem.MenuItems[0]);
 
             // Create the handle so we can send Windows messages
             var handle = form.Handle; // Forces handle creation
@@ -125,21 +123,18 @@
             const uint WM_INITMENUPOPUP = 0x0117;
             
             // Send the message to trigger the popup event on the File menu
-            IntPtr result = SendMessage(handle, WM_INITMENUPOPUP, fileMenuItem.Handle, IntPtr.Zero);
+            SendMessage(handle, WM_INITMENUPOPUP, fileMenuItem.Handle, IntPtr.Zero);
 
             // Assert
-            Assert.That(popupEventFired, Is.True, "Popup event should have been fired");
-            Assert.That(fileMenuItem.MenuItems.Count, Is.EqualTo(2), "File menu should have two items after popup");
-            Assert.That(fileMenuItem.MenuItems[0], Is.EqualTo(submenu), "The original submenu should still be there");
+            Assert.True(popupEventFired, "Popup event should have been fired");
+            Assert.Equal(2, fileMenuItem.MenuItems.Count);
+            Assert.Same(submenu, fileMenuItem.MenuItems[0]);
             
             if (addedMenuItem is not null)
             {
-                Assert.That(fileMenuItem.MenuItems[1], Is.EqualTo(addedMenuItem), "The added item should be in the file menu");
-                Assert.That(fileMenuItem.MenuItems[1].Text, Is.EqualTo("Dynamic Item Added to File"), "The added item should have the correct text");
+                Assert.Same(addedMenuItem, fileMenuItem.MenuItems[1]);
+                Assert.Equal("Dynamic Item Added to File", fileMenuItem.MenuItems[1].Text);
             }
-            
-            // Clean up
-            form.Dispose();
         }
 
         [DllImport("user32.dll")]

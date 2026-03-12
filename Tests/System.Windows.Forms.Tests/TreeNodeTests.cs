@@ -1,10 +1,8 @@
 ﻿namespace System.Windows.Forms.Tests
 {
-    [TestFixture]
-    [SingleThreaded]
     public class TreeNodeTests
     {
-        [Test]
+        [StaFact]
         public void Text_SetAndGet_ReturnsCorrectValue()
         {
             // Arrange
@@ -15,10 +13,10 @@
             treeNode.Text = text;
 
             // Assert
-            Assert.That(treeNode.Text, Is.EqualTo(text));
+            Assert.Equal(text, treeNode.Text);
         }
 
-        [Test]
+        [StaFact]
         public void Nodes_AddAndGet_ReturnsCorrectNodes()
         {
             // Arrange
@@ -29,11 +27,11 @@
             parentNode.Nodes.Add(childNode);
 
             // Assert
-            Assert.That(parentNode.Nodes.Count, Is.EqualTo(1));
-            Assert.That(parentNode.Nodes[0], Is.EqualTo(childNode));
+            Assert.Single(parentNode.Nodes);
+            Assert.Same(childNode, parentNode.Nodes[0]);
         }
 
-        [Test]
+        [StaFact]
         public void Parent_SetAndGet_ReturnsCorrectParent()
         {
             // Arrange
@@ -44,10 +42,10 @@
             parentNode.Nodes.Add(childNode);
 
             // Assert
-            Assert.That(childNode.Parent, Is.EqualTo(parentNode));
+            Assert.Same(parentNode, childNode.Parent);
         }
 
-        [Test]
+        [StaFact]
         public void Remove_RemovesNodeFromParent()
         {
             // Arrange
@@ -59,11 +57,11 @@
             parentNode.Nodes.Remove(childNode);
 
             // Assert
-            Assert.That(parentNode.Nodes.Count, Is.EqualTo(0));
-            Assert.That(childNode.Parent, Is.Null);
+            Assert.Empty(parentNode.Nodes);
+            Assert.Null(childNode.Parent);
         }
 
-        [Test]
+        [StaFact]
         public void TreeView_SetAndGet_ReturnsCorrectTreeView()
         {
             // Arrange
@@ -74,7 +72,7 @@
             treeView.Nodes.Add(treeNode);
 
             // Assert
-            Assert.That(treeNode.TreeView, Is.EqualTo(treeView));
+            Assert.Same(treeView, treeNode.TreeView);
         }
 
         // Commenting out this test, as it doesn't work in DAT

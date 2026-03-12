@@ -8,9 +8,6 @@ using DrawingSize = System.Drawing.Size;
 
 namespace System.Windows.Forms.Tests
 {
-    [TestFixture]
-    [SingleThreaded]
-    [Apartment(ApartmentState.STA)]
     public class ToolBarToolTipTests
     {
         // Minimal interop needed for this test (use internal wrappers/constants where available)
@@ -78,7 +75,7 @@ namespace System.Windows.Forms.Tests
             }
         }
 
-        [Test]
+        [StaFact]
         public void ToolBar_ToolTip_Show_DoesNotMove_ToolBar()
         {
             using var form = new Form
@@ -102,11 +99,11 @@ namespace System.Windows.Forms.Tests
             Application.DoEvents();
 
             // Precondition: toolbar starts at 0,0
-            Assert.That(toolBar.Location, Is.EqualTo(new DrawingPoint(0, 0)));
+            Assert.Equal(new DrawingPoint(0, 0), toolBar.Location);
 
             // Get the native tooltip HWND created by the toolbar
             HWND tooltipHwnd = (HWND)PInvokeCore.SendMessage(toolBar, PInvoke.TB_GETTOOLTIPS);
-            Assert.That(tooltipHwnd, Is.Not.EqualTo(HWND.Null), "Expected native tooltip window");
+            Assert.True(tooltipHwnd != HWND.Null, "Expected native tooltip window");
 
             // Force the tooltip window top-left at (0,0) so TTN_SHOW logic will try to reposition it
             PInvoke.SetWindowPos(tooltipHwnd, HWND.Null, 0, 0, 0, 0,
@@ -132,12 +129,12 @@ namespace System.Windows.Forms.Tests
 
             // Assertion: Showing the tooltip must NOT move the toolbar.
             // This would fail under the original bug where SetWindowPos targeted the toolbar HWND.
-            Assert.That(toolBar.Location, Is.EqualTo(new DrawingPoint(0, 0)), "ToolBar moved unexpectedly during TTN_SHOW processing");
+            Assert.Equal(new DrawingPoint(0, 0), toolBar.Location);
 
             form.Close();
         }
 
-        [Test]
+        [StaFact]
         public void ToolBar_ToolTip_Show_Returns_1_When_Tooltip_Is_At_0_0()
         {
             using var form = new Form
@@ -161,11 +158,11 @@ namespace System.Windows.Forms.Tests
             Application.DoEvents();
 
             // Ensure toolbar is not at 0,0 so wrong GetWindowPlacement handle avoids the reposition branch
-            Assert.That(toolBar.Location, Is.EqualTo(new DrawingPoint(10, 10)));
+            Assert.Equal(new DrawingPoint(10, 10), toolBar.Location);
 
             // Acquire native tooltip HWND
             HWND tooltipHwnd = (HWND)PInvokeCore.SendMessage(toolBar, PInvoke.TB_GETTOOLTIPS);
-            Assert.That(tooltipHwnd, Is.Not.EqualTo(HWND.Null));
+            Assert.NotEqual(HWND.Null, tooltipHwnd);
 
             // Force the tooltip at (0,0) to trigger the reposition path when correct handle is used
             PInvoke.SetWindowPos(tooltipHwnd, HWND.Null, 0, 0, 0, 0,
@@ -189,12 +186,12 @@ namespace System.Windows.Forms.Tests
 
             // Expect: when the correct window (tooltip) is queried for placement, TTN_SHOW repositions and returns 1.
             // With the buggy code that queries the toolbar's placement, the condition won't trigger and ret will be 0.
-            Assert.That(ret, Is.EqualTo((nint)1), "TTN_SHOW did not signal reposition; expected m.Result==1 when tooltip at (0,0)");
+            Assert.Equal((nint)1, ret);
 
             form.Close();
         }
 
-        [Test]
+        [StaFact]
         public void ToolBar_ToolTip_TTN_SHOW_PerMonitorV2_DoesNotMove_And_Returns_1()
         {
             // Enter Per-Monitor V2 DPI context for the thread (best effort; no-op on older OS)
@@ -224,7 +221,7 @@ namespace System.Windows.Forms.Tests
 
             // Acquire native tooltip HWND
             HWND tooltipHwnd = (HWND)PInvokeCore.SendMessage(toolBar, PInvoke.TB_GETTOOLTIPS);
-            Assert.That(tooltipHwnd, Is.Not.EqualTo(HWND.Null));
+            Assert.NotEqual(HWND.Null, tooltipHwnd);
 
             // Force tooltip to (0,0) so TTN_SHOW reposition path is taken
             PInvoke.SetWindowPos(tooltipHwnd, HWND.Null, 0, 0, 0, 0,
@@ -249,8 +246,8 @@ namespace System.Windows.Forms.Tests
             Application.DoEvents();
 
             // Assertions: TTN_SHOW is handled (ret==1) and the toolbar itself does not move
-            Assert.That(ret, Is.EqualTo((nint)1), "TTN_SHOW should be handled under Per-Monitor V2 context");
-            Assert.That(toolBar.Location, Is.EqualTo(originalLocation), "ToolBar moved unexpectedly during TTN_SHOW under Per-Monitor V2 context");
+            Assert.Equal((nint)1, ret);
+            Assert.Equal(originalLocation, toolBar.Location);
 
             form.Close();
         }
