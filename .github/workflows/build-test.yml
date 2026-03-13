@@ -2,9 +2,9 @@ name: Build and Test
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, wtg-net10 ]
   pull_request:
-    branches: [ master ]
+    branches: [ master, wtg-net10 ]
   workflow_dispatch:
 
 jobs:
