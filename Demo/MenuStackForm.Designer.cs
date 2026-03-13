@@ -13,6 +13,7 @@ partial class MenuStackForm
     private Button _showSurfaceContextMenuButton = null!;
     private Button _openStatusBarDemoButton = null!;
     private Button _openToolBarDemoButton = null!;
+    private Button _openDataGridDemoButton = null!;
     private Button _clearLogButton = null!;
     private Panel _demoSurface = null!;
     private Label _surfaceMessageLabel = null!;
@@ -38,6 +39,7 @@ partial class MenuStackForm
         _showSurfaceContextMenuButton = new Button();
         _openStatusBarDemoButton = new Button();
         _openToolBarDemoButton = new Button();
+        _openDataGridDemoButton = new Button();
         _clearLogButton = new Button();
         _demoSurface = new Panel();
         _surfaceMessageLabel = new Label();
@@ -83,12 +85,21 @@ partial class MenuStackForm
         _openToolBarDemoButton.Text = "Open ToolBar Demo";
         _openToolBarDemoButton.Click += OpenToolBarDemoButton_Click;
         // 
+        // _openDataGridDemoButton
+        // 
+        _openDataGridDemoButton.Location = new Point(538, 65);
+        _openDataGridDemoButton.Name = "_openDataGridDemoButton";
+        _openDataGridDemoButton.Size = new Size(148, 30);
+        _openDataGridDemoButton.TabIndex = 4;
+        _openDataGridDemoButton.Text = "Open DataGrid Demo";
+        _openDataGridDemoButton.Click += OpenDataGridDemoButton_Click;
+        // 
         // _clearLogButton
         // 
-        _clearLogButton.Location = new Point(538, 65);
+        _clearLogButton.Location = new Point(672, 65);
         _clearLogButton.Name = "_clearLogButton";
         _clearLogButton.Size = new Size(120, 30);
-        _clearLogButton.TabIndex = 4;
+        _clearLogButton.TabIndex = 5;
         _clearLogButton.Text = "Clear Log";
         _clearLogButton.Click += ClearLogButton_Click;
         // 
@@ -157,6 +168,7 @@ partial class MenuStackForm
         Controls.Add(_menuTreeView);
         Controls.Add(_demoSurface);
         Controls.Add(_clearLogButton);
+        Controls.Add(_openDataGridDemoButton);
         Controls.Add(_openToolBarDemoButton);
         Controls.Add(_openStatusBarDemoButton);
         Controls.Add(_showSurfaceContextMenuButton);

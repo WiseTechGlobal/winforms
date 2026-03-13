@@ -368,6 +368,7 @@ public partial class TreeNode : MarshalByRefObject, ICloneable, ISerializable
     ///  The context menu associated with this tree node. The context menu
     ///  will be shown when the user right clicks the mouse on the control.
     /// </summary>
+#pragma warning disable RS0016
     [SRCategory(nameof(SR.CatBehavior))]
     [DefaultValue(null)]
     [SRDescription(nameof(SR.ControlContextMenuDescr))]
@@ -378,6 +379,7 @@ public partial class TreeNode : MarshalByRefObject, ICloneable, ISerializable
         set => _contextMenu = value;
     }
 #nullable enable
+#pragma warning restore RS0016
 
     /// <summary>
     ///  The <see cref="Forms.ContextMenuStrip"/> associated with this tree node. This menu

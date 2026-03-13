@@ -17,13 +17,14 @@ namespace System.Windows.Forms;
     UrlFormat = Obsoletions.SharedUrlFormat)]
 [EditorBrowsable(EditorBrowsableState.Never)]
 [Browsable(false)]
-public sealed class GridTablesFactory
+public static class GridTablesFactory
 {
-    private GridTablesFactory() { }
-
     public static DataGridTableStyle[] CreateGridTables(
         DataGridTableStyle gridTable,
         object dataSource,
         string dataMember,
-        BindingContext bindingManager) => throw new PlatformNotSupportedException();
+        BindingContext bindingManager)
+    {
+        return [gridTable];
+    }
 }

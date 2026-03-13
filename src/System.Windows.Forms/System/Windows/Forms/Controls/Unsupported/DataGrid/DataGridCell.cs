@@ -1,6 +1,8 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+#pragma warning disable CA1066, CA1815, RS0016, IDE0251
+
 using System.ComponentModel;
 
 namespace System.Windows.Forms;
@@ -17,21 +19,40 @@ namespace System.Windows.Forms;
     UrlFormat = Obsoletions.SharedUrlFormat)]
 [EditorBrowsable(EditorBrowsableState.Never)]
 [Browsable(false)]
-[SuppressMessage("Performance", "CA1815:Override equals and operator equals on value types", Justification = "This type is provided for public surface compatibility with .NET Framework only. It can't run.")]
 public struct DataGridCell
 {
-#pragma warning disable IDE0251 // Make member 'readonly' - applies to `set` methods.
-    public DataGridCell(int r, int c) => throw new PlatformNotSupportedException();
+    public DataGridCell(int r, int c)
+    {
+        RowNumber = r;
+        ColumnNumber = c;
+    }
 
     public int ColumnNumber
     {
-        readonly get => throw null;
-        set { }
+        readonly get;
+        set;
     }
 
     public int RowNumber
     {
-        readonly get => throw null;
-        set { }
+        readonly get;
+        set;
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj is not DataGridCell rhs)
+        {
+            return false;
+        }
+
+        return rhs.RowNumber == RowNumber && rhs.ColumnNumber == ColumnNumber;
+    }
+
+    public override int GetHashCode() => HashCode.Combine(RowNumber, ColumnNumber);
+
+    public override string ToString()
+    {
+        return $"DataGridCell {{RowNumber = {RowNumber}, ColumnNumber = {ColumnNumber}}}";
     }
 }

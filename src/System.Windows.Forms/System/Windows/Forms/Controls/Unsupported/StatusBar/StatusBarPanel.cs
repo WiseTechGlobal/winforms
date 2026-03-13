@@ -1,6 +1,8 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+#pragma warning disable RS0016, IDE0031
+
 using System.ComponentModel;
 using System.Drawing;
 using System.Runtime.InteropServices;

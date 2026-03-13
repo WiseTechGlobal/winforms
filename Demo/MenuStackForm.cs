@@ -344,6 +344,13 @@ public partial class MenuStackForm : Form
         AppendLog("Opened ToolBar demo form.");
     }
 
+    private void OpenDataGridDemoButton_Click(object? sender, EventArgs e)
+    {
+        DataGridForm dataGridForm = new();
+        dataGridForm.Show(this);
+        AppendLog("Opened DataGrid demo form.");
+    }
+
     private void OpenStatusBarDemoButton_Click(object? sender, EventArgs e)
     {
         StatusBarForm statusBarForm = new();

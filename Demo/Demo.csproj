@@ -28,4 +28,10 @@
     <PackageReference Include="System.Security.Cryptography.ProtectedData" VersionOverride="10.0.6" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="DataGridForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+
 </Project>

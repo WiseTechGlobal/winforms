@@ -1,7 +1,7 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-#pragma warning disable IDE1006
+#pragma warning disable IDE1006, CS8625, CS8618, CS8601, RS0036, RS0016
 
 using System.ComponentModel;
 using UnsafeNativeMethods = System.Windows.Forms.LegacyMenuUnsafeNativeMethods;

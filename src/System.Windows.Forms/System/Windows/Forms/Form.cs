@@ -6995,7 +6995,7 @@ public partial class Form : ContainerControl
     {
 #pragma warning disable WFDEV006 // Type or member is obsolete
         if (Properties.TryGetValue(s_propCurMenu, out MainMenu? curMenu)
-            && curMenu.ProcessInitMenuPopup(m.WParam))
+            && curMenu.ProcessInitMenuPopup((nint)m.WParamInternal))
         {
             return;
         }
@@ -7032,7 +7032,7 @@ public partial class Form : ContainerControl
     /// <summary>
     ///  WM_UNINITMENUPOPUP handler.
     /// </summary>
-    private void WmUnInitMenuPopup(ref Message m)
+    private void WmUnInitMenuPopup(ref Message _)
     {
 #pragma warning disable WFDEV006 // Type or member is obsolete
         Menu?.OnCollapse(EventArgs.Empty);
@@ -7493,13 +7493,13 @@ public partial class Form : ContainerControl
     {
         get
         {
-            if (!Properties.TryGetValue(s_propFormMdiParent, out Form? formMdiParent)
+            if (!Properties.TryGetValue(s_propFormMdiParent, out Form formMdiParent)
                 || formMdiParent is null)
             {
                 return null;
             }
 
-            if (Properties.TryGetValue(s_propMergedMenu, out MainMenu? mergedMenu)
+            if (Properties.TryGetValue(s_propMergedMenu, out MainMenu mergedMenu)
                 && mergedMenu is not null)
             {
                 return mergedMenu;
