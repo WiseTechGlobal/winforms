@@ -1,29 +1,30 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
-using System.ComponentModel;
+#pragma warning disable IDE0073, RS0036
 
-namespace System.Windows.Forms;
-
-#nullable disable
-
-/// <summary>
-///  This type is provided for binary compatibility with .NET Framework and is not intended to be used directly from your code.
-/// </summary>
-[Obsolete(
-    Obsoletions.ToolBarMessage,
-    error: false,
-    DiagnosticId = Obsoletions.UnsupportedControlsDiagnosticId,
-    UrlFormat = Obsoletions.SharedUrlFormat)]
-[EditorBrowsable(EditorBrowsableState.Never)]
-[Browsable(false)]
-public class ToolBarButtonClickEventArgs : EventArgs
+namespace System.Windows.Forms
 {
-    public ToolBarButtonClickEventArgs(ToolBarButton button) => throw new PlatformNotSupportedException();
-
-    public ToolBarButton Button
+    /// <summary>
+    ///  Provides data for the <see cref='ToolBar.ButtonClick'/>
+    ///  event.
+    /// </summary>
+    public class ToolBarButtonClickEventArgs : EventArgs
     {
-        get => throw null;
-        set { }
+        /// <summary>
+        ///  Initializes a new instance of the <see cref='ToolBarButtonClickEventArgs'/>
+        ///  class.
+        /// </summary>
+        public ToolBarButtonClickEventArgs(ToolBarButton button)
+        {
+            Button = button;
+        }
+
+        /// <summary>
+        ///  Specifies the <see cref='ToolBarButton'/>
+        ///  that was clicked.
+        /// </summary>
+        public ToolBarButton Button { get; set; }
     }
 }

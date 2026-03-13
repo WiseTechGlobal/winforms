@@ -1,4 +1,3 @@
-using System.Drawing;
 using System.Windows.Forms;
 
 namespace Demo;
@@ -21,8 +20,7 @@ public partial class ToolBarForm : Form
     {
         ToolBar toolBar = new()
         {
-            Location = new Point(18, 72),
-            Size = new Size(554, 28),
+            TextAlign = ToolBarTextAlign.Right,
             ShowToolTips = true,
             DropDownArrows = true,
             Wrappable = false
@@ -56,6 +54,23 @@ public partial class ToolBarForm : Form
         dropDownButton.DropDownMenu = new ContextMenu([waveMenuItem, statusMenuItem]);
         toolBar.Buttons.Add(dropDownButton);
 
+        toolBar.Buttons.Add(new ToolBarButton("sep2") { Style = ToolBarButtonStyle.Separator });
+
+        toolBar.Buttons.Add(new ToolBarButton("btn4 push") { ToolTipText = "Push button 4" });
+        toolBar.Buttons.Add(new ToolBarButton("btn5 toggle") { Style = ToolBarButtonStyle.ToggleButton, ToolTipText = "Toggle button 5" });
+        toolBar.Buttons.Add(new ToolBarButton("sep3") { Style = ToolBarButtonStyle.Separator });
+
+        ToolBarButton dropDownButton2 = new("btn6 drop-down")
+        {
+            Style = ToolBarButtonStyle.DropDownButton,
+            ToolTipText = "Drop-down button 6"
+        };
+        dropDownButton2.DropDownMenu = new ContextMenu([new MenuItem("Action A", WaveMenuItem_Click), new MenuItem("Action B", WriteStatusMenuItem_Click)]);
+        toolBar.Buttons.Add(dropDownButton2);
+
+        toolBar.Buttons.Add(new ToolBarButton("btn7 push") { ToolTipText = "Push button 7" });
+        toolBar.Buttons.Add(new ToolBarButton("btn8 push") { ToolTipText = "Push button 8" });
+
         toolBar.ButtonClick += DemoToolBar_ButtonClick;
 
         return toolBar;
@@ -80,6 +95,25 @@ public partial class ToolBarForm : Form
         string timestamp = DateTime.Now.ToString("HH:mm:ss");
         _statusLabel.Text = "Status updated at " + timestamp;
         AppendLog("Toolbar drop-down menu clicked: Write Status at " + timestamp);
+    }
+
+    private void ToggleAppearanceButton_Click(object? sender, EventArgs e)
+    {
+        _demoToolBar.Appearance = _demoToolBar.Appearance == ToolBarAppearance.Normal
+            ? ToolBarAppearance.Flat
+            : ToolBarAppearance.Normal;
+
+        _toggleAppearanceButton.Text = "Appearance: " + _demoToolBar.Appearance;
+        _statusLabel.Text = "ToolBar.Appearance → " + _demoToolBar.Appearance;
+        AppendLog("ToolBar.Appearance toggled to: " + _demoToolBar.Appearance);
+    }
+
+    private void ToggleWrappableButton_Click(object? sender, EventArgs e)
+    {
+        _demoToolBar.Wrappable = !_demoToolBar.Wrappable;
+        _toggleWrappableButton.Text = "Wrappable: " + _demoToolBar.Wrappable;
+        _statusLabel.Text = "ToolBar.Wrappable → " + _demoToolBar.Wrappable;
+        AppendLog("ToolBar.Wrappable toggled to: " + _demoToolBar.Wrappable);
     }
 
     private void ClearLogButton_Click(object? sender, EventArgs e)

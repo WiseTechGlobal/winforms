@@ -257,14 +257,14 @@ If schedule is tight, `DataGrid` should be scoped separately from the menu, `Sta
 
 ### Phase 3: ToolBar
 
-- [ ] Port `release/3.0` `ToolBar.cs`.
-- [ ] Port `release/3.0` `ToolBarAppearance.cs`.
-- [ ] Port `release/3.0` `ToolBarButton.cs`.
-- [ ] Port `release/3.0` `ToolBarButtonClickEventArgs.cs`.
-- [ ] Port `release/3.0` `ToolBarButtonClickEventHandler.cs`.
-- [ ] Port `release/3.0` `ToolBarButtonStyle.cs`.
-- [ ] Port `release/3.0` `ToolBarTextAlign.cs`.
-- [ ] Collapse or replace the current split `ToolBar.ToolBarButtonCollection.cs` if the real collection implementation is restored inside `ToolBar.cs`.
+- [x] Port `release/3.0` `ToolBar.cs`.
+- [x] Port `release/3.0` `ToolBarAppearance.cs`.
+- [x] Port `release/3.0` `ToolBarButton.cs`.
+- [x] Port `release/3.0` `ToolBarButtonClickEventArgs.cs`.
+- [x] Port `release/3.0` `ToolBarButtonClickEventHandler.cs`.
+- [x] Port `release/3.0` `ToolBarButtonStyle.cs`.
+- [x] Port `release/3.0` `ToolBarTextAlign.cs`.
+- [x] Collapse or replace the current split `ToolBar.ToolBarButtonCollection.cs` if the real collection implementation is restored inside `ToolBar.cs`.
 
 ### Phase 4: DataGrid
 
@@ -332,14 +332,22 @@ If schedule is tight, `DataGrid` should be scoped separately from the menu, `Sta
 ### ToolBar
 
 - `release/3.0` `src/System.Windows.Forms/src/System/Windows/Forms/ToolBar.cs` -> `src/System.Windows.Forms/System/Windows/Forms/Controls/Unsupported/ToolBar/ToolBar.cs`
+	Status: completed
 - `release/3.0` `src/System.Windows.Forms/src/System/Windows/Forms/ToolBarAppearance.cs` -> `src/System.Windows.Forms/System/Windows/Forms/Controls/Unsupported/ToolBar/ToolBarAppearance.cs`
+	Status: completed
 - `release/3.0` `src/System.Windows.Forms/src/System/Windows/Forms/ToolBarButton.cs` -> `src/System.Windows.Forms/System/Windows/Forms/Controls/Unsupported/ToolBar/ToolBarButton.cs`
+	Status: completed
 - `release/3.0` `src/System.Windows.Forms/src/System/Windows/Forms/ToolBarButtonClickEventArgs.cs` -> `src/System.Windows.Forms/System/Windows/Forms/Controls/Unsupported/ToolBar/ToolBarButtonClickEventArgs.cs`
+	Status: completed
 - `release/3.0` `src/System.Windows.Forms/src/System/Windows/Forms/ToolBarButtonClickEventHandler.cs` -> `src/System.Windows.Forms/System/Windows/Forms/Controls/Unsupported/ToolBar/ToolBarButtonClickEventHandler.cs`
+	Status: completed
 - `release/3.0` `src/System.Windows.Forms/src/System/Windows/Forms/ToolBarButtonStyle.cs` -> `src/System.Windows.Forms/System/Windows/Forms/Controls/Unsupported/ToolBar/ToolBarButtonStyle.cs`
+	Status: completed
 - `release/3.0` `src/System.Windows.Forms/src/System/Windows/Forms/ToolBarTextAlign.cs` -> `src/System.Windows.Forms/System/Windows/Forms/Controls/Unsupported/ToolBar/ToolBarTextAlign.cs`
+	Status: completed
 - `release/3.0` embedded collection implementation in `ToolBar.cs` -> current split `src/System.Windows.Forms/System/Windows/Forms/Controls/Unsupported/ToolBar/ToolBar.ToolBarButtonCollection.cs`
-	Note: likely collapse this split once the real `ToolBar.cs` is ported.
+	Status: completed
+	Note: the split shim has been removed because the runtime collection implementation now lives inside `ToolBar.cs`.
 
 ### DataGrid
 
