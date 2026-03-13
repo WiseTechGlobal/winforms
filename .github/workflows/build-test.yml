@@ -1,0 +1,51 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build - ${{ matrix.configuration }}
+
+    strategy:
+      matrix:
+        configuration: [ Debug, Release ]
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: |
+            10.0.x
+
+    - name: Install dependencies
+      run: dotnet restore WinformsLegacy.sln
+
+    - name: Build
+      run: dotnet build WinformsLegacy.sln --configuration ${{ matrix.configuration }} --no-restore
+
+    - name: Test
+      if: matrix.configuration == 'Debug'
+      run: >
+        dotnet test
+        src/System.Windows.Forms.Legacy/System.Windows.Forms.Legacy.Tests/System.Windows.Forms.Legacy.Tests.csproj
+        --configuration Debug
+        --no-build
+        --logger trx
+        --results-directory TestResults
+
+    - name: Upload packages
+      if: matrix.configuration == 'Release'
+      uses: actions/upload-artifact@v4
+      with:
+        name: package
+        path: Bin/Release/**/*.nupkg
+        retention-days: 5
