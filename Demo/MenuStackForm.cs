@@ -22,7 +22,7 @@ public partial class MenuStackForm : Form
         _menuTreeView.ContextMenu = _treeViewContextMenu;
 
         InitializeTreeView();
-        AppendLog("Phase 1 menu stack demo ready.");
+        AppendLog("Menu stack demo ready.");
     }
 
     private MainMenu CreateMainMenu()
@@ -335,27 +335,6 @@ public partial class MenuStackForm : Form
     private void ShowSurfaceContextMenuButton_Click(object? sender, EventArgs e)
     {
         ShowSurfaceContextMenu();
-    }
-
-    private void OpenToolBarDemoButton_Click(object? sender, EventArgs e)
-    {
-        ToolBarForm toolBarForm = new();
-        toolBarForm.Show(this);
-        AppendLog("Opened ToolBar demo form.");
-    }
-
-    private void OpenDataGridDemoButton_Click(object? sender, EventArgs e)
-    {
-        DataGridForm dataGridForm = new();
-        dataGridForm.Show(this);
-        AppendLog("Opened DataGrid demo form.");
-    }
-
-    private void OpenStatusBarDemoButton_Click(object? sender, EventArgs e)
-    {
-        StatusBarForm statusBarForm = new();
-        statusBarForm.Show(this);
-        AppendLog("Opened StatusBar demo form.");
     }
 
     private void ClearLogButton_Click(object? sender, EventArgs e)

@@ -268,12 +268,6 @@ namespace Demo
             }
         }
 
-        private void OpenMenuStackDemoButton_Click(object sender, EventArgs e)
-        {
-            MenuStackForm menuStackForm = new();
-            menuStackForm.Show(this);
-        }
-
         private void UpdateSelectionSummary()
         {
             if (myDataSet is null)

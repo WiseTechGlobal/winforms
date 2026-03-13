@@ -9,7 +9,6 @@ namespace Demo
         ///  Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
-        private Button openMenuStackDemoButton;
         private GroupBox classicFeaturesGroupBox;
         private Label classicFeaturesLabel;
         private GroupBox classicOptionsGroupBox;
@@ -177,22 +176,10 @@ namespace Demo
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            openMenuStackDemoButton = new System.Windows.Forms.Button();
             SuspendLayout();
-            // 
-            // openMenuStackDemoButton
-            // 
-            openMenuStackDemoButton.Location = new System.Drawing.Point(668, 60);
-            openMenuStackDemoButton.Name = "openMenuStackDemoButton";
-            openMenuStackDemoButton.Size = new System.Drawing.Size(196, 30);
-            openMenuStackDemoButton.TabIndex = 0;
-            openMenuStackDemoButton.Text = "Open Menu Stack Demo";
-            openMenuStackDemoButton.UseVisualStyleBackColor = true;
-            openMenuStackDemoButton.Click += new System.EventHandler(OpenMenuStackDemoButton_Click);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             ClientSize = new System.Drawing.Size(1024, 680);
-            Controls.Add(openMenuStackDemoButton);
-            Text = "Phase 4: DataGrid";
+            Text = "DataGrid Demo";
             ResumeLayout(false);
         }
 

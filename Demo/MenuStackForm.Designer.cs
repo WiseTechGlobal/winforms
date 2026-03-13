@@ -11,9 +11,6 @@ partial class MenuStackForm
     private IContainer components = null;
     private Label _summaryLabel = null!;
     private Button _showSurfaceContextMenuButton = null!;
-    private Button _openStatusBarDemoButton = null!;
-    private Button _openToolBarDemoButton = null!;
-    private Button _openDataGridDemoButton = null!;
     private Button _clearLogButton = null!;
     private Panel _demoSurface = null!;
     private Label _surfaceMessageLabel = null!;
@@ -37,9 +34,6 @@ partial class MenuStackForm
         components = new Container();
         _summaryLabel = new Label();
         _showSurfaceContextMenuButton = new Button();
-        _openStatusBarDemoButton = new Button();
-        _openToolBarDemoButton = new Button();
-        _openDataGridDemoButton = new Button();
         _clearLogButton = new Button();
         _demoSurface = new Panel();
         _surfaceMessageLabel = new Label();
@@ -56,7 +50,7 @@ partial class MenuStackForm
         _summaryLabel.Name = "_summaryLabel";
         _summaryLabel.Size = new Size(774, 40);
         _summaryLabel.TabIndex = 0;
-        _summaryLabel.Text = "Phase 1 menu stack demo combining the legacy MainMenu, MenuItem, ContextMenu, StatusBar, toolbar drop-down menus, dynamic popups, owner-draw items, and TreeNode.ContextMenu samples used across this demo project.";
+        _summaryLabel.Text = "Menu stack demo exercising the legacy MainMenu, MenuItem, ContextMenu, dynamic popups, owner-draw items, and TreeNode.ContextMenu.";
         // 
         // _showSurfaceContextMenuButton
         // 
@@ -67,39 +61,12 @@ partial class MenuStackForm
         _showSurfaceContextMenuButton.Text = "Show Surface Context Menu";
         _showSurfaceContextMenuButton.Click += ShowSurfaceContextMenuButton_Click;
         // 
-        // _openStatusBarDemoButton
-        // 
-        _openStatusBarDemoButton.Location = new Point(218, 65);
-        _openStatusBarDemoButton.Name = "_openStatusBarDemoButton";
-        _openStatusBarDemoButton.Size = new Size(148, 30);
-        _openStatusBarDemoButton.TabIndex = 2;
-        _openStatusBarDemoButton.Text = "Open StatusBar Demo";
-        _openStatusBarDemoButton.Click += OpenStatusBarDemoButton_Click;
-        // 
-        // _openToolBarDemoButton
-        // 
-        _openToolBarDemoButton.Location = new Point(378, 65);
-        _openToolBarDemoButton.Name = "_openToolBarDemoButton";
-        _openToolBarDemoButton.Size = new Size(148, 30);
-        _openToolBarDemoButton.TabIndex = 3;
-        _openToolBarDemoButton.Text = "Open ToolBar Demo";
-        _openToolBarDemoButton.Click += OpenToolBarDemoButton_Click;
-        // 
-        // _openDataGridDemoButton
-        // 
-        _openDataGridDemoButton.Location = new Point(538, 65);
-        _openDataGridDemoButton.Name = "_openDataGridDemoButton";
-        _openDataGridDemoButton.Size = new Size(148, 30);
-        _openDataGridDemoButton.TabIndex = 4;
-        _openDataGridDemoButton.Text = "Open DataGrid Demo";
-        _openDataGridDemoButton.Click += OpenDataGridDemoButton_Click;
-        // 
         // _clearLogButton
         // 
-        _clearLogButton.Location = new Point(672, 65);
+        _clearLogButton.Location = new Point(218, 65);
         _clearLogButton.Name = "_clearLogButton";
         _clearLogButton.Size = new Size(120, 30);
-        _clearLogButton.TabIndex = 5;
+        _clearLogButton.TabIndex = 2;
         _clearLogButton.Text = "Clear Log";
         _clearLogButton.Click += ClearLogButton_Click;
         // 
@@ -120,7 +87,7 @@ partial class MenuStackForm
         _surfaceMessageLabel.Name = "_surfaceMessageLabel";
         _surfaceMessageLabel.Size = new Size(382, 218);
         _surfaceMessageLabel.TabIndex = 0;
-        _surfaceMessageLabel.Text = "Right-click this surface or the TreeView nodes to exercise ContextMenu and TreeNode.ContextMenu support, or use the MainMenu and the StatusBar and ToolBar launchers above to trigger legacy control demos.";
+        _surfaceMessageLabel.Text = "Right-click this surface or the TreeView nodes to exercise ContextMenu and TreeNode.ContextMenu support. Use the MainMenu above for menu actions.";
         _surfaceMessageLabel.TextAlign = ContentAlignment.MiddleCenter;
         // 
         // _menuTreeView
@@ -168,9 +135,6 @@ partial class MenuStackForm
         Controls.Add(_menuTreeView);
         Controls.Add(_demoSurface);
         Controls.Add(_clearLogButton);
-        Controls.Add(_openDataGridDemoButton);
-        Controls.Add(_openToolBarDemoButton);
-        Controls.Add(_openStatusBarDemoButton);
         Controls.Add(_showSurfaceContextMenuButton);
         Controls.Add(_summaryLabel);
         MinimumSize = new Size(826, 611);
