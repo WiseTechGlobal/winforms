@@ -1,9 +1,6 @@
 name: Create Release
 
-# On push to master branch. i.e. when we merge a PR.
 on:
-  push:
-    branches: [ master, wtg-net10 ]
   pull_request:
     branches: [ master, wtg-net10 ]
   workflow_dispatch:
