@@ -16,8 +16,8 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Microsoft.DotNet.XUnitV3Extensions" />
-    <ProjectReference Include="..\..\src\System.Windows.Forms.Primitives\src\System.Windows.Forms.Primitives.csproj" />
-    <ProjectReference Include="..\..\src\System.Windows.Forms\System.Windows.Forms.csproj" />
+    <ProjectReference Include="..\..\System.Windows.Forms.Primitives\src\System.Windows.Forms.Primitives.csproj" />
+    <ProjectReference Include="..\..\System.Windows.Forms\System.Windows.Forms.csproj" />
   </ItemGroup>
 
 </Project>

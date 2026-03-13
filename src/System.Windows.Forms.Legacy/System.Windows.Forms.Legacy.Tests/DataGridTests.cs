@@ -691,7 +691,7 @@ public class DataGridTests
         Assert.Empty(dataGrid.TableStyles);
     }
 
-    private class SubDataGrid : DataGrid
+    private sealed class SubDataGrid : DataGrid
     {
         public new ScrollBar HorizScrollBar => base.HorizScrollBar;
 
