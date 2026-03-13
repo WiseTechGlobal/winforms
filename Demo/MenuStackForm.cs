@@ -344,6 +344,13 @@ public partial class MenuStackForm : Form
         AppendLog("Opened ToolBar demo form.");
     }
 
+    private void OpenStatusBarDemoButton_Click(object? sender, EventArgs e)
+    {
+        StatusBarForm statusBarForm = new();
+        statusBarForm.Show(this);
+        AppendLog("Opened StatusBar demo form.");
+    }
+
     private void ClearLogButton_Click(object? sender, EventArgs e)
     {
         _eventLog.Items.Clear();

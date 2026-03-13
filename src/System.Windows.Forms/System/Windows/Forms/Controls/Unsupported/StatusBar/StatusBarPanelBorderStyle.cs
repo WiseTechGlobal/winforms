@@ -1,23 +1,25 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System.ComponentModel;
-
 namespace System.Windows.Forms;
 
 /// <summary>
-///  This type is provided for binary compatibility with .NET Framework and is not intended to be used directly from your code.
+///  Specifies the border style of a panel on the <see cref="StatusBar"/>.
 /// </summary>
-[Obsolete(
-    Obsoletions.StatusBarMessage,
-    error: false,
-    DiagnosticId = Obsoletions.UnsupportedControlsDiagnosticId,
-    UrlFormat = Obsoletions.SharedUrlFormat)]
-[EditorBrowsable(EditorBrowsableState.Never)]
-[Browsable(false)]
 public enum StatusBarPanelBorderStyle
 {
+    /// <summary>
+    ///  No border.
+    /// </summary>
     None = 1,
+
+    /// <summary>
+    ///  A raised border.
+    /// </summary>
     Raised = 2,
+
+    /// <summary>
+    ///  A sunken border.
+    /// </summary>
     Sunken = 3,
 }

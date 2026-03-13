@@ -116,13 +116,13 @@
             form2.ClientSize = clientSize;
 
             Func<Control>[] controlTypes =
-            {
+            [
                 () => new Button(),
                 () => new Label(),
                 () => new TextBox(),
                 () => new Panel(),
                 () => new GroupBox()
-            };
+            ];
 
             foreach (var createControl in controlTypes)
             {

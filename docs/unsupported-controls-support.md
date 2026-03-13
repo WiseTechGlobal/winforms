@@ -244,16 +244,16 @@ If schedule is tight, `DataGrid` should be scoped separately from the menu, `Sta
 
 ### Phase 2: StatusBar
 
-- [ ] Port `release/3.0` `StatusBar.cs`.
-- [ ] Port `release/3.0` `StatusBarDrawItemEventArgs.cs`.
-- [ ] Port `release/3.0` `StatusBarDrawItemEventHandler.cs`.
-- [ ] Port `release/3.0` `StatusBarPanel.cs`.
-- [ ] Port `release/3.0` `StatusBarPanelAutoSize.cs`.
-- [ ] Port `release/3.0` `StatusBarPanelBorderStyle.cs`.
-- [ ] Port `release/3.0` `StatusBarPanelClickEventArgs.cs`.
-- [ ] Port `release/3.0` `StatusBarPanelClickEventHandler.cs`.
-- [ ] Port `release/3.0` `StatusBarPanelStyle.cs`.
-- [ ] Collapse or replace the current split `StatusBar.StatusBarPanelCollection.cs` if the real collection implementation is restored inside `StatusBar.cs`.
+- [x] Port `release/3.0` `StatusBar.cs`.
+- [x] Port `release/3.0` `StatusBarDrawItemEventArgs.cs`.
+- [x] Port `release/3.0` `StatusBarDrawItemEventHandler.cs`.
+- [x] Port `release/3.0` `StatusBarPanel.cs`.
+- [x] Port `release/3.0` `StatusBarPanelAutoSize.cs`.
+- [x] Port `release/3.0` `StatusBarPanelBorderStyle.cs`.
+- [x] Port `release/3.0` `StatusBarPanelClickEventArgs.cs`.
+- [x] Port `release/3.0` `StatusBarPanelClickEventHandler.cs`.
+- [x] Port `release/3.0` `StatusBarPanelStyle.cs`.
+- [x] Collapse or replace the current split `StatusBar.StatusBarPanelCollection.cs` if the real collection implementation is restored inside `StatusBar.cs`.
 
 ### Phase 3: ToolBar
 
