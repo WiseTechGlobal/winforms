@@ -12,7 +12,7 @@ on:
       - main
 
 env:
-  PACKAGE_PATH: Bin/Release/**/*.nupkg
+  PACKAGE_PATH: artifacts/packages/**/*.nupkg
 
 jobs:
   release:
@@ -48,9 +48,21 @@ jobs:
     - name: Install dependencies
       run: dotnet restore WinformsLegacy.sln
 
-      # Package is created on build
     - name: Build
       run: dotnet build WinformsLegacy.sln --configuration Release --no-restore /p:PackageVersion=${{ steps.version.outputs.value }}
+
+    - name: Pack
+      run: dotnet pack WinformsLegacy.sln --configuration Release --no-build -o artifacts/packages /p:PackageVersion=${{ steps.version.outputs.value }}
+
+    - name: List produced packages
+      shell: pwsh
+      run: |
+        $packages = Get-ChildItem -Recurse -Filter *.nupkg
+        if ($packages.Count -eq 0) {
+            Write-Error 'No .nupkg files were produced.'
+            exit 1
+        }
+        $packages | Select-Object -ExpandProperty FullName
 
       # Upload package as an artifact to the GitHub action
     - name: Upload packages artifact
