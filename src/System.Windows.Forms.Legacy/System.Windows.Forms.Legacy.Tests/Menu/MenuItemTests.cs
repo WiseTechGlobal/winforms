@@ -1,11 +1,20 @@
 using System.ComponentModel;
+using System.Drawing;
+using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Moq;
+using Windows.Win32;
+using Windows.Win32.Foundation;
 
 namespace System.Windows.Forms.Legacy.Tests;
 
     public class MenuItemTests
     {
+        private const int OwnerDrawMenuCtlType = 1;
+        private const int WmDrawItemMessage = 0x002B;
+        private const int WmMeasureItemMessage = 0x002C;
+
         [StaFact]
         public void MenuItem_Ctor_Default()
         {
@@ -1768,6 +1777,123 @@ namespace System.Windows.Forms.Legacy.Tests;
             Assert.Throws<ObjectDisposedException>(() => menuItem.MenuID);
         }
 
+        [StaFact]
+        public void Control_WndProc_WmDrawItemMenuItem_RaisesDrawItem()
+        {
+            using Bitmap bitmap = new(1, 1);
+            using Graphics graphics = Graphics.FromImage(bitmap);
+            nint hdc = graphics.GetHdc();
+
+            try
+            {
+                using var control = new SubControl();
+                using var menuItem = new SubMenuItem("text")
+                {
+                    OwnerDraw = true
+                };
+
+                int callCount = 0;
+                menuItem.DrawItem += (sender, e) =>
+                {
+                    Assert.Equal(menuItem, sender);
+                    callCount++;
+                };
+
+                nint itemData = GetItemData(menuItem);
+                var drawItem = new LegacyMenuNativeMethods.DRAWITEMSTRUCT
+                {
+                    CtlType = OwnerDrawMenuCtlType,
+                    hDC = hdc,
+                    rcItem = new RECT(0, 0, 10, 10),
+                    itemData = itemData
+                };
+
+                nint lParam = Marshal.AllocHGlobal(Marshal.SizeOf<LegacyMenuNativeMethods.DRAWITEMSTRUCT>());
+
+                try
+                {
+                    Marshal.StructureToPtr(drawItem, lParam, false);
+
+                    Message message = Message.Create(IntPtr.Zero, WmDrawItemMessage, IntPtr.Zero, lParam);
+                    control.WndProc(ref message);
+
+                    Assert.Equal(1, callCount);
+                    Assert.Equal(1, (nint)message.ResultInternal.Value);
+                }
+                finally
+                {
+                    Marshal.FreeHGlobal(lParam);
+                }
+            }
+            finally
+            {
+                graphics.ReleaseHdc((IntPtr)hdc);
+            }
+        }
+
+        [StaFact]
+        public void Control_WndProc_WmMeasureItemMenuItem_RaisesMeasureItem()
+        {
+            using var control = new SubControl();
+            using var menuItem = new SubMenuItem("text")
+            {
+                OwnerDraw = true
+            };
+
+            int callCount = 0;
+            menuItem.MeasureItem += (sender, e) =>
+            {
+                Assert.Equal(menuItem, sender);
+                e.ItemWidth = 25;
+                e.ItemHeight = 15;
+                callCount++;
+            };
+
+            nint itemData = GetItemData(menuItem);
+            var measureItem = new LegacyMenuNativeMethods.MEASUREITEMSTRUCT
+            {
+                CtlType = OwnerDrawMenuCtlType,
+                itemData = itemData
+            };
+
+            nint lParam = Marshal.AllocHGlobal(Marshal.SizeOf<LegacyMenuNativeMethods.MEASUREITEMSTRUCT>());
+
+            try
+            {
+                Marshal.StructureToPtr(measureItem, lParam, false);
+
+                Message message = Message.Create(IntPtr.Zero, WmMeasureItemMessage, IntPtr.Zero, lParam);
+                control.WndProc(ref message);
+
+                measureItem = Marshal.PtrToStructure<LegacyMenuNativeMethods.MEASUREITEMSTRUCT>(lParam)!;
+
+                Assert.Equal(1, callCount);
+                Assert.Equal(25, measureItem.itemWidth);
+                Assert.Equal(15, measureItem.itemHeight);
+                Assert.Equal(1, (nint)message.ResultInternal.Value);
+            }
+            finally
+            {
+                Marshal.FreeHGlobal(lParam);
+            }
+        }
+
+        private static readonly MethodInfo s_createMenuItemInfoMethod = typeof(MenuItem).GetMethod("CreateMenuItemInfo", BindingFlags.Instance | BindingFlags.NonPublic)!;
+        private static readonly FieldInfo s_dwItemDataField = s_createMenuItemInfoMethod.ReturnType.GetField("dwItemData")!;
+
+        private static nint GetItemData(MenuItem menuItem)
+        {
+            object menuItemInfo = s_createMenuItemInfoMethod.Invoke(menuItem, null)!;
+            object itemData = s_dwItemDataField.GetValue(menuItemInfo)!;
+
+            return itemData switch
+            {
+                IntPtr value => value,
+                nuint value => unchecked((nint)value),
+                _ => throw new InvalidOperationException($"Unexpected itemData type: {itemData.GetType().FullName}")
+            };
+        }
+
         public class SubMenuItem : MenuItem
         {
             public SubMenuItem()
@@ -1816,6 +1942,11 @@ namespace System.Windows.Forms.Legacy.Tests;
             public SubMenu(params MenuItem[] items) : base(items)
             {
             }
+        }
+
+        private class SubControl : Control
+        {
+            public new void WndProc(ref Message m) => base.WndProc(ref m);
         }
 
         private class SubForm : Form

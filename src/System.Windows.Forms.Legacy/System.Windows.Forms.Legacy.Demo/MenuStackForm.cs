@@ -142,13 +142,20 @@ public partial class MenuStackForm : Form
 
         if (!createNestedItems)
         {
-            item.MenuItems.Add(new OwnerDrawMenuItem { Text = text + " / Sub Item A" });
-            item.MenuItems.Add(new OwnerDrawMenuItem { Text = text + " / Sub Item B" });
-
-            foreach (MenuItem subItem in item.MenuItems)
+            OwnerDrawMenuItem subItem1 = new()
             {
-                subItem.Click += OnOwnerDrawItemClicked;
-            }
+                Text = "Submenu Item 1-1"
+            };
+            OwnerDrawMenuItem subItem2 = new()
+            {
+                Text = "Submenu Item 1-2"
+            };
+
+            subItem1.Click += OnOwnerDrawItemClicked;
+            subItem2.Click += OnOwnerDrawItemClicked;
+
+            item.MenuItems.Add(subItem1);
+            item.MenuItems.Add(subItem2);
 
             return item;
         }

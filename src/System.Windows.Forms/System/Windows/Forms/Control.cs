@@ -11828,6 +11828,58 @@ public unsafe partial class Control :
     }
 
     /// <summary>
+    ///  Handles the WM_DRAWITEM message.
+    /// </summary>
+    private void WmDrawItem(ref Message m)
+    {
+        if (m.WParamInternal == 0u)
+        {
+            WmDrawItemMenuItem(ref m);
+
+            return;
+        }
+
+        WmOwnerDraw(ref m);
+    }
+
+    /// <summary>
+    ///  Handles WM_DRAWITEM for menus.
+    /// </summary>
+    private void WmDrawItemMenuItem(ref Message m)
+    {
+        DRAWITEMSTRUCT* drawItem = (DRAWITEMSTRUCT*)(nint)m.LParamInternal;
+        MenuItem? menuItem = MenuItem.GetMenuItemFromItemData((nint)drawItem->itemData);
+
+        menuItem?.WmDrawItem(ref m);
+    }
+
+    /// <summary>
+    ///  Handles the WM_MEASUREITEM message.
+    /// </summary>
+    private void WmMeasureItem(ref Message m)
+    {
+        if (m.WParamInternal == 0u)
+        {
+            WmMeasureItemMenuItem(ref m);
+
+            return;
+        }
+
+        WmOwnerDraw(ref m);
+    }
+
+    /// <summary>
+    ///  Handles WM_MEASUREITEM for menus.
+    /// </summary>
+    private void WmMeasureItemMenuItem(ref Message m)
+    {
+        MEASUREITEMSTRUCT* measureItem = (MEASUREITEMSTRUCT*)(nint)m.LParamInternal;
+        MenuItem? menuItem = MenuItem.GetMenuItemFromItemData((nint)measureItem->itemData);
+
+        menuItem?.WmMeasureItem(ref m);
+    }
+
+    /// <summary>
     ///  Handles the WM_DRAWITEM\WM_MEASUREITEM messages for controls other than menus.
     /// </summary>
     private void WmOwnerDraw(ref Message m)
@@ -12360,11 +12412,7 @@ public unsafe partial class Control :
                 break;
 
             case PInvokeCore.WM_DRAWITEM:
-                if (m.WParamInternal != 0u)
-                {
-                    WmOwnerDraw(ref m);
-                }
-
+                WmDrawItem(ref m);
                 break;
 
             case PInvokeCore.WM_ERASEBKGND:
@@ -12418,11 +12466,7 @@ public unsafe partial class Control :
                 break;
 
             case PInvokeCore.WM_MEASUREITEM:
-                if (m.WParamInternal != 0u)
-                {
-                    WmOwnerDraw(ref m);
-                }
-
+                WmMeasureItem(ref m);
                 break;
 
             case PInvokeCore.WM_SETCURSOR:
