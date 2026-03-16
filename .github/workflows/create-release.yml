@@ -1,8 +1,6 @@
 name: Create Release
 
 on:
-  pull_request:
-    branches: [ master, wtg-net10 ]
   workflow_dispatch:
 
 env:
