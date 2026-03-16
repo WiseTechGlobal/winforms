@@ -49,6 +49,9 @@ public partial class TreeNode : MarshalByRefObject, ICloneable, ISerializable
     private TreeNodeImageIndexer? _stateImageIndexer;
 
     private string _toolTipText = string.Empty;
+#nullable disable
+    private ContextMenu _contextMenu;
+#nullable enable
     private ContextMenuStrip? _contextMenuStrip;
     internal bool _nodesCleared;
 
@@ -360,6 +363,23 @@ public partial class TreeNode : MarshalByRefObject, ICloneable, ISerializable
             }
         }
     }
+
+    /// <summary>
+    ///  The context menu associated with this tree node. The context menu
+    ///  will be shown when the user right clicks the mouse on the control.
+    /// </summary>
+#pragma warning disable RS0016
+    [SRCategory(nameof(SR.CatBehavior))]
+    [DefaultValue(null)]
+    [SRDescription(nameof(SR.ControlContextMenuDescr))]
+#nullable disable
+    public virtual ContextMenu ContextMenu
+    {
+        get => _contextMenu;
+        set => _contextMenu = value;
+    }
+#nullable enable
+#pragma warning restore RS0016
 
     /// <summary>
     ///  The <see cref="Forms.ContextMenuStrip"/> associated with this tree node. This menu
@@ -1353,6 +1373,7 @@ public partial class TreeNode : MarshalByRefObject, ICloneable, ISerializable
 
         node.StateImageIndexer.Index = StateImageIndexer.Index;
         node.ToolTipText = _toolTipText;
+        node.ContextMenu = _contextMenu;
         node.ContextMenuStrip = _contextMenuStrip;
 
         // only set the key if it's set to something useful

@@ -1,0 +1,64 @@
+name: Create Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Package version to publish, for example 1.2.3 or 1.2.3-preview.1
+        required: true
+        type: string
+
+env:
+  PACKAGE_PATH: Bin/Release/**/*.nupkg
+
+jobs:
+  release:
+    name: Build - Release
+
+    runs-on: windows-latest
+
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: |
+            10.0.x
+
+    - name: Validate version
+      shell: pwsh
+      run: |
+        $version = '${{ inputs.version }}'
+
+        if ($version -notmatch '^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?(?:\+[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?$') {
+            throw "The version '$version' is not a valid SemVer 2.0.0 version."
+        }
+
+    - name: Install dependencies
+      run: dotnet restore WinformsLegacy.sln
+
+      # Pacakge is created on build
+    - name: Build
+      run: dotnet build WinformsLegacy.sln --configuration Release --no-restore /p:PackageVersion=${{ inputs.version }}
+
+      # Upload package as an atrifact to the GitHub action
+    - name: Upload packages artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: package
+        path: ${{ env.PACKAGE_PATH }}
+        retention-days: 5
+
+      # Create a new release and upload the package to the release
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: ${{ env.PACKAGE_PATH }}
+        name: ${{ inputs.version }}
+        tag_name: ${{ inputs.version }}
+
+    - name: Push NuGet Package to NuGet Gallery
+      run: dotnet nuget push ${{ env.PACKAGE_PATH }} --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
