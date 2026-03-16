@@ -15,6 +15,18 @@ namespace System.Windows.Forms.Legacy.Tests;
         private const int WmDrawItemMessage = 0x002B;
         private const int WmMeasureItemMessage = 0x002C;
 
+        private enum OnPopupMdiTestCase
+        {
+            WithDetachedMainMenu,
+            FormWithNoMdiChildren,
+            FormWithNoVisibleMdiChildren_HasMdiListItem,
+            FormWithNoVisibleMdiChildren_NoMdiListItem,
+            FormWithOneMdiChild,
+            FormWithManyMdiChildren,
+            FormWithActiveMdiChild,
+            FormWithActiveManyMdiChildren,
+        }
+
         [StaFact]
         public void MenuItem_Ctor_Default()
         {
@@ -1117,90 +1129,43 @@ namespace System.Windows.Forms.Legacy.Tests;
             Assert.Equal(new string[] { "child" }, menuItem.MenuItems.Cast<MenuItem>().Select(m => m.Text));
         }
 
-        public static IEnumerable<object[]> OnPopup_MdiChildren_TestData()
+        public static TheoryData<int, string[]> OnPopup_MdiChildren_TestData() => new()
         {
-            var formWithNoMdiChildren = new Form { Menu = new MainMenu() };
-            formWithNoMdiChildren.Controls.Add(new MdiClient());
-            yield return new object[] { new SubMenuItem("text", new MenuItem[] { new MenuItem("child") }) { MdiList = true }, new MainMenu(), new string[] { "child" } };
-            yield return new object[] { new SubMenuItem("text") { MdiList = true }, formWithNoMdiChildren.Menu, Array.Empty<string>() };
-
-            var formWithNoVisibleMdiChildren = new Form { Menu = new MainMenu() };
-            var formWithNoVisibleMdiChildrenClient = new MdiClient();
-            formWithNoVisibleMdiChildren.Controls.Add(formWithNoVisibleMdiChildrenClient);
-            formWithNoVisibleMdiChildrenClient.Controls.Add(new Form { MdiParent = formWithNoVisibleMdiChildren });
-            yield return new object[] { new SubMenuItem("text", new MenuItem[] { new MenuItem("child") }) { MdiList = true }, formWithNoVisibleMdiChildren.Menu, new string[] { "child", "-" } };
-            yield return new object[] { new SubMenuItem("text"), formWithNoVisibleMdiChildren.Menu, Array.Empty<string>() };
-
-            var formWithMdiChildren = new Form { Menu = new MainMenu(), Visible = true };
-            var formWithMdiChildrenClient = new MdiClient();
-            formWithMdiChildren.Controls.Add(formWithMdiChildrenClient);
-            formWithMdiChildrenClient.Controls.Add(new Form { MdiParent = formWithMdiChildren, Visible = true, Text = "Form" });
-            yield return new object[] { new SubMenuItem("text", new MenuItem[] { new MenuItem("child") }) { MdiList = true }, formWithMdiChildren.Menu, new string[] { "child", "-", "&1 Form", "&2 Form" } };
-
-            var formWithManyMdiChildren = new Form { Menu = new MainMenu(), Visible = true };
-            var formWithManyMdiChildrenClient = new MdiClient();
-            formWithManyMdiChildren.Controls.Add(formWithManyMdiChildrenClient);
-            formWithManyMdiChildrenClient.Controls.Add(new Form { MdiParent = formWithManyMdiChildren, Visible = true, Text = "Form1" });
-            formWithManyMdiChildrenClient.Controls.Add(new Form { MdiParent = formWithManyMdiChildren, Visible = true, Text = "Form2" });
-            formWithManyMdiChildrenClient.Controls.Add(new Form { MdiParent = formWithManyMdiChildren, Visible = true, Text = "Form3" });
-            formWithManyMdiChildrenClient.Controls.Add(new Form { MdiParent = formWithManyMdiChildren, Visible = true, Text = "Form4" });
-            formWithManyMdiChildrenClient.Controls.Add(new Form { MdiParent = formWithManyMdiChildren, Visible = true, Text = "Form5" });
-            formWithManyMdiChildrenClient.Controls.Add(new Form { MdiParent = formWithManyMdiChildren, Visible = true, Text = "Form6" });
-            formWithManyMdiChildrenClient.Controls.Add(new Form { MdiParent = formWithManyMdiChildren, Visible = true, Text = "Form7" });
-            formWithManyMdiChildrenClient.Controls.Add(new Form { MdiParent = formWithManyMdiChildren, Visible = true, Text = "Form8" });
-            formWithManyMdiChildrenClient.Controls.Add(new Form { MdiParent = formWithManyMdiChildren, Visible = true, Text = "Form9" });
-            formWithManyMdiChildrenClient.Controls.Add(new Form { MdiParent = formWithManyMdiChildren, Visible = true, Text = "Form10" });
-            yield return new object[] { new SubMenuItem("text", new MenuItem[] { new MenuItem("child") }) { MdiList = true }, formWithManyMdiChildren.Menu, new string[] { "child", "-", "&1 Form1", "&2 Form1", "&3 Form2", "&4 Form2", "&5 Form3", "&6 Form3", "&7 Form4", "&8 Form4", "&9 Form10", "&10 Form10", "&More Windows..." } };
-
-            var formWithActiveMdiChildren = new SubForm { Menu = new MainMenu(), Visible = true };
-            var formWithActiveMdiChildrenClient = new MdiClient();
-            formWithActiveMdiChildren.Controls.Add(formWithActiveMdiChildrenClient);
-            var activeForm1 = new Form { MdiParent = formWithActiveMdiChildren, Visible = true, Text = "Form2" };
-            formWithActiveMdiChildrenClient.Controls.Add(new Form { MdiParent = formWithActiveMdiChildren, Visible = true, Text = "Form1" });
-            formWithActiveMdiChildrenClient.Controls.Add(activeForm1);
-            formWithActiveMdiChildren.ActivateMdiChild(activeForm1);
-            yield return new object[] { new SubMenuItem("text", new MenuItem[] { new MenuItem("child") }) { MdiList = true }, formWithActiveMdiChildren.Menu, new string[] { "child", "-", "&1 Form2", "&2 Form1", "&3 Form1", "&4 Form2" } };
-
-            var formWithActiveManyMdiChildren = new SubForm { Menu = new MainMenu(), Visible = true };
-            var formWithActiveManyMdiChildrenClient = new MdiClient();
-            formWithActiveManyMdiChildren.Controls.Add(formWithActiveManyMdiChildrenClient);
-            var activeForm2 = new Form { MdiParent = formWithActiveManyMdiChildren, Visible = true, Text = "Form11" };
-            formWithActiveManyMdiChildrenClient.Controls.Add(new Form { MdiParent = formWithActiveManyMdiChildren, Visible = true, Text = "Form1" });
-            formWithActiveManyMdiChildrenClient.Controls.Add(new Form { MdiParent = formWithActiveManyMdiChildren, Visible = true, Text = "Form2" });
-            formWithActiveManyMdiChildrenClient.Controls.Add(new Form { MdiParent = formWithActiveManyMdiChildren, Visible = true, Text = "Form3" });
-            formWithActiveManyMdiChildrenClient.Controls.Add(new Form { MdiParent = formWithActiveManyMdiChildren, Visible = true, Text = "Form4" });
-            formWithActiveManyMdiChildrenClient.Controls.Add(new Form { MdiParent = formWithActiveManyMdiChildren, Visible = true, Text = "Form5" });
-            formWithActiveManyMdiChildrenClient.Controls.Add(new Form { MdiParent = formWithActiveManyMdiChildren, Visible = true, Text = "Form6" });
-            formWithActiveManyMdiChildrenClient.Controls.Add(new Form { MdiParent = formWithActiveManyMdiChildren, Visible = true, Text = "Form7" });
-            formWithActiveManyMdiChildrenClient.Controls.Add(new Form { MdiParent = formWithActiveManyMdiChildren, Visible = true, Text = "Form8" });
-            formWithActiveManyMdiChildrenClient.Controls.Add(new Form { MdiParent = formWithActiveManyMdiChildren, Visible = true, Text = "Form9" });
-            formWithActiveManyMdiChildrenClient.Controls.Add(new Form { MdiParent = formWithActiveManyMdiChildren, Visible = true, Text = "Form10" });
-            formWithActiveManyMdiChildrenClient.Controls.Add(activeForm2);
-            formWithActiveManyMdiChildren.ActivateMdiChild(activeForm2);
-            yield return new object[] { new SubMenuItem("text", new MenuItem[] { new MenuItem("child") }) { MdiList = true }, formWithActiveManyMdiChildren.Menu, new string[] { "child", "-", "&1 Form11", "&2 Form1", "&3 Form1", "&4 Form2", "&5 Form2", "&6 Form3", "&7 Form3", "&8 Form4", "&9 Form4", "&10 Form11", "&More Windows..." } };
-        }
+            { (int)OnPopupMdiTestCase.WithDetachedMainMenu, ["child"] },
+            { (int)OnPopupMdiTestCase.FormWithNoMdiChildren, [] },
+            { (int)OnPopupMdiTestCase.FormWithNoVisibleMdiChildren_HasMdiListItem, ["child", "-"] },
+            { (int)OnPopupMdiTestCase.FormWithNoVisibleMdiChildren_NoMdiListItem, [] },
+            { (int)OnPopupMdiTestCase.FormWithOneMdiChild, ["child", "-", "&1 Form", "&2 Form"] },
+            { (int)OnPopupMdiTestCase.FormWithManyMdiChildren, ["child", "-", "&1 Form1", "&2 Form1", "&3 Form2", "&4 Form2", "&5 Form3", "&6 Form3", "&7 Form4", "&8 Form4", "&9 Form10", "&10 Form10", "&More Windows..."] },
+            { (int)OnPopupMdiTestCase.FormWithActiveMdiChild, ["child", "-", "&1 Form2", "&2 Form1", "&3 Form1", "&4 Form2"] },
+            { (int)OnPopupMdiTestCase.FormWithActiveManyMdiChildren, ["child", "-", "&1 Form11", "&2 Form1", "&3 Form1", "&4 Form2", "&5 Form2", "&6 Form3", "&7 Form3", "&8 Form4", "&9 Form4", "&10 Form11", "&More Windows..."] },
+        };
 
         [StaTheory]
         [MemberData(nameof(OnPopup_MdiChildren_TestData))]
-        public void MenuItem_OnPopup_MdiChildren_AddsSeparator(SubMenuItem menuItem, Menu parent, string[] expectedItems)
+        public void MenuItem_OnPopup_MdiChildren_AddsSeparator(int testCaseValue, string[] expectedItems)
         {
-            try
-            {
-                parent.MenuItems.Add(menuItem);
+            OnPopupMdiTestCase testCase = (OnPopupMdiTestCase)testCaseValue;
 
-                menuItem.OnPopup(null);
-                Assert.Equal(expectedItems, menuItem.MenuItems.Cast<MenuItem>().Select(m => m.Text));
+            using Form? parentForm = CreateMdiParentForm(testCase);
+            using Menu? standaloneMenu = parentForm is null ? new MainMenu() : null;
 
-                // Calling OnPopup again should not add duplicate items.
-                menuItem.OnPopup(null);
-                Assert.Equal(expectedItems, menuItem.MenuItems.Cast<MenuItem>().Select(m => m.Text));
-            }
-            catch
+            Menu parent = standaloneMenu ?? parentForm!.Menu;
+            SubMenuItem menuItem = testCase switch
             {
-                string expected = "Expected: " + string.Join(", ", expectedItems.Select(i => "\"" + i + "\""));
-                string actual = "Actual:   " + string.Join(", ", menuItem.MenuItems.Cast<MenuItem>().Select(m => m.Text).Select(i => "\"" + i + "\""));
-                throw new Exception(expected + Environment.NewLine + actual);
-            }
+                OnPopupMdiTestCase.FormWithNoMdiChildren => new SubMenuItem("text") { MdiList = true },
+                OnPopupMdiTestCase.FormWithNoVisibleMdiChildren_NoMdiListItem => new SubMenuItem("text"),
+                _ => new SubMenuItem("text", new MenuItem[] { new MenuItem("child") }) { MdiList = true }
+            };
+
+            parent.MenuItems.Add(menuItem);
+
+            menuItem.OnPopup(null);
+            Assert.Equal(expectedItems, menuItem.MenuItems.Cast<MenuItem>().Select(m => m.Text));
+
+            // Calling OnPopup again should not add duplicate items.
+            menuItem.OnPopup(null);
+            Assert.Equal(expectedItems, menuItem.MenuItems.Cast<MenuItem>().Select(m => m.Text));
         }
 
         [StaFact]
@@ -1892,6 +1857,101 @@ namespace System.Windows.Forms.Legacy.Tests;
                 nuint value => unchecked((nint)value),
                 _ => throw new InvalidOperationException($"Unexpected itemData type: {itemData.GetType().FullName}")
             };
+        }
+
+        private static Form? CreateMdiParentForm(OnPopupMdiTestCase testCase) => testCase switch
+        {
+            OnPopupMdiTestCase.WithDetachedMainMenu => null,
+            OnPopupMdiTestCase.FormWithNoMdiChildren => CreateFormWithNoMdiChildren(),
+            OnPopupMdiTestCase.FormWithNoVisibleMdiChildren_HasMdiListItem
+                or OnPopupMdiTestCase.FormWithNoVisibleMdiChildren_NoMdiListItem => CreateFormWithNoVisibleMdiChildren(),
+            OnPopupMdiTestCase.FormWithOneMdiChild => CreateFormWithOneMdiChild(),
+            OnPopupMdiTestCase.FormWithManyMdiChildren => CreateFormWithManyMdiChildren(),
+            OnPopupMdiTestCase.FormWithActiveMdiChild => CreateFormWithActiveMdiChild(),
+            OnPopupMdiTestCase.FormWithActiveManyMdiChildren => CreateFormWithActiveManyMdiChildren(),
+            _ => throw new ArgumentOutOfRangeException(nameof(testCase))
+        };
+
+        private static Form CreateFormWithNoMdiChildren()
+        {
+            var form = new Form { Menu = new MainMenu() };
+            form.Controls.Add(new MdiClient());
+
+            return form;
+        }
+
+        private static Form CreateFormWithNoVisibleMdiChildren()
+        {
+            var form = new Form { Menu = new MainMenu() };
+            var client = new MdiClient();
+            form.Controls.Add(client);
+            client.Controls.Add(new Form { MdiParent = form });
+
+            return form;
+        }
+
+        private static Form CreateFormWithOneMdiChild()
+        {
+            var form = new Form { Menu = new MainMenu(), Visible = true };
+            var client = new MdiClient();
+            form.Controls.Add(client);
+            client.Controls.Add(new Form { MdiParent = form, Visible = true, Text = "Form" });
+
+            return form;
+        }
+
+        private static Form CreateFormWithManyMdiChildren()
+        {
+            var form = new Form { Menu = new MainMenu(), Visible = true };
+            var client = new MdiClient();
+            form.Controls.Add(client);
+            client.Controls.Add(new Form { MdiParent = form, Visible = true, Text = "Form1" });
+            client.Controls.Add(new Form { MdiParent = form, Visible = true, Text = "Form2" });
+            client.Controls.Add(new Form { MdiParent = form, Visible = true, Text = "Form3" });
+            client.Controls.Add(new Form { MdiParent = form, Visible = true, Text = "Form4" });
+            client.Controls.Add(new Form { MdiParent = form, Visible = true, Text = "Form5" });
+            client.Controls.Add(new Form { MdiParent = form, Visible = true, Text = "Form6" });
+            client.Controls.Add(new Form { MdiParent = form, Visible = true, Text = "Form7" });
+            client.Controls.Add(new Form { MdiParent = form, Visible = true, Text = "Form8" });
+            client.Controls.Add(new Form { MdiParent = form, Visible = true, Text = "Form9" });
+            client.Controls.Add(new Form { MdiParent = form, Visible = true, Text = "Form10" });
+
+            return form;
+        }
+
+        private static SubForm CreateFormWithActiveMdiChild()
+        {
+            var form = new SubForm { Menu = new MainMenu(), Visible = true };
+            var client = new MdiClient();
+            form.Controls.Add(client);
+            var activeForm = new Form { MdiParent = form, Visible = true, Text = "Form2" };
+            client.Controls.Add(new Form { MdiParent = form, Visible = true, Text = "Form1" });
+            client.Controls.Add(activeForm);
+            form.ActivateMdiChild(activeForm);
+
+            return form;
+        }
+
+        private static SubForm CreateFormWithActiveManyMdiChildren()
+        {
+            var form = new SubForm { Menu = new MainMenu(), Visible = true };
+            var client = new MdiClient();
+            form.Controls.Add(client);
+            var activeForm = new Form { MdiParent = form, Visible = true, Text = "Form11" };
+            client.Controls.Add(new Form { MdiParent = form, Visible = true, Text = "Form1" });
+            client.Controls.Add(new Form { MdiParent = form, Visible = true, Text = "Form2" });
+            client.Controls.Add(new Form { MdiParent = form, Visible = true, Text = "Form3" });
+            client.Controls.Add(new Form { MdiParent = form, Visible = true, Text = "Form4" });
+            client.Controls.Add(new Form { MdiParent = form, Visible = true, Text = "Form5" });
+            client.Controls.Add(new Form { MdiParent = form, Visible = true, Text = "Form6" });
+            client.Controls.Add(new Form { MdiParent = form, Visible = true, Text = "Form7" });
+            client.Controls.Add(new Form { MdiParent = form, Visible = true, Text = "Form8" });
+            client.Controls.Add(new Form { MdiParent = form, Visible = true, Text = "Form9" });
+            client.Controls.Add(new Form { MdiParent = form, Visible = true, Text = "Form10" });
+            client.Controls.Add(activeForm);
+            form.ActivateMdiChild(activeForm);
+
+            return form;
         }
 
         public class SubMenuItem : MenuItem
