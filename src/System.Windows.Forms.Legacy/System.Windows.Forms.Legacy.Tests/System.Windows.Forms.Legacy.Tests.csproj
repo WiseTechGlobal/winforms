@@ -6,13 +6,16 @@
     <DisableTransitiveFrameworkReferences>true</DisableTransitiveFrameworkReferences>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <NoWarn>$(NoWarn);SA1005;SA1028;WFDEV006</NoWarn>
+    <NoWarn>$(NoWarn);SA1005;SA1028;SA1513;WFDEV006;CA1507;CA1852;CA2201;IDE0005;IDE0002;IDE0300</NoWarn>
 
     <AssemblyName>System.Windows.Forms.Tests</AssemblyName>
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
     <OutputPath>$([System.IO.Path]::GetFullPath('$(RepoRoot)Bin\$(OutDirName)\'))</OutputPath>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\System.Windows.Forms.Primitives\src\System.Windows.Forms.Primitives.csproj" />
     <ProjectReference Include="..\..\System.Windows.Forms\System.Windows.Forms.csproj" />
