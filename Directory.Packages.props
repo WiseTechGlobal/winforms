@@ -37,15 +37,11 @@
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
     <PackageVersion Include="Microsoft.DotNet.XUnitV3Extensions" Version="$(MicrosoftDotNetXUnitV3ExtensionsPackageVersion)" />
     <PackageVersion Include="Microsoft.VisualStudio.Threading" Version="$(MicrosoftVisualStudioThreadingVersion)" />
-    <PackageVersion Include="NUnit" Version="$(NUnitPackageVersion)" />
-    <PackageVersion Include="NUnit.Analyzers" Version="$(NUnitAnalyzersPackageVersion)" />
-    <PackageVersion Include="NUnit3TestAdapter" Version="$(NUnit3TestAdapterPackageVersion)" />
     <PackageVersion Include="Verify.XunitV3" Version="$(VerifyXunitV3Version)" />
     <PackageVersion Include="xunit.v3.assert" Version="$(XUnitV3Version)" Condition="'$(IsTestProject)' != 'true'" />
     <PackageVersion Include="xunit.stafact" Version="$(XUnitStaFactPackageVersion)" />
 
     <!-- Code coverage-->
-      <PackageVersion Include="coverlet.collector" Version="$(CoverletCollectorPackageVersion)" />
     <PackageVersion Include="coverlet.msbuild" Version="$(CoverletMSBuildPackageVersion)" />
     <PackageVersion Include="Codecov" Version="$(CodecovVersion)" />
     <PackageVersion Include="ReportGenerator" Version="$(ReportGeneratorVersion)" />
