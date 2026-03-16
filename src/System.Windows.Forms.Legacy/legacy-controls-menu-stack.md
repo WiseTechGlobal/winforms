@@ -231,7 +231,8 @@ The main remaining tasks are:
 1. Run focused Menu Stack behavior tests and verify they pass in the intended build environment.
 2. Review remaining API semantics such as obsolete warnings and `EditorBrowsable` behavior now that the types are no longer hollow shims.
 3. Reconcile package and documentation messaging so the restored runtime surface is not still described purely as binary compatibility.
-4. Continue checking edge cases around MDI merge behavior, native handle lifecycle, and owner-draw interaction.
+4. Backfill the migrated menu SR XLF entries by copying existing translations from `src/System.Windows.Forms/src/Resources` when equivalent resource text already exists, and leave newly added menu-only entries in source-language form until upstream translations are available.
+5. Continue checking edge cases around MDI merge behavior, native handle lifecycle, and owner-draw interaction.
 
 ## Practical Summary
 

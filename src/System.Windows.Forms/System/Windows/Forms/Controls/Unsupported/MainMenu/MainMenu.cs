@@ -46,6 +46,7 @@ namespace System.Windows.Forms
         {
         }
 
+        [SRDescription(nameof(SR.MainMenuCollapseDescr))]
         public event EventHandler Collapse
         {
             add => onCollapse += value;
@@ -60,6 +61,7 @@ namespace System.Windows.Forms
         // Add an AmbientValue attribute so that the Reset context menu becomes available in the Property Grid.
         [
         Localizable(true),
+        SRDescription(nameof(SR.MenuRightToLeftDescr)),
         AmbientValue(RightToLeft.Inherit)
         ]
         public virtual RightToLeft RightToLeft

@@ -170,6 +170,7 @@ namespace System.Windows.Forms
         ///  the menu item.
         /// </summary>
         [DefaultValue(false)]
+        [SRDescription(nameof(SR.MenuItemCheckedDescr))]
         public bool Checked
         {
             get
@@ -183,7 +184,7 @@ namespace System.Windows.Forms
 
                 if (value && (ItemCount != 0 || Parent is MainMenu))
                 {
-                    throw new ArgumentException("Checked menu items cannot be parent items or top-level main menu items.", nameof(value));
+                    throw new ArgumentException(SR.MenuItemInvalidCheckProperty, nameof(value));
                 }
 
                 _data.SetState(StateChecked, value);
@@ -194,6 +195,7 @@ namespace System.Windows.Forms
         ///  Gets or sets a value indicating whether the menu item is the default.
         /// </summary>
         [DefaultValue(false)]
+        [SRDescription(nameof(SR.MenuItemDefaultDescr))]
         public bool DefaultItem
         {
             get
@@ -226,6 +228,7 @@ namespace System.Windows.Forms
         /// </summary>
         [SRCategory(nameof(SR.CatBehavior))]
         [DefaultValue(false)]
+        [SRDescription(nameof(SR.MenuItemOwnerDrawDescr))]
         public bool OwnerDraw
         {
             get
@@ -245,6 +248,7 @@ namespace System.Windows.Forms
         /// </summary>
         [Localizable(true)]
         [DefaultValue(true)]
+        [SRDescription(nameof(SR.MenuItemEnabledDescr))]
         public bool Enabled
         {
             get
@@ -342,6 +346,7 @@ namespace System.Windows.Forms
         ///  list of the MDI child windows that are displayed within the associated form.
         /// </summary>
         [DefaultValue(false)]
+        [SRDescription(nameof(SR.MenuItemMDIListDescr))]
         public bool MdiList
         {
             get
@@ -432,6 +437,7 @@ namespace System.Windows.Forms
         ///  menu item when its menu is merged with another.
         /// </summary>
         [DefaultValue(MenuMerge.Add)]
+        [SRDescription(nameof(SR.MenuItemMergeTypeDescr))]
         public MenuMerge MergeType
         {
             get
@@ -456,6 +462,7 @@ namespace System.Windows.Forms
         ///  menu is merged with another.
         /// </summary>
         [DefaultValue(0)]
+        [SRDescription(nameof(SR.MenuItemMergeOrderDescr))]
         public int MergeOrder
         {
             get
@@ -497,6 +504,7 @@ namespace System.Windows.Forms
         ///  displays a radio-button mark instead of a check mark.
         /// </summary>
         [DefaultValue(false)]
+        [SRDescription(nameof(SR.MenuItemRadioCheckDescr))]
         public bool RadioCheck
         {
             get
@@ -517,6 +525,7 @@ namespace System.Windows.Forms
         ///  Gets or sets the text of the menu item.
         /// </summary>
         [Localizable(true)]
+        [SRDescription(nameof(SR.MenuItemTextDescr))]
         public string Text
         {
             get
@@ -536,6 +545,7 @@ namespace System.Windows.Forms
         /// </summary>
         [Localizable(true)]
         [DefaultValue(Shortcut.None)]
+        [SRDescription(nameof(SR.MenuItemShortCutDescr))]
         public Shortcut Shortcut
         {
             get
@@ -562,6 +572,7 @@ namespace System.Windows.Forms
         /// </summary>
         [DefaultValue(true),
         Localizable(true)]
+        [SRDescription(nameof(SR.MenuItemShowShortCutDescr))]
         public bool ShowShortcut
         {
             get
@@ -586,6 +597,7 @@ namespace System.Windows.Forms
         /// </summary>
         [Localizable(true)]
         [DefaultValue(true)]
+        [SRDescription(nameof(SR.MenuItemVisibleDescr))]
         public bool Visible
         {
             get
@@ -604,6 +616,7 @@ namespace System.Windows.Forms
         ///  Occurs when the menu item is clicked or selected using a shortcut key defined
         ///  for the menu item.
         /// </summary>
+        [SRDescription(nameof(SR.MenuItemOnClickDescr))]
         public event EventHandler Click
         {
             add
@@ -658,6 +671,7 @@ namespace System.Windows.Forms
         /// <summary>
         ///  Occurs before a menu item's list of menu items is displayed.
         /// </summary>
+        [SRDescription(nameof(SR.MenuItemOnInitDescr))]
         public event EventHandler Popup
         {
             add
@@ -676,6 +690,7 @@ namespace System.Windows.Forms
         ///  Occurs when the user hovers their mouse over a menu item or selects it with the
         ///  keyboard but has not activated it.
         /// </summary>
+        [SRDescription(nameof(SR.MenuItemOnSelectDescr))]
         public event EventHandler Select
         {
             add

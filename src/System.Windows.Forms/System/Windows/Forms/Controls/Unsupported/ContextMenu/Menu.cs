@@ -58,6 +58,7 @@ namespace System.Windows.Forms
         /// </summary>
         [
         Browsable(false), EditorBrowsable(EditorBrowsableState.Advanced),
+            SRDescription(nameof(SR.ControlHandleDescr)),
             DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)
         ]
         public IntPtr Handle
@@ -79,6 +80,7 @@ namespace System.Windows.Forms
         /// </summary>
         [
         Browsable(false),
+            SRDescription(nameof(SR.MenuIsParentDescr)),
             DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)
         ]
         public virtual bool IsParent
@@ -102,6 +104,7 @@ namespace System.Windows.Forms
         /// </summary>
         [
         Browsable(false),
+            SRDescription(nameof(SR.MenuMDIListItemDescr)),
             DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)
         ]
         public MenuItem MdiListItem
@@ -162,6 +165,7 @@ namespace System.Windows.Forms
 
         [
         Browsable(false),
+        SRDescription(nameof(SR.MenuMenuItemsDescr)),
         DesignerSerializationVisibility(DesignerSerializationVisibility.Content),
         MergableProperty(false)
         ]
@@ -535,9 +539,10 @@ namespace System.Windows.Forms
         public virtual void MergeMenu(Menu menuSrc)
         {
             ArgumentNullException.ThrowIfNull(menuSrc);
+
             if (menuSrc == this)
             {
-                throw new ArgumentException("A menu cannot be merged with itself.", nameof(menuSrc));
+                throw new ArgumentException(SR.MenuMergeWithSelf, nameof(menuSrc));
             }
 
             int i, j;
@@ -884,7 +889,7 @@ namespace System.Windows.Forms
                         {
                             if (parent.Equals(item))
                             {
-                                throw new ArgumentException($"The menu item '{item.Text}' already exists in this menu hierarchy.", nameof(item));
+                                throw new ArgumentException(string.Format(SR.MenuItemAlreadyExists, item.Text), nameof(item));
                             }
 
                             if (parent.Parent is MenuItem)
@@ -956,7 +961,7 @@ namespace System.Windows.Forms
                 }
                 else
                 {
-                    throw new ArgumentException("Value must be a MenuItem.", nameof(value));
+                    throw new ArgumentException(SR.MenuBadMenuItem, nameof(value));
                 }
             }
 
@@ -1122,7 +1127,7 @@ namespace System.Windows.Forms
                 }
                 else
                 {
-                    throw new ArgumentException("Value must be a MenuItem.", nameof(value));
+                    throw new ArgumentException(SR.MenuBadMenuItem, nameof(value));
                 }
             }
 

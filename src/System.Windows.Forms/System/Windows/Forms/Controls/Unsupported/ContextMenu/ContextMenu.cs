@@ -45,7 +45,8 @@ namespace System.Windows.Forms
         /// </summary>
         [
         Browsable(false),
-            DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)
+            DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden),
+            SRDescription(nameof(SR.ContextMenuSourceControlDescr))
         ]
         public Control SourceControl
         {
@@ -55,6 +56,7 @@ namespace System.Windows.Forms
             }
         }
 
+        [SRDescription(nameof(SR.MenuItemOnInitDescr))]
         public event EventHandler Popup
         {
             add => onPopup += value;
@@ -64,6 +66,7 @@ namespace System.Windows.Forms
         /// <summary>
         ///  Fires when the context menu collapses.
         /// </summary>
+        [SRDescription(nameof(SR.ContextMenuCollapseDescr))]
         public event EventHandler Collapse
         {
             add => onCollapse += value;
@@ -79,7 +82,8 @@ namespace System.Windows.Forms
         // available in the Property Grid but the default value remains No.
         [
         Localizable(true),
-        DefaultValue(RightToLeft.No)
+        DefaultValue(RightToLeft.No),
+        SRDescription(nameof(SR.MenuRightToLeftDescr))
         ]
         public virtual RightToLeft RightToLeft
         {
@@ -200,7 +204,7 @@ namespace System.Windows.Forms
 
             if (!control.IsHandleCreated || !control.Visible)
             {
-                throw new ArgumentException("The control must be visible and have a created handle.", nameof(control));
+                throw new ArgumentException(SR.ContextMenuInvalidParent, nameof(control));
             }
 
             sourceControl = control;
