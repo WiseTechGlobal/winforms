@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <LangVersion>preview</LangVersion>
     <ImplicitUsings>enable</ImplicitUsings>
+    <IsPackable>false</IsPackable>
     <NoWarn>$(NoWarn);SA1400;CS0649;WFDEV006;NU1602</NoWarn>
   </PropertyGroup>
 

@@ -12,10 +12,11 @@ on:
       - main
 
 permissions:
-  contents: write
+  contents: read
 
 env:
   PACKAGE_PATH: artifacts/packages/**/*.nupkg
+  PACKAGE_PROJECT: src/System.Windows.Forms/System.Windows.Forms.csproj
 
 jobs:
   release:
@@ -55,7 +56,7 @@ jobs:
       run: dotnet build WinformsLegacy.sln --configuration Release --no-restore /p:PackageVersion=${{ steps.version.outputs.value }} /p:GeneratePackageOnBuild=false
 
     - name: Pack
-      run: dotnet pack WinformsLegacy.sln --configuration Release --no-build -o artifacts/packages /p:PackageVersion=${{ steps.version.outputs.value }}
+      run: dotnet pack ${{ env.PACKAGE_PROJECT }} --configuration Release --no-build -o artifacts/packages /p:PackageVersion=${{ steps.version.outputs.value }}
 
     - name: List produced packages
       shell: pwsh
@@ -76,17 +77,6 @@ jobs:
         }
 
         $packages | Select-Object -ExpandProperty FullName
-
-      # Create a GitHub Release only for manual workflow runs
-    - name: Create GitHub Release
-      if: github.event_name == 'workflow_dispatch'
-      uses: softprops/action-gh-release@v2
-      with:
-        files: ${{ env.PACKAGE_PATH }}
-        fail_on_unmatched_files: true
-        name: ${{ steps.version.outputs.value }}
-        tag_name: ${{ steps.version.outputs.value }}
-        target_commitish: ${{ github.sha }}
 
       # Push to NuGet only for manual workflow runs
     - name: Push NuGet Package to NuGet Gallery
