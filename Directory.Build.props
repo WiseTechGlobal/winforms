@@ -6,6 +6,10 @@
   <Import Project="$(RepositoryEngineeringDir)ApiCompatibility\PublicApiAnalyzer.props" />
   <Import Project="$(RepositoryEngineeringDir)Test.props" Condition="'$(IsTestProject)' == 'true'"/>
 
+  <PropertyGroup Condition="'$(RepoRoot)' == ''">
+    <RepoRoot>$(MSBuildThisFileDirectory)</RepoRoot>
+  </PropertyGroup>
+
   <PropertyGroup>
     <TargetFramework>$(NetCurrent)</TargetFramework>
     <Product>Microsoft&#xAE; .NET</Product>
