@@ -38,9 +38,11 @@
     <PackageDescription>WiseTech Global forked version of System.Windows.Forms that includes controls that were deprecated in .NET Core 3.1 and .NET 5, like DataGrid, Menu, ToolBar and StatusBar.</PackageDescription>
     <Authors>WiseTech Global</Authors>
     <Copyright>© WiseTech Global Limited. All rights reserved.</Copyright>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
     <None Remove="Resources\System\Windows\Forms\XPThemes.manifest" />
   </ItemGroup>
 

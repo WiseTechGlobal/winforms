@@ -11,6 +11,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write
+
 env:
   PACKAGE_PATH: artifacts/packages/**/*.nupkg
 
@@ -49,7 +52,7 @@ jobs:
       run: dotnet restore WinformsLegacy.sln
 
     - name: Build
-      run: dotnet build WinformsLegacy.sln --configuration Release --no-restore /p:PackageVersion=${{ steps.version.outputs.value }}
+      run: dotnet build WinformsLegacy.sln --configuration Release --no-restore /p:PackageVersion=${{ steps.version.outputs.value }} /p:GeneratePackageOnBuild=false
 
     - name: Pack
       run: dotnet pack WinformsLegacy.sln --configuration Release --no-build -o artifacts/packages /p:PackageVersion=${{ steps.version.outputs.value }}
@@ -57,29 +60,33 @@ jobs:
     - name: List produced packages
       shell: pwsh
       run: |
-        $packages = Get-ChildItem -Recurse -Filter *.nupkg
+        $packages = Get-ChildItem -Path artifacts/packages -Recurse -File -Filter *.nupkg
         if ($packages.Count -eq 0) {
             Write-Error 'No .nupkg files were produced.'
             exit 1
         }
-        $packages | Select-Object -ExpandProperty FullName
 
-      # Upload package as an artifact to the GitHub action
-    - name: Upload packages artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: package
-        path: ${{ env.PACKAGE_PATH }}
-        retention-days: 5
+        $duplicatePackages = $packages | Group-Object Name | Where-Object Count -gt 1
+        if ($duplicatePackages) {
+            $duplicatePackages | ForEach-Object {
+                Write-Error ("Duplicate package asset name detected: {0}`n{1}" -f $_.Name, ($_.Group.FullName -join "`n"))
+            }
+
+            exit 1
+        }
+
+        $packages | Select-Object -ExpandProperty FullName
 
       # Create a GitHub Release only for manual workflow runs
     - name: Create GitHub Release
       if: github.event_name == 'workflow_dispatch'
-      uses: softprops/action-gh-release@v1
+      uses: softprops/action-gh-release@v2
       with:
         files: ${{ env.PACKAGE_PATH }}
+        fail_on_unmatched_files: true
         name: ${{ steps.version.outputs.value }}
         tag_name: ${{ steps.version.outputs.value }}
+        target_commitish: ${{ github.sha }}
 
       # Push to NuGet only for manual workflow runs
     - name: Push NuGet Package to NuGet Gallery
