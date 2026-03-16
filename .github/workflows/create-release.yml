@@ -7,6 +7,9 @@ on:
         description: Package version to publish, for example 1.2.3 or 1.2.3-preview.1
         required: true
         type: string
+  pull_request:
+    branches:
+      - main
 
 env:
   PACKAGE_PATH: Bin/Release/**/*.nupkg
@@ -28,23 +31,28 @@ jobs:
         dotnet-version: |
             10.0.x
 
-    - name: Validate version
+    - name: Compute version
+      id: version
       shell: pwsh
       run: |
-        $version = '${{ inputs.version }}'
-
-        if ($version -notmatch '^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?(?:\+[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?$') {
-            throw "The version '$version' is not a valid SemVer 2.0.0 version."
+        if ('${{ github.event_name }}' -eq 'pull_request') {
+            $version = "0.0.0-pr.${{ github.event.pull_request.number }}.${{ github.run_number }}"
+        } else {
+            $version = '${{ inputs.version }}'
+            if ($version -notmatch '^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?(?:\+[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?$') {
+                throw "The version '$version' is not a valid SemVer 2.0.0 version."
+            }
         }
+        echo "value=$version" >> $env:GITHUB_OUTPUT
 
     - name: Install dependencies
       run: dotnet restore WinformsLegacy.sln
 
-      # Pacakge is created on build
+      # Package is created on build
     - name: Build
-      run: dotnet build WinformsLegacy.sln --configuration Release --no-restore /p:PackageVersion=${{ inputs.version }}
+      run: dotnet build WinformsLegacy.sln --configuration Release --no-restore /p:PackageVersion=${{ steps.version.outputs.value }}
 
-      # Upload package as an atrifact to the GitHub action
+      # Upload package as an artifact to the GitHub action
     - name: Upload packages artifact
       uses: actions/upload-artifact@v4
       with:
@@ -52,13 +60,16 @@ jobs:
         path: ${{ env.PACKAGE_PATH }}
         retention-days: 5
 
-      # Create a new release and upload the package to the release
+      # Create a GitHub Release only for manual workflow runs
     - name: Create GitHub Release
+      if: github.event_name == 'workflow_dispatch'
       uses: softprops/action-gh-release@v1
       with:
         files: ${{ env.PACKAGE_PATH }}
-        name: ${{ inputs.version }}
-        tag_name: ${{ inputs.version }}
+        name: ${{ steps.version.outputs.value }}
+        tag_name: ${{ steps.version.outputs.value }}
 
+      # Push to NuGet only for manual workflow runs
     - name: Push NuGet Package to NuGet Gallery
+      if: github.event_name == 'workflow_dispatch'
       run: dotnet nuget push ${{ env.PACKAGE_PATH }} --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
