@@ -1,10 +1,40 @@
 name: Build and Test
 
+permissions:
+  contents: read
+
+concurrency:
+  group: build-test-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 on:
   push:
     branches: [ master ]
+    paths:
+      - .github/workflows/build-test.yml
+      - WinformsLegacy.sln
+      - Directory.Build.props
+      - Directory.Build.targets
+      - Directory.Packages.props
+      - global.json
+      - NuGet.config
+      - dotnet.config
+      - eng/**
+      - src/**
+      
   pull_request:
     branches: [ master ]
+    paths:
+      - .github/workflows/build-test.yml
+      - WinformsLegacy.sln
+      - Directory.Build.props
+      - Directory.Build.targets
+      - Directory.Packages.props
+      - global.json
+      - NuGet.config
+      - dotnet.config
+      - eng/**
+      - src/**
   workflow_dispatch:
 
 jobs:
@@ -12,6 +42,7 @@ jobs:
     name: Build - Debug
 
     runs-on: windows-latest
+    timeout-minutes: 30
 
     steps:
     - uses: actions/checkout@v4
@@ -34,5 +65,14 @@ jobs:
         src/System.Windows.Forms.Legacy/System.Windows.Forms.Legacy.Tests/System.Windows.Forms.Legacy.Tests.csproj
         --configuration Debug
         --no-restore
+        --no-build
         --logger trx
         --results-directory TestResults
+
+    - name: Upload test results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-results
+        path: TestResults
+        if-no-files-found: warn
