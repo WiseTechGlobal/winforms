@@ -33,6 +33,6 @@ jobs:
         dotnet test
         src/System.Windows.Forms.Legacy/System.Windows.Forms.Legacy.Tests/System.Windows.Forms.Legacy.Tests.csproj
         --configuration Debug
-        --no-build
+        --no-restore
         --logger trx
         --results-directory TestResults
