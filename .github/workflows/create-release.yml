@@ -16,7 +16,6 @@ permissions:
 
 env:
   PACKAGE_PATH: artifacts/packages/**/*.nupkg
-  PACKAGE_PROJECT: src/System.Windows.Forms/System.Windows.Forms.csproj
 
 jobs:
   release:
@@ -52,11 +51,8 @@ jobs:
     - name: Install dependencies
       run: dotnet restore WinformsLegacy.sln
 
-    - name: Build
-      run: dotnet build WinformsLegacy.sln --configuration Release --no-restore /p:PackageVersion=${{ steps.version.outputs.value }} /p:GeneratePackageOnBuild=false
-
     - name: Pack
-      run: dotnet pack ${{ env.PACKAGE_PROJECT }} --configuration Release --no-build -o artifacts/packages /p:PackageVersion=${{ steps.version.outputs.value }}
+      run: dotnet pack WinformsLegacy.sln --configuration Release -o artifacts/packages --no-restore /p:PackageVersion=${{ steps.version.outputs.value }} /p:GeneratePackageOnBuild=false
 
     - name: List produced packages
       shell: pwsh
