@@ -55,6 +55,16 @@
       <Pack>true</Pack>
       <PrivateAssets>all</PrivateAssets>
     </ProjectReference>
+    <ProjectReference Include="..\System.Drawing.Common\src\System.Drawing.Common.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <SetTargetFramework>TargetFramework=$(TargetFramework)</SetTargetFramework>
+      <PrivateAssets>all</PrivateAssets>
+    </ProjectReference>
+    <ProjectReference Include="..\System.Private.Windows.GdiPlus\System.Private.Windows.GdiPlus.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <SetTargetFramework>TargetFramework=$(TargetFramework)</SetTargetFramework>
+      <PrivateAssets>all</PrivateAssets>
+    </ProjectReference>
     <ProjectReference Include="..\System.Private.Windows.Core\src\System.Private.Windows.Core.csproj">
       <Pack>true</Pack>
       <PrivateAssets>all</PrivateAssets>
@@ -67,10 +77,20 @@
 
   <ItemGroup>
     <!-- Keep these dependencies on a public stable version for downstream consumers that do not restore from dnceng feeds. -->
+    <PackageReference Include="Microsoft.Win32.SystemEvents" VersionOverride="10.0.3" />
     <PackageReference Include="System.Configuration.ConfigurationManager" VersionOverride="10.0.3" />
     <PackageReference Include="System.Formats.Nrbf" VersionOverride="10.0.3" />
     <PackageReference Include="System.Resources.Extensions" VersionOverride="10.0.3" />
     <PackageReference Include="System.Windows.Extensions" VersionOverride="10.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="$(ArtifactsBinDir)System.Drawing.Common\$(Configuration)\$(TargetFramework)\System.Drawing.Common.dll"
+          Pack="true"
+          PackagePath="lib\$(TargetFramework)\" />
+    <None Include="$(ArtifactsBinDir)System.Private.Windows.GdiPlus\$(Configuration)\$(TargetFramework)\System.Private.Windows.GdiPlus.dll"
+          Pack="true"
+          PackagePath="lib\$(TargetFramework)\" />
   </ItemGroup>
 
   <ItemGroup>
