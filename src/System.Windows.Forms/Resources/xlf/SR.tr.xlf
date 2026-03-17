@@ -1354,17 +1354,17 @@
       </trans-unit>
       <trans-unit id="ContextMenuCollapseDescr">
         <source>Raised when the context menu collapses.</source>
-        <target state="new">Raised when the context menu collapses.</target>
+        <target state="translated">İçerik menüsü daraltıldığında harekete geçirilir.</target>
         <note />
       </trans-unit>
       <trans-unit id="ContextMenuInvalidParent">
         <source>ContextMenu cannot be shown on an invisible control.</source>
-        <target state="new">ContextMenu cannot be shown on an invisible control.</target>
+        <target state="translated">ContextMenu, görünmeyen bir denetimde gösterilemiyor.</target>
         <note />
       </trans-unit>
       <trans-unit id="ContextMenuSourceControlDescr">
         <source>The last control that caused this context menu to be displayed.</source>
-        <target state="new">The last control that caused this context menu to be displayed.</target>
+        <target state="translated">Bu bağlam menüsünün görüntülenmesine neden olan en son denetim.</target>
         <note />
       </trans-unit>
       <trans-unit id="ContextMenuStripSourceControlDescr">
@@ -7056,7 +7056,7 @@ Geçersiz işlemin gerçekleştiği yığın izi:
       </trans-unit>
       <trans-unit id="MainMenuCollapseDescr">
         <source>Occurs when the main menu collapses.</source>
-        <target state="new">Occurs when the main menu collapses.</target>
+        <target state="translated">Ana menü daraltıldığında gerçekleşir.</target>
         <note />
       </trans-unit>
       <trans-unit id="MaskedTextBoxAllowPromptAsInputDescr">
@@ -7196,77 +7196,77 @@ Geçersiz işlemin gerçekleştiği yığın izi:
       </trans-unit>
       <trans-unit id="MenuBadMenuItem">
         <source>Parameter must be of type MenuItem.</source>
-        <target state="new">Parameter must be of type MenuItem.</target>
+        <target state="translated">Parametrenin MenuItem türünde olması gerekir.</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuIsParentDescr">
         <source>Indicates if this menu contains any child items.</source>
-        <target state="new">Indicates if this menu contains any child items.</target>
+        <target state="translated">Bu menünün alt öğe içerip içermediğini gösterir.</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuItemAlreadyExists">
         <source>Cannot add MenuItem '{0}'. It already exists as a parent of the current menu item.</source>
-        <target state="new">Cannot add MenuItem '{0}'. It already exists as a parent of the current menu item.</target>
+        <target state="translated">MenuItem '{0}' eklenemiyor. Geçerli menü öğesinin üstü olarak zaten var.</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuItemCheckedDescr">
         <source>Indicates whether the item is checked.</source>
-        <target state="new">Indicates whether the item is checked.</target>
+        <target state="translated">Öğenin işaretli olup olmadığını gösterir.</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuItemDefaultDescr">
         <source>Indicates whether the item is the default item.</source>
-        <target state="new">Indicates whether the item is the default item.</target>
+        <target state="translated">Öğenin varsayılan öğe olup olmadığını gösterir.</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuItemEnabledDescr">
         <source>Indicates whether the item is enabled.</source>
-        <target state="new">Indicates whether the item is enabled.</target>
+        <target state="translated">Öğenin etkin olup olmadığını gösterir.</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuItemInvalidCheckProperty">
         <source>True is not a valid value for the Checked property.  This is only valid for MenuItems that have no children and are not top-level.</source>
-        <target state="new">True is not a valid value for the Checked property.  This is only valid for MenuItems that have no children and are not top-level.</target>
+        <target state="translated">True, Checked özelliği için geçerli bir değer değil. Bu, yalnızca hiç alt öğesi bulunmayan ve en üst düzeyde olmayan MenuItem'lar için geçerlidir.</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuItemMDIListDescr">
         <source>Determines whether the MDI child window list is appended to this item.</source>
-        <target state="new">Determines whether the MDI child window list is appended to this item.</target>
+        <target state="translated">MDI alt pencere listesinin bu öğenin sonuna eklenip eklenmediğini belirler.</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuItemMergeOrderDescr">
         <source>Determines the merge order of the item.</source>
-        <target state="new">Determines the merge order of the item.</target>
+        <target state="translated">Öğenin birleştirme sırasını belirler.</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuItemMergeTypeDescr">
         <source>Determines how the item is handled when menus are merged.</source>
-        <target state="new">Determines how the item is handled when menus are merged.</target>
+        <target state="translated">Menüler birleştirildiğinde öğenin nasıl işlendiğini belirler.</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuItemOnClickDescr">
         <source>Occurs when the menu item is selected.</source>
-        <target state="new">Occurs when the menu item is selected.</target>
+        <target state="translated">Menü öğesi seçildiğinde gerçekleşir.</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuItemOnInitDescr">
         <source>Occurs before the containing menu is displayed.</source>
-        <target state="new">Occurs before the containing menu is displayed.</target>
+        <target state="translated">İçeren menü görüntülenmeden önce gerçekleşir.</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuItemOnSelectDescr">
         <source>Occurs when the menu item is selected.</source>
-        <target state="new">Occurs when the menu item is selected.</target>
+        <target state="translated">Menü öğesi seçildiğinde gerçekleşir.</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuItemOwnerDrawDescr">
         <source>Indicates if Windows will draw the menu item or if the user will handle the painting.</source>
-        <target state="new">Indicates if Windows will draw the menu item or if the user will handle the painting.</target>
+        <target state="translated">Menü öğesinin Windows tarafından mı çizileceğini yoksa boyama işini kullanıcının mı yapacağını gösterir.</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuItemRadioCheckDescr">
         <source>If the item is checked, this value will determine whether the check style is a radio button.</source>
-        <target state="new">If the item is checked, this value will determine whether the check style is a radio button.</target>
+        <target state="translated">Öğe işaretliyse, bu değer işaret stilinin radyo düğmesi olup olmadığını belirler.</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuItemShortCutDescr">
@@ -7281,32 +7281,32 @@ Geçersiz işlemin gerçekleştiği yığın izi:
       </trans-unit>
       <trans-unit id="MenuItemTextDescr">
         <source>The caption displayed by the item.</source>
-        <target state="new">The caption displayed by the item.</target>
+        <target state="translated">Öğe tarafından görüntülenen başlık.</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuItemVisibleDescr">
         <source>Indicates whether the item is visible.</source>
-        <target state="new">Indicates whether the item is visible.</target>
+        <target state="translated">Öğenin görünür olup olmadığını gösterir.</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuMDIListItemDescr">
         <source>Retrieves the menu item that contains a list of MDI child windows.</source>
-        <target state="new">Retrieves the menu item that contains a list of MDI child windows.</target>
+        <target state="translated">MDI alt pencereleri listesi içeren menü öğesini alır.</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuMenuItemsDescr">
         <source>The menu items for the menu.</source>
-        <target state="new">The menu items for the menu.</target>
+        <target state="translated">Menüdeki menü öğeleri.</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuMergeWithSelf">
         <source>Cannot merge a menu with itself.</source>
-        <target state="new">Cannot merge a menu with itself.</target>
+        <target state="translated">Menü kendisiyle birleştirilemez.</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuRightToLeftDescr">
         <source>Indicates if this menu should display right to left</source>
-        <target state="new">Indicates if this menu should display right to left</target>
+        <target state="translated">Bu menünün sağdan sola görüntülenip görüntülenmeyeceğini gösterir</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuStripMdiWindowListItem">

@@ -1354,17 +1354,17 @@
       </trans-unit>
       <trans-unit id="ContextMenuCollapseDescr">
         <source>Raised when the context menu collapses.</source>
-        <target state="new">Raised when the context menu collapses.</target>
+        <target state="translated">상황에 맞는 메뉴가 축소될 때 발생합니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="ContextMenuInvalidParent">
         <source>ContextMenu cannot be shown on an invisible control.</source>
-        <target state="new">ContextMenu cannot be shown on an invisible control.</target>
+        <target state="translated">보이지 않는 컨트롤에 ContextMenu를 표시할 수 없습니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="ContextMenuSourceControlDescr">
         <source>The last control that caused this context menu to be displayed.</source>
-        <target state="new">The last control that caused this context menu to be displayed.</target>
+        <target state="translated">상황에 맞는 메뉴를 표시한 마지막 컨트롤입니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="ContextMenuStripSourceControlDescr">
@@ -7056,7 +7056,7 @@ Stack trace where the illegal operation occurred was:
       </trans-unit>
       <trans-unit id="MainMenuCollapseDescr">
         <source>Occurs when the main menu collapses.</source>
-        <target state="new">Occurs when the main menu collapses.</target>
+        <target state="translated">주 메뉴가 축소될 때 발생합니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="MaskedTextBoxAllowPromptAsInputDescr">
@@ -7196,77 +7196,77 @@ Stack trace where the illegal operation occurred was:
       </trans-unit>
       <trans-unit id="MenuBadMenuItem">
         <source>Parameter must be of type MenuItem.</source>
-        <target state="new">Parameter must be of type MenuItem.</target>
+        <target state="translated">매개 변수는 MenuItem 형식이어야 합니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuIsParentDescr">
         <source>Indicates if this menu contains any child items.</source>
-        <target state="new">Indicates if this menu contains any child items.</target>
+        <target state="translated">이 메뉴에 자식 항목이 있는지 여부를 나타냅니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuItemAlreadyExists">
         <source>Cannot add MenuItem '{0}'. It already exists as a parent of the current menu item.</source>
-        <target state="new">Cannot add MenuItem '{0}'. It already exists as a parent of the current menu item.</target>
+        <target state="translated">MenuItem '{0}'을(를) 추가할 수 없습니다. 현재 메뉴 항목의 부모로 이미 존재합니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuItemCheckedDescr">
         <source>Indicates whether the item is checked.</source>
-        <target state="new">Indicates whether the item is checked.</target>
+        <target state="translated">항목의 선택 상태를 나타냅니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuItemDefaultDescr">
         <source>Indicates whether the item is the default item.</source>
-        <target state="new">Indicates whether the item is the default item.</target>
+        <target state="translated">해당 항목이 기본 항목인지 여부를 나타냅니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuItemEnabledDescr">
         <source>Indicates whether the item is enabled.</source>
-        <target state="new">Indicates whether the item is enabled.</target>
+        <target state="translated">항목의 사용 여부를 나타냅니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuItemInvalidCheckProperty">
         <source>True is not a valid value for the Checked property.  This is only valid for MenuItems that have no children and are not top-level.</source>
-        <target state="new">True is not a valid value for the Checked property.  This is only valid for MenuItems that have no children and are not top-level.</target>
+        <target state="translated">True는 Checked 속성에 사용할 수 없습니다. 자식이 없고 최상위가 아닌 MenuItem에만 사용할 수 있습니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuItemMDIListDescr">
         <source>Determines whether the MDI child window list is appended to this item.</source>
-        <target state="new">Determines whether the MDI child window list is appended to this item.</target>
+        <target state="translated">이 항목에 MDI 자식 창 목록을 추가할지 여부를 결정합니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuItemMergeOrderDescr">
         <source>Determines the merge order of the item.</source>
-        <target state="new">Determines the merge order of the item.</target>
+        <target state="translated">항목의 병합 순서를 결정합니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuItemMergeTypeDescr">
         <source>Determines how the item is handled when menus are merged.</source>
-        <target state="new">Determines how the item is handled when menus are merged.</target>
+        <target state="translated">메뉴를 병합하는 경우 항목을 처리하는 방법을 결정합니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuItemOnClickDescr">
         <source>Occurs when the menu item is selected.</source>
-        <target state="new">Occurs when the menu item is selected.</target>
+        <target state="translated">메뉴 항목을 선택할 때 발생합니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuItemOnInitDescr">
         <source>Occurs before the containing menu is displayed.</source>
-        <target state="new">Occurs before the containing menu is displayed.</target>
+        <target state="translated">포함하는 메뉴가 표시되기 전에 발생합니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuItemOnSelectDescr">
         <source>Occurs when the menu item is selected.</source>
-        <target state="new">Occurs when the menu item is selected.</target>
+        <target state="translated">메뉴 항목을 선택할 때 발생합니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuItemOwnerDrawDescr">
         <source>Indicates if Windows will draw the menu item or if the user will handle the painting.</source>
-        <target state="new">Indicates if Windows will draw the menu item or if the user will handle the painting.</target>
+        <target state="translated">Windows에서 메뉴 항목을 그릴지 또는 사용자가 그리기를 처리할지 나타냅니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuItemRadioCheckDescr">
         <source>If the item is checked, this value will determine whether the check style is a radio button.</source>
-        <target state="new">If the item is checked, this value will determine whether the check style is a radio button.</target>
+        <target state="translated">항목이 선택되는 경우 이 값은 선택 스타일이 라디오 단추인지 여부를 결정합니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuItemShortCutDescr">
@@ -7281,32 +7281,32 @@ Stack trace where the illegal operation occurred was:
       </trans-unit>
       <trans-unit id="MenuItemTextDescr">
         <source>The caption displayed by the item.</source>
-        <target state="new">The caption displayed by the item.</target>
+        <target state="translated">항목에 표시할 캡션입니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuItemVisibleDescr">
         <source>Indicates whether the item is visible.</source>
-        <target state="new">Indicates whether the item is visible.</target>
+        <target state="translated">항목의 표시 여부를 나타냅니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuMDIListItemDescr">
         <source>Retrieves the menu item that contains a list of MDI child windows.</source>
-        <target state="new">Retrieves the menu item that contains a list of MDI child windows.</target>
+        <target state="translated">MDI 자식 창 목록을 포함하는 메뉴 항목을 검색합니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuMenuItemsDescr">
         <source>The menu items for the menu.</source>
-        <target state="new">The menu items for the menu.</target>
+        <target state="translated">메뉴의 메뉴 항목입니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuMergeWithSelf">
         <source>Cannot merge a menu with itself.</source>
-        <target state="new">Cannot merge a menu with itself.</target>
+        <target state="translated">메뉴를 메뉴 자체와 병합할 수 없습니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuRightToLeftDescr">
         <source>Indicates if this menu should display right to left</source>
-        <target state="new">Indicates if this menu should display right to left</target>
+        <target state="translated">메뉴를 오른쪽에서 왼쪽으로 표시할지 여부를 나타냅니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuStripMdiWindowListItem">

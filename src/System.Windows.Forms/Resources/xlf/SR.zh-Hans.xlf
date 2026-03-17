@@ -1354,17 +1354,17 @@
       </trans-unit>
       <trans-unit id="ContextMenuCollapseDescr">
         <source>Raised when the context menu collapses.</source>
-        <target state="new">Raised when the context menu collapses.</target>
+        <target state="translated">在上下文菜单折叠时引发。</target>
         <note />
       </trans-unit>
       <trans-unit id="ContextMenuInvalidParent">
         <source>ContextMenu cannot be shown on an invisible control.</source>
-        <target state="new">ContextMenu cannot be shown on an invisible control.</target>
+        <target state="translated">ContextMenu 无法在不可见的控件上显示。</target>
         <note />
       </trans-unit>
       <trans-unit id="ContextMenuSourceControlDescr">
         <source>The last control that caused this context menu to be displayed.</source>
-        <target state="new">The last control that caused this context menu to be displayed.</target>
+        <target state="translated">使此上下文菜单显示的最后一个控件。</target>
         <note />
       </trans-unit>
       <trans-unit id="ContextMenuStripSourceControlDescr">
@@ -7056,7 +7056,7 @@ Stack trace where the illegal operation occurred was:
       </trans-unit>
       <trans-unit id="MainMenuCollapseDescr">
         <source>Occurs when the main menu collapses.</source>
-        <target state="new">Occurs when the main menu collapses.</target>
+        <target state="translated">当主菜单折叠时发生。</target>
         <note />
       </trans-unit>
       <trans-unit id="MaskedTextBoxAllowPromptAsInputDescr">
@@ -7196,77 +7196,77 @@ Stack trace where the illegal operation occurred was:
       </trans-unit>
       <trans-unit id="MenuBadMenuItem">
         <source>Parameter must be of type MenuItem.</source>
-        <target state="new">Parameter must be of type MenuItem.</target>
+        <target state="translated">参数必须是 MenuItem 类型。</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuIsParentDescr">
         <source>Indicates if this menu contains any child items.</source>
-        <target state="new">Indicates if this menu contains any child items.</target>
+        <target state="translated">指示此菜单是否包含任何子项。</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuItemAlreadyExists">
         <source>Cannot add MenuItem '{0}'. It already exists as a parent of the current menu item.</source>
-        <target state="new">Cannot add MenuItem '{0}'. It already exists as a parent of the current menu item.</target>
+        <target state="translated">无法添加 MenuItem“{0}”。它已经作为当前菜单项的父级存在。</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuItemCheckedDescr">
         <source>Indicates whether the item is checked.</source>
-        <target state="new">Indicates whether the item is checked.</target>
+        <target state="translated">指示该项是否已选中。</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuItemDefaultDescr">
         <source>Indicates whether the item is the default item.</source>
-        <target state="new">Indicates whether the item is the default item.</target>
+        <target state="translated">指示该项是否是默认项。</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuItemEnabledDescr">
         <source>Indicates whether the item is enabled.</source>
-        <target state="new">Indicates whether the item is enabled.</target>
+        <target state="translated">指示该项是否已启用。</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuItemInvalidCheckProperty">
         <source>True is not a valid value for the Checked property.  This is only valid for MenuItems that have no children and are not top-level.</source>
-        <target state="new">True is not a valid value for the Checked property.  This is only valid for MenuItems that have no children and are not top-level.</target>
+        <target state="translated">True 不是 Checked 属性的有效值。  它仅对于无子级且不是顶级的 MenuItem 有效。</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuItemMDIListDescr">
         <source>Determines whether the MDI child window list is appended to this item.</source>
-        <target state="new">Determines whether the MDI child window list is appended to this item.</target>
+        <target state="translated">确定是否将 MDI 子窗口列表追加到此项。</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuItemMergeOrderDescr">
         <source>Determines the merge order of the item.</source>
-        <target state="new">Determines the merge order of the item.</target>
+        <target state="translated">确定该项的合并顺序。</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuItemMergeTypeDescr">
         <source>Determines how the item is handled when menus are merged.</source>
-        <target state="new">Determines how the item is handled when menus are merged.</target>
+        <target state="translated">确定在合并菜单时如何处理该项。</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuItemOnClickDescr">
         <source>Occurs when the menu item is selected.</source>
-        <target state="new">Occurs when the menu item is selected.</target>
+        <target state="translated">在选中菜单项时发生。</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuItemOnInitDescr">
         <source>Occurs before the containing menu is displayed.</source>
-        <target state="new">Occurs before the containing menu is displayed.</target>
+        <target state="translated">在显示包含菜单前发生。</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuItemOnSelectDescr">
         <source>Occurs when the menu item is selected.</source>
-        <target state="new">Occurs when the menu item is selected.</target>
+        <target state="translated">在选中菜单项时发生。</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuItemOwnerDrawDescr">
         <source>Indicates if Windows will draw the menu item or if the user will handle the painting.</source>
-        <target state="new">Indicates if Windows will draw the menu item or if the user will handle the painting.</target>
+        <target state="translated">指示是由 Windows 来绘制该菜单项，还是由用户来完成这一绘制任务。</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuItemRadioCheckDescr">
         <source>If the item is checked, this value will determine whether the check style is a radio button.</source>
-        <target state="new">If the item is checked, this value will determine whether the check style is a radio button.</target>
+        <target state="translated">如果选中该项，则此值确定选择样式是否是单选按钮。</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuItemShortCutDescr">
@@ -7281,32 +7281,32 @@ Stack trace where the illegal operation occurred was:
       </trans-unit>
       <trans-unit id="MenuItemTextDescr">
         <source>The caption displayed by the item.</source>
-        <target state="new">The caption displayed by the item.</target>
+        <target state="translated">由该项显示的标题。</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuItemVisibleDescr">
         <source>Indicates whether the item is visible.</source>
-        <target state="new">Indicates whether the item is visible.</target>
+        <target state="translated">指示该项是否可见。</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuMDIListItemDescr">
         <source>Retrieves the menu item that contains a list of MDI child windows.</source>
-        <target state="new">Retrieves the menu item that contains a list of MDI child windows.</target>
+        <target state="translated">检索包含 MDI 子窗口列表的菜单项。</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuMenuItemsDescr">
         <source>The menu items for the menu.</source>
-        <target state="new">The menu items for the menu.</target>
+        <target state="translated">菜单的菜单项。</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuMergeWithSelf">
         <source>Cannot merge a menu with itself.</source>
-        <target state="new">Cannot merge a menu with itself.</target>
+        <target state="translated">无法将菜单与其自身合并。</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuRightToLeftDescr">
         <source>Indicates if this menu should display right to left</source>
-        <target state="new">Indicates if this menu should display right to left</target>
+        <target state="translated">指示此菜单是否应按从右到左的顺序显示</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuStripMdiWindowListItem">
