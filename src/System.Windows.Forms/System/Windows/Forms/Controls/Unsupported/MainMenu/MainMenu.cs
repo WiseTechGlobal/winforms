@@ -59,11 +59,9 @@ namespace System.Windows.Forms
         ///  text alignment and reading order will be from right to left.
         /// </summary>
         // Add an AmbientValue attribute so that the Reset context menu becomes available in the Property Grid.
-        [
-        Localizable(true),
-        SRDescription(nameof(SR.MenuRightToLeftDescr)),
-        AmbientValue(RightToLeft.Inherit)
-        ]
+        [Localizable(true)]
+        [AmbientValue(RightToLeft.Inherit)]
+        [SRDescription(nameof(SR.MenuRightToLeftDescr))]
         public virtual RightToLeft RightToLeft
         {
             get
