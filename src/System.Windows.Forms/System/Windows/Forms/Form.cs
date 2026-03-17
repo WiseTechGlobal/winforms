@@ -124,6 +124,9 @@ public partial class Form : ContainerControl
     private static readonly int s_propFormerlyActiveMdiChild = PropertyStore.CreateKey();
     private static readonly int s_propMdiChildFocusable = PropertyStore.CreateKey();
 
+    private static readonly int s_propMainMenu = PropertyStore.CreateKey();
+    private static readonly int s_propMergedMenu = PropertyStore.CreateKey();
+    private static readonly int s_propCurMenu = PropertyStore.CreateKey();
     private static readonly int s_propDummyMdiMenu = PropertyStore.CreateKey();
     private static readonly int s_propMainMenuStrip = PropertyStore.CreateKey();
     private static readonly int s_propMdiWindowListStrip = PropertyStore.CreateKey();
@@ -1247,6 +1250,8 @@ public partial class Form : ContainerControl
         add => Events.AddHandler(s_maximumSizeChangedEvent, value);
         remove => Events.RemoveHandler(s_maximumSizeChangedEvent, value);
     }
+
+    internal override bool HasMenu => TopLevel && Menu is not null && Menu.ItemCount > 0;
 
     [SRCategory(nameof(SR.CatWindowStyle))]
     [DefaultValue(null)]
@@ -3275,7 +3280,9 @@ public partial class Form : ContainerControl
     private Size ComputeWindowSize(Size clientSize, WINDOW_STYLE style, WINDOW_EX_STYLE exStyle)
     {
         RECT result = new(clientSize);
-        AdjustWindowRectExForControlDpi(ref result, style, false, exStyle);
+
+        AdjustWindowRectExForControlDpi(ref result, style, HasMenu, exStyle);
+
         return result.Size;
     }
 
@@ -3533,6 +3540,18 @@ public partial class Form : ContainerControl
                 // should NOT call dispose on MainMenuStrip - it's likely NOT to be in the form's control collection.
                 MainMenuStrip = null;
             }
+
+            if (Properties.TryGetValue(s_propMergedMenu, out MainMenu? mergedMenu))
+            {
+                if (mergedMenu.ownerForm == this || mergedMenu.form is null)
+                {
+                    mergedMenu.Dispose();
+                }
+
+                Properties.RemoveValue(s_propMergedMenu);
+            }
+
+            Properties.RemoveValue(s_propCurMenu);
 
             if (Properties.TryGetValue(s_propOwner, out Form? owner))
             {
@@ -3971,7 +3990,20 @@ public partial class Form : ContainerControl
     ///  Invalidates the merged menu, forcing the menu to be recreated if
     ///  needed again.
     /// </summary>
-    private void InvalidateMergedMenu() => ParentForm?.UpdateMenuHandles();
+    private void InvalidateMergedMenu()
+    {
+        if (Properties.TryGetValue(s_propMergedMenu, out MainMenu? mergedMenu))
+        {
+            if (mergedMenu.ownerForm == this)
+            {
+                mergedMenu.Dispose();
+            }
+
+            Properties.RemoveValue(s_propMergedMenu);
+        }
+
+        ParentForm?.UpdateMenuHandles();
+    }
 
     /// <summary>
     ///  Arranges the Multiple Document Interface
@@ -3980,6 +4012,76 @@ public partial class Form : ContainerControl
     public void LayoutMdi(MdiLayout value)
     {
         _ctlClient?.LayoutMdi(value);
+    }
+
+    internal void MenuChanged(int change, Menu? menu)
+    {
+#pragma warning disable WFDEV006 // Type or member is obsolete
+        Form? parentForm = ParentForm;
+        if (parentForm is not null && this == parentForm.ActiveMdiChildInternal)
+        {
+            parentForm.MenuChanged(change, menu);
+
+            return;
+        }
+
+        switch (change)
+        {
+            case Forms.Menu.CHANGE_ITEMS:
+            case Forms.Menu.CHANGE_MERGE:
+                if (_ctlClient is null || !_ctlClient.IsHandleCreated)
+                {
+                    if (ReferenceEquals(menu, Menu) && change == Forms.Menu.CHANGE_ITEMS)
+                    {
+                        UpdateMenuHandles();
+                    }
+
+                    break;
+                }
+
+                if (IsHandleCreated)
+                {
+                    UpdateMenuHandles();
+                }
+
+                Control.ControlCollection children = _ctlClient.Controls;
+                for (int i = children.Count - 1; i >= 0; i--)
+                {
+                    if (children[i] is not Form childForm)
+                    {
+                        continue;
+                    }
+
+                    if (childForm.Properties.TryGetValue(s_propMergedMenu, out MainMenu? mergedMenu))
+                    {
+                        if (mergedMenu.ownerForm == childForm)
+                        {
+                            mergedMenu.Dispose();
+                        }
+
+                        childForm.Properties.RemoveValue(s_propMergedMenu);
+                    }
+                }
+
+                UpdateMenuHandles();
+                break;
+            case Forms.Menu.CHANGE_VISIBLE:
+                if (ReferenceEquals(menu, Menu)
+                    || (ActiveMdiChildInternal is not null && ReferenceEquals(menu, ActiveMdiChildInternal.Menu)))
+                {
+                    UpdateMenuHandles();
+                }
+
+                break;
+            case Forms.Menu.CHANGE_MDI:
+                if (_ctlClient is not null && _ctlClient.IsHandleCreated)
+                {
+                    UpdateMenuHandles();
+                }
+
+                break;
+        }
+#pragma warning restore WFDEV006
     }
 
     /// <summary>
@@ -4209,6 +4311,13 @@ public partial class Form : ContainerControl
         {
             SetScreenCaptureModeInternal(FormScreenCaptureMode);
         }
+
+#pragma warning disable WFDEV006 // Type or member is obsolete
+        if (Menu is not null || MainMenuStrip is not null || IsMdiContainer)
+        {
+            UpdateMenuHandles(recreateMenu: true);
+        }
+#pragma warning restore WFDEV006
     }
 
     /// <summary>
@@ -4705,6 +4814,14 @@ public partial class Form : ContainerControl
         {
             return true;
         }
+
+#pragma warning disable WFDEV006 // Type or member is obsolete
+        if (Properties.TryGetValue(s_propCurMenu, out MainMenu? curMenu)
+            && curMenu.ProcessCmdKey(ref msg, keyData))
+        {
+            return true;
+        }
+#pragma warning restore WFDEV006
 
         // Process MDI accelerator keys.
         bool retValue = false;
@@ -6170,6 +6287,24 @@ public partial class Form : ContainerControl
             return;
         }
 
+#pragma warning disable WFDEV006 // Type or member is obsolete
+        MainMenu? currentMenu = TopLevel
+            ? ActiveMdiChildInternal?.MergedMenuPrivate ?? Menu
+            : null;
+#pragma warning restore WFDEV006
+
+        Properties.AddOrRemoveValue(s_propCurMenu, currentMenu);
+
+        if (currentMenu is not null)
+        {
+            currentMenu.form = this;
+            PInvoke.SetMenu(this, (HMENU)(nint)currentMenu.Handle);
+            CommonProperties.xClearPreferredSizeCache(this);
+            PInvoke.DrawMenuBar(this);
+            _formStateEx[s_formStateExUpdateMenuHandlesDeferred] = 0;
+            return;
+        }
+
         if (_ctlClient is null || !_ctlClient.IsHandleCreated)
         {
             PInvoke.SetMenu(this, HMENU.Null);
@@ -6854,6 +6989,57 @@ public partial class Form : ContainerControl
     }
 
     /// <summary>
+    ///  WM_INITMENUPOPUP handler.
+    /// </summary>
+    private void WmInitMenuPopup(ref Message m)
+    {
+#pragma warning disable WFDEV006 // Type or member is obsolete
+        if (Properties.TryGetValue(s_propCurMenu, out MainMenu? curMenu)
+            && curMenu.ProcessInitMenuPopup((nint)m.WParamInternal))
+        {
+            return;
+        }
+#pragma warning restore WFDEV006
+
+        base.WndProc(ref m);
+    }
+
+    /// <summary>
+    ///  Handles the WM_MENUCHAR message.
+    /// </summary>
+    private void WmMenuChar(ref Message m)
+    {
+#pragma warning disable WFDEV006 // Type or member is obsolete
+        if (!Properties.TryGetValue(s_propCurMenu, out MainMenu? curMenu)
+            && Properties.TryGetValue(s_propFormMdiParent, out Form? formMdiParent)
+            && formMdiParent.Menu is not null)
+        {
+            PInvokeCore.PostMessage(formMdiParent, PInvokeCore.WM_SYSCOMMAND, (WPARAM)PInvoke.SC_KEYMENU, (LPARAM)(nint)m.WParamInternal);
+            m.ResultInternal = (LRESULT)(nint)PARAM.FromLowHigh(0, 1);
+            return;
+        }
+
+        curMenu?.WmMenuChar(ref m);
+        if (m.ResultInternal != 0)
+        {
+            return;
+        }
+#pragma warning restore WFDEV006
+
+        base.WndProc(ref m);
+    }
+
+    /// <summary>
+    ///  WM_UNINITMENUPOPUP handler.
+    /// </summary>
+    private void WmUnInitMenuPopup(ref Message _)
+    {
+#pragma warning disable WFDEV006 // Type or member is obsolete
+        Menu?.OnCollapse(EventArgs.Empty);
+#pragma warning restore WFDEV006
+    }
+
+    /// <summary>
     ///  WM_GETMINMAXINFO handler
     /// </summary>
     private void WmGetMinMaxInfo(ref Message m)
@@ -6975,6 +7161,23 @@ public partial class Form : ContainerControl
     /// </summary>
     private void WmNCDestroy(ref Message m)
     {
+#pragma warning disable WFDEV006 // Type or member is obsolete
+        MainMenu? mainMenu = Menu;
+        MainMenu? curMenu = Properties.GetValueOrDefault<MainMenu>(s_propCurMenu);
+        MainMenu? mergedMenu = Properties.GetValueOrDefault<MainMenu>(s_propMergedMenu);
+
+        mainMenu?.ClearHandles();
+        if (!ReferenceEquals(curMenu, mainMenu))
+        {
+            curMenu?.ClearHandles();
+        }
+
+        if (!ReferenceEquals(mergedMenu, curMenu) && !ReferenceEquals(mergedMenu, mainMenu))
+        {
+            mergedMenu?.ClearHandles();
+        }
+#pragma warning restore WFDEV006
+
         base.WndProc(ref m);
 
         // Destroy the owner window, if we created one. We
@@ -7200,6 +7403,15 @@ public partial class Form : ContainerControl
             // case PInvokeCore.WM_WINDOWPOSCHANGING:
             //    WmWindowPosChanging(ref m);
             //    break;
+            case PInvokeCore.WM_INITMENUPOPUP:
+                WmInitMenuPopup(ref m);
+                break;
+            case PInvokeCore.WM_UNINITMENUPOPUP:
+                WmUnInitMenuPopup(ref m);
+                break;
+            case PInvokeCore.WM_MENUCHAR:
+                WmMenuChar(ref m);
+                break;
             case PInvokeCore.WM_ENTERMENULOOP:
                 WmEnterMenuLoop(ref m);
                 break;
@@ -7233,37 +7445,89 @@ public partial class Form : ContainerControl
 
     // Unsupported types don't support nullability.
 #nullable disable
-    /// <summary>
-    ///  This property is provided for binary compatibility with .NET Framework and is not intended to be used directly from your code.
-    /// </summary>
-    [Obsolete(
-        Obsoletions.MainMenuMessage,
-        error: false,
-        DiagnosticId = Obsoletions.UnsupportedControlsDiagnosticId,
-        UrlFormat = Obsoletions.SharedUrlFormat)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
+    [SRCategory(nameof(SR.CatWindowStyle))]
+    [DefaultValue(null)]
+    [TypeConverter(typeof(ReferenceConverter))]
     [Browsable(false)]
-    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public MainMenu Menu
     {
-        get;
-        set;
+        get => Properties.GetValueOrDefault<MainMenu>(s_propMainMenu);
+        set
+        {
+            MainMenu mainMenu = Menu;
+
+            if (mainMenu == value)
+            {
+                return;
+            }
+
+            mainMenu?.form = null;
+
+            Properties.AddOrRemoveValue(s_propMainMenu, value);
+
+            if (value is not null)
+            {
+                value.form?.Menu = null;
+
+                value.form = this;
+            }
+
+            if (_formState[s_formStateSetClientSize] == 1 && !IsHandleCreated)
+            {
+                Size clientSize = ClientSize;
+
+                ClientSize = clientSize;
+            }
+
+            MenuChanged(Forms.Menu.CHANGE_ITEMS, value);
+        }
     }
 
-    /// <summary>
-    ///  This property is provided for binary compatibility with .NET Framework and is not intended to be used directly from your code.
-    /// </summary>
-    [Obsolete(
-        Obsoletions.MainMenuMessage,
-        error: false,
-        DiagnosticId = Obsoletions.UnsupportedControlsDiagnosticId,
-        UrlFormat = Obsoletions.SharedUrlFormat)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
+    [SRCategory(nameof(SR.CatWindowStyle))]
     [Browsable(false)]
+    [EditorBrowsable(EditorBrowsableState.Advanced)]
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-    public MainMenu MergedMenu
+    public MainMenu MergedMenu => MergedMenuPrivate;
+
+    private MainMenu MergedMenuPrivate
     {
-        get;
+        get
+        {
+            if (!Properties.TryGetValue(s_propFormMdiParent, out Form formMdiParent)
+                || formMdiParent is null)
+            {
+                return null;
+            }
+
+            if (Properties.TryGetValue(s_propMergedMenu, out MainMenu mergedMenu)
+                && mergedMenu is not null)
+            {
+                return mergedMenu;
+            }
+
+            MainMenu parentMenu = formMdiParent.Menu;
+            MainMenu mainMenu = Menu;
+
+            if (mainMenu is null)
+            {
+                return parentMenu;
+            }
+
+            if (parentMenu is null)
+            {
+                return mainMenu;
+            }
+
+            mergedMenu = new MainMenu
+            {
+                ownerForm = this
+            };
+
+            mergedMenu.MergeMenu(parentMenu);
+            mergedMenu.MergeMenu(mainMenu);
+            Properties.AddOrRemoveValue(s_propMergedMenu, mergedMenu);
+            return mergedMenu;
+        }
     }
 #nullable enable
 }

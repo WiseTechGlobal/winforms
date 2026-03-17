@@ -1,0 +1,80 @@
+name: Create Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Package version to publish, for example 1.2.3 or 1.2.3-preview.1
+        required: true
+        type: string
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+env:
+  PACKAGE_PATH: artifacts/packages/**/*.nupkg
+
+jobs:
+  release:
+    name: Build - Release
+
+    runs-on: windows-latest
+
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: |
+            10.0.x
+
+    - name: Compute version
+      id: version
+      shell: pwsh
+      run: |
+        if ('${{ github.event_name }}' -eq 'pull_request') {
+            $version = "0.0.0-pr.${{ github.event.pull_request.number }}.${{ github.run_number }}"
+        } else {
+            $version = '${{ inputs.version }}'
+            if ($version -notmatch '^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?(?:\+[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?$') {
+                throw "The version '$version' is not a valid SemVer 2.0.0 version."
+            }
+        }
+        echo "value=$version" >> $env:GITHUB_OUTPUT
+
+    - name: Install dependencies
+      run: dotnet restore WinformsLegacy.sln
+
+    - name: Pack
+      run: dotnet pack WinformsLegacy.sln --configuration Release -o artifacts/packages --no-restore /p:PackageVersion=${{ steps.version.outputs.value }} /p:GeneratePackageOnBuild=false
+
+    - name: List produced packages
+      shell: pwsh
+      run: |
+        $packages = Get-ChildItem -Path artifacts/packages -Recurse -File -Filter *.nupkg
+        if ($packages.Count -eq 0) {
+            Write-Error 'No .nupkg files were produced.'
+            exit 1
+        }
+
+        $duplicatePackages = $packages | Group-Object Name | Where-Object Count -gt 1
+        if ($duplicatePackages) {
+            $duplicatePackages | ForEach-Object {
+                Write-Error ("Duplicate package asset name detected: {0}`n{1}" -f $_.Name, ($_.Group.FullName -join "`n"))
+            }
+
+            exit 1
+        }
+
+        $packages | Select-Object -ExpandProperty FullName
+
+      # Push to NuGet only for manual workflow runs
+    - name: Push NuGet Package to NuGet Gallery
+      if: github.event_name == 'workflow_dispatch'
+      run: dotnet nuget push ${{ env.PACKAGE_PATH }} --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate

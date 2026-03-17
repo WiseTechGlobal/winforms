@@ -1352,6 +1352,21 @@
         <target state="translated">Form padre di questo controllo contenitore.</target>
         <note />
       </trans-unit>
+      <trans-unit id="ContextMenuCollapseDescr">
+        <source>Raised when the context menu collapses.</source>
+        <target state="translated">Generato quando si comprime il menu di scelta rapida.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ContextMenuInvalidParent">
+        <source>ContextMenu cannot be shown on an invisible control.</source>
+        <target state="translated">Impossibile visualizzare il menu di scelta rapida su un controllo invisibile.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ContextMenuSourceControlDescr">
+        <source>The last control that caused this context menu to be displayed.</source>
+        <target state="translated">Ultimo controllo che ha comportato la visualizzazione di questo menu di scelta rapida.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="ContextMenuStripSourceControlDescr">
         <source>The last control that caused this context menu strip to be displayed.</source>
         <target state="translated">Ultimo controllo che ha causato la visualizzazione di questo elenco di menu di scelta rapida.</target>
@@ -7039,6 +7054,11 @@ Analisi dello stack dove si è verificata l'operazione non valida:
         <target state="translated">Il form specificato come MdiParent per questo form non è un MdiContainer.</target>
         <note />
       </trans-unit>
+      <trans-unit id="MainMenuCollapseDescr">
+        <source>Occurs when the main menu collapses.</source>
+        <target state="translated">Generato quando si comprime il menu principale.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="MaskedTextBoxAllowPromptAsInputDescr">
         <source>Indicates whether the prompt character is valid as input.</source>
         <target state="translated">Indica se il carattere di prompt è valido come input.</target>
@@ -7174,6 +7194,81 @@ Analisi dello stack dove si è verificata l'operazione non valida:
         <target state="translated">Specifica il tipo di oggetto da utilizzare per l'analisi del testo di input quando il controllo perde lo stato attivo.</target>
         <note />
       </trans-unit>
+      <trans-unit id="MenuBadMenuItem">
+        <source>Parameter must be of type MenuItem.</source>
+        <target state="translated">Il parametro deve essere di tipo MenuItem.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuIsParentDescr">
+        <source>Indicates if this menu contains any child items.</source>
+        <target state="translated">Indica se questo menu contiene elementi figlio.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemAlreadyExists">
+        <source>Cannot add MenuItem '{0}'. It already exists as a parent of the current menu item.</source>
+        <target state="translated">Impossibile aggiungere il MenuItem '{0}', perché esiste già ed è l'elemento padre della voce di menu corrente.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemCheckedDescr">
+        <source>Indicates whether the item is checked.</source>
+        <target state="translated">Indica se l'elemento è selezionato.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemDefaultDescr">
+        <source>Indicates whether the item is the default item.</source>
+        <target state="translated">Indica se l'elemento è l'elemento predefinito.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemEnabledDescr">
+        <source>Indicates whether the item is enabled.</source>
+        <target state="translated">Indica se l'elemento è abilitato.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemInvalidCheckProperty">
+        <source>True is not a valid value for the Checked property.  This is only valid for MenuItems that have no children and are not top-level.</source>
+        <target state="translated">True non è un valore valido per la proprietà Checked. Tale valore è valido solo per un MenuItem che non ha elementi figlio e non è di livello principale.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemMDIListDescr">
+        <source>Determines whether the MDI child window list is appended to this item.</source>
+        <target state="translated">Determina se l'elenco delle finestre figlio MDI viene accodato a questo elemento.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemMergeOrderDescr">
+        <source>Determines the merge order of the item.</source>
+        <target state="translated">Determina l'ordine di merge dell'elemento.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemMergeTypeDescr">
+        <source>Determines how the item is handled when menus are merged.</source>
+        <target state="translated">Determina come viene gestito l'elemento in caso di merge di menu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemOnClickDescr">
+        <source>Occurs when the menu item is selected.</source>
+        <target state="translated">Generato quando la voce di menu viene selezionata.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemOnInitDescr">
+        <source>Occurs before the containing menu is displayed.</source>
+        <target state="translated">Generato prima della visualizzazione del menu che lo contiene.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemOnSelectDescr">
+        <source>Occurs when the menu item is selected.</source>
+        <target state="translated">Generato quando la voce di menu viene selezionata.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemOwnerDrawDescr">
+        <source>Indicates if Windows will draw the menu item or if the user will handle the painting.</source>
+        <target state="translated">Indica se il disegno dell'elemento di menu viene eseguito da Windows o dall'utente.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemRadioCheckDescr">
+        <source>If the item is checked, this value will determine whether the check style is a radio button.</source>
+        <target state="translated">Se la voce è selezionata, questo valore indica se lo stile di selezione è un pulsante di opzione.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="MenuItemShortCutDescr">
         <source>The shortcut key associated with the menu item. </source>
         <target state="translated">Il tasto di scelta rapida associato alla voce di menu. </target>
@@ -7182,6 +7277,36 @@ Analisi dello stack dove si è verificata l'operazione non valida:
       <trans-unit id="MenuItemShowShortCutDescr">
         <source>Indicates whether the shorcut key for the menu item is displayed on the item. </source>
         <target state="translated">Indica se il tasto di scelta rapida della voce di menu viene visualizzato sulla voce. </target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemTextDescr">
+        <source>The caption displayed by the item.</source>
+        <target state="translated">La didascalia visualizzata dall'elemento.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemVisibleDescr">
+        <source>Indicates whether the item is visible.</source>
+        <target state="translated">Indica se l'elemento è visibile.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuMDIListItemDescr">
+        <source>Retrieves the menu item that contains a list of MDI child windows.</source>
+        <target state="translated">Recupera la voce di menu che contiene un elenco di finestre figlio MDI.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuMenuItemsDescr">
+        <source>The menu items for the menu.</source>
+        <target state="translated">Le voci del menu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuMergeWithSelf">
+        <source>Cannot merge a menu with itself.</source>
+        <target state="translated">Impossibile eseguire il merge di un menu con se stesso.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuRightToLeftDescr">
+        <source>Indicates if this menu should display right to left</source>
+        <target state="translated">Indica se visualizzare questo menu da destra a sinistra.</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuStripMdiWindowListItem">

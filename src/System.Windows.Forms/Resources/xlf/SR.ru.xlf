@@ -1352,6 +1352,21 @@
         <target state="translated">Родительская форма данного вмещающего элемента управления.</target>
         <note />
       </trans-unit>
+      <trans-unit id="ContextMenuCollapseDescr">
+        <source>Raised when the context menu collapses.</source>
+        <target state="translated">Вызывается при сворачивании контекстного меню.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ContextMenuInvalidParent">
+        <source>ContextMenu cannot be shown on an invisible control.</source>
+        <target state="translated">Невозможно отобразить ContextMenu в невидимом элементе управления.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ContextMenuSourceControlDescr">
+        <source>The last control that caused this context menu to be displayed.</source>
+        <target state="translated">Последний элемент управления, вызывавший отображение этого контекстного меню.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="ContextMenuStripSourceControlDescr">
         <source>The last control that caused this context menu strip to be displayed.</source>
         <target state="translated">Последний элемент управления, вызвавший отображение полосы данного контекстного меню.</target>
@@ -7039,6 +7054,11 @@ Stack trace where the illegal operation occurred was:
         <target state="translated">Форма, указанная как MdiParent для данной формы, не является MdiContainer.</target>
         <note />
       </trans-unit>
+      <trans-unit id="MainMenuCollapseDescr">
+        <source>Occurs when the main menu collapses.</source>
+        <target state="translated">Происходит при сворачивании главного меню.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="MaskedTextBoxAllowPromptAsInputDescr">
         <source>Indicates whether the prompt character is valid as input.</source>
         <target state="translated">Указывает, является ли символ, введенный в окне приглашения, допустимым.</target>
@@ -7174,6 +7194,81 @@ Stack trace where the illegal operation occurred was:
         <target state="translated">Указывает Type для объекта, который будет использоваться для разбора вводимого текста при потере фокуса элементом управления.</target>
         <note />
       </trans-unit>
+      <trans-unit id="MenuBadMenuItem">
+        <source>Parameter must be of type MenuItem.</source>
+        <target state="translated">Параметр должен иметь тип MenuItem.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuIsParentDescr">
+        <source>Indicates if this menu contains any child items.</source>
+        <target state="translated">Указывает, содержит ли это меню дочерние элементы.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemAlreadyExists">
+        <source>Cannot add MenuItem '{0}'. It already exists as a parent of the current menu item.</source>
+        <target state="translated">Невозможно добавить MenuItem '{0}'. Он уже существует как родитель для данного пункта меню.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemCheckedDescr">
+        <source>Indicates whether the item is checked.</source>
+        <target state="translated">Указывает, установлен ли этот элемент.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemDefaultDescr">
+        <source>Indicates whether the item is the default item.</source>
+        <target state="translated">Указывает, является ли этот пункт элементом по умолчанию.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemEnabledDescr">
+        <source>Indicates whether the item is enabled.</source>
+        <target state="translated">Указывает, включен ли данный элемент.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemInvalidCheckProperty">
+        <source>True is not a valid value for the Checked property.  This is only valid for MenuItems that have no children and are not top-level.</source>
+        <target state="translated">True (истина) не является допустимым значением для Checked Property.  Это значение допустимо только для MenuItems, не имеющего дочерних элементов и не принадлежащего к верхнему уровню.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemMDIListDescr">
+        <source>Determines whether the MDI child window list is appended to this item.</source>
+        <target state="translated">Определяет, присоединен ли список дочерних окон MDI к этому пункту.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemMergeOrderDescr">
+        <source>Determines the merge order of the item.</source>
+        <target state="translated">Определяет порядок слияния для этого элемента.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemMergeTypeDescr">
+        <source>Determines how the item is handled when menus are merged.</source>
+        <target state="translated">Определяет, как будет обрабатываться данный пункт при слиянии меню.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemOnClickDescr">
+        <source>Occurs when the menu item is selected.</source>
+        <target state="translated">Происходит, когда выбирается элемент меню.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemOnInitDescr">
+        <source>Occurs before the containing menu is displayed.</source>
+        <target state="translated">Происходит перед отображением охватывающего меню.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemOnSelectDescr">
+        <source>Occurs when the menu item is selected.</source>
+        <target state="translated">Происходит, когда выбирается элемент меню.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemOwnerDrawDescr">
+        <source>Indicates if Windows will draw the menu item or if the user will handle the painting.</source>
+        <target state="translated">Указывает, прорисовывает ли Windows данный элемент меню или прорисовку реализует пользователь.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemRadioCheckDescr">
+        <source>If the item is checked, this value will determine whether the check style is a radio button.</source>
+        <target state="translated">Если этот пункт выбран, данное значение будет определять, является ли данный элемент переключателем.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="MenuItemShortCutDescr">
         <source>The shortcut key associated with the menu item. </source>
         <target state="translated">Указывает клавиши быстрого доступа к данному меню.</target>
@@ -7182,6 +7277,36 @@ Stack trace where the illegal operation occurred was:
       <trans-unit id="MenuItemShowShortCutDescr">
         <source>Indicates whether the shorcut key for the menu item is displayed on the item. </source>
         <target state="translated">Определяет, будут ли отображаться клавиши быстрого доступа для данного элемента меню.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemTextDescr">
+        <source>The caption displayed by the item.</source>
+        <target state="translated">Заголовок, отображаемый данным элементом.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemVisibleDescr">
+        <source>Indicates whether the item is visible.</source>
+        <target state="translated">Указывает, является ли этот элемент видимым.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuMDIListItemDescr">
+        <source>Retrieves the menu item that contains a list of MDI child windows.</source>
+        <target state="translated">Извлекает элемент меню, который содержит список дочерних MDI-окон.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuMenuItemsDescr">
+        <source>The menu items for the menu.</source>
+        <target state="translated">Элементы данного меню.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuMergeWithSelf">
+        <source>Cannot merge a menu with itself.</source>
+        <target state="translated">Невозможно объединить меню с самим собой.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuRightToLeftDescr">
+        <source>Indicates if this menu should display right to left</source>
+        <target state="translated">Показывает, должно ли данное меню отображаться справа налево.</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuStripMdiWindowListItem">

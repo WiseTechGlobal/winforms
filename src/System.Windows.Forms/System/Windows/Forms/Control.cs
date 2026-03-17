@@ -138,6 +138,7 @@ public unsafe partial class Control :
     private static readonly object s_enabledEvent = new();
     private static readonly object s_dockEvent = new();
     private static readonly object s_cursorEvent = new();
+    private static readonly object s_contextMenuEvent = new();
     private static readonly object s_contextMenuStripEvent = new();
     private static readonly object s_causesValidationEvent = new();
     private static readonly object s_regionChangedEvent = new();
@@ -211,6 +212,7 @@ public unsafe partial class Control :
     private static readonly int s_controlVersionInfoProperty = PropertyStore.CreateKey();
     private static readonly int s_backgroundImageLayoutProperty = PropertyStore.CreateKey();
 
+    private static readonly int s_contextMenuProperty = PropertyStore.CreateKey();
     private static readonly int s_contextMenuStripProperty = PropertyStore.CreateKey();
     private static readonly int s_autoScrollOffsetProperty = PropertyStore.CreateKey();
     private static readonly int s_useCompatibleTextRenderingProperty = PropertyStore.CreateKey();
@@ -1686,6 +1688,10 @@ public unsafe partial class Control :
     ///  This is more efficient than setting the size in the control's constructor.
     /// </summary>
     protected virtual Size DefaultSize => Size.Empty;
+
+    internal virtual bool HasMenu => false;
+
+    private void DetachContextMenu(object? sender, EventArgs e) => ContextMenu = null;
 
     private void DetachContextMenuStrip(object? sender, EventArgs e) => ContextMenuStrip = null;
 
@@ -5405,11 +5411,11 @@ public unsafe partial class Control :
         CreateParams cp = CreateParams;
 
         // We would need to get adornments metrics for both (old and new) Dpi in case application is in PerMonitorV2 mode and Dpi changed.
-        AdjustWindowRectExForControlDpi(ref adornmentsAfterDpiChange, (WINDOW_STYLE)cp.Style, bMenu: false, (WINDOW_EX_STYLE)cp.ExStyle);
+        AdjustWindowRectExForControlDpi(ref adornmentsAfterDpiChange, (WINDOW_STYLE)cp.Style, bMenu: HasMenu, (WINDOW_EX_STYLE)cp.ExStyle);
 
         if (OriginalDeviceDpiInternal != DeviceDpiInternal && OsVersion.IsWindows10_1703OrGreater())
         {
-            AdjustWindowRectExForDpi(ref adornmentsBeforeDpiChange, (WINDOW_STYLE)cp.Style, bMenu: false, (WINDOW_EX_STYLE)cp.ExStyle, OriginalDeviceDpiInternal);
+            AdjustWindowRectExForDpi(ref adornmentsBeforeDpiChange, (WINDOW_STYLE)cp.Style, bMenu: HasMenu, (WINDOW_EX_STYLE)cp.ExStyle, OriginalDeviceDpiInternal);
         }
         else
         {
@@ -8786,8 +8792,18 @@ public unsafe partial class Control :
     ///   key. Modifier keys include the SHIFT, CTRL, and ALT keys.
     ///  </para>
     /// </remarks>
-    protected virtual bool ProcessCmdKey(ref Message msg, Keys keyData) =>
-        _parent?.ProcessCmdKey(ref msg, keyData) ?? false;
+    protected virtual bool ProcessCmdKey(ref Message msg, Keys keyData)
+    {
+#pragma warning disable WFDEV006 // Type or member is obsolete
+        if (Properties.TryGetValue(s_contextMenuProperty, out ContextMenu? contextMenu)
+            && contextMenu.ProcessCmdKey(ref msg, keyData, this))
+        {
+            return true;
+        }
+#pragma warning restore WFDEV006
+
+        return _parent?.ProcessCmdKey(ref msg, keyData) ?? false;
+    }
 
     private unsafe void PrintToMetaFile(HDC hDC, IntPtr lParam)
     {
@@ -9803,7 +9819,7 @@ public unsafe partial class Control :
     {
         CreateParams cp = CreateParams;
         RECT adornments = default;
-        AdjustWindowRectExForControlDpi(ref adornments, (WINDOW_STYLE)cp.Style, false, (WINDOW_EX_STYLE)cp.ExStyle);
+        AdjustWindowRectExForControlDpi(ref adornments, (WINDOW_STYLE)cp.Style, HasMenu, (WINDOW_EX_STYLE)cp.ExStyle);
         Size minSize = MinimumSize;
         Size maxSize = MaximumSize;
 
@@ -10248,7 +10264,7 @@ public unsafe partial class Control :
     {
         RECT rect = new(size);
         CreateParams cp = CreateParams;
-        AdjustWindowRectExForControlDpi(ref rect, (WINDOW_STYLE)cp.Style, false, (WINDOW_EX_STYLE)cp.ExStyle);
+        AdjustWindowRectExForControlDpi(ref rect, (WINDOW_STYLE)cp.Style, HasMenu, (WINDOW_EX_STYLE)cp.ExStyle);
         return rect.Size;
     }
 
@@ -11208,6 +11224,28 @@ public unsafe partial class Control :
     /// </summary>
     internal void WmContextMenu(ref Message m, Control sourceControl)
     {
+        if (Properties.TryGetValue(s_contextMenuProperty, out ContextMenu? contextMenu))
+        {
+            int legacyX = PARAM.SignedLOWORD(m.LParamInternal);
+            int legacyY = PARAM.SignedHIWORD(m.LParamInternal);
+            Point legacyClient = m.LParamInternal == -1
+                ? new Point(Width / 2, Height / 2)
+                : PointToClient(new Point(legacyX, legacyY));
+
+            if (ClientRectangle.Contains(legacyClient))
+            {
+#pragma warning disable WFDEV006 // Type or member is obsolete
+                contextMenu.Show(sourceControl, legacyClient);
+#pragma warning restore WFDEV006
+            }
+            else
+            {
+                DefWndProc(ref m);
+            }
+
+            return;
+        }
+
         if (!Properties.TryGetValue(s_contextMenuStripProperty, out ContextMenuStrip? contextMenuStrip))
         {
             DefWndProc(ref m);
@@ -11790,6 +11828,58 @@ public unsafe partial class Control :
     }
 
     /// <summary>
+    ///  Handles the WM_DRAWITEM message.
+    /// </summary>
+    private void WmDrawItem(ref Message m)
+    {
+        if (m.WParamInternal == 0u)
+        {
+            WmDrawItemMenuItem(ref m);
+
+            return;
+        }
+
+        WmOwnerDraw(ref m);
+    }
+
+    /// <summary>
+    ///  Handles WM_DRAWITEM for menus.
+    /// </summary>
+    private void WmDrawItemMenuItem(ref Message m)
+    {
+        DRAWITEMSTRUCT* drawItem = (DRAWITEMSTRUCT*)(nint)m.LParamInternal;
+        MenuItem? menuItem = MenuItem.GetMenuItemFromItemData((nint)drawItem->itemData);
+
+        menuItem?.WmDrawItem(ref m);
+    }
+
+    /// <summary>
+    ///  Handles the WM_MEASUREITEM message.
+    /// </summary>
+    private void WmMeasureItem(ref Message m)
+    {
+        if (m.WParamInternal == 0u)
+        {
+            WmMeasureItemMenuItem(ref m);
+
+            return;
+        }
+
+        WmOwnerDraw(ref m);
+    }
+
+    /// <summary>
+    ///  Handles WM_MEASUREITEM for menus.
+    /// </summary>
+    private void WmMeasureItemMenuItem(ref Message m)
+    {
+        MEASUREITEMSTRUCT* measureItem = (MEASUREITEMSTRUCT*)(nint)m.LParamInternal;
+        MenuItem? menuItem = MenuItem.GetMenuItemFromItemData((nint)measureItem->itemData);
+
+        menuItem?.WmMeasureItem(ref m);
+    }
+
+    /// <summary>
     ///  Handles the WM_DRAWITEM\WM_MEASUREITEM messages for controls other than menus.
     /// </summary>
     private void WmOwnerDraw(ref Message m)
@@ -12322,11 +12412,7 @@ public unsafe partial class Control :
                 break;
 
             case PInvokeCore.WM_DRAWITEM:
-                if (m.WParamInternal != 0u)
-                {
-                    WmOwnerDraw(ref m);
-                }
-
+                WmDrawItem(ref m);
                 break;
 
             case PInvokeCore.WM_ERASEBKGND:
@@ -12380,11 +12466,7 @@ public unsafe partial class Control :
                 break;
 
             case PInvokeCore.WM_MEASUREITEM:
-                if (m.WParamInternal != 0u)
-                {
-                    WmOwnerDraw(ref m);
-                }
-
+                WmMeasureItem(ref m);
                 break;
 
             case PInvokeCore.WM_SETCURSOR:
@@ -12958,52 +13040,53 @@ public unsafe partial class Control :
 
     // Unsupported types don't support nullability.
 #nullable disable
-    /// <summary>
-    ///  This property is provided for binary compatibility with .NET Framework and is not intended to be used directly from your code.
-    /// </summary>
-    [Obsolete(
-        Obsoletions.ContextMenuMessage,
-        error: false,
-        DiagnosticId = Obsoletions.UnsupportedControlsDiagnosticId,
-        UrlFormat = Obsoletions.SharedUrlFormat)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
+    [SRCategory(nameof(SR.CatBehavior))]
+    [DefaultValue(null)]
+    [SRDescription(nameof(SR.ControlContextMenuDescr))]
     [Browsable(false)]
-    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public virtual ContextMenu ContextMenu
     {
-        get;
-        set;
+        get => Properties.GetValueOrDefault<ContextMenu>(s_contextMenuProperty);
+        set
+        {
+            ContextMenu oldValue = Properties.AddOrRemoveValue(s_contextMenuProperty, value);
+
+            if (oldValue == value)
+            {
+                return;
+            }
+
+            if (oldValue is not null)
+            {
+                oldValue.Disposed -= DetachContextMenu;
+            }
+
+            if (value is not null)
+            {
+                value.Disposed += DetachContextMenu;
+            }
+
+            OnContextMenuChanged(EventArgs.Empty);
+        }
     }
 
-    /// <summary>
-    ///  This event is provided for binary compatibility with .NET Framework and is not intended to be used directly from your code.
-    /// </summary>
-    [Obsolete(
-        Obsoletions.ContextMenuMessage,
-        error: false,
-        DiagnosticId = Obsoletions.UnsupportedControlsDiagnosticId,
-        UrlFormat = Obsoletions.SharedUrlFormat)]
-
-    [EditorBrowsable(EditorBrowsableState.Never)]
+    [SRCategory(nameof(SR.CatPropertyChanged))]
+    [SRDescription(nameof(SR.ControlOnContextMenuChangedDescr))]
     [Browsable(false)]
-    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public event EventHandler ContextMenuChanged
     {
-        add { }
-        remove { }
+        add => Events.AddHandler(s_contextMenuEvent, value);
+        remove => Events.RemoveHandler(s_contextMenuEvent, value);
     }
 
-    /// <summary>
-    ///  This method is provided for binary compatibility with .NET Framework and is not intended to be used directly from your code.
-    /// </summary>
-    [Obsolete(
-        Obsoletions.ContextMenuMessage,
-        error: false,
-        DiagnosticId = Obsoletions.UnsupportedControlsDiagnosticId,
-        UrlFormat = Obsoletions.SharedUrlFormat)]
-    [EditorBrowsable(EditorBrowsableState.Never)]
     [Browsable(false)]
-    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-    protected virtual void OnContextMenuChanged(EventArgs e) { }
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    protected virtual void OnContextMenuChanged(EventArgs e)
+    {
+        if (Events[s_contextMenuEvent] is EventHandler eh)
+        {
+            eh(this, e);
+        }
+    }
 #nullable enable
 }

@@ -837,6 +837,15 @@
   <data name="ContainerControlParentFormDescr" xml:space="preserve">
     <value>The parent form of this container control.</value>
   </data>
+  <data name="ContextMenuCollapseDescr" xml:space="preserve">
+    <value>Raised when the context menu collapses.</value>
+  </data>
+  <data name="ContextMenuInvalidParent" xml:space="preserve">
+    <value>ContextMenu cannot be shown on an invisible control.</value>
+  </data>
+  <data name="ContextMenuSourceControlDescr" xml:space="preserve">
+    <value>The last control that caused this context menu to be displayed.</value>
+  </data>
   <data name="ContextMenuStripSourceControlDescr" xml:space="preserve">
     <value>The last control that caused this context menu strip to be displayed.</value>
   </data>
@@ -4140,11 +4149,77 @@ Stack trace where the illegal operation occurred was:
   <data name="measureItemEventDescr" xml:space="preserve">
     <value>Occurs whenever a particular item's height needs to be calculated.</value>
   </data>
+  <data name="MenuItemOnInitDescr" xml:space="preserve">
+    <value>Occurs before the containing menu is displayed.</value>
+  </data>
+  <data name="MenuRightToLeftDescr" xml:space="preserve">
+    <value>Indicates if this menu should display right to left</value>
+  </data>
   <data name="MenuItemShortCutDescr" xml:space="preserve">
     <value>The shortcut key associated with the menu item. </value>
   </data>
   <data name="MenuItemShowShortCutDescr" xml:space="preserve">
     <value>Indicates whether the shorcut key for the menu item is displayed on the item. </value>
+  </data>
+  <data name="MainMenuCollapseDescr" xml:space="preserve">
+    <value>Occurs when the main menu collapses.</value>
+  </data>
+  <data name="MenuIsParentDescr" xml:space="preserve">
+    <value>Indicates if this menu contains any child items.</value>
+  </data>
+  <data name="MenuItemCheckedDescr" xml:space="preserve">
+    <value>Indicates whether the item is checked.</value>
+  </data>
+  <data name="MenuItemDefaultDescr" xml:space="preserve">
+    <value>Indicates whether the item is the default item.</value>
+  </data>
+  <data name="MenuItemEnabledDescr" xml:space="preserve">
+    <value>Indicates whether the item is enabled.</value>
+  </data>
+  <data name="MenuItemMDIListDescr" xml:space="preserve">
+    <value>Determines whether the MDI child window list is appended to this item.</value>
+  </data>
+  <data name="MenuItemMergeOrderDescr" xml:space="preserve">
+    <value>Determines the merge order of the item.</value>
+  </data>
+  <data name="MenuItemMergeTypeDescr" xml:space="preserve">
+    <value>Determines how the item is handled when menus are merged.</value>
+  </data>
+  <data name="MenuItemOnClickDescr" xml:space="preserve">
+    <value>Occurs when the menu item is selected.</value>
+  </data>
+  <data name="MenuItemOnSelectDescr" xml:space="preserve">
+    <value>Occurs when the menu item is selected.</value>
+  </data>
+  <data name="MenuItemOwnerDrawDescr" xml:space="preserve">
+    <value>Indicates if Windows will draw the menu item or if the user will handle the painting.</value>
+  </data>
+  <data name="MenuItemRadioCheckDescr" xml:space="preserve">
+    <value>If the item is checked, this value will determine whether the check style is a radio button.</value>
+  </data>
+  <data name="MenuItemTextDescr" xml:space="preserve">
+    <value>The caption displayed by the item.</value>
+  </data>
+  <data name="MenuItemVisibleDescr" xml:space="preserve">
+    <value>Indicates whether the item is visible.</value>
+  </data>
+  <data name="MenuMDIListItemDescr" xml:space="preserve">
+    <value>Retrieves the menu item that contains a list of MDI child windows.</value>
+  </data>
+  <data name="MenuMenuItemsDescr" xml:space="preserve">
+    <value>The menu items for the menu.</value>
+  </data>
+  <data name="MenuBadMenuItem" xml:space="preserve">
+    <value>Parameter must be of type MenuItem.</value>
+  </data>
+  <data name="MenuItemAlreadyExists" xml:space="preserve">
+    <value>Cannot add MenuItem '{0}'. It already exists as a parent of the current menu item.</value>
+  </data>
+  <data name="MenuItemInvalidCheckProperty" xml:space="preserve">
+    <value>True is not a valid value for the Checked property.  This is only valid for MenuItems that have no children and are not top-level.</value>
+  </data>
+  <data name="MenuMergeWithSelf" xml:space="preserve">
+    <value>Cannot merge a menu with itself.</value>
   </data>
   <data name="MenuStripMdiWindowListItem" xml:space="preserve">
     <value>Specifies the item whose DropDown will show the list of MDI windows.</value>

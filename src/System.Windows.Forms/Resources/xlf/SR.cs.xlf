@@ -1352,6 +1352,21 @@
         <target state="translated">Nadřazený formulář tohoto ovládacího prvku kontejneru.</target>
         <note />
       </trans-unit>
+      <trans-unit id="ContextMenuCollapseDescr">
+        <source>Raised when the context menu collapses.</source>
+        <target state="translated">Vyvolá se při sbalení místní nabídky.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ContextMenuInvalidParent">
+        <source>ContextMenu cannot be shown on an invisible control.</source>
+        <target state="translated">Nabídku ContextMenu nelze zobrazit v neviditelném ovládacím prvku.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ContextMenuSourceControlDescr">
+        <source>The last control that caused this context menu to be displayed.</source>
+        <target state="translated">Poslední ovládací prvek, který způsobil zobrazení této kontextové nabídky.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="ContextMenuStripSourceControlDescr">
         <source>The last control that caused this context menu strip to be displayed.</source>
         <target state="translated">Poslední ovládací prvek, který způsobil zobrazení této místní nabídky</target>
@@ -7039,6 +7054,11 @@ Trasování zásobníku, kde došlo k neplatné operaci:
         <target state="translated">Formulář, který byl určen jako nadřazený objekt MdiParent pro tento formulář, není typu MdiContainer.</target>
         <note />
       </trans-unit>
+      <trans-unit id="MainMenuCollapseDescr">
+        <source>Occurs when the main menu collapses.</source>
+        <target state="translated">Vyvolá se při sbalení hlavní nabídky.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="MaskedTextBoxAllowPromptAsInputDescr">
         <source>Indicates whether the prompt character is valid as input.</source>
         <target state="translated">Označuje, zda je znak příkazového řádku platný jako vstup.</target>
@@ -7174,6 +7194,81 @@ Trasování zásobníku, kde došlo k neplatné operaci:
         <target state="translated">Určuje typ objektu, který se má použít k analýze vstupního textu v případě, že ovládací prvek ztratí fokus.</target>
         <note />
       </trans-unit>
+      <trans-unit id="MenuBadMenuItem">
+        <source>Parameter must be of type MenuItem.</source>
+        <target state="translated">Parametr musí být typu MenuItem.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuIsParentDescr">
+        <source>Indicates if this menu contains any child items.</source>
+        <target state="translated">Určuje, zda tato nabídka obsahuje podřízené položky.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemAlreadyExists">
+        <source>Cannot add MenuItem '{0}'. It already exists as a parent of the current menu item.</source>
+        <target state="translated">Položku MenuItem {0} nelze přidat. Již existuje jako nadřazená položka aktuální položky nabídky.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemCheckedDescr">
+        <source>Indicates whether the item is checked.</source>
+        <target state="translated">Určuje, zda je položka zaškrtnuta.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemDefaultDescr">
+        <source>Indicates whether the item is the default item.</source>
+        <target state="translated">Určuje, zda je položka výchozí položkou.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemEnabledDescr">
+        <source>Indicates whether the item is enabled.</source>
+        <target state="translated">Určuje, zda je položka povolena.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemInvalidCheckProperty">
+        <source>True is not a valid value for the Checked property.  This is only valid for MenuItems that have no children and are not top-level.</source>
+        <target state="translated">Hodnota True není platnou hodnotou vlastnosti Checked. Je platná pouze pro položky MenuItems, které nemají žádné podřízené položky a nejsou na nejvyšší úrovni.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemMDIListDescr">
+        <source>Determines whether the MDI child window list is appended to this item.</source>
+        <target state="translated">Určuje, zda je k této položce připojen seznam podřízených oken MDI.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemMergeOrderDescr">
+        <source>Determines the merge order of the item.</source>
+        <target state="translated">Určuje pořadí sloučení položky.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemMergeTypeDescr">
+        <source>Determines how the item is handled when menus are merged.</source>
+        <target state="translated">Určuje, jakým způsobem je položka zpracována při slučování nabídek.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemOnClickDescr">
+        <source>Occurs when the menu item is selected.</source>
+        <target state="translated">Vyvolá se v případě, že je vybrána položka nabídky.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemOnInitDescr">
+        <source>Occurs before the containing menu is displayed.</source>
+        <target state="translated">Vyvolá se před zobrazením příslušné nabídky.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemOnSelectDescr">
+        <source>Occurs when the menu item is selected.</source>
+        <target state="translated">Vyvolá se v případě, že je vybrána položka nabídky.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemOwnerDrawDescr">
+        <source>Indicates if Windows will draw the menu item or if the user will handle the painting.</source>
+        <target state="translated">Určuje, zda položku nabídky nakreslí systém Windows nebo zda bude vykreslení zpracováno uživatelem.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemRadioCheckDescr">
+        <source>If the item is checked, this value will determine whether the check style is a radio button.</source>
+        <target state="translated">Pokud je položka zaškrtnuta, bude tato hodnota určovat, zda je stylem zaškrtnutí přepínač.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="MenuItemShortCutDescr">
         <source>The shortcut key associated with the menu item. </source>
         <target state="translated">Klávesová zkratka přiřazená položce nabídky</target>
@@ -7182,6 +7277,36 @@ Trasování zásobníku, kde došlo k neplatné operaci:
       <trans-unit id="MenuItemShowShortCutDescr">
         <source>Indicates whether the shorcut key for the menu item is displayed on the item. </source>
         <target state="translated">Určuje, zda bude v položce nabídky zobrazena klávesová zkratka pro tuto položku. </target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemTextDescr">
+        <source>The caption displayed by the item.</source>
+        <target state="translated">Titulek zobrazený položkou.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemVisibleDescr">
+        <source>Indicates whether the item is visible.</source>
+        <target state="translated">Určuje, zda je položka viditelná.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuMDIListItemDescr">
+        <source>Retrieves the menu item that contains a list of MDI child windows.</source>
+        <target state="translated">Načte položku nabídky obsahující seznam podřízených oken MDI.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuMenuItemsDescr">
+        <source>The menu items for the menu.</source>
+        <target state="translated">Příkazy této nabídky</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuMergeWithSelf">
+        <source>Cannot merge a menu with itself.</source>
+        <target state="translated">Nabídku nelze sloučit se sebou samou.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuRightToLeftDescr">
+        <source>Indicates if this menu should display right to left</source>
+        <target state="translated">Určuje, zda se tato nabídka má zobrazovat zprava doleva.</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuStripMdiWindowListItem">

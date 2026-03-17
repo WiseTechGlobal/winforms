@@ -109,8 +109,15 @@
     <ItemGroup>
       <!-- Add ReferenceCopyLocalPaths for ProjectReferences which are flagged as Pack="true" into the package. -->
       <_projectReferenceCopyLocalPaths Include="@(ReferenceCopyLocalPaths->WithMetadataValue('ReferenceSourceTarget', 'ProjectReference')->WithMetadataValue('Pack', 'true'))" />
+        <!-- Satellite resource assemblies must be packaged under lib/{tfm}/{culture}/ so NuGet preserves the culture-specific probing layout. -->
+      <_projectReferenceSatelliteCopyLocalPaths Include="@(_projectReferenceCopyLocalPaths)"
+                                               Condition="$([System.String]::Copy('%(_projectReferenceCopyLocalPaths.Filename)').EndsWith('.resources'))" />
+      <_projectReferenceCopyLocalPaths Remove="@(_projectReferenceSatelliteCopyLocalPaths)" />
       <TfmSpecificPackageFile Include="@(_projectReferenceCopyLocalPaths)"
                               PackagePath="$([MSBuild]::ValueOrDefault('%(ReferenceCopyLocalPaths.PackagePath)', '$(BuildOutputTargetFolder)\$(_referringTargetFramework)\'))" />
+        <!-- The culture name comes from the satellite assembly's parent directory, e.g. de\Foo.resources.dll -> lib/{tfm}/de/. -->
+      <TfmSpecificPackageFile Include="@(_projectReferenceSatelliteCopyLocalPaths)"
+                              PackagePath="$([MSBuild]::ValueOrDefault('%(_projectReferenceSatelliteCopyLocalPaths.PackagePath)', '$(BuildOutputTargetFolder)\$(_referringTargetFramework)\$([System.IO.Path]::GetFileName($([System.IO.Path]::GetDirectoryName('%(_projectReferenceSatelliteCopyLocalPaths.Identity)'))))\'))" />
       <TfmSpecificDebugSymbolsFile Include="@(TfmSpecificPackageFile->WithMetadataValue('Extension', '.pdb'))"
                                    TargetPath="/%(TfmSpecificPackageFile.PackagePath)/%(Filename)%(Extension)"
                                    TargetFramework="$(_referringTargetFramework)"

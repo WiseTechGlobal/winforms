@@ -1,0 +1,3 @@
+<Project>
+  <!-- Demo project is standalone and should not inherit the repo's root build defaults. -->
+</Project>

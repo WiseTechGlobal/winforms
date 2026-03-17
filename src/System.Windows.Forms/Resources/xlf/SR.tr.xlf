@@ -1352,6 +1352,21 @@
         <target state="translated">Bu kapsayıcı denetiminin üst formu.</target>
         <note />
       </trans-unit>
+      <trans-unit id="ContextMenuCollapseDescr">
+        <source>Raised when the context menu collapses.</source>
+        <target state="translated">İçerik menüsü daraltıldığında harekete geçirilir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ContextMenuInvalidParent">
+        <source>ContextMenu cannot be shown on an invisible control.</source>
+        <target state="translated">ContextMenu, görünmeyen bir denetimde gösterilemiyor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ContextMenuSourceControlDescr">
+        <source>The last control that caused this context menu to be displayed.</source>
+        <target state="translated">Bu bağlam menüsünün görüntülenmesine neden olan en son denetim.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="ContextMenuStripSourceControlDescr">
         <source>The last control that caused this context menu strip to be displayed.</source>
         <target state="translated">Bu içerik menüsü şeridinin görüntülenmesine neden olan en son denetim.</target>
@@ -7039,6 +7054,11 @@ Geçersiz işlemin gerçekleştiği yığın izi:
         <target state="translated">Bu form için MdiParent olarak belirtilen form, bir MdiContainer değil.</target>
         <note />
       </trans-unit>
+      <trans-unit id="MainMenuCollapseDescr">
+        <source>Occurs when the main menu collapses.</source>
+        <target state="translated">Ana menü daraltıldığında gerçekleşir.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="MaskedTextBoxAllowPromptAsInputDescr">
         <source>Indicates whether the prompt character is valid as input.</source>
         <target state="translated">İstem karakterinin giriş olarak geçerli olup olmadığını gösterir.</target>
@@ -7174,6 +7194,81 @@ Geçersiz işlemin gerçekleştiği yığın izi:
         <target state="translated">Denetim odağı kaybettiğinde giriş metnini ayrıştırmak için kullanılacak nesnenin türünü belirtir.</target>
         <note />
       </trans-unit>
+      <trans-unit id="MenuBadMenuItem">
+        <source>Parameter must be of type MenuItem.</source>
+        <target state="translated">Parametrenin MenuItem türünde olması gerekir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuIsParentDescr">
+        <source>Indicates if this menu contains any child items.</source>
+        <target state="translated">Bu menünün alt öğe içerip içermediğini gösterir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemAlreadyExists">
+        <source>Cannot add MenuItem '{0}'. It already exists as a parent of the current menu item.</source>
+        <target state="translated">MenuItem '{0}' eklenemiyor. Geçerli menü öğesinin üstü olarak zaten var.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemCheckedDescr">
+        <source>Indicates whether the item is checked.</source>
+        <target state="translated">Öğenin işaretli olup olmadığını gösterir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemDefaultDescr">
+        <source>Indicates whether the item is the default item.</source>
+        <target state="translated">Öğenin varsayılan öğe olup olmadığını gösterir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemEnabledDescr">
+        <source>Indicates whether the item is enabled.</source>
+        <target state="translated">Öğenin etkin olup olmadığını gösterir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemInvalidCheckProperty">
+        <source>True is not a valid value for the Checked property.  This is only valid for MenuItems that have no children and are not top-level.</source>
+        <target state="translated">True, Checked özelliği için geçerli bir değer değil. Bu, yalnızca hiç alt öğesi bulunmayan ve en üst düzeyde olmayan MenuItem'lar için geçerlidir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemMDIListDescr">
+        <source>Determines whether the MDI child window list is appended to this item.</source>
+        <target state="translated">MDI alt pencere listesinin bu öğenin sonuna eklenip eklenmediğini belirler.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemMergeOrderDescr">
+        <source>Determines the merge order of the item.</source>
+        <target state="translated">Öğenin birleştirme sırasını belirler.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemMergeTypeDescr">
+        <source>Determines how the item is handled when menus are merged.</source>
+        <target state="translated">Menüler birleştirildiğinde öğenin nasıl işlendiğini belirler.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemOnClickDescr">
+        <source>Occurs when the menu item is selected.</source>
+        <target state="translated">Menü öğesi seçildiğinde gerçekleşir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemOnInitDescr">
+        <source>Occurs before the containing menu is displayed.</source>
+        <target state="translated">İçeren menü görüntülenmeden önce gerçekleşir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemOnSelectDescr">
+        <source>Occurs when the menu item is selected.</source>
+        <target state="translated">Menü öğesi seçildiğinde gerçekleşir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemOwnerDrawDescr">
+        <source>Indicates if Windows will draw the menu item or if the user will handle the painting.</source>
+        <target state="translated">Menü öğesinin Windows tarafından mı çizileceğini yoksa boyama işini kullanıcının mı yapacağını gösterir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemRadioCheckDescr">
+        <source>If the item is checked, this value will determine whether the check style is a radio button.</source>
+        <target state="translated">Öğe işaretliyse, bu değer işaret stilinin radyo düğmesi olup olmadığını belirler.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="MenuItemShortCutDescr">
         <source>The shortcut key associated with the menu item. </source>
         <target state="translated">Menü öğesiyle ilişkili kısayol tuşu. </target>
@@ -7182,6 +7277,36 @@ Geçersiz işlemin gerçekleştiği yığın izi:
       <trans-unit id="MenuItemShowShortCutDescr">
         <source>Indicates whether the shorcut key for the menu item is displayed on the item. </source>
         <target state="translated">Menü öğesinin kısayolunun öğede görüntülenip görüntülenmeyeceğini gösterir. </target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemTextDescr">
+        <source>The caption displayed by the item.</source>
+        <target state="translated">Öğe tarafından görüntülenen başlık.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuItemVisibleDescr">
+        <source>Indicates whether the item is visible.</source>
+        <target state="translated">Öğenin görünür olup olmadığını gösterir.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuMDIListItemDescr">
+        <source>Retrieves the menu item that contains a list of MDI child windows.</source>
+        <target state="translated">MDI alt pencereleri listesi içeren menü öğesini alır.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuMenuItemsDescr">
+        <source>The menu items for the menu.</source>
+        <target state="translated">Menüdeki menü öğeleri.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuMergeWithSelf">
+        <source>Cannot merge a menu with itself.</source>
+        <target state="translated">Menü kendisiyle birleştirilemez.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MenuRightToLeftDescr">
+        <source>Indicates if this menu should display right to left</source>
+        <target state="translated">Bu menünün sağdan sola görüntülenip görüntülenmeyeceğini gösterir</target>
         <note />
       </trans-unit>
       <trans-unit id="MenuStripMdiWindowListItem">

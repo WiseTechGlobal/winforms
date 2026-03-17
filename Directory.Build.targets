@@ -32,7 +32,7 @@
   <!-- Turn OFF Trimming for non .NET projects.-->
   <PropertyGroup>
     <EnableTrimAnalyzer Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">true</EnableTrimAnalyzer>
-    <EnableTrimAnalyzer Condition="$(IsTestProject) or $(IsAnalyzerProject) or $(MSBuildProjectDirectory.Contains('\tests\'))">false</EnableTrimAnalyzer>
+    <EnableTrimAnalyzer Condition="'$(IsTestProject)' == 'true' or '$(IsAnalyzerProject)' == 'true' or $(MSBuildProjectDirectory.Contains('\tests\'))">false</EnableTrimAnalyzer>
   </PropertyGroup>
 
   <!-- Mark all projects located under **\tests\* folders as non-shipping -->
@@ -91,7 +91,9 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <RuntimeFrameworkVersion Condition="'$(MicrosoftNETCoreAppRefPackageVersion)'!='' And $(TargetFramework.StartsWith('$(RedistTargetFrameworkName)')) ">$(MicrosoftNETCoreAppRefPackageVersion)</RuntimeFrameworkVersion>
+    <RuntimeFrameworkVersion Condition="'$(DisablePinnedRuntimeFrameworkVersion)' == 'true' And $(TargetFramework.StartsWith('$(RedistTargetFrameworkName)'))" />
+
+    <RuntimeFrameworkVersion Condition="'$(DisablePinnedRuntimeFrameworkVersion)' != 'true' And '$(MicrosoftNETCoreAppRefPackageVersion)'!='' And $(TargetFramework.StartsWith('$(RedistTargetFrameworkName)')) ">$(MicrosoftNETCoreAppRefPackageVersion)</RuntimeFrameworkVersion>
 
     <!-- If TargetFramework is not net8.x, then reset RuntimeFrameworkVersion -->
     <RuntimeFrameworkVersion Condition="!$(TargetFramework.StartsWith('$(RedistTargetFrameworkName)'))" />

@@ -5,7 +5,13 @@
     <LangVersion>Preview</LangVersion>
     <Nullable>enable</Nullable>
     <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
+    <DefaultItemExcludes>$(DefaultItemExcludes);bin\**;obj\**</DefaultItemExcludes>
+    <DefaultItemExcludesInProjectFolder>$(DefaultItemExcludesInProjectFolder);bin\**;obj\**</DefaultItemExcludesInProjectFolder>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="bin\**\*.cs;obj\**\*.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <Using Include="Microsoft.CodeAnalysis" />
