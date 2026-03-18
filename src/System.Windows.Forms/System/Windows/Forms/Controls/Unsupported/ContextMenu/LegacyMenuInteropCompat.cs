@@ -1,8 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-#pragma warning disable IDE1006, SA1518
-
 using System.Runtime.InteropServices;
 
 namespace System.Windows.Forms;
