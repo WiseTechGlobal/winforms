@@ -1,25 +1,15 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
-using System.ComponentModel;
-
-namespace System.Windows.Forms;
-
-#nullable disable
-
-/// <summary>
-///  This type is provided for binary compatibility with .NET Framework and is not intended to be used directly from your code.
-/// </summary>
-[Obsolete(
-    Obsoletions.DataGridMessage,
-    error: false,
-    DiagnosticId = Obsoletions.UnsupportedControlsDiagnosticId,
-    UrlFormat = Obsoletions.SharedUrlFormat)]
-[EditorBrowsable(EditorBrowsableState.Never)]
-[Browsable(false)]
-public interface IDataGridEditingService
+namespace System.Windows.Forms
 {
-    bool BeginEdit(DataGridColumnStyle gridColumn, int rowNumber);
-
-    bool EndEdit(DataGridColumnStyle gridColumn, int rowNumber, bool shouldAbort);
+    /// <summary>
+    ///  The DataGrid exposes hooks to request editing commands via this interface.
+    /// </summary>
+    public interface IDataGridEditingService
+    {
+        bool BeginEdit(DataGridColumnStyle gridColumn, int rowNumber);
+        bool EndEdit(DataGridColumnStyle gridColumn, int rowNumber, bool shouldAbort);
+    }
 }

@@ -2262,6 +2262,71 @@
         <target state="translated">RemoveAt は、プロパティからプロパティへの バインドに対してサポートされていません。</target>
         <note />
       </trans-unit>
+      <trans-unit id="DataGridNavigateEventDescr">
+        <source>Occurs when the user navigates to the child rows or when the user navigates back to the parent rows.</source>
+        <target state="translated">ユーザーが子行に移動したときまたは親行に戻ったときに発生します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridNodeClickEventDescr">
+        <source>Occurs when the user clicks on the expansion glyph on the row header.</source>
+        <target state="translated">ユーザーが行ヘッダーの拡張グラフィックスをクリックしたときに発生します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridOnBackgroundColorChangedDescr">
+        <source>Event raised when the value of the BackgroundColor property is changed on DataGrid.</source>
+        <target state="translated">BackgroundColor プロパティの値が DataGrid で変更されたときに発生するイベントです。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridOnBorderStyleChangedDescr">
+        <source>Event raised when the value of the BorderStyle property is changed on DataGrid.</source>
+        <target state="translated">BorderStyle プロパティの値が DataGrid で変更されたときに発生するイベントです。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridOnCaptionVisibleChangedDescr">
+        <source>Event raised when the value of the CaptionVisible property is changed on DataGrid.</source>
+        <target state="translated">CaptionVisible プロパティの値が DataGrid で変更されたときに発生するイベントです。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridOnCurrentCellChangedDescr">
+        <source>Event raised when the value of the CurrentCell property is changed on DataGrid.</source>
+        <target state="translated">CurrentCell プロパティの値が DataGrid で変更されたときに発生するイベントです。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridOnDataSourceChangedDescr">
+        <source>Event raised when the value of the DataSource property is changed on DataGrid.</source>
+        <target state="translated">DataSource プロパティの値が DataGrid で変更されたときに発生するイベントです。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridOnFlatModeChangedDescr">
+        <source>Event raised when the value of the FlatMode property is changed on DataGrid.</source>
+        <target state="translated">FlatMode プロパティの値が DataGrid で変更されたときに発生するイベントです。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridOnNavigationModeChangedDescr">
+        <source>Event raised when the value of the NavigationMode property is changed on DataGrid.</source>
+        <target state="translated">NavigationMode プロパティの値が DataGrid で変更されたときに発生するイベントです。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridOnParentRowsLabelStyleChangedDescr">
+        <source>Event raised when the value of the ParentRowsLabelStyle property is changed on DataGrid.</source>
+        <target state="translated">ParentRowsLabelStyle プロパティの値が DataGrid で変更されたときに発生するイベントです。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridOnParentRowsVisibleChangedDescr">
+        <source>Event raised when the value of the ParentRowsVisible property is changed on DataGrid.</source>
+        <target state="translated">ParentRowsVisible プロパティの値が DataGrid で変更されたときに発生するイベントです。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridOnReadOnlyChangedDescr">
+        <source>Event raised when the value of the ReadOnly property is changed on DataGrid.</source>
+        <target state="translated">ReadOnly プロパティの値が DataGrid で変更されたときに発生するイベントです。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridScrollEventDescr">
+        <source>Occurs when the user scrolls either the horizontal or vertical scroll bar.</source>
+        <target state="translated">ユーザーが水平または垂直スクロール バーをスクロールしたときに発生します。</target>
+        <note />
+      </trans-unit>
       <trans-unit id="DataGridViewAlternatingRowsDefaultCellStyleChangedDescr">
         <source>Occurs when the value of the AlternatingRowsDefaultCellStyle property changes.</source>
         <target state="translated">AlternatingRowsDefaultCellStyle プロパティの値が変更したときに発生します。</target>
@@ -11662,6 +11727,396 @@ Stack trace where the illegal operation occurred was:
       <trans-unit id="valueChangedEventDescr">
         <source>Occurs when the value of the control changes.</source>
         <target state="translated">コントロールの値が変更するときに発生します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridAllowSortingDescr">
+        <source>Indicates whether the grid can be re-sorted by clicking a column header.</source>
+        <target state="translated">列ヘッダーをクリックして、グリッドを再度並べ替えられるかどうかを示します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridAlternatingBackColorDescr">
+        <source>Indicates the background color of alternating rows for a ledger appearance.</source>
+        <target state="translated">帳簿の表示方法で、交互に色が変更される列の背景色を示します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridBackButtonClickDescr">
+        <source>Occurs when the user clicks the Back button on a child table to return to the parent table.</source>
+        <target state="translated">子テーブル上の [戻る] をクリックして親テーブルに戻ったときに発生します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridBackgroundColorDescr">
+        <source>Indicates the color of the DataGrid background.</source>
+        <target state="translated">DataGrid の背景色を示します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridBeginInit">
+        <source>BeginInit() has already been called without an EndInit().</source>
+        <target state="translated">EndInit() なしに、BeginInit() は既に呼び出されました。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridBoolColumnAllowNullValue">
+        <source>Specifies whether the DataGridBoolColumn allows null values.</source>
+        <target state="translated">DataGridBoolColumn が Null 値を許容するかどうかを指定します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridBorderStyleDescr">
+        <source>Indicates the border style for the DataGrid.</source>
+        <target state="translated">DataGrid の境界線スタイルを示します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridCaptionBackButtonToolTip">
+        <source>Navigates back to the parent rows.</source>
+        <target state="translated">親行に戻ります。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridCaptionBackColorDescr">
+        <source>Indicates the background color of the top caption.</source>
+        <target state="translated">上部のキャプションの背景色を示します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridCaptionDetailsButtonToolTip">
+        <source>Shows/Hides the parent rows for the current set of child rows.</source>
+        <target state="translated">現在の子行のセットを表示/非表示にします。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridCaptionFontDescr">
+        <source>Indicates the font of the top caption.</source>
+        <target state="translated">上部のキャプションのフォントを示します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridCaptionForeColorDescr">
+        <source>Indicates the color of text that appears in the top caption.</source>
+        <target state="translated">上部のキャプションに表示されるテキストの色を示します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridCaptionTextDescr">
+        <source>Indicates the text displayed in the top caption.</source>
+        <target state="translated">上部のキャプションに表示されるテキストを示します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridCaptionVisibleDescr">
+        <source>Indicates whether the top caption is visible.</source>
+        <target state="translated">上部のキャプションが表示可能かどうかを示します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridColumnCollectionMissing">
+        <source>DataGridColumn instance does not exist in the collection.</source>
+        <target state="translated">DataGridColumn インスタンスはコレクションに存在しません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridColumnHeadersVisibleDescr">
+        <source>Indicates whether the column headers are visible.</source>
+        <target state="translated">列ヘッダーを表示するかどうかを示します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridColumnListManagerPosition">
+        <source>Position of ListManager must be equal to 'rowNum'.</source>
+        <target state="translated">ListManager の位置は 'rowNum' と同じでなければなりません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridColumnNoPropertyDescriptor">
+        <source>PropertyDescriptor has not been set on this DataGridColumn.</source>
+        <target state="translated">PropertyDescriptor はこの DataGridColumn で設定されていません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridColumnStyleDuplicateMappingName">
+        <source>Data grid column styles collection already contains a column style with the same mapping name.</source>
+        <target state="translated">データ グリッドの列スタイル コレクションには、既に同じマップ名の列スタイルが含まれています。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridColumnUnbound">
+        <source>DataGridColumnStyle of '{0}' cannot be used because it is not associated with a Property or Column in the DataSource.</source>
+        <target state="translated">'{0}' の DataGridColumnStyle は、DataSource でプロパティまたは列に関連付けられていないため、使用できません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridColumnWidth">
+        <source>ColumnWidth must be greater than or equal to 0.</source>
+        <target state="translated">ColumnWidth は 0 以上でなければなりません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridCurrentCellDescr">
+        <source>The currently selected cell in the DataGrid.</source>
+        <target state="translated">DataGrid で現在選択されているセルです。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridDataMemberDescr">
+        <source>Indicates a sub-list of the DataSource to show in the DataGrid.</source>
+        <target state="translated">DataGrid で表示する DataSource のサブリストを示します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridDataSourceDescr">
+        <source>Indicates the source of data for the DataGrid.</source>
+        <target state="translated">DataGrid のデータのソースを示します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridDefaultColumnCollectionChanged">
+        <source>User cannot change the contents of the default GridColumnStylesCollection.</source>
+        <target state="translated">ユーザーは、既定の GridColumnStylesCollection の内容を変更できません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridDefaultTableSet">
+        <source>Value of this property cannot be changed on the default DataGridTableStyle.</source>
+        <target state="translated">既定の DataGridTableStyle でこのプロパティの値を変更できません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridDownButtonClickDescr">
+        <source>Occurs when the user clicks the "show/hide parent rows" icon.</source>
+        <target state="needs-review-translation">[親行の表示/非表示] アイコンをクリックしたときに発生します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridEmptyColor">
+        <source>Value '{0}' cannot be set to an empty value.</source>
+        <target state="translated">値 '{0}' を空の値に設定できません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridErrorMessageBoxCaption">
+        <source>Committing the row to the original data store has caused an error.</source>
+        <target state="translated">オリジナルのデータ ストアに行をコミットして、エラーが発生しました。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridExceptionInPaint">
+        <source>DataGrid received an exception at design time. Reset the DataSource and DataMember property on the grid.</source>
+        <target state="translated">DataGrid はデザイン時に例外を受け取りました。グリッドの DataSource と DataMember プロパティを再設定してください。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridFirstVisibleColumnDescr">
+        <source>Indicates the index of the column that is first shown.</source>
+        <target state="translated">最初に表示される列のインデックスを示します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridFlatModeDescr">
+        <source>Indicates whether the grid has a flat appearance.</source>
+        <target state="translated">グリッドの外観をフラットにするかどうかを示します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridGridLineColorDescr">
+        <source>Indicates the color of the grid lines.</source>
+        <target state="translated">グリッド線の色を示します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridGridLineStyleDescr">
+        <source>Indicates the style of the grid lines.</source>
+        <target state="translated">グリッド線のスタイルを示します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridGridTablesDescr">
+        <source>The collection of DataGridTableStyle objects that the DataGrid can render its data with.</source>
+        <target state="translated">DataGrid がそのデータを表示できる DataGridTableStyle オブジェクトのコレクションです。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridHeaderBackColorDescr">
+        <source>Indicates the background color of the column and row headers.</source>
+        <target state="translated">列と行のヘッダーの背景色を示します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridHeaderFontDescr">
+        <source>Indicates the font of the text in the column and row headers.</source>
+        <target state="translated">列と行のヘッダーのテキストのフォントを示します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridHeaderForeColorDescr">
+        <source>Indicates the color of the text in the column and row headers.</source>
+        <target state="translated">列と行のヘッダーのテキストの色を示します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridHorizScrollBarDescr">
+        <source>Returns the horizontal scroll bar used by the grid.</source>
+        <target state="translated">グリッドが使用する水平スクロール バーを返します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridLinkColorDescr">
+        <source>Indicates the color of the text that appears inside the child links.</source>
+        <target state="translated">子リンク内部に表示されるテキストの色を示します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridLinkHoverColorDescr">
+        <source>Indicates the color of the text that appears inside a child link when the mouse pointer moves over it.</source>
+        <target state="translated">マウス ポインターが移動したときに子リンク内に表示されるテキストの色を示します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridListManagerDescr">
+        <source>The CurrencyManager that the DataGrid uses to get data from the data source.</source>
+        <target state="translated">DataGrid がデータ ソースからデータを取得するために使用する CurrencyManager です。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridNavigationModeDescr">
+        <source>Indicates whether links to child tables are shown.</source>
+        <target state="translated">子テーブルへのリンクを表示するかどうかを示します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridNullText">
+        <source>Event raised when the value of the BackgroundColor property is changed on DataGrid.</source>
+        <target state="needs-review-translation">(なし)</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridParentRowsBackColorDescr">
+        <source>Indicates the background color of the parent rows.</source>
+        <target state="translated">親の行の背景色を示します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridParentRowsForeColorDescr">
+        <source>Indicates the color of the text in the parent rows.</source>
+        <target state="translated">親の行のテキストの色を示します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridParentRowsLabelStyleDescr">
+        <source>Indicates whether the parent rows show labels for the table and for the columns.</source>
+        <target state="translated">親の行がテーブルと列のラベルを表示するかどうかを示します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridParentRowsVisibleDescr">
+        <source>Indicates whether the parent rows area is visible.</source>
+        <target state="translated">親の行領域を表示するかどうかを示します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridPreferredColumnWidthDescr">
+        <source>Specifies what the default pixel widths of the grid columns are. The default value for PreferredColumnWidth is 75.</source>
+        <target state="translated">グリッド コラムの既定のピクセル幅を指定します。PreferredColumnWidth の既定値は 75 です。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridPreferredRowHeightDescr">
+        <source>Indicates the preferred height of the rows.</source>
+        <target state="translated">行の適切な高さを示します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridPushedIncorrectValueIntoColumn">
+        <source>Value {0} Do you want to correct this value?</source>
+        <target state="translated">値 {0} を修正しますか?</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridReadOnlyDescr">
+        <source>Indicates whether rows in the grid can be edited, added, or deleted.</source>
+        <target state="translated">グリッドの行を編集、追加、削除できるかどうかを示します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridRowHeadersVisibleDescr">
+        <source>Indicates whether the row headers are visible.</source>
+        <target state="translated">行ヘッダーが表示されているかどうかを示します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridRowHeaderWidthDescr">
+        <source>Indicates the width of the row headers.</source>
+        <target state="translated">行ヘッダーの幅を示します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridRowRowHeight">
+        <source>DataGridRow.Height cannot be negative.</source>
+        <target state="translated">DataGridRow.Height を負の値にすることはできません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridRowRowNumber">
+        <source>DataGridRow cannot have a negative row number.</source>
+        <target state="translated">DataGridRow に負の値の行番号を指定することはできません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridSelectedIndexDescr">
+        <source>Indicates the index of the current row.</source>
+        <target state="translated">現在の行のインデックスを示します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridSelectionBackColorDescr">
+        <source>Indicates the background color of any selected cells or rows.</source>
+        <target state="translated">選択されているセルまたは行の背景色を示します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridSelectionForeColorDescr">
+        <source>Indicates the color of the text in any selected cells or rows.</source>
+        <target state="translated">選択されているセルまたは行のテキストの色を示します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridSetListManager">
+        <source>ListManager can be set using the DataSource and DataMember properties.</source>
+        <target state="translated">ListManager は DataSource および DataMember プロパティを使用して設定することができます。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridSetSelectIndex">
+        <source>Position on a null ListManager cannot be set.</source>
+        <target state="translated">Null の ListManager で位置を設定できません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridSettingCurrentCellNotGood">
+        <source>CurrentCell cannot be set at this time. Moving your code to the Form.Load event should solve this problem.</source>
+        <target state="translated">CurrentCell は現時点では設定できません。この問題を解決するには、コードを Form.Load イベントに移動してください。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridTableCollectionMissingTable">
+        <source>DataGridTable instance does not exist in the collection.</source>
+        <target state="translated">DataGridTable インスタンスはコレクションに存在しません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridTableStyleCollectionAddedParentedTableStyle">
+        <source>DataGridTableStyle that is already parented to another DataGrid cannot be added.</source>
+        <target state="translated">既に別の DataGrid の親になっている DataGridTableStyle を追加することはできません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridTableStyleDuplicateMappingName">
+        <source>Data grid table styles collection already contains a table style with the same mapping name.</source>
+        <target state="translated">このデータ グリッドのテーブル スタイル コレクションには既に同じマップ名のテーブル スタイルが含まれています。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridTableStyleTransparentAlternatingBackColorNotAllowed">
+        <source>DataGridTableStyle does not support transparent AlternatingBackColor.</source>
+        <target state="translated">DataGridTableStyle は、透明色の AlternatingBackColor をサポートしません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridTableStyleTransparentBackColorNotAllowed">
+        <source>DataGridTableStyle does not support transparent BackColor.</source>
+        <target state="translated">DataGridTableStyle は、透明色の BackColor をサポートしません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridTableStyleTransparentHeaderBackColorNotAllowed">
+        <source>DataGridTableStyle does not support transparent HeaderBackColor.</source>
+        <target state="translated">DataGridTableStyle は、透明色の HeaderBackColor をサポートしません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridTableStyleTransparentSelectionBackColorNotAllowed">
+        <source>DataGridTableStyle does not support transparent SelectionBackColor.</source>
+        <target state="translated">DataGridTableStyle は、透明色の SelectionBackColor をサポートしません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridToolTipEmptyIcon">
+        <source>null rectangle for icon bounds when adding tool tip.</source>
+        <target state="translated">ツールヒントを追加する場合に作成されるアイコンの境界線の Null 四角形です。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridTransparentAlternatingBackColorNotAllowed">
+        <source>DataGrid control does not support transparent AlternatingBackColor.</source>
+        <target state="translated">DataGrid コントロールは、透明色の AlternatingBackColor をサポートしません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridTransparentBackColorNotAllowed">
+        <source>DataGrid control does not support transparent BackColor.</source>
+        <target state="translated">DataGrid コントロールは、透明色の BackColor をサポートしません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridTransparentCaptionBackColorNotAllowed">
+        <source>DataGrid control does not support transparent CaptionBackColor.</source>
+        <target state="translated">DataGrid コントロールは、透明色の CaptionBackColor をサポートしません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridTransparentHeaderBackColorNotAllowed">
+        <source>DataGrid control does not support transparent HeaderBackColor.</source>
+        <target state="translated">DataGrid コントロールは、透明色の HeaderBackColor をサポートしません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridTransparentParentRowsBackColorNotAllowed">
+        <source>DataGrid control does not support transparent ParentRowsBackColor.</source>
+        <target state="translated">DataGrid コントロールは、透明色の ParentRowsBackColor をサポートしません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridTransparentSelectionBackColorNotAllowed">
+        <source>DataGrid control does not support transparent SelectionBackColor.</source>
+        <target state="translated">DataGrid コントロールは、透明色の SelectionBackColor をサポートしません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridUnbound">
+        <source>Data cannot be read from a DataGrid which is not bound to a DataTable.</source>
+        <target state="translated">DataTable にバインドされていない DataGrid からデータを読み取ることができません。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridVertScrollBarDescr">
+        <source>Returns the vertical scroll bar used by the grid.</source>
+        <target state="translated">グリッドが使用する垂直スクロール バーを返します。</target>
         <note />
       </trans-unit>
     </body>

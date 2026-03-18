@@ -1,4 +1,4 @@
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
@@ -30,6 +30,17 @@ namespace Demo
         private CheckBox allowNavigationCheckBox;
         private Label classicOptionsHintLabel;
         private string lastHitTestSummary = "No grid hit test yet.";
+        private Button button7;
+        private Button button8;
+        private Button button9;
+        private Button button10;
+        private Button button11;
+        private CheckBox columnHeadersVisibleCheckBox;
+        private CheckBox allowSortingCheckBox;
+        private CheckBox gridLinesCheckBox;
+        private int _colorSchemeIndex = 0;
+        private int _borderStyleIndex = 0;
+        private int _rowLabelStyleIndex = 0;
 
         public DataGridForm()
         {
@@ -215,6 +226,108 @@ namespace Demo
             UpdateSelectionSummary();
         }
 
+        private void Button7_Click(object sender, EventArgs e)
+        {
+            _colorSchemeIndex = (_colorSchemeIndex + 1) % 3;
+            ApplyColorScheme(_colorSchemeIndex);
+            UpdateSelectionSummary();
+        }
+
+        private void ApplyColorScheme(int scheme)
+        {
+            switch (scheme)
+            {
+                case 1:
+                    myDataGrid.AlternatingBackColor = Color.PeachPuff;
+                    myDataGrid.HeaderBackColor = Color.Chocolate;
+                    myDataGrid.HeaderForeColor = Color.White;
+                    myDataGrid.GridLineColor = Color.Peru;
+                    break;
+                case 2:
+                    myDataGrid.AlternatingBackColor = Color.LightCyan;
+                    myDataGrid.HeaderBackColor = Color.SteelBlue;
+                    myDataGrid.HeaderForeColor = Color.White;
+                    myDataGrid.GridLineColor = Color.CadetBlue;
+                    break;
+                default:
+                    myDataGrid.ResetAlternatingBackColor();
+                    myDataGrid.ResetHeaderBackColor();
+                    myDataGrid.ResetHeaderForeColor();
+                    myDataGrid.ResetGridLineColor();
+                    break;
+            }
+        }
+
+        private void Button8_Click(object sender, EventArgs e)
+        {
+            myDataGrid.BorderStyle = _borderStyleIndex switch
+            {
+                0 => BorderStyle.FixedSingle,
+                1 => BorderStyle.None,
+                _ => BorderStyle.Fixed3D
+            };
+            _borderStyleIndex = (_borderStyleIndex + 1) % 3;
+            UpdateSelectionSummary();
+        }
+
+        private void Button9_Click(object sender, EventArgs e)
+        {
+            myDataGrid.CurrentCell = new DataGridCell(0, 0);
+            UpdateSelectionSummary();
+        }
+
+        private void Button10_Click(object sender, EventArgs e)
+        {
+            if (myDataSet is null)
+            {
+                return;
+            }
+
+            CurrencyManager cm = (CurrencyManager)BindingContext[myDataSet, "Customers"];
+
+            for (int i = 0; i < cm.Count; i++)
+            {
+                myDataGrid.Select(i);
+            }
+
+            UpdateSelectionSummary();
+        }
+
+        private void Button11_Click(object sender, EventArgs e)
+        {
+            myDataGrid.ParentRowsLabelStyle = _rowLabelStyleIndex switch
+            {
+                0 => DataGridParentRowsLabelStyle.TableName,
+                1 => DataGridParentRowsLabelStyle.ColumnName,
+                2 => DataGridParentRowsLabelStyle.None,
+                _ => DataGridParentRowsLabelStyle.Both
+            };
+            _rowLabelStyleIndex = (_rowLabelStyleIndex + 1) % 4;
+
+            UpdateButtonLabels();
+            UpdateSelectionSummary();
+        }
+
+        private void ColumnHeadersVisibleCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            myDataGrid.ColumnHeadersVisible = columnHeadersVisibleCheckBox.Checked;
+            UpdateSelectionSummary();
+        }
+
+        private void AllowSortingCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            myDataGrid.AllowSorting = allowSortingCheckBox.Checked;
+            UpdateSelectionSummary();
+        }
+
+        private void GridLinesCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            myDataGrid.GridLineStyle = gridLinesCheckBox.Checked
+                ? DataGridLineStyle.Solid
+                : DataGridLineStyle.None;
+            UpdateSelectionSummary();
+        }
+
         private void PopulateFeatureList()
         {
             featureListBox.Items.Clear();
@@ -228,6 +341,14 @@ namespace Demo
             featureListBox.Items.Add("Classic flat or 3D border rendering modes");
             featureListBox.Items.Add("Preferred column width switching for compact and wide views");
             featureListBox.Items.Add("Reset-to-first-row navigation for basic browsing flows");
+            featureListBox.Items.Add("Color scheme cycling: Default, Warm, and Cool palettes");
+            featureListBox.Items.Add("BorderStyle cycling: Fixed3D, FixedSingle, and None");
+            featureListBox.Items.Add("Programmatic CurrentCell navigation via DataGridCell");
+            featureListBox.Items.Add("Programmatic row selection using the Select API");
+            featureListBox.Items.Add("ParentRowsLabelStyle cycling for child table breadcrumbs");
+            featureListBox.Items.Add("Column header visibility control");
+            featureListBox.Items.Add("AllowSorting toggle for interactive column sorting");
+            featureListBox.Items.Add("GridLineStyle toggle between Solid and None");
         }
 
         private void UpdateFeatureToggleStates()
@@ -237,6 +358,27 @@ namespace Demo
             rowHeadersVisibleCheckBox.Checked = myDataGrid.RowHeadersVisible;
             readOnlyCheckBox.Checked = myDataGrid.ReadOnly;
             allowNavigationCheckBox.Checked = myDataGrid.AllowNavigation;
+            columnHeadersVisibleCheckBox.Checked = myDataGrid.ColumnHeadersVisible;
+            allowSortingCheckBox.Checked = myDataGrid.AllowSorting;
+            gridLinesCheckBox.Checked = myDataGrid.GridLineStyle == DataGridLineStyle.Solid;
+
+            UpdateButtonLabels();
+        }
+
+        private void UpdateButtonLabels()
+        {
+            const int CompactColumnWidth = 75;
+
+            button6.Text = myDataGrid.PreferredColumnWidth <= CompactColumnWidth
+                ? "Use Wide Columns"
+                : "Use Compact Columns";
+            button11.Text = myDataGrid.ParentRowsLabelStyle switch
+            {
+                DataGridParentRowsLabelStyle.TableName => "Labels: Table",
+                DataGridParentRowsLabelStyle.ColumnName => "Labels: Column",
+                DataGridParentRowsLabelStyle.None => "Labels: Hidden",
+                _ => "Labels: Both"
+            };
         }
 
         private void MakeDataSet()
@@ -322,8 +464,29 @@ namespace Demo
             string captionMode = myDataGrid.CaptionVisible ? "Caption on" : "Caption off";
             string relationMode = myDataGrid.AllowNavigation ? "Navigation on" : "Navigation off";
             string widthMode = myDataGrid.PreferredColumnWidth <= 75 ? "Compact columns" : "Wide columns";
+            string parentRowLabelMode = myDataGrid.ParentRowsLabelStyle switch
+            {
+                DataGridParentRowsLabelStyle.TableName => "Table labels",
+                DataGridParentRowsLabelStyle.ColumnName => "Column labels",
+                DataGridParentRowsLabelStyle.None => "Labels hidden",
+                _ => "Table + column labels"
+            };
 
-            selectionSummaryLabel.Text = $"Current customer: {customerName} | Active: {currentFlag} | Orders: {relatedOrders.Length} | Border mode: {borderMode} | {captionMode} | {relationMode} | {widthMode} | {lastHitTestSummary}";
+            string colorScheme = _colorSchemeIndex switch
+            {
+                1 => "Warm",
+                2 => "Cool",
+                _ => "Default"
+            };
+            string borderStyle = myDataGrid.BorderStyle switch
+            {
+                BorderStyle.FixedSingle => "Single",
+                BorderStyle.None => "None",
+                _ => "3D"
+            };
+
+            selectionSummaryLabel.Text = $"Current customer: {customerName} | Active: {currentFlag} | Orders: {relatedOrders.Length} | Border mode: {borderMode} | {captionMode} | {relationMode} | {widthMode} | {lastHitTestSummary}" +
+                $"\nColors: {colorScheme} | Border: {borderStyle} | Sorting: {(myDataGrid.AllowSorting ? "on" : "off")} | Col headers: {(myDataGrid.ColumnHeadersVisible ? "on" : "off")} | Parent labels: {parentRowLabelMode} (visible after drilling into Orders)";
         }
     }
 }

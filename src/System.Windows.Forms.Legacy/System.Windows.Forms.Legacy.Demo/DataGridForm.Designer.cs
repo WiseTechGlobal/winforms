@@ -12,6 +12,8 @@ namespace Demo
         private GroupBox classicFeaturesGroupBox;
         private Label classicFeaturesLabel;
         private GroupBox classicOptionsGroupBox;
+        private GroupBox advancedOptionsGroupBox;
+        private Label advancedOptionsHintLabel;
 
         /// <summary>
         ///  Clean up any resources being used.
@@ -44,36 +46,71 @@ namespace Demo
             readOnlyCheckBox = new System.Windows.Forms.CheckBox();
             allowNavigationCheckBox = new System.Windows.Forms.CheckBox();
             classicOptionsHintLabel = new System.Windows.Forms.Label();
+            button7 = new System.Windows.Forms.Button();
+            button8 = new System.Windows.Forms.Button();
+            button9 = new System.Windows.Forms.Button();
+            button10 = new System.Windows.Forms.Button();
+            button11 = new System.Windows.Forms.Button();
+            columnHeadersVisibleCheckBox = new System.Windows.Forms.CheckBox();
+            allowSortingCheckBox = new System.Windows.Forms.CheckBox();
+            gridLinesCheckBox = new System.Windows.Forms.CheckBox();
+            advancedOptionsGroupBox = new GroupBox();
+            advancedOptionsHintLabel = new System.Windows.Forms.Label();
 
-            button1.Location = new Point(24, 60);
+            button1.Location = new Point(24, 20);
             button1.Size = new Size(160, 30);
             button1.Text = "Change Appearance";
             button1.Click += new System.EventHandler(Button1_Click);
 
-            button2.Location = new Point(192, 60);
+            button2.Location = new Point(192, 20);
             button2.Size = new Size(160, 30);
             button2.Text = "Get Binding Manager";
             button2.Click += new System.EventHandler(Button2_Click);
 
-            button3.Location = new Point(360, 60);
+            button3.Location = new Point(360, 20);
             button3.Size = new Size(140, 30);
             button3.Text = "Use Flat Mode";
             button3.Click += new System.EventHandler(Button3_Click);
 
-            button4.Location = new Point(508, 60);
+            button4.Location = new Point(508, 20);
             button4.Size = new Size(116, 30);
             button4.Text = "Next Customer";
             button4.Click += new System.EventHandler(Button4_Click);
 
-            button5.Location = new Point(632, 60);
+            button5.Location = new Point(632, 20);
             button5.Size = new Size(116, 30);
             button5.Text = "First Customer";
             button5.Click += new System.EventHandler(Button5_Click);
 
-            button6.Location = new Point(756, 60);
+            button6.Location = new Point(756, 20);
             button6.Size = new Size(140, 30);
             button6.Text = "Use Wide Columns";
             button6.Click += new System.EventHandler(Button6_Click);
+
+            button7.Location = new Point(24, 58);
+            button7.Size = new Size(140, 30);
+            button7.Text = "Cycle Colors";
+            button7.Click += new System.EventHandler(Button7_Click);
+
+            button8.Location = new Point(172, 58);
+            button8.Size = new Size(130, 30);
+            button8.Text = "Cycle Border";
+            button8.Click += new System.EventHandler(Button8_Click);
+
+            button9.Location = new Point(310, 58);
+            button9.Size = new Size(130, 30);
+            button9.Text = "Jump to First Cell";
+            button9.Click += new System.EventHandler(Button9_Click);
+
+            button10.Location = new Point(448, 58);
+            button10.Size = new Size(130, 30);
+            button10.Text = "Select All Rows";
+            button10.Click += new System.EventHandler(Button10_Click);
+
+            button11.Location = new Point(586, 58);
+            button11.Size = new Size(142, 30);
+            button11.Text = "Cycle Row Labels";
+            button11.Click += new System.EventHandler(Button11_Click);
 
             myDataGrid.Location = new Point(24, 100);
             myDataGrid.Size = new Size(620, 440);
@@ -145,16 +182,49 @@ namespace Demo
             classicOptionsGroupBox.Controls.Add(allowNavigationCheckBox);
             classicOptionsGroupBox.Controls.Add(classicOptionsHintLabel);
 
+            columnHeadersVisibleCheckBox.Location = new Point(16, 28);
+            columnHeadersVisibleCheckBox.Size = new Size(160, 24);
+            columnHeadersVisibleCheckBox.Text = "Column Headers Visible";
+            columnHeadersVisibleCheckBox.CheckedChanged += new System.EventHandler(ColumnHeadersVisibleCheckBox_CheckedChanged);
+
+            allowSortingCheckBox.Location = new Point(16, 58);
+            allowSortingCheckBox.Size = new Size(160, 24);
+            allowSortingCheckBox.Text = "Allow Sorting";
+            allowSortingCheckBox.CheckedChanged += new System.EventHandler(AllowSortingCheckBox_CheckedChanged);
+
+            gridLinesCheckBox.Location = new Point(16, 88);
+            gridLinesCheckBox.Size = new Size(160, 24);
+            gridLinesCheckBox.Text = "Grid Lines";
+            gridLinesCheckBox.CheckedChanged += new System.EventHandler(GridLinesCheckBox_CheckedChanged);
+
+            advancedOptionsHintLabel.Location = new Point(16, 122);
+            advancedOptionsHintLabel.Size = new Size(288, 40);
+            advancedOptionsHintLabel.Text = "Toggle column headers, enable sorting, and switch grid line visibility to explore additional display options.";
+
+            advancedOptionsGroupBox.Location = new Point(668, 630);
+            advancedOptionsGroupBox.Size = new Size(320, 172);
+            advancedOptionsGroupBox.Text = "Try Advanced Options";
+            advancedOptionsGroupBox.Controls.Add(columnHeadersVisibleCheckBox);
+            advancedOptionsGroupBox.Controls.Add(allowSortingCheckBox);
+            advancedOptionsGroupBox.Controls.Add(gridLinesCheckBox);
+            advancedOptionsGroupBox.Controls.Add(advancedOptionsHintLabel);
+
             Controls.Add(button1);
             Controls.Add(button2);
             Controls.Add(button3);
             Controls.Add(button4);
             Controls.Add(button5);
             Controls.Add(button6);
+            Controls.Add(button7);
+            Controls.Add(button8);
+            Controls.Add(button9);
+            Controls.Add(button10);
+            Controls.Add(button11);
             Controls.Add(myDataGrid);
             Controls.Add(selectionSummaryLabel);
             Controls.Add(classicFeaturesGroupBox);
             Controls.Add(classicOptionsGroupBox);
+            Controls.Add(advancedOptionsGroupBox);
         }
 
         #region Windows Form Designer generated code
@@ -168,7 +238,7 @@ namespace Demo
             components = new System.ComponentModel.Container();
             SuspendLayout();
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(1024, 680);
+            ClientSize = new System.Drawing.Size(1024, 820);
             Text = "DataGrid Demo";
             ResumeLayout(false);
         }

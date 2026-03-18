@@ -1,29 +1,18 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
-using System.ComponentModel;
-
-namespace System.Windows.Forms;
-
-#nullable disable
-
-/// <summary>
-///  This type is provided for binary compatibility with .NET Framework and is not intended to be used directly from your code.
-/// </summary>
-[Obsolete(
-    Obsoletions.DataGridMessage,
-    error: false,
-    DiagnosticId = Obsoletions.UnsupportedControlsDiagnosticId,
-    UrlFormat = Obsoletions.SharedUrlFormat)]
-[EditorBrowsable(EditorBrowsableState.Never)]
-[Browsable(false)]
-public sealed class GridTablesFactory
+namespace System.Windows.Forms
 {
-    private GridTablesFactory() { }
-
-    public static DataGridTableStyle[] CreateGridTables(
-        DataGridTableStyle gridTable,
-        object dataSource,
-        string dataMember,
-        BindingContext bindingManager) => throw new PlatformNotSupportedException();
+    public static class GridTablesFactory
+    {
+        /// <summary>
+        ///  Takes a DataView and creates an intelligent mapping of DataView storage
+        ///  types into available DataColumn types.
+        /// </summary>
+        public static DataGridTableStyle[] CreateGridTables(DataGridTableStyle gridTable, object dataSource, string dataMember, BindingContext bindingManager)
+        {
+            return new DataGridTableStyle[] { gridTable };
+        }
+    }
 }

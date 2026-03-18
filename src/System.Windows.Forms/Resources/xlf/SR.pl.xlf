@@ -2262,6 +2262,71 @@
         <target state="translated">Element RemoveAt nie jest obsługiwany dla powiązań właściwości z właściwością</target>
         <note />
       </trans-unit>
+      <trans-unit id="DataGridNavigateEventDescr">
+        <source>Occurs when the user navigates to the child rows or when the user navigates back to the parent rows.</source>
+        <target state="translated">Występuje, gdy użytkownik nawiguje do wierszy podrzędnych lub gdy użytkownik nawiguje wstecz do wierszy nadrzędnych.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridNodeClickEventDescr">
+        <source>Occurs when the user clicks on the expansion glyph on the row header.</source>
+        <target state="translated">Występuje, gdy użytkownik kliknie ikonę rozwijania w nagłówku wiersza.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridOnBackgroundColorChangedDescr">
+        <source>Event raised when the value of the BackgroundColor property is changed on DataGrid.</source>
+        <target state="translated">Zdarzenie wywoływane, gdy wartość właściwości BackgroundColor w elemencie DataGrid zostanie zmieniona.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridOnBorderStyleChangedDescr">
+        <source>Event raised when the value of the BorderStyle property is changed on DataGrid.</source>
+        <target state="translated">Zdarzenie wywoływane, gdy wartość właściwości BorderStyle w elemencie DataGrid zostanie zmieniona.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridOnCaptionVisibleChangedDescr">
+        <source>Event raised when the value of the CaptionVisible property is changed on DataGrid.</source>
+        <target state="translated">Zdarzenie wywoływane, gdy wartość właściwości CaptionVisible w elemencie DataGrid zostanie zmieniona.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridOnCurrentCellChangedDescr">
+        <source>Event raised when the value of the CurrentCell property is changed on DataGrid.</source>
+        <target state="translated">Zdarzenie wywoływane, gdy wartość właściwości CurrentCell w elemencie DataGrid zostanie zmieniona.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridOnDataSourceChangedDescr">
+        <source>Event raised when the value of the DataSource property is changed on DataGrid.</source>
+        <target state="translated">Zdarzenie wywoływane, gdy wartość właściwości DataSource w elemencie DataGrid zostanie zmieniona.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridOnFlatModeChangedDescr">
+        <source>Event raised when the value of the FlatMode property is changed on DataGrid.</source>
+        <target state="translated">Zdarzenie wywoływane, gdy wartość właściwości FlatMode w elemencie DataGrid zostanie zmieniona.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridOnNavigationModeChangedDescr">
+        <source>Event raised when the value of the NavigationMode property is changed on DataGrid.</source>
+        <target state="translated">Zdarzenie wywoływane, gdy wartość właściwości NavigationMode w elemencie DataGrid zostanie zmieniona.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridOnParentRowsLabelStyleChangedDescr">
+        <source>Event raised when the value of the ParentRowsLabelStyle property is changed on DataGrid.</source>
+        <target state="translated">Zdarzenie wywoływane, gdy wartość właściwości ParentRowsLabelStyle w elemencie DataGrid zostanie zmieniona.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridOnParentRowsVisibleChangedDescr">
+        <source>Event raised when the value of the ParentRowsVisible property is changed on DataGrid.</source>
+        <target state="translated">Zdarzenie wywoływane, gdy wartość właściwości ParentRowsVisible w elemencie DataGrid zostanie zmieniona.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridOnReadOnlyChangedDescr">
+        <source>Event raised when the value of the ReadOnly property is changed on DataGrid.</source>
+        <target state="translated">Zdarzenie wywoływane, gdy wartość właściwości ReadOnly w elemencie DataGrid zostanie zmieniona.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridScrollEventDescr">
+        <source>Occurs when the user scrolls either the horizontal or vertical scroll bar.</source>
+        <target state="translated">Występuje, gdy użytkownik przewija poziomy lub pionowy pasek przewijania.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="DataGridViewAlternatingRowsDefaultCellStyleChangedDescr">
         <source>Occurs when the value of the AlternatingRowsDefaultCellStyle property changes.</source>
         <target state="translated">Występuje, gdy wartość właściwości AlternatingRowsDefaultCellStyle zostanie zmieniona.</target>
@@ -11662,6 +11727,396 @@ Stos śledzenia, w którym wystąpiła zabroniona operacja:
       <trans-unit id="valueChangedEventDescr">
         <source>Occurs when the value of the control changes.</source>
         <target state="translated">Występuje, gdy wartość formantu zostanie zmieniona.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridAllowSortingDescr">
+        <source>Indicates whether the grid can be re-sorted by clicking a column header.</source>
+        <target state="translated">Wskazuje, czy można ponownie posortować siatkę, klikając nagłówek kolumny.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridAlternatingBackColorDescr">
+        <source>Indicates the background color of alternating rows for a ledger appearance.</source>
+        <target state="translated">Określa kolor tła przemiennych wierszy nadających wygląd księgi rachunkowej.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridBackButtonClickDescr">
+        <source>Occurs when the user clicks the Back button on a child table to return to the parent table.</source>
+        <target state="translated">Występuje, gdy użytkownik kliknie przycisk Wstecz w tabeli podrzędnej w celu powrotu do tabeli nadrzędnej.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridBackgroundColorDescr">
+        <source>Indicates the color of the DataGrid background.</source>
+        <target state="translated">Określa kolor tła elementu DataGrid.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridBeginInit">
+        <source>BeginInit() has already been called without an EndInit().</source>
+        <target state="translated">Wywołano już element BeginInit() bez elementu EndInit().</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridBoolColumnAllowNullValue">
+        <source>Specifies whether the DataGridBoolColumn allows null values.</source>
+        <target state="translated">Określa, czy element DataGridBoolColumn dopuszcza wartości zerowe.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridBorderStyleDescr">
+        <source>Indicates the border style for the DataGrid.</source>
+        <target state="translated">Określa styl obramowania elementu DataGrid.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridCaptionBackButtonToolTip">
+        <source>Navigates back to the parent rows.</source>
+        <target state="translated">Nawiguje wstecz do wierszy nadrzędnych.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridCaptionBackColorDescr">
+        <source>Indicates the background color of the top caption.</source>
+        <target state="translated">Określa kolor tła górnego podpisu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridCaptionDetailsButtonToolTip">
+        <source>Shows/Hides the parent rows for the current set of child rows.</source>
+        <target state="translated">Pokazuje/ukrywa wiersze nadrzędne danego zestawu wierszy podrzędnych.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridCaptionFontDescr">
+        <source>Indicates the font of the top caption.</source>
+        <target state="translated">Określa czcionkę górnego podpisu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridCaptionForeColorDescr">
+        <source>Indicates the color of text that appears in the top caption.</source>
+        <target state="translated">Określa kolor tekstu pojawiającego się w górnym podpisie.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridCaptionTextDescr">
+        <source>Indicates the text displayed in the top caption.</source>
+        <target state="translated">Określa tekst wyświetlany w górnym podpisie.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridCaptionVisibleDescr">
+        <source>Indicates whether the top caption is visible.</source>
+        <target state="translated">Wskazuje, czy górny obszar jest widoczny.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridColumnCollectionMissing">
+        <source>DataGridColumn instance does not exist in the collection.</source>
+        <target state="translated">Wystąpienie DataGridColumn nie istnieje w tej kolekcji.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridColumnHeadersVisibleDescr">
+        <source>Indicates whether the column headers are visible.</source>
+        <target state="translated">Wskazuje, czy nagłówki kolumn są widoczne.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridColumnListManagerPosition">
+        <source>Position of ListManager must be equal to 'rowNum'.</source>
+        <target state="translated">Pozycja elementu ListManager musi być równa wartości rowNum.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridColumnNoPropertyDescriptor">
+        <source>PropertyDescriptor has not been set on this DataGridColumn.</source>
+        <target state="translated">Dla tego elementu DataGridColumn nie skonfigurowano elementu PropertyDescriptor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridColumnStyleDuplicateMappingName">
+        <source>Data grid column styles collection already contains a column style with the same mapping name.</source>
+        <target state="translated">Kolekcja styli kolumn siatki danych już zawiera styl kolumny o tej samej nazwie mapowania.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridColumnUnbound">
+        <source>DataGridColumnStyle of '{0}' cannot be used because it is not associated with a Property or Column in the DataSource.</source>
+        <target state="translated">Nie można użyć elementu DataGridColumnStyle '{0}', ponieważ nie jest on skojarzony z żadną właściwością ani kolumną elementu DataSource.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridColumnWidth">
+        <source>ColumnWidth must be greater than or equal to 0.</source>
+        <target state="translated">Wartość ColumnWidth musi być większa lub równa 0.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridCurrentCellDescr">
+        <source>The currently selected cell in the DataGrid.</source>
+        <target state="translated">Aktualnie zaznaczona komórka w elemencie DataGrid.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridDataMemberDescr">
+        <source>Indicates a sub-list of the DataSource to show in the DataGrid.</source>
+        <target state="translated">Określa listę podrzędną elementu DataSource, która ma być wyświetlana w elemencie DataGrid.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridDataSourceDescr">
+        <source>Indicates the source of data for the DataGrid.</source>
+        <target state="translated">Określa źródło danych dla elementu DataGrid.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridDefaultColumnCollectionChanged">
+        <source>User cannot change the contents of the default GridColumnStylesCollection.</source>
+        <target state="translated">Użytkownik nie może zmienić zawartości domyślnej kolekcji GridColumnStylesCollection.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridDefaultTableSet">
+        <source>Value of this property cannot be changed on the default DataGridTableStyle.</source>
+        <target state="translated">Wartości tej właściwości nie można zmienić w domyślnym parametrze DataGridTableStyle.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridDownButtonClickDescr">
+        <source>Occurs when the user clicks the "show/hide parent rows" icon.</source>
+        <target state="needs-review-translation">Występuje po kliknięciu przez użytkownika ikony „show/hide parent rows”. </target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridEmptyColor">
+        <source>Value '{0}' cannot be set to an empty value.</source>
+        <target state="translated">Wartości „{0}” nie można ustawić tak, aby była pusta.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridErrorMessageBoxCaption">
+        <source>Committing the row to the original data store has caused an error.</source>
+        <target state="translated">Błąd podczas przekazywania wiersza do oryginalnego magazynu danych.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridExceptionInPaint">
+        <source>DataGrid received an exception at design time. Reset the DataSource and DataMember property on the grid.</source>
+        <target state="translated">Element DataGrid odebrał wyjątek w czasie projektowania. Zresetuj właściwości DataSource i DataMember na siatce.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridFirstVisibleColumnDescr">
+        <source>Indicates the index of the column that is first shown.</source>
+        <target state="translated">Określa indeks kolumny wyświetlanej jako pierwsza.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridFlatModeDescr">
+        <source>Indicates whether the grid has a flat appearance.</source>
+        <target state="translated">Wskazuje, czy siatka ma wygląd płaski.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridGridLineColorDescr">
+        <source>Indicates the color of the grid lines.</source>
+        <target state="translated">Określa kolor linii siatki.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridGridLineStyleDescr">
+        <source>Indicates the style of the grid lines.</source>
+        <target state="translated">Określa styl linii siatki.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridGridTablesDescr">
+        <source>The collection of DataGridTableStyle objects that the DataGrid can render its data with.</source>
+        <target state="translated">Kolekcja obiektów DataGridTableStyle, za pomocą których element DataGrid może renderować swoje dane.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridHeaderBackColorDescr">
+        <source>Indicates the background color of the column and row headers.</source>
+        <target state="translated">Określa kolor tła nagłówków kolumn i wierszy.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridHeaderFontDescr">
+        <source>Indicates the font of the text in the column and row headers.</source>
+        <target state="translated">Określa czcionkę w nagłówkach kolumn i wierszy.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridHeaderForeColorDescr">
+        <source>Indicates the color of the text in the column and row headers.</source>
+        <target state="translated">Określa kolor tekstu w nagłówkach kolumn i wierszy.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridHorizScrollBarDescr">
+        <source>Returns the horizontal scroll bar used by the grid.</source>
+        <target state="translated">Przywraca poziomy pasek przewijania używany przez siatkę.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridLinkColorDescr">
+        <source>Indicates the color of the text that appears inside the child links.</source>
+        <target state="translated">Określa kolor tekstu pojawiającego się w łączach podrzędnych.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridLinkHoverColorDescr">
+        <source>Indicates the color of the text that appears inside a child link when the mouse pointer moves over it.</source>
+        <target state="translated">Wskazuje kolor tekstu wyświetlanego w łączu podrzędnym, gdy przesuwany jest nad nim wskaźnik myszy.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridListManagerDescr">
+        <source>The CurrencyManager that the DataGrid uses to get data from the data source.</source>
+        <target state="translated">Element CurrencyManager używany przez element DataGrid do pobierania danych ze źródła danych.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridNavigationModeDescr">
+        <source>Indicates whether links to child tables are shown.</source>
+        <target state="translated">Wskazuje, czy łącza są widoczne dla tabel podrzędnych.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridNullText">
+        <source>Event raised when the value of the BackgroundColor property is changed on DataGrid.</source>
+        <target state="needs-review-translation">(null)</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridParentRowsBackColorDescr">
+        <source>Indicates the background color of the parent rows.</source>
+        <target state="translated">Wskazuje kolor tła wierszy nadrzędnych.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridParentRowsForeColorDescr">
+        <source>Indicates the color of the text in the parent rows.</source>
+        <target state="translated">Wskazuje kolor tekstu w wierszach nadrzędnych.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridParentRowsLabelStyleDescr">
+        <source>Indicates whether the parent rows show labels for the table and for the columns.</source>
+        <target state="translated">Wskazuje, czy wiersze nadrzędne pokazują etykiety dla tabeli i dla kolumn.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridParentRowsVisibleDescr">
+        <source>Indicates whether the parent rows area is visible.</source>
+        <target state="translated">Wskazuje, czy obszar wierszy nadrzędnych jest widoczny.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridPreferredColumnWidthDescr">
+        <source>Specifies what the default pixel widths of the grid columns are. The default value for PreferredColumnWidth is 75.</source>
+        <target state="translated">Określa domyślną szerokość kolumn siatki w pikselach. Wartością domyślną elementu PreferredColumnWidth jest 75.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridPreferredRowHeightDescr">
+        <source>Indicates the preferred height of the rows.</source>
+        <target state="translated">Wskazuje preferowaną wysokość wierszy.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridPushedIncorrectValueIntoColumn">
+        <source>Value {0} Do you want to correct this value?</source>
+        <target state="translated">Wartość {0} Czy chcesz poprawić tę wartość?</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridReadOnlyDescr">
+        <source>Indicates whether rows in the grid can be edited, added, or deleted.</source>
+        <target state="translated">Wskazuje, czy wiersze siatki mogą być edytowane, dodawane lub usuwane.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridRowHeadersVisibleDescr">
+        <source>Indicates whether the row headers are visible.</source>
+        <target state="translated">Wskazuje, czy nagłówki wierszy są widoczne.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridRowHeaderWidthDescr">
+        <source>Indicates the width of the row headers.</source>
+        <target state="translated">Określa szerokość nagłówków wierszy.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridRowRowHeight">
+        <source>DataGridRow.Height cannot be negative.</source>
+        <target state="translated">Wartość elementu DataGridRow.Height nie może być ujemna.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridRowRowNumber">
+        <source>DataGridRow cannot have a negative row number.</source>
+        <target state="translated">Element DataGridRow nie może mieć ujemnej liczby wierszy.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridSelectedIndexDescr">
+        <source>Indicates the index of the current row.</source>
+        <target state="translated">Wskazuje indeks bieżącego wiersza.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridSelectionBackColorDescr">
+        <source>Indicates the background color of any selected cells or rows.</source>
+        <target state="translated">Określa kolor tła zaznaczonych komórek lub wierszy.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridSelectionForeColorDescr">
+        <source>Indicates the color of the text in any selected cells or rows.</source>
+        <target state="translated">Określa kolor tekstu w zaznaczonych komórkach lub wierszach.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridSetListManager">
+        <source>ListManager can be set using the DataSource and DataMember properties.</source>
+        <target state="translated">Element ListManager można skonfigurować przy użyciu właściwości DataSource i DataMember.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridSetSelectIndex">
+        <source>Position on a null ListManager cannot be set.</source>
+        <target state="translated">Nie można ustawić pozycji w zerowym obiekcie ListManager.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridSettingCurrentCellNotGood">
+        <source>CurrentCell cannot be set at this time. Moving your code to the Form.Load event should solve this problem.</source>
+        <target state="translated">Nie można teraz skonfigurować elementu CurrentCell. Aby rozwiązać ten problem, przenieś kod do elementu Form.Load.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridTableCollectionMissingTable">
+        <source>DataGridTable instance does not exist in the collection.</source>
+        <target state="translated">Wystąpienie elementu DataGridTable nie istnieje w kolekcji.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridTableStyleCollectionAddedParentedTableStyle">
+        <source>DataGridTableStyle that is already parented to another DataGrid cannot be added.</source>
+        <target state="translated">Nie można dodać elementu DataGridTableStyle, który już jest nadrzędny w stosunku do innego obiektu DataGrid.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridTableStyleDuplicateMappingName">
+        <source>Data grid table styles collection already contains a table style with the same mapping name.</source>
+        <target state="translated">Kolekcja stylów tabeli siatki danych zawiera już styl tabeli o tej samej nazwie mapowania.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridTableStyleTransparentAlternatingBackColorNotAllowed">
+        <source>DataGridTableStyle does not support transparent AlternatingBackColor.</source>
+        <target state="translated">Element DataGridTableStyle nie obsługuje przezroczystego elementu AlternatingBackColor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridTableStyleTransparentBackColorNotAllowed">
+        <source>DataGridTableStyle does not support transparent BackColor.</source>
+        <target state="translated">Element DataGridTableStyle nie obsługuje przezroczystego elementu BackColor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridTableStyleTransparentHeaderBackColorNotAllowed">
+        <source>DataGridTableStyle does not support transparent HeaderBackColor.</source>
+        <target state="translated">Element DataGridTableStyle nie obsługuje przezroczystego elementu HeaderBackColor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridTableStyleTransparentSelectionBackColorNotAllowed">
+        <source>DataGridTableStyle does not support transparent SelectionBackColor.</source>
+        <target state="translated">Element DataGridTableStyle nie obsługuje przezroczystego elementu SelectionBackColor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridToolTipEmptyIcon">
+        <source>null rectangle for icon bounds when adding tool tip.</source>
+        <target state="translated">zerowy prostokąt obramowania ikony podczas dodawania etykiety.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridTransparentAlternatingBackColorNotAllowed">
+        <source>DataGrid control does not support transparent AlternatingBackColor.</source>
+        <target state="translated">Formant DataGrid nie obsługuje przezroczystego elementu AlternatingBackColor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridTransparentBackColorNotAllowed">
+        <source>DataGrid control does not support transparent BackColor.</source>
+        <target state="translated">Formant DataGrid nie obsługuje przezroczystego elementu BackColor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridTransparentCaptionBackColorNotAllowed">
+        <source>DataGrid control does not support transparent CaptionBackColor.</source>
+        <target state="translated">Formant DataGrid nie obsługuje przezroczystego elementu CaptionBackColor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridTransparentHeaderBackColorNotAllowed">
+        <source>DataGrid control does not support transparent HeaderBackColor.</source>
+        <target state="translated">Formant DataGrid nie obsługuje przezroczystego elementu HeaderBackColor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridTransparentParentRowsBackColorNotAllowed">
+        <source>DataGrid control does not support transparent ParentRowsBackColor.</source>
+        <target state="translated">Formant DataGrid nie obsługuje przezroczystego elementu ParentRowsBackColor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridTransparentSelectionBackColorNotAllowed">
+        <source>DataGrid control does not support transparent SelectionBackColor.</source>
+        <target state="translated">Formant DataGrid nie obsługuje przezroczystego elementu SelectionBackColor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridUnbound">
+        <source>Data cannot be read from a DataGrid which is not bound to a DataTable.</source>
+        <target state="translated">Nie można odczytać danych z elementu DataGrid nie związanego z elementem DataTable.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridVertScrollBarDescr">
+        <source>Returns the vertical scroll bar used by the grid.</source>
+        <target state="translated">Zwraca pionowy pasek przewijania używany w siatce.</target>
         <note />
       </trans-unit>
     </body>
