@@ -12,6 +12,7 @@ partial class MainForm
     private Label _titleLabel = null!;
     private Label _descriptionLabel = null!;
     private Button _menuStackButton = null!;
+    private Button _dataGridButton = null!;
 
     protected override void Dispose(bool disposing)
     {
@@ -29,6 +30,7 @@ partial class MainForm
         _titleLabel = new Label();
         _descriptionLabel = new Label();
         _menuStackButton = new Button();
+        _dataGridButton = new Button();
         SuspendLayout();
         // 
         // _titleLabel
@@ -45,9 +47,9 @@ partial class MainForm
         // 
         _descriptionLabel.Location = new Point(20, 58);
         _descriptionLabel.Name = "_descriptionLabel";
-        _descriptionLabel.Size = new Size(440, 36);
+        _descriptionLabel.Size = new Size(440, 54);
         _descriptionLabel.TabIndex = 1;
-        _descriptionLabel.Text = "Open the menu demo to exercise MainMenu, MenuItem, ContextMenu, owner-draw menus, and TreeNode.ContextMenu.";
+        _descriptionLabel.Text = "Menu Stack is the active migration focus on this branch. The DataGrid surface remains a separate, higher-risk recovery effort, so this launcher keeps both demos available for targeted validation.";
         _descriptionLabel.TextAlign = ContentAlignment.MiddleCenter;
         // 
         // _menuStackButton
@@ -59,11 +61,21 @@ partial class MainForm
         _menuStackButton.Text = "Menu Stack";
         _menuStackButton.Click += MenuStackButton_Click;
         // 
+        // _dataGridButton
+        // 
+        _dataGridButton.Location = new Point(140, 178);
+        _dataGridButton.Name = "_dataGridButton";
+        _dataGridButton.Size = new Size(200, 60);
+        _dataGridButton.TabIndex = 3;
+        _dataGridButton.Text = "DataGrid";
+        _dataGridButton.Click += DataGridButton_Click;
+        // 
         // MainForm
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(480, 205);
+        ClientSize = new Size(480, 275);
+        Controls.Add(_dataGridButton);
         Controls.Add(_menuStackButton);
         Controls.Add(_descriptionLabel);
         Controls.Add(_titleLabel);
