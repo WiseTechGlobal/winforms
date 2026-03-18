@@ -53,7 +53,7 @@ jobs:
       run: dotnet restore ${{ env.PACKAGE_PROJECT }}
 
     - name: Pack
-      run: dotnet pack ${{ env.PACKAGE_PROJECT }} --configuration Release -o artifacts/packages --no-restore /p:PackageVersion=${{ steps.version.outputs.value }} /p:GeneratePackageOnBuild=false
+      run: dotnet pack ${{ env.PACKAGE_PROJECT }} --configuration Release -m:1 -o artifacts/packages --no-restore /p:PackageVersion=${{ steps.version.outputs.value }} /p:GeneratePackageOnBuild=false
 
     - name: List produced packages
       shell: pwsh
