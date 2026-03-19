@@ -6,7 +6,7 @@ This document tracks the legacy `DataGrid` family and its supporting types.
 
 ## Current Status
 
-The `DataGrid` family **has been ported** (uncommitted, in-progress). All major types have been replaced with full working implementations ported from the `release/3.0` upstream runtime. The old stub layer — every file that previously threw `PlatformNotSupportedException` — has been replaced.
+The `DataGrid` family **has been ported**. All major types have been replaced with full working implementations ported from the `release/3.0` upstream runtime. The old stub layer — every file that previously threw `PlatformNotSupportedException` — has been replaced.
 
 ### Files ported / changed
 
