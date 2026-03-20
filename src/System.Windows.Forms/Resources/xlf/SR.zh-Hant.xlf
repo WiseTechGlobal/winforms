@@ -10389,6 +10389,121 @@ Stack trace where the illegal operation occurred was:
         <target state="translated">當超過指定的間隔時間時發生。</target>
         <note />
       </trans-unit>
+      <trans-unit id="ToolBarAppearanceDescr">
+        <source>Controls the appearance of the ToolBar control, using values from the ToolBarAppearance enumeration.</source>
+        <target state="translated">控制 ToolBar 控制項的外觀，使用來自 ToolBarAppearance 列舉型別的值。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarAutoSizeDescr">
+        <source>Controls whether the ToolBar will automatically size itself based on Button size.</source>
+        <target state="translated">控制工具列 (ToolBar) 是否會依照按鈕大小自動調整其大小。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarBorderStyleDescr">
+        <source>Controls what type of border the ToolBar control will have.</source>
+        <target state="translated">控制 ToolBar 控制項擁有的框線類型。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonClickDescr">
+        <source>Occurs whenever a button in the ToolBar is clicked by the user.</source>
+        <target state="translated">當使用者按下 ToolBar 中的按鈕時發生。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonDropDownDescr">
+        <source>Occurs whenever a button with the DropDownButton style is pressed.</source>
+        <target state="translated">當按住有 DropDownButton 樣式的按鈕時發生。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonEnabledDescr">
+        <source>Controls whether this button responds to user input.</source>
+        <target state="translated">控制此按鈕是否回應使用者的輸入。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonImageIndexDescr">
+        <source>Identifies the image displayed on the button.</source>
+        <target state="translated">識別按鈕上顯示的影像。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonMenuDescr">
+        <source>The shortcut menu that will appear if this button's style is set to DropDownButton.</source>
+        <target state="translated">將此按鈕的樣式設為 DropDownButton 時會顯示的捷徑功能表。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonPartialPushDescr">
+        <source>Controls whether the button should be displayed as partially pushed or not, but only if the style of the button is ToggleButton.</source>
+        <target state="translated">控制按鈕是否應顯示為部分壓下，但僅適用於按鈕的樣式為 ToggleButton。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonPushedDescr">
+        <source>Indicates whether the button is pushed or not. This is most commonly seen for buttons with the TOGGLEBUTTON style.</source>
+        <target state="translated">表示是否按下按鈕。這些按鈕最常見的樣式為 TOGGLEBUTTON。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonsDescr">
+        <source>The collection of ToolBarButtons that make up this ToolBar.</source>
+        <target state="translated">組成這個 ToolBar 的 ToolBarButtons 集合物件。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonSizeDescr">
+        <source>The size of the buttons on the control if the button contents do not require a larger size.</source>
+        <target state="translated">按鈕內容不需要更大的大小時，控制項上按鈕的大小。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonStyleDescr">
+        <source>Indicates what style of ToolBarButton this will be.</source>
+        <target state="translated">表示將會是何種 ToolBarButton 樣式。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonTextDescr">
+        <source>The caption to be displayed for this button.</source>
+        <target state="translated">此按鈕所顯示的標題。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonToolTipTextDescr">
+        <source>The ToolTip text to be displayed for this button.</source>
+        <target state="translated">此按鈕所顯示的 ToolTip 文字。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonVisibleDescr">
+        <source>Indicates whether this button should be visible.</source>
+        <target state="translated">表示此按鈕是否可見。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarDividerDescr">
+        <source>Controls whether the ToolBar will display a 3-D line at the top of its client area.</source>
+        <target state="translated">控制工具列是否要在其工作區的頂端顯示立體線段。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarDropDownArrowsDescr">
+        <source>Controls whether the ToolBar will display an arrow on the side of drop-down buttons.</source>
+        <target state="translated">控制工具列是否要在下拉按鈕旁顯示箭頭。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarImageListDescr">
+        <source>The ImageList from which this ToolBar will get all of the button images.</source>
+        <target state="translated">這個 ToolBar 用來取得所有按鈕影像的 ImageList。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarImageSizeDescr">
+        <source>The size of the images within the ToolBar's ImageList.</source>
+        <target state="translated">工具列的 ImageList 中的影像大小。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarShowToolTipsDescr">
+        <source>Indicates whether ToolTips will be shown for each of the buttons, if available.</source>
+        <target state="translated">表示是否顯示每個按鈕的工具提示 (如果有)。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarTextAlignDescr">
+        <source>Controls how the text is positioned relative to the Image in each button.</source>
+        <target state="translated">控制每個按鈕中與影像相關的文字位置。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarWrappableDescr">
+        <source>Indicates if more than one row of buttons is allowed.</source>
+        <target state="translated">表示是否允許一列以上的按鈕。</target>
+        <note />
+      </trans-unit>
       <trans-unit id="TooManyResumeUpdateMenuHandles">
         <source>Too many calls to ResumeUpdateMenuHandles.</source>
         <target state="translated">太多的 ResumeUpdateMenuHandles 呼叫。</target>

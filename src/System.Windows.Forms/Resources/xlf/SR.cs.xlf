@@ -9999,6 +9999,121 @@ Trasování zásobníku, kde došlo k neplatné operaci:
         <target state="translated">Vyvolá se vždy, když uplyne zadaný časový interval.</target>
         <note />
       </trans-unit>
+      <trans-unit id="ToolBarAppearanceDescr">
+        <source>Controls the appearance of the ToolBar control, using values from the ToolBarAppearance enumeration.</source>
+        <target state="translated">Určuje vzhled ovládacího prvku ToolBar a využívá hodnoty výčtu ToolBarAppearance.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarAutoSizeDescr">
+        <source>Controls whether the ToolBar will automatically size itself based on Button size.</source>
+        <target state="translated">Určuje, zda ovládací prvek ToolBar automaticky změní velikost na základě velikosti prvku Button.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarBorderStyleDescr">
+        <source>Controls what type of border the ToolBar control will have.</source>
+        <target state="translated">Určuje typ ohraničení ovládacího prvku ToolBar.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonClickDescr">
+        <source>Occurs whenever a button in the ToolBar is clicked by the user.</source>
+        <target state="translated">Vyvolá se vždy, když uživatel klikne na tlačítko na panelu nástrojů (ToolBar).</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonDropDownDescr">
+        <source>Occurs whenever a button with the DropDownButton style is pressed.</source>
+        <target state="translated">Vyvolá se při každém stisknutí tlačítka se stylem DropDownButton.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonEnabledDescr">
+        <source>Controls whether this button responds to user input.</source>
+        <target state="translated">Určuje, zda toto tlačítko bude reagovat na vstup uživatele.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonImageIndexDescr">
+        <source>Identifies the image displayed on the button.</source>
+        <target state="translated">Určuje obrázek zobrazovaný na tlačítku.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonMenuDescr">
+        <source>The shortcut menu that will appear if this button's style is set to DropDownButton.</source>
+        <target state="translated">Místní nabídka, která bude zobrazena, pokud bude styl tohoto tlačítka nastaven na hodnotu DropDownButton.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonPartialPushDescr">
+        <source>Controls whether the button should be displayed as partially pushed or not, but only if the style of the button is ToggleButton.</source>
+        <target state="translated">Určuje, zda by tlačítko mělo být zobrazeno jako částečně stisknuté, ale pouze v případě, že je styl tlačítka nastaven na hodnotu ToggleButton.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonPushedDescr">
+        <source>Indicates whether the button is pushed or not. This is most commonly seen for buttons with the TOGGLEBUTTON style.</source>
+        <target state="translated">Určuje, zda tlačítko je nebo není stisknuto. Nejčastěji se používá pro tlačítka se stylem TOGGLEBUTTON.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonsDescr">
+        <source>The collection of ToolBarButtons that make up this ToolBar.</source>
+        <target state="translated">Kolekce objektů ToolBarButtons, které vytvářejí tento ovládací prvek ToolBar.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonSizeDescr">
+        <source>The size of the buttons on the control if the button contents do not require a larger size.</source>
+        <target state="translated">Velikost tlačítek v ovládacím prvku, pokud obsah tlačítek nevyžaduje větší velikost</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonStyleDescr">
+        <source>Indicates what style of ToolBarButton this will be.</source>
+        <target state="translated">Určuje styl ovládacího prvku ToolBarButton.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonTextDescr">
+        <source>The caption to be displayed for this button.</source>
+        <target state="translated">Titulek, který bude zobrazen pro toto tlačítko.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonToolTipTextDescr">
+        <source>The ToolTip text to be displayed for this button.</source>
+        <target state="translated">Text popisu tlačítka, který bude zobrazen pro toto tlačítko.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonVisibleDescr">
+        <source>Indicates whether this button should be visible.</source>
+        <target state="translated">Určuje, zda toto tlačítko bude viditelné.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarDividerDescr">
+        <source>Controls whether the ToolBar will display a 3-D line at the top of its client area.</source>
+        <target state="translated">Určuje, zda ovládací prvek ToolBar zobrazí v horní části klientské oblasti prostorovou čáru.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarDropDownArrowsDescr">
+        <source>Controls whether the ToolBar will display an arrow on the side of drop-down buttons.</source>
+        <target state="translated">Určuje, zda ovládací prvek ToolBar zobrazí vedle rozevíracích tlačítek šipku.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarImageListDescr">
+        <source>The ImageList from which this ToolBar will get all of the button images.</source>
+        <target state="translated">Seznam ImageList, z něhož tento ovládací prvek ToolBar získá všechny obrázky tlačítek.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarImageSizeDescr">
+        <source>The size of the images within the ToolBar's ImageList.</source>
+        <target state="translated">Velikost obrázků v rámci seznamu ImageList tohoto ovládacího prvku ToolBar.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarShowToolTipsDescr">
+        <source>Indicates whether ToolTips will be shown for each of the buttons, if available.</source>
+        <target state="translated">Určuje, zda budou pro jednotlivá tlačítka zobrazeny popisy tlačítek, jsou-li k dispozici.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarTextAlignDescr">
+        <source>Controls how the text is positioned relative to the Image in each button.</source>
+        <target state="translated">Určuje pozici textu vzhledem k obrázku v jednotlivých tlačítkách.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarWrappableDescr">
+        <source>Indicates if more than one row of buttons is allowed.</source>
+        <target state="translated">Určuje, zda je povolen více než jeden řádek tlačítek.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="TooManyResumeUpdateMenuHandles">
         <source>Too many calls to ResumeUpdateMenuHandles.</source>
         <target state="translated">Příliš mnoho volání ResumeUpdateMenuHandles.</target>

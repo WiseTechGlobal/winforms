@@ -9999,6 +9999,121 @@ Stack trace where the illegal operation occurred was:
         <target state="translated">指定された間隔の時間が経過したときに発生します。</target>
         <note />
       </trans-unit>
+      <trans-unit id="ToolBarAppearanceDescr">
+        <source>Controls the appearance of the ToolBar control, using values from the ToolBarAppearance enumeration.</source>
+        <target state="translated">ToolBarAppearance 列挙 からの値を用いて、ToolBar コントロールの外観を制御します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarAutoSizeDescr">
+        <source>Controls whether the ToolBar will automatically size itself based on Button size.</source>
+        <target state="translated">ボタンのサイズに基づいて、ツール バーのサイズを自動的に変更するかどうかを制御します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarBorderStyleDescr">
+        <source>Controls what type of border the ToolBar control will have.</source>
+        <target state="translated">ツール バー コントロールの境界線の種類を設定します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonClickDescr">
+        <source>Occurs whenever a button in the ToolBar is clicked by the user.</source>
+        <target state="translated">ユーザーがツール バーのボタンをクリックしたときに発生します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonDropDownDescr">
+        <source>Occurs whenever a button with the DropDownButton style is pressed.</source>
+        <target state="translated">DropDownButton スタイルのボタンがクリックされたときに発生します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonEnabledDescr">
+        <source>Controls whether this button responds to user input.</source>
+        <target state="translated">このボタンがユーザーの入力に応答するかどうかを制御します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonImageIndexDescr">
+        <source>Identifies the image displayed on the button.</source>
+        <target state="translated">ボタンに表示されたイメージを識別します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonMenuDescr">
+        <source>The shortcut menu that will appear if this button's style is set to DropDownButton.</source>
+        <target state="translated">このボタンのスタイルが DropDownButton に設定されている場合に表示されるショートカット メニューです。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonPartialPushDescr">
+        <source>Controls whether the button should be displayed as partially pushed or not, but only if the style of the button is ToggleButton.</source>
+        <target state="translated">ボタンの種類が ToggleButton の場合のみ、ボタンが部分的にクリックされたとして表示するかどうかを制御します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonPushedDescr">
+        <source>Indicates whether the button is pushed or not. This is most commonly seen for buttons with the TOGGLEBUTTON style.</source>
+        <target state="translated">ボタンをクリックしたかどうかを示します。TOGGLEBUTTON スタイルのボタンによく使われます。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonsDescr">
+        <source>The collection of ToolBarButtons that make up this ToolBar.</source>
+        <target state="translated">このツール バーを構成する ToolBarButtons のコレクションです。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonSizeDescr">
+        <source>The size of the buttons on the control if the button contents do not require a larger size.</source>
+        <target state="translated">ボタンの内容により大きなサイズが必要でない場合の、コントロール上のボタンのサイズです。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonStyleDescr">
+        <source>Indicates what style of ToolBarButton this will be.</source>
+        <target state="translated">ToolBarButton のスタイルを示します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonTextDescr">
+        <source>The caption to be displayed for this button.</source>
+        <target state="translated">このボタンに表示されるキャプションです。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonToolTipTextDescr">
+        <source>The ToolTip text to be displayed for this button.</source>
+        <target state="translated">このボタンに表示されるツールヒント テキストです。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonVisibleDescr">
+        <source>Indicates whether this button should be visible.</source>
+        <target state="translated">このボタンを表示するかどうかを示します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarDividerDescr">
+        <source>Controls whether the ToolBar will display a 3-D line at the top of its client area.</source>
+        <target state="translated">ツール バーがこのクライアント領域の上に 3D の線を表示するかどうかを設定します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarDropDownArrowsDescr">
+        <source>Controls whether the ToolBar will display an arrow on the side of drop-down buttons.</source>
+        <target state="translated">ツール バーがドロップダウン ボタンの横に矢印を表示するかどうかを制御します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarImageListDescr">
+        <source>The ImageList from which this ToolBar will get all of the button images.</source>
+        <target state="translated">ツール バーがすべてボタンのイメージを取得する ImageList です。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarImageSizeDescr">
+        <source>The size of the images within the ToolBar's ImageList.</source>
+        <target state="translated">ツール バーの ImageList 内にある、イメージのサイズです。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarShowToolTipsDescr">
+        <source>Indicates whether ToolTips will be shown for each of the buttons, if available.</source>
+        <target state="translated">ツールヒントがある場合に、それぞれのボタンでそれを表示するかどうかを示します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarTextAlignDescr">
+        <source>Controls how the text is positioned relative to the Image in each button.</source>
+        <target state="translated">各ボタンのイメージに対して、テキストがどのように表示されるか制御します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarWrappableDescr">
+        <source>Indicates if more than one row of buttons is allowed.</source>
+        <target state="translated">複数行のボタンを許可するかどうかを示します。</target>
+        <note />
+      </trans-unit>
       <trans-unit id="TooManyResumeUpdateMenuHandles">
         <source>Too many calls to ResumeUpdateMenuHandles.</source>
         <target state="translated">ResumeUpdateMenuHandles への呼び出しが多すぎます。</target>

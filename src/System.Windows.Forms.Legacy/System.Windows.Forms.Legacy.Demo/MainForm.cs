@@ -20,4 +20,10 @@ public partial class MainForm : Form
         DataGridForm form = new();
         form.Show(this);
     }
+
+    private void ToolBarButton_Click(object? sender, EventArgs e)
+    {
+        ToolBarForm form = new();
+        form.Show(this);
+    }
 }

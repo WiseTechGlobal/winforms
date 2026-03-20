@@ -9999,6 +9999,121 @@ O rastreamento de pilha em que a operação ilegal ocorreu foi:
         <target state="translated">Ocorre sempre que o tempo de intervalo especificado tiver decorrido.</target>
         <note />
       </trans-unit>
+      <trans-unit id="ToolBarAppearanceDescr">
+        <source>Controls the appearance of the ToolBar control, using values from the ToolBarAppearance enumeration.</source>
+        <target state="translated">Controla a aparência do controle ToolBar, usando os valores de enumeração ToolBarAppearance.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarAutoSizeDescr">
+        <source>Controls whether the ToolBar will automatically size itself based on Button size.</source>
+        <target state="translated">Controla se ToolBar será dimensionado automaticamente com base no tamanho do botão.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarBorderStyleDescr">
+        <source>Controls what type of border the ToolBar control will have.</source>
+        <target state="translated">Controla o tipo de borda que o controle ToolBar terá.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonClickDescr">
+        <source>Occurs whenever a button in the ToolBar is clicked by the user.</source>
+        <target state="translated">Ocorre sempre que um botão em ToolBar é clicado pelo usuário.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonDropDownDescr">
+        <source>Occurs whenever a button with the DropDownButton style is pressed.</source>
+        <target state="translated">Ocorre sempre que um botão com o estilo DropDownButton é pressionado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonEnabledDescr">
+        <source>Controls whether this button responds to user input.</source>
+        <target state="translated">Controla se este botão responde à entrada do usuário.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonImageIndexDescr">
+        <source>Identifies the image displayed on the button.</source>
+        <target state="translated">Identifica a imagem exibida no botão.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonMenuDescr">
+        <source>The shortcut menu that will appear if this button's style is set to DropDownButton.</source>
+        <target state="translated">O menu de atalho a ser exibido se o estilo deste botão for definido como DropDownButton.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonPartialPushDescr">
+        <source>Controls whether the button should be displayed as partially pushed or not, but only if the style of the button is ToggleButton.</source>
+        <target state="translated">Controla se o botão deve ser exibido como parcialmente pressionado ou não, mas somente se o estilo do botão for ToggleButton.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonPushedDescr">
+        <source>Indicates whether the button is pushed or not. This is most commonly seen for buttons with the TOGGLEBUTTON style.</source>
+        <target state="translated">Indica se o botão está pressionado ou não. Isso é mais comum para botões com estilo TOGGLEBUTTON.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonsDescr">
+        <source>The collection of ToolBarButtons that make up this ToolBar.</source>
+        <target state="translated">A coleção de ToolBarButtons que compõe este ToolBar.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonSizeDescr">
+        <source>The size of the buttons on the control if the button contents do not require a larger size.</source>
+        <target state="translated">O tamanho dos botões no controle se o conteúdo do botão não exigir um tamanho maior.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonStyleDescr">
+        <source>Indicates what style of ToolBarButton this will be.</source>
+        <target state="translated">Indica o estilo de ToolBarButton a ser usado.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonTextDescr">
+        <source>The caption to be displayed for this button.</source>
+        <target state="translated">A legenda a ser exibida para este botão.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonToolTipTextDescr">
+        <source>The ToolTip text to be displayed for this button.</source>
+        <target state="translated">O texto de dica de ferramenta a ser exibido para este botão.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonVisibleDescr">
+        <source>Indicates whether this button should be visible.</source>
+        <target state="translated">Indica se este botão deve estar visível.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarDividerDescr">
+        <source>Controls whether the ToolBar will display a 3-D line at the top of its client area.</source>
+        <target state="translated">Controla se ToolBar exibirá uma linha em 3D na parte superior de sua área cliente.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarDropDownArrowsDescr">
+        <source>Controls whether the ToolBar will display an arrow on the side of drop-down buttons.</source>
+        <target state="translated">Controla se ToolBar exibirá uma seta na lateral dos botões suspensos.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarImageListDescr">
+        <source>The ImageList from which this ToolBar will get all of the button images.</source>
+        <target state="translated">ImageList do qual este ToolBar obterá todas as imagens de botões.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarImageSizeDescr">
+        <source>The size of the images within the ToolBar's ImageList.</source>
+        <target state="translated">O tamanho das imagens dentro de ImageList de ToolBar.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarShowToolTipsDescr">
+        <source>Indicates whether ToolTips will be shown for each of the buttons, if available.</source>
+        <target state="translated">Indica se dicas de ferramenta serão mostradas para cada um dos botões, se disponíveis.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarTextAlignDescr">
+        <source>Controls how the text is positioned relative to the Image in each button.</source>
+        <target state="translated">Controla como o texto é posicionado em relação à imagem em cada botão.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarWrappableDescr">
+        <source>Indicates if more than one row of buttons is allowed.</source>
+        <target state="translated">Indica se é permitida mais de uma linha de botões.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="TooManyResumeUpdateMenuHandles">
         <source>Too many calls to ResumeUpdateMenuHandles.</source>
         <target state="translated">Número excessivo de chamadas para ResumeUpdateMenuHandles.</target>

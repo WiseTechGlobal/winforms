@@ -1,22 +1,23 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
-using System.ComponentModel;
-
-namespace System.Windows.Forms;
-
-/// <summary>
-///  This type is provided for binary compatibility with .NET Framework and is not intended to be used directly from your code.
-/// </summary>
-[Obsolete(
-    Obsoletions.ToolBarMessage,
-    error: false,
-    DiagnosticId = Obsoletions.UnsupportedControlsDiagnosticId,
-    UrlFormat = Obsoletions.SharedUrlFormat)]
-[EditorBrowsable(EditorBrowsableState.Never)]
-[Browsable(false)]
-public enum ToolBarAppearance
+namespace System.Windows.Forms
 {
-    Normal = 0,
-    Flat = 1,
+    /// <summary>
+    ///  Specifies the type of toolbar to display.
+    /// </summary>
+    public enum ToolBarAppearance
+    {
+        /// <summary>
+        ///  The toolbar and buttons appear as standard three dimensional controls.
+        /// </summary>
+        Normal = 0,
+
+        /// <summary>
+        ///  The toolbar and buttons appear flat, but the buttons change to three
+        ///  dimensional as the mouse pointer moves over them.
+        /// </summary>
+        Flat = 1,
+    }
 }
