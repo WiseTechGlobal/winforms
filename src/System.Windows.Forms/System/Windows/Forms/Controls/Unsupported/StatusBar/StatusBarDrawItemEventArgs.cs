@@ -1,38 +1,31 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
-using System.ComponentModel;
 using System.Drawing;
 
 namespace System.Windows.Forms;
 
-#nullable disable
-
 /// <summary>
-///  This type is provided for binary compatibility with .NET Framework and is not intended to be used directly from your code.
+///  Provides data for the <see cref="StatusBar.OnDrawItem"/>
+///  event.
 /// </summary>
-[Obsolete(
-    Obsoletions.StatusBarMessage,
-    error: false,
-    DiagnosticId = Obsoletions.UnsupportedControlsDiagnosticId,
-    UrlFormat = Obsoletions.SharedUrlFormat)]
-[EditorBrowsable(EditorBrowsableState.Never)]
-[Browsable(false)]
 public class StatusBarDrawItemEventArgs : DrawItemEventArgs
 {
-    public StatusBarDrawItemEventArgs(
-        Graphics g,
-        Font font,
-        Rectangle r,
-        int itemId,
-        DrawItemState itemState,
-        StatusBarPanel panel) : base(
-            graphics: g,
-            font: font,
-            rect: r,
-            index: itemId,
-            state: itemState) => throw new PlatformNotSupportedException();
+    /// <summary>
+    ///  Initializes a new instance of the <see cref="StatusBarDrawItemEventArgs"/>
+    ///  class.
+    /// </summary>
+    public StatusBarDrawItemEventArgs(Graphics g, Font font, Rectangle r, int itemId, DrawItemState itemState, StatusBarPanel panel)
+        : base(g, font, r, itemId, itemState)
+    {
+        Panel = panel;
+    }
 
+    /// <summary>
+    ///  Initializes a new instance of the <see cref="StatusBarDrawItemEventArgs"/>
+    ///  class using the Forecolor and Backcolor.
+    /// </summary>
     public StatusBarDrawItemEventArgs(
         Graphics g,
         Font font,
@@ -41,14 +34,14 @@ public class StatusBarDrawItemEventArgs : DrawItemEventArgs
         DrawItemState itemState,
         StatusBarPanel panel,
         Color foreColor,
-        Color backColor) : base(
-            graphics: g,
-            font: font,
-            rect: r,
-            index: itemId,
-            state: itemState,
-            foreColor: foreColor,
-            backColor: backColor) => throw new PlatformNotSupportedException();
+        Color backColor)
+        : base(g, font, r, itemId, itemState, foreColor, backColor)
+    {
+        Panel = panel;
+    }
 
-    public StatusBarPanel Panel => throw null;
+    /// <summary>
+    ///  Specifies the <see cref="StatusBarPanel"/> to draw.
+    /// </summary>
+    public StatusBarPanel Panel { get; }
 }

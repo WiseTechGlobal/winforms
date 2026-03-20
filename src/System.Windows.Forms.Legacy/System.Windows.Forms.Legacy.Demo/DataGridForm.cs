@@ -8,7 +8,7 @@ using System.Windows.Forms;
 namespace Demo
 {
     /// <summary>
-    ///  Phase 4 DataGrid demo surface.
+    ///  DataGrid demo surface.
     /// </summary>
     public partial class DataGridForm : Form
     {

@@ -140,7 +140,7 @@ partial class MenuStackForm
         MinimumSize = new Size(826, 611);
         Name = "MenuStackForm";
         StartPosition = FormStartPosition.CenterParent;
-        Text = "Phase 1: Menu Stack";
+        Text = "Menu Stack";
         _demoSurface.ResumeLayout(false);
         ResumeLayout(false);
     }

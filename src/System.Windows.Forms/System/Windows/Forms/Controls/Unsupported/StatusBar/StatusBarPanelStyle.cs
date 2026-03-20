@@ -1,22 +1,21 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-
-using System.ComponentModel;
+// See the LICENSE file in the project root for more information.
 
 namespace System.Windows.Forms;
 
 /// <summary>
-///  This type is provided for binary compatibility with .NET Framework and is not intended to be used directly from your code.
+///  Specifies whether a panel on a status bar is owner drawn or system drawn.
 /// </summary>
-[Obsolete(
-    Obsoletions.StatusBarMessage,
-    error: false,
-    DiagnosticId = Obsoletions.UnsupportedControlsDiagnosticId,
-    UrlFormat = Obsoletions.SharedUrlFormat)]
-[EditorBrowsable(EditorBrowsableState.Never)]
-[Browsable(false)]
 public enum StatusBarPanelStyle
 {
+    /// <summary>
+    ///  The panel is drawn by the system.
+    /// </summary>
     Text = 1,
+
+    /// <summary>
+    ///  The panel is drawn by the owner.
+    /// </summary>
     OwnerDraw = 2,
 }
