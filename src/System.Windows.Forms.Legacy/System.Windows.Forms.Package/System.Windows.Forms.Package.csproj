@@ -1,0 +1,69 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>WTG.Windows.Forms.Package</AssemblyName>
+    <Deterministic>true</Deterministic>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <IsPackable>true</IsPackable>
+    <PackageId>WTG.Windows.Forms</PackageId>
+    <WtgPackageVersionPrefix>0.1.0</WtgPackageVersionPrefix>
+    <PackageVersion Condition="'$(PackageVersion)' == ''">$(WtgPackageVersionPrefix)-dev</PackageVersion>
+    <PackageDescription>WiseTech Global forked version of System.Windows.Forms that includes controls that were deprecated in .NET Core 3.1 and .NET 5, like DataGrid, Menu, ToolBar and StatusBar.</PackageDescription>
+    <Authors>WiseTech Global</Authors>
+    <Copyright>© WiseTech Global Limited. All rights reserved.</Copyright>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Accessibility\src\Accessibility.ilproj" ReferenceOutputAssembly="false" PrivateAssets="all">
+      <SetTargetFramework>TargetFramework=$(TargetFramework)</SetTargetFramework>
+    </ProjectReference>
+    <ProjectReference Include="..\..\System.Private.Windows.Core\src\System.Private.Windows.Core.csproj" ReferenceOutputAssembly="false" PrivateAssets="all">
+      <SetTargetFramework>TargetFramework=$(TargetFramework)</SetTargetFramework>
+    </ProjectReference>
+    <ProjectReference Include="..\..\System.Private.Windows.GdiPlus\System.Private.Windows.GdiPlus.csproj" ReferenceOutputAssembly="false" PrivateAssets="all">
+      <SetTargetFramework>TargetFramework=$(TargetFramework)</SetTargetFramework>
+    </ProjectReference>
+    <ProjectReference Include="..\..\System.Windows.Forms\System.Windows.Forms.csproj" ReferenceOutputAssembly="false" PrivateAssets="all">
+      <SetTargetFramework>TargetFramework=$(TargetFramework)</SetTargetFramework>
+    </ProjectReference>
+    <ProjectReference Include="..\..\System.Windows.Forms.Primitives\src\System.Windows.Forms.Primitives.csproj" ReferenceOutputAssembly="false" PrivateAssets="all">
+      <SetTargetFramework>TargetFramework=$(TargetFramework)</SetTargetFramework>
+    </ProjectReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Keep these dependencies on a public stable version for downstream consumers that do not restore from dnceng feeds. -->
+    <PackageReference Include="Microsoft.Win32.SystemEvents" VersionOverride="10.0.3" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" VersionOverride="10.0.3" />
+    <PackageReference Include="System.Drawing.Common" VersionOverride="10.0.3" />
+    <PackageReference Include="System.Formats.Nrbf" VersionOverride="10.0.3" />
+    <PackageReference Include="System.Resources.Extensions" VersionOverride="10.0.3" />
+    <PackageReference Include="System.Windows.Extensions" VersionOverride="10.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Primary assemblies — TfmSpecificPackageFile produces typed lib/{tfm} entries in the NuGet item model. -->
+    <TfmSpecificPackageFile Include="$(ArtifactsBinDir)Accessibility\$(Configuration)\$(TargetFramework)\Accessibility.dll"
+                            PackagePath="lib\$(TargetFramework)\" />
+    <TfmSpecificPackageFile Include="$(ArtifactsBinDir)System.Private.Windows.Core\$(Configuration)\$(TargetFramework)\System.Private.Windows.Core.dll"
+                            PackagePath="lib\$(TargetFramework)\" />
+    <TfmSpecificPackageFile Include="$(ArtifactsBinDir)System.Private.Windows.GdiPlus\$(Configuration)\$(TargetFramework)\System.Private.Windows.GdiPlus.dll"
+                            PackagePath="lib\$(TargetFramework)\" />
+    <TfmSpecificPackageFile Include="$(ArtifactsBinDir)System.Windows.Forms\$(Configuration)\$(TargetFramework)\System.Windows.Forms.dll"
+                            PackagePath="lib\$(TargetFramework)\" />
+    <TfmSpecificPackageFile Include="$(ArtifactsBinDir)System.Windows.Forms.Primitives\$(Configuration)\$(TargetFramework)\System.Windows.Forms.Primitives.dll"
+                            PackagePath="lib\$(TargetFramework)\" />
+    <!-- Satellite resource assemblies — PackagePath intentionally omits %(RecursiveDir): the SDK pack task appends NuGetRecursiveDir automatically, placing each file under lib/{tfm}/{culture}/. -->
+    <TfmSpecificPackageFile Include="$(ArtifactsBinDir)System.Windows.Forms\$(Configuration)\$(TargetFramework)\**\System.Windows.Forms.resources.dll"
+                            PackagePath="lib\$(TargetFramework)\" />
+    <TfmSpecificPackageFile Include="$(ArtifactsBinDir)System.Windows.Forms.Primitives\$(Configuration)\$(TargetFramework)\**\System.Windows.Forms.Primitives.resources.dll"
+                            PackagePath="lib\$(TargetFramework)\" />
+  </ItemGroup>
+
+</Project>

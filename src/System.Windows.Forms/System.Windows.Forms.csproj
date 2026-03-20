@@ -20,29 +20,9 @@
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
     <UsePublicApiAnalyzers>true</UsePublicApiAnalyzers>
     <StrongNameKeyId>ECMA</StrongNameKeyId>
-  
-    <!--
-      Microsoft use Arcade to handle the building of WinForms (and other things .net).
-      See: https://github.com/dotnet/arcade/blob/main/Documentation/Overview.md
-
-      Arcade puts everything in the Artifacts folder of this repo.
-      DAT needs all output to be in the Bin folder of the repo, so we need to override Arcade
-
-      The RepoRoot variable was discovered by opening Developer Command Prompt for VS 2022 and running:
-        msbuild src\System.Windows.Forms\src\WTG.System.Windows.Forms.csproj -preprocess:out.xml
-    -->
-    <OutputPath>$([System.IO.Path]::GetFullPath('$(RepoRoot)Bin\$(OutDirName)\'))</OutputPath>
-    <IsPackable>true</IsPackable>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageId>WTG.Windows.Forms</PackageId>
-    <PackageDescription>WiseTech Global forked version of System.Windows.Forms that includes controls that were deprecated in .NET Core 3.1 and .NET 5, like DataGrid, Menu, ToolBar and StatusBar.</PackageDescription>
-    <Authors>WiseTech Global</Authors>
-    <Copyright>© WiseTech Global Limited. All rights reserved.</Copyright>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="README.md" Pack="true" PackagePath="\" />
     <None Remove="Resources\System\Windows\Forms\XPThemes.manifest" />
   </ItemGroup>
 
@@ -51,46 +31,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Accessibility\src\Accessibility.ilproj">
-      <Pack>true</Pack>
-      <PrivateAssets>all</PrivateAssets>
-    </ProjectReference>
-    <ProjectReference Include="..\System.Drawing.Common\src\System.Drawing.Common.csproj">
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <SetTargetFramework>TargetFramework=$(TargetFramework)</SetTargetFramework>
-      <PrivateAssets>all</PrivateAssets>
-    </ProjectReference>
-    <ProjectReference Include="..\System.Private.Windows.GdiPlus\System.Private.Windows.GdiPlus.csproj">
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <SetTargetFramework>TargetFramework=$(TargetFramework)</SetTargetFramework>
-      <PrivateAssets>all</PrivateAssets>
-    </ProjectReference>
-    <ProjectReference Include="..\System.Private.Windows.Core\src\System.Private.Windows.Core.csproj">
-      <Pack>true</Pack>
-      <PrivateAssets>all</PrivateAssets>
-    </ProjectReference>
-    <ProjectReference Include="..\System.Windows.Forms.Primitives\src\System.Windows.Forms.Primitives.csproj">
-      <Pack>true</Pack>
-      <PrivateAssets>all</PrivateAssets>
-    </ProjectReference>
+    <ProjectReference Include="..\Accessibility\src\Accessibility.ilproj" />
+    <ProjectReference Include="..\System.Private.Windows.Core\src\System.Private.Windows.Core.csproj" />
+    <ProjectReference Include="..\System.Windows.Forms.Primitives\src\System.Windows.Forms.Primitives.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <!-- Keep these dependencies on a public stable version for downstream consumers that do not restore from dnceng feeds. -->
-    <PackageReference Include="Microsoft.Win32.SystemEvents" VersionOverride="10.0.3" />
-    <PackageReference Include="System.Configuration.ConfigurationManager" VersionOverride="10.0.3" />
-    <PackageReference Include="System.Formats.Nrbf" VersionOverride="10.0.3" />
-    <PackageReference Include="System.Resources.Extensions" VersionOverride="10.0.3" />
-    <PackageReference Include="System.Windows.Extensions" VersionOverride="10.0.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="$(ArtifactsBinDir)System.Drawing.Common\$(Configuration)\$(TargetFramework)\System.Drawing.Common.dll"
-          Pack="true"
-          PackagePath="lib\$(TargetFramework)\" />
-    <None Include="$(ArtifactsBinDir)System.Private.Windows.GdiPlus\$(Configuration)\$(TargetFramework)\System.Private.Windows.GdiPlus.dll"
-          Pack="true"
-          PackagePath="lib\$(TargetFramework)\" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" />
+    <PackageReference Include="System.Resources.Extensions" />
+    <PackageReference Include="System.Windows.Extensions" />
   </ItemGroup>
 
   <ItemGroup>

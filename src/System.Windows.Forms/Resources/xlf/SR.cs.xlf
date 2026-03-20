@@ -2262,6 +2262,71 @@
         <target state="translated">Funkce RemoveAt není pro vazby mezi vlastnostmi podporována.</target>
         <note />
       </trans-unit>
+      <trans-unit id="DataGridNavigateEventDescr">
+        <source>Occurs when the user navigates to the child rows or when the user navigates back to the parent rows.</source>
+        <target state="translated">Vyvolá se v případě, že uživatel přejde k podřízeným řádkům nebo pokud uživatel přejde zpět k nadřazeným řádkům.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridNodeClickEventDescr">
+        <source>Occurs when the user clicks on the expansion glyph on the row header.</source>
+        <target state="translated">Vyvolá se v případě, že uživatel klikne na piktogram rozbalení v záhlaví řádku.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridOnBackgroundColorChangedDescr">
+        <source>Event raised when the value of the BackgroundColor property is changed on DataGrid.</source>
+        <target state="translated">Událost aktivovaná při změně hodnoty vlastnosti BackgroundColor ovládacího prvku DataGrid</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridOnBorderStyleChangedDescr">
+        <source>Event raised when the value of the BorderStyle property is changed on DataGrid.</source>
+        <target state="translated">Událost aktivovaná při změně hodnoty vlastnosti BorderStyle ovládacího prvku DataGrid</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridOnCaptionVisibleChangedDescr">
+        <source>Event raised when the value of the CaptionVisible property is changed on DataGrid.</source>
+        <target state="translated">Událost aktivovaná při změně hodnoty vlastnosti CaptionVisible ovládacího prvku DataGrid</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridOnCurrentCellChangedDescr">
+        <source>Event raised when the value of the CurrentCell property is changed on DataGrid.</source>
+        <target state="translated">Událost aktivovaná při změně hodnoty vlastnosti CurrentCell ovládacího prvku DataGrid</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridOnDataSourceChangedDescr">
+        <source>Event raised when the value of the DataSource property is changed on DataGrid.</source>
+        <target state="translated">Událost aktivovaná při změně hodnoty vlastnosti DataSource ovládacího prvku DataGrid</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridOnFlatModeChangedDescr">
+        <source>Event raised when the value of the FlatMode property is changed on DataGrid.</source>
+        <target state="translated">Událost aktivovaná při změně hodnoty vlastnosti FlatMode ovládacího prvku DataGrid</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridOnNavigationModeChangedDescr">
+        <source>Event raised when the value of the NavigationMode property is changed on DataGrid.</source>
+        <target state="translated">Událost aktivovaná při změně hodnoty vlastnosti NavigationMode ovládacího prvku DataGrid</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridOnParentRowsLabelStyleChangedDescr">
+        <source>Event raised when the value of the ParentRowsLabelStyle property is changed on DataGrid.</source>
+        <target state="translated">Událost aktivovaná při změně hodnoty vlastnosti ParentRowsLabelStyle ovládacího prvku DataGrid</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridOnParentRowsVisibleChangedDescr">
+        <source>Event raised when the value of the ParentRowsVisible property is changed on DataGrid.</source>
+        <target state="translated">Událost aktivovaná při změně hodnoty vlastnosti ParentRowsVisible ovládacího prvku DataGrid</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridOnReadOnlyChangedDescr">
+        <source>Event raised when the value of the ReadOnly property is changed on DataGrid.</source>
+        <target state="translated">Událost aktivovaná při změně hodnoty vlastnosti ReadOnly ovládacího prvku DataGrid</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridScrollEventDescr">
+        <source>Occurs when the user scrolls either the horizontal or vertical scroll bar.</source>
+        <target state="translated">Vyvolá se v případě, že uživatel posune svislým nebo vodorovným posuvníkem</target>
+        <note />
+      </trans-unit>
       <trans-unit id="DataGridViewAlternatingRowsDefaultCellStyleChangedDescr">
         <source>Occurs when the value of the AlternatingRowsDefaultCellStyle property changes.</source>
         <target state="translated">Vyvolá se při změně hodnoty vlastnosti AlternatingRowsDefaultCellStyle.</target>
@@ -11662,6 +11727,396 @@ Trasování zásobníku, kde došlo k neplatné operaci:
       <trans-unit id="valueChangedEventDescr">
         <source>Occurs when the value of the control changes.</source>
         <target state="translated">Vyvolá se vždy, když se změní hodnota ovládacího prvku.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridAllowSortingDescr">
+        <source>Indicates whether the grid can be re-sorted by clicking a column header.</source>
+        <target state="translated">Určuje, zda lze mřížku znovu seřadit kliknutím na záhlaví sloupce.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridAlternatingBackColorDescr">
+        <source>Indicates the background color of alternating rows for a ledger appearance.</source>
+        <target state="translated">Určuje barvu pozadí střídavých řádků pro vzhled účetní knihy.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridBackButtonClickDescr">
+        <source>Occurs when the user clicks the Back button on a child table to return to the parent table.</source>
+        <target state="translated">Vyvolá se v případě, že uživatel klikne na tlačítko Zpět v podřízené tabulce, aby se vrátil do nadřazené tabulky.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridBackgroundColorDescr">
+        <source>Indicates the color of the DataGrid background.</source>
+        <target state="translated">Určuje barvu pozadí ovládacího prvku DataGrid.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridBeginInit">
+        <source>BeginInit() has already been called without an EndInit().</source>
+        <target state="translated">Funkce BeginInit() již byla volána bez funkce EndInit().</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridBoolColumnAllowNullValue">
+        <source>Specifies whether the DataGridBoolColumn allows null values.</source>
+        <target state="translated">Určuje, zda funkce DataGridBoolColumn umožňuje použití hodnot NULL.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridBorderStyleDescr">
+        <source>Indicates the border style for the DataGrid.</source>
+        <target state="translated">Určuje styl ohraničení ovládacího prvku DataGrid.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridCaptionBackButtonToolTip">
+        <source>Navigates back to the parent rows.</source>
+        <target state="translated">Přejde zpět na nadřazené řádky.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridCaptionBackColorDescr">
+        <source>Indicates the background color of the top caption.</source>
+        <target state="translated">Určuje barvu pozadí titulku nejvyšší úrovně.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridCaptionDetailsButtonToolTip">
+        <source>Shows/Hides the parent rows for the current set of child rows.</source>
+        <target state="translated">Zobrazí nebo skryje nadřazené řádky pro aktuální sadu podřízených řádků.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridCaptionFontDescr">
+        <source>Indicates the font of the top caption.</source>
+        <target state="translated">Určuje písmo titulku nejvyšší úrovně.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridCaptionForeColorDescr">
+        <source>Indicates the color of text that appears in the top caption.</source>
+        <target state="translated">Určuje barvu textu, který je zobrazen v titulku nejvyšší úrovně.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridCaptionTextDescr">
+        <source>Indicates the text displayed in the top caption.</source>
+        <target state="translated">Určuje text zobrazený v titulku nejvyšší úrovně.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridCaptionVisibleDescr">
+        <source>Indicates whether the top caption is visible.</source>
+        <target state="translated">Určuje, zda je titulek nejvyšší úrovně viditelný.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridColumnCollectionMissing">
+        <source>DataGridColumn instance does not exist in the collection.</source>
+        <target state="translated">Instance DataGridColumn v kolekci neexistuje.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridColumnHeadersVisibleDescr">
+        <source>Indicates whether the column headers are visible.</source>
+        <target state="translated">Určuje, zda jsou záhlaví sloupců viditelná.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridColumnListManagerPosition">
+        <source>Position of ListManager must be equal to 'rowNum'.</source>
+        <target state="translated">Pozice správce ListManager musí být rovna hodnotě rowNum.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridColumnNoPropertyDescriptor">
+        <source>PropertyDescriptor has not been set on this DataGridColumn.</source>
+        <target state="translated">V tomto objektu DataGridColumn nebyl nastaven popisovač PropertyDescriptor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridColumnStyleDuplicateMappingName">
+        <source>Data grid column styles collection already contains a column style with the same mapping name.</source>
+        <target state="translated">Kolekce stylů sloupců datové mřížky již obsahuje styl sloupce se stejným názvem mapování.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridColumnUnbound">
+        <source>DataGridColumnStyle of '{0}' cannot be used because it is not associated with a Property or Column in the DataSource.</source>
+        <target state="translated">Styl DataGridColumnStyle {0} nelze použít, protože není přidružen k objektu Property nebo Column v objektu DataSource.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridColumnWidth">
+        <source>ColumnWidth must be greater than or equal to 0.</source>
+        <target state="translated">Hodnota ColumnWidth musí být větší nebo rovna 0.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridCurrentCellDescr">
+        <source>The currently selected cell in the DataGrid.</source>
+        <target state="translated">Aktuálně vybraná buňka v objektu DataGrid.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridDataMemberDescr">
+        <source>Indicates a sub-list of the DataSource to show in the DataGrid.</source>
+        <target state="translated">Určuje podseznam objektu DataSource, který bude zobrazen v objektu DataGrid.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridDataSourceDescr">
+        <source>Indicates the source of data for the DataGrid.</source>
+        <target state="translated">Určuje zdroj dat pro objekt DataGrid.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridDefaultColumnCollectionChanged">
+        <source>User cannot change the contents of the default GridColumnStylesCollection.</source>
+        <target state="translated">Uživatel nemůže změnit obsah výchozí kolekce GridColumnStylesCollection.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridDefaultTableSet">
+        <source>Value of this property cannot be changed on the default DataGridTableStyle.</source>
+        <target state="translated">Hodnotu této vlastnosti nelze ve výchozím objektu DataGridTableStyle změnit.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridDownButtonClickDescr">
+        <source>Occurs when the user clicks the "show/hide parent rows" icon.</source>
+        <target state="needs-review-translation">Vyvolá se v případě, že uživatel klikne na ikonu pro zobrazení nebo skrytí nadřazených řádků. </target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridEmptyColor">
+        <source>Value '{0}' cannot be set to an empty value.</source>
+        <target state="translated">Hodnotu {0} nelze nastavit na prázdnou hodnotu.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridErrorMessageBoxCaption">
+        <source>Committing the row to the original data store has caused an error.</source>
+        <target state="translated">Při potvrzování řádku původnímu úložišti dat došlo k chybě.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridExceptionInPaint">
+        <source>DataGrid received an exception at design time. Reset the DataSource and DataMember property on the grid.</source>
+        <target state="translated">Objekt DataGrid obdržel výjimku v době návrhu. Obnovte nastavení vlastností DataSource a DataMember mřížky.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridFirstVisibleColumnDescr">
+        <source>Indicates the index of the column that is first shown.</source>
+        <target state="translated">Určuje index sloupce, který je zobrazen jako první.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridFlatModeDescr">
+        <source>Indicates whether the grid has a flat appearance.</source>
+        <target state="translated">Určuje, zda je mřížka zobrazena jako plochá.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridGridLineColorDescr">
+        <source>Indicates the color of the grid lines.</source>
+        <target state="translated">Určuje barvu čar mřížky.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridGridLineStyleDescr">
+        <source>Indicates the style of the grid lines.</source>
+        <target state="translated">Určuje styl čar mřížky.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridGridTablesDescr">
+        <source>The collection of DataGridTableStyle objects that the DataGrid can render its data with.</source>
+        <target state="translated">Kolekce objektů DataGridTableStyle, pomocí kterých může prvek DataGrid zobrazit data.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridHeaderBackColorDescr">
+        <source>Indicates the background color of the column and row headers.</source>
+        <target state="translated">Určuje barvu pozadí záhlaví řádků a sloupců.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridHeaderFontDescr">
+        <source>Indicates the font of the text in the column and row headers.</source>
+        <target state="translated">Určuje písmo textu v záhlaví řádků a sloupců.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridHeaderForeColorDescr">
+        <source>Indicates the color of the text in the column and row headers.</source>
+        <target state="translated">Určuje barvu textu v záhlaví řádků a sloupců.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridHorizScrollBarDescr">
+        <source>Returns the horizontal scroll bar used by the grid.</source>
+        <target state="translated">Vrátí vodorovný posuvník používaný mřížkou.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridLinkColorDescr">
+        <source>Indicates the color of the text that appears inside the child links.</source>
+        <target state="translated">Určuje barvu textu, který se zobrazí uvnitř podřízených odkazů.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridLinkHoverColorDescr">
+        <source>Indicates the color of the text that appears inside a child link when the mouse pointer moves over it.</source>
+        <target state="translated">Určuje barvu textu, který se zobrazí uvnitř podřízeného odkazu při umístění ukazatele myši nad odkaz.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridListManagerDescr">
+        <source>The CurrencyManager that the DataGrid uses to get data from the data source.</source>
+        <target state="translated">Správce CurrencyManager, který ovládací prvek DataGrid používá k získání dat ze zdroje dat</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridNavigationModeDescr">
+        <source>Indicates whether links to child tables are shown.</source>
+        <target state="translated">Určuje, zda jsou zobrazeny odkazy na podřízené tabulky.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridNullText">
+        <source>Event raised when the value of the BackgroundColor property is changed on DataGrid.</source>
+        <target state="needs-review-translation">(null)</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridParentRowsBackColorDescr">
+        <source>Indicates the background color of the parent rows.</source>
+        <target state="translated">Určuje barvu pozadí nadřazených řádků.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridParentRowsForeColorDescr">
+        <source>Indicates the color of the text in the parent rows.</source>
+        <target state="translated">Určuje barvu textu nadřazených řádků.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridParentRowsLabelStyleDescr">
+        <source>Indicates whether the parent rows show labels for the table and for the columns.</source>
+        <target state="translated">Určuje, zda nadřazené řádky zobrazují popisky pro tabulku a pro sloupce.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridParentRowsVisibleDescr">
+        <source>Indicates whether the parent rows area is visible.</source>
+        <target state="translated">Určuje, zda je oblast nadřazených řádků viditelná.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridPreferredColumnWidthDescr">
+        <source>Specifies what the default pixel widths of the grid columns are. The default value for PreferredColumnWidth is 75.</source>
+        <target state="translated">Určuje výchozí šířku sloupců mřížky v pixelech. Výchozí hodnotou vlastnosti PreferredColumnWidth je 75.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridPreferredRowHeightDescr">
+        <source>Indicates the preferred height of the rows.</source>
+        <target state="translated">Určuje upřednostňovanou výšku řádků.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridPushedIncorrectValueIntoColumn">
+        <source>Value {0} Do you want to correct this value?</source>
+        <target state="translated">Hodnota {0} Chcete tuto hodnotu opravit?</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridReadOnlyDescr">
+        <source>Indicates whether rows in the grid can be edited, added, or deleted.</source>
+        <target state="translated">Určuje, zda lze upravit, přidat nebo odstranit řádky mřížky.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridRowHeadersVisibleDescr">
+        <source>Indicates whether the row headers are visible.</source>
+        <target state="translated">Určuje, zda jsou záhlaví řádků viditelná.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridRowHeaderWidthDescr">
+        <source>Indicates the width of the row headers.</source>
+        <target state="translated">Určuje šířku záhlaví sloupců.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridRowRowHeight">
+        <source>DataGridRow.Height cannot be negative.</source>
+        <target state="translated">Hodnota DataGridRow.Height nemůže být záporná.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridRowRowNumber">
+        <source>DataGridRow cannot have a negative row number.</source>
+        <target state="translated">Vlastnost DataGridRow nemůže obsahovat záporné číslo řádku.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridSelectedIndexDescr">
+        <source>Indicates the index of the current row.</source>
+        <target state="translated">Určuje index aktuálního řádku.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridSelectionBackColorDescr">
+        <source>Indicates the background color of any selected cells or rows.</source>
+        <target state="translated">Určuje barvu pozadí libovolných vybraných buněk nebo řádků.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridSelectionForeColorDescr">
+        <source>Indicates the color of the text in any selected cells or rows.</source>
+        <target state="translated">Určuje barvu textu v libovolných vybraných buňkách nebo řádcích.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridSetListManager">
+        <source>ListManager can be set using the DataSource and DataMember properties.</source>
+        <target state="translated">Správce ListManager lze nastavit pomocí vlastností DataSource a DataMember.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridSetSelectIndex">
+        <source>Position on a null ListManager cannot be set.</source>
+        <target state="translated">Nelze nastavit pozici v prázdném správci ListManager.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridSettingCurrentCellNotGood">
+        <source>CurrentCell cannot be set at this time. Moving your code to the Form.Load event should solve this problem.</source>
+        <target state="translated">Vlastnost CurrentCell nelze nyní nastavit. Potíže by mělo vyřešit přesunutí kódu do procedury události Form.Load.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridTableCollectionMissingTable">
+        <source>DataGridTable instance does not exist in the collection.</source>
+        <target state="translated">Instance DataGridTable v této kolekci neexistuje.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridTableStyleCollectionAddedParentedTableStyle">
+        <source>DataGridTableStyle that is already parented to another DataGrid cannot be added.</source>
+        <target state="translated">Nelze přidat styl DataGridTableStyle, který je již nastaven jako nadřízený pro jiný objekt DataGrid.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridTableStyleDuplicateMappingName">
+        <source>Data grid table styles collection already contains a table style with the same mapping name.</source>
+        <target state="translated">Kolekce stylů tabulek datové mřížky již obsahuje styl tabulky se stejným názvem mapování.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridTableStyleTransparentAlternatingBackColorNotAllowed">
+        <source>DataGridTableStyle does not support transparent AlternatingBackColor.</source>
+        <target state="translated">Styl DataGridTableStyle nepodporuje průhlednou barvu AlternatingBackColor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridTableStyleTransparentBackColorNotAllowed">
+        <source>DataGridTableStyle does not support transparent BackColor.</source>
+        <target state="translated">Styl DataGridTableStyle nepodporuje průhlednou barvu BackColor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridTableStyleTransparentHeaderBackColorNotAllowed">
+        <source>DataGridTableStyle does not support transparent HeaderBackColor.</source>
+        <target state="translated">Styl DataGridTableStyle nepodporuje průhlednou barvu HeaderBackColor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridTableStyleTransparentSelectionBackColorNotAllowed">
+        <source>DataGridTableStyle does not support transparent SelectionBackColor.</source>
+        <target state="translated">Styl DataGridTableStyle nepodporuje průhlednou barvu SelectionBackColor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridToolTipEmptyIcon">
+        <source>null rectangle for icon bounds when adding tool tip.</source>
+        <target state="translated">Při přidání popisu tlačítka jsou hranice ikony tvořeny prázdným obdélníkem.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridTransparentAlternatingBackColorNotAllowed">
+        <source>DataGrid control does not support transparent AlternatingBackColor.</source>
+        <target state="translated">Ovládací prvek DataGrid nepodporuje průhlednou barvu AlternatingBackColor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridTransparentBackColorNotAllowed">
+        <source>DataGrid control does not support transparent BackColor.</source>
+        <target state="translated">Ovládací prvek DataGrid nepodporuje průhlednou barvu BackColor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridTransparentCaptionBackColorNotAllowed">
+        <source>DataGrid control does not support transparent CaptionBackColor.</source>
+        <target state="translated">Ovládací prvek DataGrid nepodporuje průhlednou barvu CaptionBackColor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridTransparentHeaderBackColorNotAllowed">
+        <source>DataGrid control does not support transparent HeaderBackColor.</source>
+        <target state="translated">Ovládací prvek DataGrid nepodporuje průhlednou barvu HeaderBackColor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridTransparentParentRowsBackColorNotAllowed">
+        <source>DataGrid control does not support transparent ParentRowsBackColor.</source>
+        <target state="translated">Ovládací prvek DataGrid nepodporuje průhlednou barvu ParentRowsBackColor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridTransparentSelectionBackColorNotAllowed">
+        <source>DataGrid control does not support transparent SelectionBackColor.</source>
+        <target state="translated">Ovládací prvek DataGrid nepodporuje průhlednou barvu SelectionBackColor.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridUnbound">
+        <source>Data cannot be read from a DataGrid which is not bound to a DataTable.</source>
+        <target state="translated">Nelze načíst data z ovládacího prvku DataGrid, který není vázán k objektu DataTable.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="DataGridVertScrollBarDescr">
+        <source>Returns the vertical scroll bar used by the grid.</source>
+        <target state="translated">Vrátí svislý posuvník používaný mřížkou.</target>
         <note />
       </trans-unit>
     </body>

@@ -1,22 +1,22 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
-using System.ComponentModel;
-
-namespace System.Windows.Forms;
-
-/// <summary>
-///  This type is provided for binary compatibility with .NET Framework and is not intended to be used directly from your code.
-/// </summary>
-[Obsolete(
-    Obsoletions.DataGridMessage,
-    error: false,
-    DiagnosticId = Obsoletions.UnsupportedControlsDiagnosticId,
-    UrlFormat = Obsoletions.SharedUrlFormat)]
-[EditorBrowsable(EditorBrowsableState.Never)]
-[Browsable(false)]
-public enum DataGridLineStyle
+namespace System.Windows.Forms
 {
-    None,
-    Solid
+    /// <summary>
+    ///  Specifies the style of gridlines in a <see cref='DataGrid'/>.
+    /// </summary>
+    public enum DataGridLineStyle
+    {
+        /// <summary>
+        ///  No gridlines between cells.
+        /// </summary>
+        None,
+
+        /// <summary>
+        ///  Solid gridlines between cells.
+        /// </summary>
+        Solid
+    }
 }
