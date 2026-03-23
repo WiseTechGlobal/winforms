@@ -2,8 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-#pragma warning disable CS8632, CSIsNull001, CSIsNull002, IDE1006, IDE0002, CA1510, WFDEV001, CA1805, CA2020, RS0016, SA1005, SA1129, SA1131, SA1206, SA1505, SA1508, SA1518, IDE0031, IDE0036, IDE0059, IDE0073, IDE0078, IDE0270
-
 using System.Collections;
 using System.ComponentModel;
 using System.Drawing;
