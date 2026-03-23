@@ -20,4 +20,10 @@ public partial class MainForm : Form
         DataGridForm form = new();
         form.Show(this);
     }
+
+    private void StatusBarButton_Click(object? sender, EventArgs e)
+    {
+        StatusBarForm form = new();
+        form.Show(this);
+    }
 }
