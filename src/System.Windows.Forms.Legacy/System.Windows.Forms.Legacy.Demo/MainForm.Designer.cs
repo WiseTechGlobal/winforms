@@ -12,11 +12,11 @@ partial class MainForm
     private Label _titleLabel = null!;
     private Label _descriptionLabel = null!;
     private Button _menuStackButton = null!;
-    private Label _menuStackLabel = null!;
+    private Label _menuStackDescriptionLabel = null!;
     private Button _dataGridButton = null!;
-    private Label _dataGridLabel = null!;
-    private Button _toolBarButton = null!;
-    private Label _toolBarLabel = null!;
+    private Label _dataGridDescriptionLabel = null!;
+    private Button _statusBarButton = null!;
+    private Label _statusBarDescriptionLabel = null!;
 
     protected override void Dispose(bool disposing)
     {
@@ -34,11 +34,11 @@ partial class MainForm
         _titleLabel = new Label();
         _descriptionLabel = new Label();
         _menuStackButton = new Button();
-        _menuStackLabel = new Label();
+        _menuStackDescriptionLabel = new Label();
         _dataGridButton = new Button();
-        _dataGridLabel = new Label();
-        _toolBarButton = new Button();
-        _toolBarLabel = new Label();
+        _dataGridDescriptionLabel = new Label();
+        _statusBarButton = new Button();
+        _statusBarDescriptionLabel = new Label();
         SuspendLayout();
         // 
         // _titleLabel
@@ -55,9 +55,9 @@ partial class MainForm
         // 
         _descriptionLabel.Location = new Point(20, 58);
         _descriptionLabel.Name = "_descriptionLabel";
-        _descriptionLabel.Size = new Size(440, 54);
+        _descriptionLabel.Size = new Size(680, 42);
         _descriptionLabel.TabIndex = 1;
-        _descriptionLabel.Text = "Start with ToolBar for the clearest command-bar scenario: push, toggle, drop-down, wrapping, text layout, and advanced state transitions. Menu Stack and DataGrid remain available for broader validation.";
+        _descriptionLabel.Text = "Use this launcher to validate legacy control surfaces under active migration. Menu Stack remains the main branch focus, while DataGrid and StatusBar cover separate recovery and regression paths.";
         _descriptionLabel.TextAlign = ContentAlignment.MiddleCenter;
         // 
         // _toolBarButton
@@ -81,50 +81,68 @@ partial class MainForm
         // 
         // _menuStackButton
         // 
-        _menuStackButton.Location = new Point(140, 234);
+        _menuStackButton.Location = new Point(20, 118);
         _menuStackButton.Name = "_menuStackButton";
         _menuStackButton.Size = new Size(200, 60);
         _menuStackButton.TabIndex = 4;
         _menuStackButton.Text = "Menu Stack";
         _menuStackButton.Click += MenuStackButton_Click;
         // 
-        // _menuStackLabel
+        // _menuStackDescriptionLabel
         // 
-        _menuStackLabel.Location = new Point(76, 298);
-        _menuStackLabel.Name = "_menuStackLabel";
-        _menuStackLabel.Size = new Size(328, 34);
-        _menuStackLabel.TabIndex = 5;
-        _menuStackLabel.Text = "Use for menu composition and nested-command coverage when you need more than the ToolBar surface.";
-        _menuStackLabel.TextAlign = ContentAlignment.MiddleCenter;
+        _menuStackDescriptionLabel.Location = new Point(20, 188);
+        _menuStackDescriptionLabel.Name = "_menuStackDescriptionLabel";
+        _menuStackDescriptionLabel.Size = new Size(200, 64);
+        _menuStackDescriptionLabel.TabIndex = 3;
+        _menuStackDescriptionLabel.Text = "Nested menus, popup routing, shortcut processing, and stack behavior across the legacy menu surface.";
+        _menuStackDescriptionLabel.TextAlign = ContentAlignment.TopCenter;
         // 
         // _dataGridButton
         // 
-        _dataGridButton.Location = new Point(140, 342);
+        _dataGridButton.Location = new Point(250, 118);
         _dataGridButton.Name = "_dataGridButton";
         _dataGridButton.Size = new Size(200, 60);
-        _dataGridButton.TabIndex = 6;
+        _dataGridButton.TabIndex = 4;
         _dataGridButton.Text = "DataGrid";
         _dataGridButton.Click += DataGridButton_Click;
         // 
-        // _dataGridLabel
+        // _dataGridDescriptionLabel
         // 
-        _dataGridLabel.Location = new Point(76, 406);
-        _dataGridLabel.Name = "_dataGridLabel";
-        _dataGridLabel.Size = new Size(328, 34);
-        _dataGridLabel.TabIndex = 7;
-        _dataGridLabel.Text = "Heavier table-surface validation for editing, navigation, and legacy grid behavior.";
-        _dataGridLabel.TextAlign = ContentAlignment.MiddleCenter;
+        _dataGridDescriptionLabel.Location = new Point(250, 188);
+        _dataGridDescriptionLabel.Name = "_dataGridDescriptionLabel";
+        _dataGridDescriptionLabel.Size = new Size(200, 64);
+        _dataGridDescriptionLabel.TabIndex = 5;
+        _dataGridDescriptionLabel.Text = "Legacy editing, navigation, and bound or unbound grid scenarios that still need targeted recovery coverage.";
+        _dataGridDescriptionLabel.TextAlign = ContentAlignment.TopCenter;
+        // 
+        // _statusBarButton
+        // 
+        _statusBarButton.Location = new Point(480, 118);
+        _statusBarButton.Name = "_statusBarButton";
+        _statusBarButton.Size = new Size(200, 60);
+        _statusBarButton.TabIndex = 6;
+        _statusBarButton.Text = "StatusBar";
+        _statusBarButton.Click += StatusBarButton_Click;
+        // 
+        // _statusBarDescriptionLabel
+        // 
+        _statusBarDescriptionLabel.Location = new Point(480, 188);
+        _statusBarDescriptionLabel.Name = "_statusBarDescriptionLabel";
+        _statusBarDescriptionLabel.Size = new Size(200, 64);
+        _statusBarDescriptionLabel.TabIndex = 7;
+        _statusBarDescriptionLabel.Text = "Simple text mode, panel layout, owner-draw rendering, border styles, and sizing grip behavior.";
+        _statusBarDescriptionLabel.TextAlign = ContentAlignment.TopCenter;
         // 
         // MainForm
         // 
         AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(480, 458);
-        Controls.Add(_dataGridLabel);
-        Controls.Add(_menuStackLabel);
-        Controls.Add(_toolBarLabel);
-        Controls.Add(_toolBarButton);
+        ClientSize = new Size(720, 270);
+        Controls.Add(_statusBarDescriptionLabel);
+        Controls.Add(_statusBarButton);
+        Controls.Add(_dataGridDescriptionLabel);
         Controls.Add(_dataGridButton);
+        Controls.Add(_menuStackDescriptionLabel);
         Controls.Add(_menuStackButton);
         Controls.Add(_descriptionLabel);
         Controls.Add(_titleLabel);

@@ -1,23 +1,28 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-
-using System.ComponentModel;
+// See the LICENSE file in the project root for more information.
 
 namespace System.Windows.Forms;
 
 /// <summary>
-///  This type is provided for binary compatibility with .NET Framework and is not intended to be used directly from your code.
+///  Specifies how a panel on a status bar changes when the status bar resizes.
 /// </summary>
-[Obsolete(
-    Obsoletions.StatusBarMessage,
-    error: false,
-    DiagnosticId = Obsoletions.UnsupportedControlsDiagnosticId,
-    UrlFormat = Obsoletions.SharedUrlFormat)]
-[EditorBrowsable(EditorBrowsableState.Never)]
-[Browsable(false)]
 public enum StatusBarPanelAutoSize
 {
+    /// <summary>
+    ///  The panel does not change its size when the status bar resizes.
+    /// </summary>
     None = 1,
+
+    /// <summary>
+    ///  The panel shares the available status bar space (the space not taken
+    ///  up by panels with the <see cref="None"/> and <see cref="Contents"/>
+    ///  settings) with other panels that have the <see cref="Spring"/> setting.
+    /// </summary>
     Spring = 2,
+
+    /// <summary>
+    ///  The width of the panel is determined by its contents.
+    /// </summary>
     Contents = 3,
 }
