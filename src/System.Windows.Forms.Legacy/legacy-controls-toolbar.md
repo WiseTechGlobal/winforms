@@ -28,7 +28,7 @@ The `ToolBar` family **has been ported**. All types have been replaced with full
 
 | File | Purpose |
 |---|---|
-| `LegacyToolBarInteropCompat.cs` | Compatibility shim providing `LegacyToolBarSR` (error message constants), `ToolBarNativeMethods` (TB\* Win32 constants, HICF flags enum, TBBUTTON / TBBUTTONINFO / NMTOOLBAR / NMTBHOTITEM / TOOLTIPTEXT structs, and low-level bit helpers) |
+| `LegacyToolBarInteropCompat.cs` | Compatibility shim providing `ToolBarNativeMethods` (TB\* Win32 constants, HICF flags enum, TBBUTTON / TBBUTTONINFO / NMTOOLBAR / NMTBHOTITEM / TOOLTIPTEXT structs, and low-level bit helpers) |
 
 ### Files deleted
 
@@ -38,10 +38,12 @@ The `ToolBar` family **has been ported**. All types have been replaced with full
 
 ### Resource changes
 
-All `ToolBar`-family string resources (23 entries, e.g. `ToolBarAppearanceDescr`,
+All `ToolBar`-family design-time string resources (23 entries, e.g. `ToolBarAppearanceDescr`,
 `ToolBarButtonClickDescr`, `ToolBarButtonsDescr`, etc.) have been added to `SR.resx` and all
 13 language XLF files. The XLF files carry `state="translated"` with translations sourced
-from the upstream `dotnet/winforms` repository.
+from the upstream `dotnet/winforms` repository. The runtime exception strings
+`ToolBarBadToolBarButton` and `ToolBarButtonInvalidDropDownMenuType` are also sourced from
+`SR.resx`.
 
 ---
 
@@ -63,18 +65,19 @@ longer exist in the current codebase. A thin compatibility shim is created in-fo
 
 | Shim type | Purpose |
 |---|---|
-| `LegacyToolBarSR` | Static string constants for the two hard-coded error messages (`ToolBarBadToolBarButton`, `ToolBarButtonInvalidDropDownMenuType`) |
 | `ToolBarNativeMethods` | All `TB*` / `CCS_*` / `TBSTYLE_*` / `TBSTATE_*` / `TBIF_*` / `TBN_*` Win32 constants; `HICF` flags enum; `TBBUTTON`, `TBBUTTONINFO`, `NMTOOLBAR`, `NMTBHOTITEM`, `TOOLTIPTEXT` structs; `Util` helper with `MAKELONG` / `MAKELPARAM` / `HIWORD` / `LOWORD` |
 
 The implementation files use `SourceGenerated.EnumValidator.Validate()` instead of the
 upstream `ClientUtils.IsEnumValid()`, and `PInvokeCore.SendMessage` / `PInvoke.*` instead
-of `NativeMethods.*`.
+of `NativeMethods.*`. The two legacy `ArgumentException` messages are sourced from
+`SR.ToolBarBadToolBarButton` and `SR.ToolBarButtonInvalidDropDownMenuType` rather than
+through a separate shim type.
 
 ### Step 3 — Add `SRDescription` attributes and string resources
 
 All public properties and events on `ToolBar` and `ToolBarButton` are decorated with
 `[SRDescription(nameof(SR.ToolBar*Descr))]` attributes, matching the upstream metadata.
-The 23 required SR keys were added to `SR.resx` and propagated to all 13 XLF files.
+The 23 required description SR keys were added to `SR.resx` and propagated to all 13 XLF files.
 
 **`ToolBar.cs` — 14 attributes added:**
 `Appearance`, `AutoSize`, `BorderStyle`, `Buttons`, `ButtonSize`, `Divider`,

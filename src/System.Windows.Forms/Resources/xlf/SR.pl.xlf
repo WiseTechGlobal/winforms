@@ -10009,6 +10009,11 @@ Stos śledzenia, w którym wystąpiła zabroniona operacja:
         <target state="translated">Określa, czy rozmiar formantu ToolBar będzie zmieniał się automatycznie na podstawie rozmiaru elementu Button.</target>
         <note />
       </trans-unit>
+      <trans-unit id="ToolBarBadToolBarButton">
+        <source>Parameter must be of type ToolBarButton.</source>
+        <target state="translated">Parametr musi być typu ToolBarButton.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="ToolBarBorderStyleDescr">
         <source>Controls what type of border the ToolBar control will have.</source>
         <target state="translated">Określa typ obramowania formantu ToolBar.</target>
@@ -10032,6 +10037,11 @@ Stos śledzenia, w którym wystąpiła zabroniona operacja:
       <trans-unit id="ToolBarButtonImageIndexDescr">
         <source>Identifies the image displayed on the button.</source>
         <target state="translated">Identyfikuje obraz wyświetlany na przycisku.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonInvalidDropDownMenuType">
+        <source>The drop-down menu for a ToolBarButton must be of type ContextMenu.</source>
+        <target state="translated">Menu rozwijane elementu ToolBarButton musi być typu ContextMenu.</target>
         <note />
       </trans-unit>
       <trans-unit id="ToolBarButtonMenuDescr">

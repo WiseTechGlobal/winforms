@@ -10009,6 +10009,11 @@ Cette opération non conforme s'est produite sur la trace de la pile :
         <target state="translated">Contrôle si la barre d&apos;outils est automatiquement redimensionnée en fonction de la taille des boutons.</target>
         <note />
       </trans-unit>
+      <trans-unit id="ToolBarBadToolBarButton">
+        <source>Parameter must be of type ToolBarButton.</source>
+        <target state="translated">Le paramètre doit être de type ToolBarButton.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="ToolBarBorderStyleDescr">
         <source>Controls what type of border the ToolBar control will have.</source>
         <target state="translated">Contrôle le type de bordure du contrôle ToolBar.</target>
@@ -10032,6 +10037,11 @@ Cette opération non conforme s'est produite sur la trace de la pile :
       <trans-unit id="ToolBarButtonImageIndexDescr">
         <source>Identifies the image displayed on the button.</source>
         <target state="translated">Identifie l&apos;image affichée sur ce bouton.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonInvalidDropDownMenuType">
+        <source>The drop-down menu for a ToolBarButton must be of type ContextMenu.</source>
+        <target state="translated">Le type d'un menu déroulant d'un ToolBarButton doit être ContextMenu.</target>
         <note />
       </trans-unit>
       <trans-unit id="ToolBarButtonMenuDescr">

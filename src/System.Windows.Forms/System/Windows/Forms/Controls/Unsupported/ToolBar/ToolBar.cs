@@ -1888,7 +1888,7 @@ namespace System.Windows.Forms
                     }
                     else
                     {
-                        throw new ArgumentException(LegacyToolBarSR.ToolBarBadToolBarButton, nameof(value));
+                            throw new ArgumentException(SR.ToolBarBadToolBarButton, nameof(value));
                     }
                 }
             }
@@ -1995,7 +1995,7 @@ namespace System.Windows.Forms
                 }
                 else
                 {
-                    throw new ArgumentException(LegacyToolBarSR.ToolBarBadToolBarButton, nameof(button));
+                    throw new ArgumentException(SR.ToolBarBadToolBarButton, nameof(button));
                 }
             }
 
@@ -2157,7 +2157,7 @@ namespace System.Windows.Forms
                 }
                 else
                 {
-                    throw new ArgumentException(LegacyToolBarSR.ToolBarBadToolBarButton, nameof(button));
+                    throw new ArgumentException(SR.ToolBarBadToolBarButton, nameof(button));
                 }
             }
 

@@ -10009,6 +10009,11 @@ Stack trace where the illegal operation occurred was:
         <target state="translated">ボタンのサイズに基づいて、ツール バーのサイズを自動的に変更するかどうかを制御します。</target>
         <note />
       </trans-unit>
+      <trans-unit id="ToolBarBadToolBarButton">
+        <source>Parameter must be of type ToolBarButton.</source>
+        <target state="translated">パラメーターは型 ToolBarButton でなければなりません。</target>
+        <note />
+      </trans-unit>
       <trans-unit id="ToolBarBorderStyleDescr">
         <source>Controls what type of border the ToolBar control will have.</source>
         <target state="translated">ツール バー コントロールの境界線の種類を設定します。</target>
@@ -10032,6 +10037,11 @@ Stack trace where the illegal operation occurred was:
       <trans-unit id="ToolBarButtonImageIndexDescr">
         <source>Identifies the image displayed on the button.</source>
         <target state="translated">ボタンに表示されたイメージを識別します。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonInvalidDropDownMenuType">
+        <source>The drop-down menu for a ToolBarButton must be of type ContextMenu.</source>
+        <target state="translated">ToolBarButton のドロップダウン メニューは ContextMenu 型でなければなりません。</target>
         <note />
       </trans-unit>
       <trans-unit id="ToolBarButtonMenuDescr">

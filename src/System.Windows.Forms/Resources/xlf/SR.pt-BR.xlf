@@ -10009,6 +10009,11 @@ O rastreamento de pilha em que a operação ilegal ocorreu foi:
         <target state="translated">Controla se ToolBar será dimensionado automaticamente com base no tamanho do botão.</target>
         <note />
       </trans-unit>
+      <trans-unit id="ToolBarBadToolBarButton">
+        <source>Parameter must be of type ToolBarButton.</source>
+        <target state="translated">O parâmetro deve ser do tipo ToolBarButton.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="ToolBarBorderStyleDescr">
         <source>Controls what type of border the ToolBar control will have.</source>
         <target state="translated">Controla o tipo de borda que o controle ToolBar terá.</target>
@@ -10032,6 +10037,11 @@ O rastreamento de pilha em que a operação ilegal ocorreu foi:
       <trans-unit id="ToolBarButtonImageIndexDescr">
         <source>Identifies the image displayed on the button.</source>
         <target state="translated">Identifica a imagem exibida no botão.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonInvalidDropDownMenuType">
+        <source>The drop-down menu for a ToolBarButton must be of type ContextMenu.</source>
+        <target state="translated">O menu suspenso para um ToolBarButton deve ser do tipo ContextMenu.</target>
         <note />
       </trans-unit>
       <trans-unit id="ToolBarButtonMenuDescr">

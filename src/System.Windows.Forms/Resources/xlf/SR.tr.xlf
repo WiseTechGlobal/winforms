@@ -10009,6 +10009,11 @@ Geçersiz işlemin gerçekleştiği yığın izi:
         <target state="translated">Araç Çubuğu&apos;nun Düğme boyutuna bağlı olarak kendi kendini otomatik olarak boyutlandırıp boyutlandıramayacağını denetler.</target>
         <note />
       </trans-unit>
+      <trans-unit id="ToolBarBadToolBarButton">
+        <source>Parameter must be of type ToolBarButton.</source>
+        <target state="translated">Parametrenin ToolBarButton türünde olması gerekir.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="ToolBarBorderStyleDescr">
         <source>Controls what type of border the ToolBar control will have.</source>
         <target state="translated">ToolBar denetiminin ne tür kenarlığı olacağını denetler.</target>
@@ -10032,6 +10037,11 @@ Geçersiz işlemin gerçekleştiği yığın izi:
       <trans-unit id="ToolBarButtonImageIndexDescr">
         <source>Identifies the image displayed on the button.</source>
         <target state="translated">Düğmede görüntülenen resmi tanımlar.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonInvalidDropDownMenuType">
+        <source>The drop-down menu for a ToolBarButton must be of type ContextMenu.</source>
+        <target state="translated">ToolBarButton'ın açılan menüsü ContextMenu türünde olmalı.</target>
         <note />
       </trans-unit>
       <trans-unit id="ToolBarButtonMenuDescr">

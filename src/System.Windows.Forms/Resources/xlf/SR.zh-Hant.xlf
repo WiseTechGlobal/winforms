@@ -10474,6 +10474,11 @@ Stack trace where the illegal operation occurred was:
         <target state="translated">控制工具列 (ToolBar) 是否會依照按鈕大小自動調整其大小。</target>
         <note />
       </trans-unit>
+      <trans-unit id="ToolBarBadToolBarButton">
+        <source>Parameter must be of type ToolBarButton.</source>
+        <target state="translated">參數必須屬於 ToolBarButton 類型。</target>
+        <note />
+      </trans-unit>
       <trans-unit id="ToolBarBorderStyleDescr">
         <source>Controls what type of border the ToolBar control will have.</source>
         <target state="translated">控制 ToolBar 控制項擁有的框線類型。</target>
@@ -10497,6 +10502,11 @@ Stack trace where the illegal operation occurred was:
       <trans-unit id="ToolBarButtonImageIndexDescr">
         <source>Identifies the image displayed on the button.</source>
         <target state="translated">識別按鈕上顯示的影像。</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonInvalidDropDownMenuType">
+        <source>The drop-down menu for a ToolBarButton must be of type ContextMenu.</source>
+        <target state="translated">ToolBarButton 的下拉式功能表必須屬於 ContextMenu 類型。</target>
         <note />
       </trans-unit>
       <trans-unit id="ToolBarButtonMenuDescr">

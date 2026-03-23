@@ -10009,6 +10009,11 @@ Stapelüberwachung, in der der unzulässige Vorgang auftrat:
         <target state="translated">Steuert, ob die Größe der ToolBar automatisch basierend auf der Schaltflächengröße geändert wird.</target>
         <note />
       </trans-unit>
+      <trans-unit id="ToolBarBadToolBarButton">
+        <source>Parameter must be of type ToolBarButton.</source>
+        <target state="translated">Der Parameter muss den Typ ToolBarButton haben.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="ToolBarBorderStyleDescr">
         <source>Controls what type of border the ToolBar control will have.</source>
         <target state="translated">Steuert den Rahmentyp des ToolBar-Steuerelements.</target>
@@ -10032,6 +10037,11 @@ Stapelüberwachung, in der der unzulässige Vorgang auftrat:
       <trans-unit id="ToolBarButtonImageIndexDescr">
         <source>Identifies the image displayed on the button.</source>
         <target state="translated">Gibt das auf der Schaltfläche angezeigte Bild an.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonInvalidDropDownMenuType">
+        <source>The drop-down menu for a ToolBarButton must be of type ContextMenu.</source>
+        <target state="translated">Das DropdownmMenü für einen ToolBarButton muss den Typ ContextMenu haben.</target>
         <note />
       </trans-unit>
       <trans-unit id="ToolBarButtonMenuDescr">

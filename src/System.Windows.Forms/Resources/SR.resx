@@ -5658,6 +5658,9 @@ Stack trace where the illegal operation occurred was:
   <data name="ToolBarButtonMenuDescr" xml:space="preserve">
     <value>The shortcut menu that will appear if this button's style is set to DropDownButton.</value>
   </data>
+  <data name="ToolBarButtonInvalidDropDownMenuType" xml:space="preserve">
+    <value>The drop-down menu for a ToolBarButton must be of type ContextMenu.</value>
+  </data>
   <data name="ToolBarButtonPartialPushDescr" xml:space="preserve">
     <value>Controls whether the button should be displayed as partially pushed or not, but only if the style of the button is ToggleButton.</value>
   </data>
@@ -5666,6 +5669,9 @@ Stack trace where the illegal operation occurred was:
   </data>
   <data name="ToolBarButtonsDescr" xml:space="preserve">
     <value>The collection of ToolBarButtons that make up this ToolBar.</value>
+  </data>
+  <data name="ToolBarBadToolBarButton" xml:space="preserve">
+    <value>Parameter must be of type ToolBarButton.</value>
   </data>
   <data name="ToolBarButtonSizeDescr" xml:space="preserve">
     <value>The size of the buttons on the control if the button contents do not require a larger size.</value>

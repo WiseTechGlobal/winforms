@@ -10009,6 +10009,11 @@ Trasování zásobníku, kde došlo k neplatné operaci:
         <target state="translated">Určuje, zda ovládací prvek ToolBar automaticky změní velikost na základě velikosti prvku Button.</target>
         <note />
       </trans-unit>
+      <trans-unit id="ToolBarBadToolBarButton">
+        <source>Parameter must be of type ToolBarButton.</source>
+        <target state="translated">Parametr musí být typu ToolBarButton.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="ToolBarBorderStyleDescr">
         <source>Controls what type of border the ToolBar control will have.</source>
         <target state="translated">Určuje typ ohraničení ovládacího prvku ToolBar.</target>
@@ -10032,6 +10037,11 @@ Trasování zásobníku, kde došlo k neplatné operaci:
       <trans-unit id="ToolBarButtonImageIndexDescr">
         <source>Identifies the image displayed on the button.</source>
         <target state="translated">Určuje obrázek zobrazovaný na tlačítku.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonInvalidDropDownMenuType">
+        <source>The drop-down menu for a ToolBarButton must be of type ContextMenu.</source>
+        <target state="translated">Rozevírací nabídka pro ovládací prvek ToolBarButton musí být typu ContextMenu.</target>
         <note />
       </trans-unit>
       <trans-unit id="ToolBarButtonMenuDescr">

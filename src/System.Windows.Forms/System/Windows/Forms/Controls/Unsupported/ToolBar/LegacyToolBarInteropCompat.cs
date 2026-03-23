@@ -5,12 +5,6 @@ using System.Runtime.InteropServices;
 
 namespace System.Windows.Forms;
 
-internal static class LegacyToolBarSR
-{
-    public const string ToolBarBadToolBarButton = "Value must be a ToolBarButton.";
-    public const string ToolBarButtonInvalidDropDownMenuType = "DropDownMenu must be a ContextMenu.";
-}
-
 internal static class ToolBarNativeMethods
 {
     public const string WC_TOOLBAR = "ToolbarWindow32";

@@ -10009,6 +10009,11 @@ El seguimiento de la pila donde tuvo lugar la operación no válida fue:
         <target state="translated">Controla si la barra de herramientas debe cambiar automáticamente de tamaño basándose en el tamaño de los botones.</target>
         <note />
       </trans-unit>
+      <trans-unit id="ToolBarBadToolBarButton">
+        <source>Parameter must be of type ToolBarButton.</source>
+        <target state="translated">El parámetro debe ser de tipo ToolBarButton.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="ToolBarBorderStyleDescr">
         <source>Controls what type of border the ToolBar control will have.</source>
         <target state="translated">Controla qué tipo de borde tiene el control de la barra de herramientas.</target>
@@ -10032,6 +10037,11 @@ El seguimiento de la pila donde tuvo lugar la operación no válida fue:
       <trans-unit id="ToolBarButtonImageIndexDescr">
         <source>Identifies the image displayed on the button.</source>
         <target state="translated">Identifica la imagen que aparece en el botón.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonInvalidDropDownMenuType">
+        <source>The drop-down menu for a ToolBarButton must be of type ContextMenu.</source>
+        <target state="translated">El menú desplegable de la colección ToolBarButton debe ser de tipo ContextMenu.</target>
         <note />
       </trans-unit>
       <trans-unit id="ToolBarButtonMenuDescr">

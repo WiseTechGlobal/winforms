@@ -10009,6 +10009,11 @@ Analisi dello stack dove si è verificata l'operazione non valida:
         <target state="translated">Determina se viene effettuato il ridimensionamento automatico del controllo ToolBar in base alla dimensione del controllo Button.</target>
         <note />
       </trans-unit>
+      <trans-unit id="ToolBarBadToolBarButton">
+        <source>Parameter must be of type ToolBarButton.</source>
+        <target state="translated">Il parametro deve essere di tipo ToolBarButton.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="ToolBarBorderStyleDescr">
         <source>Controls what type of border the ToolBar control will have.</source>
         <target state="translated">Determina il tipo di bordo del controllo ToolBar.</target>
@@ -10032,6 +10037,11 @@ Analisi dello stack dove si è verificata l'operazione non valida:
       <trans-unit id="ToolBarButtonImageIndexDescr">
         <source>Identifies the image displayed on the button.</source>
         <target state="translated">Identifica l&apos;immagine visualizzata sul pulsante.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonInvalidDropDownMenuType">
+        <source>The drop-down menu for a ToolBarButton must be of type ContextMenu.</source>
+        <target state="translated">Il menu a discesa di ToolBarButton deve essere di tipo ContextMenu.</target>
         <note />
       </trans-unit>
       <trans-unit id="ToolBarButtonMenuDescr">

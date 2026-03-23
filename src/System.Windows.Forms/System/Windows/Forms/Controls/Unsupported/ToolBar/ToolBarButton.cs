@@ -126,7 +126,7 @@ namespace System.Windows.Forms
                 //
                 if (value != null && !(value is ContextMenu))
                 {
-                    throw new ArgumentException(LegacyToolBarSR.ToolBarButtonInvalidDropDownMenuType, nameof(value));
+                    throw new ArgumentException(SR.ToolBarButtonInvalidDropDownMenuType);
                 }
 
                 dropDownMenu = value;

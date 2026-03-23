@@ -10009,6 +10009,11 @@ Stack trace where the illegal operation occurred was:
         <target state="translated">단추 크기에 따라 도구 모음의 크기를 자동으로 조정할지 여부를 제어합니다.</target>
         <note />
       </trans-unit>
+      <trans-unit id="ToolBarBadToolBarButton">
+        <source>Parameter must be of type ToolBarButton.</source>
+        <target state="translated">매개 변수는 ToolBarButton 형식이어야 합니다.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="ToolBarBorderStyleDescr">
         <source>Controls what type of border the ToolBar control will have.</source>
         <target state="translated">ToolBar 컨트롤의 테두리 형식을 제어합니다.</target>
@@ -10032,6 +10037,11 @@ Stack trace where the illegal operation occurred was:
       <trans-unit id="ToolBarButtonImageIndexDescr">
         <source>Identifies the image displayed on the button.</source>
         <target state="translated">단추에 표시되는 이미지를 식별합니다.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonInvalidDropDownMenuType">
+        <source>The drop-down menu for a ToolBarButton must be of type ContextMenu.</source>
+        <target state="translated">ToolBarButton의 드롭다운 메뉴는 ContextMenu 형식이어야 합니다.</target>
         <note />
       </trans-unit>
       <trans-unit id="ToolBarButtonMenuDescr">

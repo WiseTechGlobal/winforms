@@ -10009,6 +10009,11 @@ Stack trace where the illegal operation occurred was:
         <target state="translated">Указывает, будет ли ToolBar автоматически изменять размер в соответствии с размером кнопок.</target>
         <note />
       </trans-unit>
+      <trans-unit id="ToolBarBadToolBarButton">
+        <source>Parameter must be of type ToolBarButton.</source>
+        <target state="translated">Параметр должен быть типа ToolBarButton.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="ToolBarBorderStyleDescr">
         <source>Controls what type of border the ToolBar control will have.</source>
         <target state="translated">Определяет тип границы для элемента управления ToolBar.</target>
@@ -10032,6 +10037,11 @@ Stack trace where the illegal operation occurred was:
       <trans-unit id="ToolBarButtonImageIndexDescr">
         <source>Identifies the image displayed on the button.</source>
         <target state="translated">Указывает индекс изображения в ImageList для родительского ToolBar, который используется при получении изображения для этой кнопки.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="ToolBarButtonInvalidDropDownMenuType">
+        <source>The drop-down menu for a ToolBarButton must be of type ContextMenu.</source>
+        <target state="translated">Раскрывающееся меню для ToolBarButton должно иметь тип ContextMenu.</target>
         <note />
       </trans-unit>
       <trans-unit id="ToolBarButtonMenuDescr">
