@@ -2,7 +2,7 @@
 
 ## Scope
 
-This document tracks the legacy `ToolBar` family:
+This document tracks the legacy `ToolBar` family and its supporting types:
 
 - `ToolBar`
 - `ToolBarButton`
@@ -10,29 +10,90 @@ This document tracks the legacy `ToolBar` family:
 
 ## Current Status
 
-The current branch indicates that the `ToolBar` family has been ported.
+The `ToolBar` family **has been ported**. All types have been replaced with full working implementations ported from the upstream runtime. The old stub layer — every file that previously threw `PlatformNotSupportedException` — has been replaced.
 
-Completed items on the branch checklist are:
+### Files ported / changed
 
-- `ToolBar.cs`
-- `ToolBarAppearance.cs`
-- `ToolBarButton.cs`
-- `ToolBarButtonClickEventArgs.cs`
-- `ToolBarButtonClickEventHandler.cs`
-- `ToolBarButtonStyle.cs`
-- `ToolBarTextAlign.cs`
-- removal of the old split `ToolBarButtonCollection` shim after restoring the real collection implementation inside `ToolBar.cs`
+| File | Change |
+|---|---|
+| `ToolBar.cs` | Replaced shim with full implementation including embedded `ToolBarButtonCollection` |
+| `ToolBarButton.cs` | Full button component implementation (was throw-stubs) |
+| `ToolBarAppearance.cs` | Enum — updated to file-scoped namespace with XML doc comments |
+| `ToolBarButtonStyle.cs` | Enum — updated to file-scoped namespace with XML doc comments |
+| `ToolBarTextAlign.cs` | Enum — updated to file-scoped namespace with XML doc comments |
+| `ToolBarButtonClickEventArgs.cs` | Full event args implementation |
+| `ToolBarButtonClickEventHandler.cs` | Delegate declaration |
 
-## What Still Matters
+### New files added
 
-Ported code is not the same as fully accepted support. This family still needs:
+| File | Purpose |
+|---|---|
+| `LegacyToolBarInteropCompat.cs` | Compatibility shim providing `ToolBarNativeMethods` (TB\* Win32 constants, HICF flags enum, TBBUTTON / TBBUTTONINFO / NMTOOLBAR / NMTBHOTITEM / TOOLTIPTEXT structs, and low-level bit helpers) |
 
-- focused runtime testing
-- painting and image-behavior validation
-- click and interaction verification
-- designer serialization checks where needed
-- cleanup of any obsolete or compatibility-only product messaging that is no longer accurate
+### Files deleted
 
-## Recommended Next Step
+| File | Reason |
+|---|---|
+| `ToolBar.ToolBarButtonCollection.cs` | Old throw-stub split file; real collection restored as a nested class inside `ToolBar.cs` |
 
-Keep `ToolBar` behind the Menu Stack in validation priority, but treat it as the next candidate for focused verification once Phase 1 is stabilized.
+### Resource changes
+
+All `ToolBar`-family design-time string resources (23 entries, e.g. `ToolBarAppearanceDescr`,
+`ToolBarButtonClickDescr`, `ToolBarButtonsDescr`, etc.) have been added to `SR.resx` and all
+13 language XLF files. The XLF files carry `state="translated"` with translations sourced
+from the upstream `dotnet/winforms` repository. The runtime exception strings
+`ToolBarBadToolBarButton` and `ToolBarButtonInvalidDropDownMenuType` are also sourced from
+`SR.resx`.
+
+---
+
+## Migration Approach
+
+### Step 1 — Copy the baseline from upstream
+
+Take each file verbatim from the upstream `dotnet/winforms` source before the control was
+removed from the main runtime. The starting point retains:
+
+- the old-style block namespace (`namespace System.Windows.Forms { … }`)
+- `#nullable disable`
+- references to `NativeMethods`, `SafeNativeMethods`, `ClientUtils`, etc.
+
+### Step 2 — Create `LegacyToolBarInteropCompat.cs`
+
+The upstream source references internal helpers and Win32 constant definitions that no
+longer exist in the current codebase. A thin compatibility shim is created in-folder:
+
+| Shim type | Purpose |
+|---|---|
+| `ToolBarNativeMethods` | All `TB*` / `CCS_*` / `TBSTYLE_*` / `TBSTATE_*` / `TBIF_*` / `TBN_*` Win32 constants; `HICF` flags enum; `TBBUTTON`, `TBBUTTONINFO`, `NMTOOLBAR`, `NMTBHOTITEM`, `TOOLTIPTEXT` structs; `Util` helper with `MAKELONG` / `MAKELPARAM` / `HIWORD` / `LOWORD` |
+
+The implementation files use `SourceGenerated.EnumValidator.Validate()` instead of the
+upstream `ClientUtils.IsEnumValid()`, and `PInvokeCore.SendMessage` / `PInvoke.*` instead
+of `NativeMethods.*`. The two legacy `ArgumentException` messages are sourced from
+`SR.ToolBarBadToolBarButton` and `SR.ToolBarButtonInvalidDropDownMenuType` rather than
+through a separate shim type.
+
+### Step 3 — Add `SRDescription` attributes and string resources
+
+All public properties and events on `ToolBar` and `ToolBarButton` are decorated with
+`[SRDescription(nameof(SR.ToolBar*Descr))]` attributes, matching the upstream metadata.
+The 23 required description SR keys were added to `SR.resx` and propagated to all 13 XLF files.
+
+**`ToolBar.cs` — 14 attributes added:**
+`Appearance`, `AutoSize`, `BorderStyle`, `Buttons`, `ButtonSize`, `Divider`,
+`DropDownArrows`, `ImageList`, `ImageSize`, `ShowToolTips`, `TextAlign`, `Wrappable`,
+`ButtonClick` (event), `ButtonDropDown` (event)
+
+**`ToolBarButton.cs` — 10 attributes added:**
+`DropDownMenu`, `Enabled`, `ImageIndex`, `ImageKey`, `PartialPush`, `Pushed`,
+`Style`, `Text`, `ToolTipText`, `Visible`
+
+---
+
+## Remaining Work
+
+- Focused runtime testing
+- Painting and image-behavior validation
+- Click and interaction verification
+- Designer serialization checks
+- Formal accessibility object review against current `AccessibleObject` patterns

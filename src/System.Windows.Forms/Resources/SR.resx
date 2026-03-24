@@ -5634,6 +5634,81 @@ Stack trace where the illegal operation occurred was:
   <data name="TimerTimerDescr" xml:space="preserve">
     <value>Occurs whenever the specified interval time elapses.</value>
   </data>
+  <data name="ToolBarAppearanceDescr" xml:space="preserve">
+    <value>Controls the appearance of the ToolBar control, using values from the ToolBarAppearance enumeration.</value>
+  </data>
+  <data name="ToolBarAutoSizeDescr" xml:space="preserve">
+    <value>Controls whether the ToolBar will automatically size itself based on Button size.</value>
+  </data>
+  <data name="ToolBarBorderStyleDescr" xml:space="preserve">
+    <value>Controls what type of border the ToolBar control will have.</value>
+  </data>
+  <data name="ToolBarButtonClickDescr" xml:space="preserve">
+    <value>Occurs whenever a button in the ToolBar is clicked by the user.</value>
+  </data>
+  <data name="ToolBarButtonDropDownDescr" xml:space="preserve">
+    <value>Occurs whenever a button with the DropDownButton style is pressed.</value>
+  </data>
+  <data name="ToolBarButtonEnabledDescr" xml:space="preserve">
+    <value>Controls whether this button responds to user input.</value>
+  </data>
+  <data name="ToolBarButtonImageIndexDescr" xml:space="preserve">
+    <value>Identifies the image displayed on the button.</value>
+  </data>
+  <data name="ToolBarButtonMenuDescr" xml:space="preserve">
+    <value>The shortcut menu that will appear if this button's style is set to DropDownButton.</value>
+  </data>
+  <data name="ToolBarButtonInvalidDropDownMenuType" xml:space="preserve">
+    <value>The drop-down menu for a ToolBarButton must be of type ContextMenu.</value>
+  </data>
+  <data name="ToolBarButtonPartialPushDescr" xml:space="preserve">
+    <value>Controls whether the button should be displayed as partially pushed or not, but only if the style of the button is ToggleButton.</value>
+  </data>
+  <data name="ToolBarButtonPushedDescr" xml:space="preserve">
+    <value>Indicates whether the button is pushed or not. This is most commonly seen for buttons with the TOGGLEBUTTON style.</value>
+  </data>
+  <data name="ToolBarButtonsDescr" xml:space="preserve">
+    <value>The collection of ToolBarButtons that make up this ToolBar.</value>
+  </data>
+  <data name="ToolBarBadToolBarButton" xml:space="preserve">
+    <value>Parameter must be of type ToolBarButton.</value>
+  </data>
+  <data name="ToolBarButtonSizeDescr" xml:space="preserve">
+    <value>The size of the buttons on the control if the button contents do not require a larger size.</value>
+  </data>
+  <data name="ToolBarButtonStyleDescr" xml:space="preserve">
+    <value>Indicates what style of ToolBarButton this will be.</value>
+  </data>
+  <data name="ToolBarButtonTextDescr" xml:space="preserve">
+    <value>The caption to be displayed for this button.</value>
+  </data>
+  <data name="ToolBarButtonToolTipTextDescr" xml:space="preserve">
+    <value>The ToolTip text to be displayed for this button.</value>
+  </data>
+  <data name="ToolBarButtonVisibleDescr" xml:space="preserve">
+    <value>Indicates whether this button should be visible.</value>
+  </data>
+  <data name="ToolBarDividerDescr" xml:space="preserve">
+    <value>Controls whether the ToolBar will display a 3-D line at the top of its client area.</value>
+  </data>
+  <data name="ToolBarDropDownArrowsDescr" xml:space="preserve">
+    <value>Controls whether the ToolBar will display an arrow on the side of drop-down buttons.</value>
+  </data>
+  <data name="ToolBarImageListDescr" xml:space="preserve">
+    <value>The ImageList from which this ToolBar will get all of the button images.</value>
+  </data>
+  <data name="ToolBarImageSizeDescr" xml:space="preserve">
+    <value>The size of the images within the ToolBar's ImageList.</value>
+  </data>
+  <data name="ToolBarShowToolTipsDescr" xml:space="preserve">
+    <value>Indicates whether ToolTips will be shown for each of the buttons, if available.</value>
+  </data>
+  <data name="ToolBarTextAlignDescr" xml:space="preserve">
+    <value>Controls how the text is positioned relative to the Image in each button.</value>
+  </data>
+  <data name="ToolBarWrappableDescr" xml:space="preserve">
+    <value>Indicates if more than one row of buttons is allowed.</value>
+  </data>
   <data name="ToolStripAllowClickThrough" xml:space="preserve">
     <value>Allows the control to be interacted when window does not have focus.</value>
   </data>

@@ -1,20 +1,12 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
 
-using System.ComponentModel;
-
-namespace System.Windows.Forms;
-
-#nullable disable
-
-/// <summary>
-///  This type is provided for binary compatibility with .NET Framework and is not intended to be used directly from your code.
-/// </summary>
-[Obsolete(
-    Obsoletions.ToolBarMessage,
-    error: false,
-    DiagnosticId = Obsoletions.UnsupportedControlsDiagnosticId,
-    UrlFormat = Obsoletions.SharedUrlFormat)]
-[EditorBrowsable(EditorBrowsableState.Never)]
-[Browsable(false)]
-public delegate void ToolBarButtonClickEventHandler(object sender, ToolBarButtonClickEventArgs e);
+namespace System.Windows.Forms
+{
+    /// <summary>
+    ///  Represents a method that will handle the <see cref='ToolBar.ButtonClick'/>
+    ///  event of a <see cref='ToolBar'/>.
+    /// </summary>
+    public delegate void ToolBarButtonClickEventHandler(object sender, ToolBarButtonClickEventArgs e);
+}
