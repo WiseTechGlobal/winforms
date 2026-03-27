@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Drawing;
@@ -41,7 +41,7 @@ public class PaintEventArgsResetGraphicsTests
     private static readonly Rectangle s_backgroundClip = new(0, 0, 10, 10);
 
     /// <summary>
-    ///  A control that:
+    ///  <para>A control that:</para>
     ///  <list type="bullet">
     ///   <item>In <see cref="Control.OnPaintBackground"/>: accesses the public <c>Graphics</c>
     ///   property first (triggering the bug path), then applies a small clip in the top-left corner.</item>
@@ -99,7 +99,7 @@ public class PaintEventArgsResetGraphicsTests
     ///  <para>
     ///   This test catches the bug in all build configurations. Without the fix,
     ///   <c>ResetGraphics()</c> silently skips <c>graphics.Restore()</c> (because
-    ///   <c>_savedGraphicsState</c> is <c>null</c>), and the background clip bleeds into
+    ///   <c>_savedGraphicsState</c> is <see langword="null"/>), and the background clip bleeds into
     ///   <c>OnPaint</c>, causing <c>CentrePointVisibleInOnPaint</c> to be <see langword="false"/>.
     ///  </para>
     /// </remarks>
