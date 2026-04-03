@@ -68,12 +68,12 @@ public unsafe class WebBrowserSiteBase :
     {
         get
         {
-            if (_host.TryGetTarget(out var target))
+            if (_host.TryGetTarget(out WebBrowserBase? target))
             {
                 return target;
             }
 
-            return null!;
+            throw new ObjectDisposedException(nameof(WebBrowserBase));
         }
     }
 

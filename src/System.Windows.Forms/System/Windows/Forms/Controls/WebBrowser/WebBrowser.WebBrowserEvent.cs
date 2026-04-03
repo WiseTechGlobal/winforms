@@ -18,12 +18,12 @@ public partial class WebBrowser
         {
             get
             {
-                if (_parent.TryGetTarget(out var target))
+                if (_parent.TryGetTarget(out WebBrowser? target))
                 {
                     return target;
                 }
 
-                return null!;
+                throw new ObjectDisposedException(nameof(WebBrowser));
             }
         }
 
