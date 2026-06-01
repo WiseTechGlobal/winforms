@@ -7005,6 +7005,21 @@ public partial class Form : ContainerControl
     }
 
     /// <summary>
+    ///  Handles the WM_MENUSELECT message.
+    /// </summary>
+    private void WmMenuSelect(ref Message m)
+    {
+#pragma warning disable WFDEV006 // Type or member is obsolete
+        if (Properties.TryGetValue(s_propCurMenu, out MainMenu? curMenu))
+        {
+            curMenu.ProcessMenuSelect(ref m);
+        }
+#pragma warning restore WFDEV006
+
+        base.WndProc(ref m);
+    }
+
+    /// <summary>
     ///  Handles the WM_MENUCHAR message.
     /// </summary>
     private void WmMenuChar(ref Message m)
@@ -7405,6 +7420,9 @@ public partial class Form : ContainerControl
             //    break;
             case PInvokeCore.WM_INITMENUPOPUP:
                 WmInitMenuPopup(ref m);
+                break;
+            case PInvokeCore.WM_MENUSELECT:
+                WmMenuSelect(ref m);
                 break;
             case PInvokeCore.WM_UNINITMENUPOPUP:
                 WmUnInitMenuPopup(ref m);

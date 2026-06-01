@@ -624,6 +624,44 @@ namespace System.Windows.Forms
             return false;
         }
 
+        internal bool ProcessMenuSelect(ref Message m)
+        {
+            const int MF_POPUP = 0x0010;
+            const int MF_SYSMENU = 0x2000;
+
+            int item = PARAM.SignedLOWORD((nint)m.WParamInternal);
+            int flags = PARAM.SignedHIWORD((nint)m.WParamInternal);
+            MenuItem? menuItem = null;
+
+            if ((flags & MF_SYSMENU) == 0)
+            {
+                if ((flags & MF_POPUP) == 0)
+                {
+                    Command? command = Command.GetCommandFromID(item);
+                    if (command?.Target is MenuItem.MenuItemData data)
+                    {
+                        menuItem = data.baseItem;
+                    }
+                }
+                else
+                {
+                    Menu menu = (m.LParamInternal == handle) ? this : FindMenuItem(FindHandle, m.LParamInternal);
+                    if (menu is not null && item >= 0 && item < menu.ItemCount)
+                    {
+                        menuItem = menu.MenuItems[item];
+                    }
+                }
+            }
+
+            if (menuItem is not null)
+            {
+                menuItem.PerformSelect();
+                return true;
+            }
+
+            return false;
+        }
+
         protected internal virtual bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             MenuItem item = FindMenuItem(FindShortcut, (IntPtr)(int)keyData);

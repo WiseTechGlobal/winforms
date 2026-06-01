@@ -11279,6 +11279,38 @@ public unsafe partial class Control :
     }
 
     /// <summary>
+    ///  Handles the WM_MENUSELECT message.
+    /// </summary>
+    private void WmMenuSelect(ref Message m)
+    {
+#pragma warning disable WFDEV006 // Type or member is obsolete
+        if (Properties.TryGetValue(s_contextMenuProperty, out ContextMenu? contextMenu))
+        {
+            contextMenu.ProcessMenuSelect(ref m);
+        }
+
+        DefWndProc(ref m);
+#pragma warning restore WFDEV006
+    }
+
+    /// <summary>
+    ///  Handles the WM_EXITMENULOOP message. If this control has a context menu, its
+    ///  Collapse event is raised.
+    /// </summary>
+    private void WmExitMenuLoop(ref Message m)
+    {
+#pragma warning disable WFDEV006 // Type or member is obsolete
+        if (m.WParamInternal != 0u &&
+            Properties.TryGetValue(s_contextMenuProperty, out ContextMenu? contextMenu))
+        {
+            contextMenu.OnCollapse(EventArgs.Empty);
+        }
+
+        DefWndProc(ref m);
+#pragma warning restore WFDEV006
+    }
+
+    /// <summary>
     ///  Handles the WM_INITMENUPOPUP message. Dispatches to the legacy <see cref="ContextMenu"/> so
     ///  that <see cref="MenuItem.Popup"/> events fire for submenus. Without this, controls that own
     ///  a <see cref="ContextMenu"/> (e.g. via <c>TrackPopupMenuEx</c>) would never receive submenu
@@ -12765,8 +12797,12 @@ public unsafe partial class Control :
                 WmInitMenuPopup(ref m);
                 break;
 
-            case PInvokeCore.WM_EXITMENULOOP:
             case PInvokeCore.WM_MENUSELECT:
+                WmMenuSelect(ref m);
+                break;
+            case PInvokeCore.WM_EXITMENULOOP:
+                WmExitMenuLoop(ref m);
+                break;
             default:
 
                 // If we received a thread execute message, then execute it.
