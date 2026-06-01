@@ -276,6 +276,7 @@ public partial class BindingContext : ICollection
         if (wRef is null)
         {
             _listManagers.Add(key, new WeakReference(bindingManagerBase, false));
+            OnAddingNewItemToListManager(key, bindingManagerBase);
         }
         else
         {
@@ -285,6 +286,10 @@ public partial class BindingContext : ICollection
         ScrubWeakRefs();
         // Return the final binding manager
         return bindingManagerBase;
+    }
+
+    protected virtual void OnAddingNewItemToListManager(object key, BindingManagerBase bindingManager)
+    {
     }
 
     private static void CheckPropertyBindingCycles(BindingContext newBindingContext, Binding propBinding)
