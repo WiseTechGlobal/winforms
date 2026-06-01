@@ -1,55 +1,55 @@
-# WM_MENUSELECT Root-Fix Report / WM_MENUSELECT 根因修复报告
+# WM_MENUSELECT root-fix report / WM_MENUSELECT 根因修复报告
 
 Date: 2026-06-01T18:36:25.924+08:00
 
 ## English
 
-### Why the root fix is justified
-- In the old CargoWise legacy repo, `Control.WmMenuSelect` handled `WM_MENUSELECT` inline and `Control.WmExitMenuLoop` raised `ContextMenu.Collapse`.
-- In the new winforms fork, `WM_MENUSELECT` was missing from the legacy menu flow and `WM_EXITMENULOOP` still fell through to the default path, so both `MenuItem.Select` and `ContextMenu.Collapse` parity were at risk.
-- The current winforms fix restores framework parity in three places: `Control.WndProc`, `Form.WndProc`, and `Menu.ProcessMenuSelect`, plus the restored `Control.WmExitMenuLoop` path.
+### Why the root fix is valid
+- In the legacy CargoWise WinForms repo, `Control.WmMenuSelect` handled `WM_MENUSELECT` and called `MenuItem.PerformSelect()` for both command and popup menu items.
+- In the new WinForms repo, that behavior is restored through `Control.WmMenuSelect`, `Form.WmMenuSelect`, and `Menu.ProcessMenuSelect`.
+- So the change is framework parity restoration, not an app-level workaround.
+- CargoWise PR #53445 is the downstream workaround; this repo change restores the missing framework behavior.
 
-### Why the test belongs in the new winforms repo
-- The regression tests live under `src/test/unit/System.Windows.Forms/System/Windows/Forms/Controls/Unsupported/ContextMenu/`.
-- That is the correct home because the bug is on the legacy menu surface (`ContextMenu`, `MainMenu`, and `MenuItem.Select`).
-- The tests currently prove three important paths: command-item selection from `Control`, popup-item selection from `Form`, and context-menu collapse on `WM_EXITMENULOOP`.
+### Test placement
+- The tests now live in the new WinForms unit test tree:
+  - `src/test/unit/System.Windows.Forms/System/Windows/Forms/Controls/Unsupported/ContextMenu/MenuSelectTests.cs`
+  - `src/test/unit/System.Windows.Forms/System/Windows/Forms/Controls/Unsupported/ContextMenu/ContextMenuSubMenuPopupTests.cs`
+- These tests cover:
+  - command-item `WM_MENUSELECT` on `Control`
+  - popup-item `WM_MENUSELECT` on `Form`
+  - direct submenu `WM_INITMENUPOPUP`
+  - nested submenu `WM_INITMENUPOPUP`
 
-### Similar omissions still worth tracking
-- The only clear code-path omission found in this comparison was `Control.WmExitMenuLoop`; that is now fixed.
-- Test coverage could still be hardened around the `MF_POPUP` nested-submenu branch and the `MF_SYSMENU` negative path in `Menu.ProcessMenuSelect`.
+### Similar migration omissions to review
+- The two regression tests originally lived under `src/System.Windows.Forms.Legacy/System.Windows.Forms.Legacy.Tests/`; that was the migration drift and has now been corrected.
+- If we want fuller parity, review the remaining legacy-menu tests under `src/System.Windows.Forms.Legacy/System.Windows.Forms.Legacy.Tests/` (for example `ContextMenuTests.cs`, `MenuTests.cs`, `MenuItemTests.cs`, `MenuItemCollectionTests.cs`, and the `MainMenu*` tests) to decide whether they should also be mirrored into the new unit tree.
 
-### Draft PR wording
-**Title**
-Restore `WM_MENUSELECT` dispatch for legacy menus
-
-**Body**
-- Restore framework-level `WM_MENUSELECT` routing so legacy `MenuItem.Select` fires again for both command and popup items.
-- Restore `WM_EXITMENULOOP` routing so legacy `ContextMenu.Collapse` still fires.
-- Keep the new winforms behavior aligned with the old legacy repo instead of forcing app code to rely on workarounds.
-- Add regression coverage in the new `System.Windows.Forms` unit test tree for the control and form entry points.
+### Validation
+- `dotnet build src\test\unit\System.Windows.Forms\System.Windows.Forms.Tests.csproj --no-restore` succeeded.
+- `dotnet test` in this environment aborts because the local `testhost` package is unavailable, so build success is the reliable validation signal here.
 
 ## 中文
 
 ### 为什么这个根因修复是成立的
-- 在旧的 CargoWise legacy 仓库里，`Control.WmMenuSelect` 直接处理 `WM_MENUSELECT`，而 `Control.WmExitMenuLoop` 会触发 `ContextMenu.Collapse`。
-- 在新的 winforms fork 里，`WM_MENUSELECT` 的 legacy 菜单分发路径缺失，`WM_EXITMENULOOP` 也仍然会落到默认分支，所以 `MenuItem.Select` 和 `ContextMenu.Collapse` 都有回归风险。
-- 现在的 winforms 修复把框架行为补回到三处：`Control.WndProc`、`Form.WndProc`、`Menu.ProcessMenuSelect`，并恢复了 `Control.WmExitMenuLoop` 路径。
+- 在旧的 CargoWise WinForms 仓库里，`Control.WmMenuSelect` 直接处理 `WM_MENUSELECT`，并且会对 command / popup 菜单项调用 `MenuItem.PerformSelect()`。
+- 在新的 WinForms 仓库里，这个行为通过 `Control.WmMenuSelect`、`Form.WmMenuSelect` 和 `Menu.ProcessMenuSelect` 补回来了。
+- 所以这次改动是框架行为补齐，不是应用层 workaround。
+- CargoWise PR #53445 只是下游 workaround；当前这个仓库改动才是框架层的缺失修复。
 
-### 为什么测试应该放在新的 winforms 仓库里
-- 回归测试位于 `src/test/unit/System.Windows.Forms/System/Windows/Forms/Controls/Unsupported/ContextMenu/`。
-- 这个位置是正确的，因为问题出在 legacy 菜单表面（`ContextMenu`、`MainMenu`、`MenuItem.Select`）。
-- 现有测试已经覆盖三个关键路径：`Control` 的 command-item 选择、`Form` 的 popup-item 选择，以及 `WM_EXITMENULOOP` 的 collapse 事件。
+### 测试放置位置
+- 测试已经移动到新的 WinForms 单测目录：
+  - `src/test/unit/System.Windows.Forms/System/Windows/Forms/Controls/Unsupported/ContextMenu/MenuSelectTests.cs`
+  - `src/test/unit/System.Windows.Forms/System/Windows/Forms/Controls/Unsupported/ContextMenu/ContextMenuSubMenuPopupTests.cs`
+- 这两组测试覆盖：
+  - `Control` 上 command-item 的 `WM_MENUSELECT`
+  - `Form` 上 popup-item 的 `WM_MENUSELECT`
+  - 直接子菜单的 `WM_INITMENUPOPUP`
+  - 嵌套子菜单的 `WM_INITMENUPOPUP`
 
-### 仍然建议继续补齐的类似遗漏
-- 本次对比里，唯一明确的代码路径遗漏就是 `Control.WmExitMenuLoop`；这项已经修复。
-- 测试覆盖还可以继续加固 `Menu.ProcessMenuSelect` 的 `MF_POPUP` 嵌套子菜单分支和 `MF_SYSMENU` 负向路径。
+### 其他类似遗漏的检查项
+- 这两份回归测试原本放在 `src/System.Windows.Forms.Legacy/System.Windows.Forms.Legacy.Tests/` 下；这就是这次迁移漂移，已经修正。
+- 如果要继续补齐更完整的 parity，建议继续审查 `src/System.Windows.Forms.Legacy/System.Windows.Forms.Legacy.Tests/` 下剩余的菜单类测试（例如 `ContextMenuTests.cs`、`MenuTests.cs`、`MenuItemTests.cs`、`MenuItemCollectionTests.cs` 以及各个 `MainMenu*` 测试），再决定是否需要同步到新的单测树。
 
-### PR 文案草稿
-**标题**
-恢复 legacy 菜单的 `WM_MENUSELECT` 分发
-
-**正文**
-- 恢复框架级 `WM_MENUSELECT` 路由，让 legacy `MenuItem.Select` 在 command 和 popup 菜单项上重新触发。
-- 恢复 `WM_EXITMENULOOP` 路由，让 legacy `ContextMenu.Collapse` 继续触发。
-- 让新的 winforms 行为继续和旧的 legacy 仓库保持一致，而不是依赖下游应用把问题当成 workaround。
-- 在新的 `System.Windows.Forms` 单元测试树中补上 control 和 form 两个入口的回归测试。
+### 验证
+- `dotnet build src\test\unit\System.Windows.Forms\System.Windows.Forms.Tests.csproj --no-restore` 已成功。
+- 这个环境下 `dotnet test` 会因为本地缺少 `testhost` 包而中止，所以当前最可靠的本地验证是编译成功。

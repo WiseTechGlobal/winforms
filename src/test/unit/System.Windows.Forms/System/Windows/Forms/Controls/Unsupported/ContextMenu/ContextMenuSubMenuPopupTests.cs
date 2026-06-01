@@ -125,7 +125,7 @@ public class ContextMenuSubMenuPopupTests
             nestedPopupFired,
             "MenuItem.Popup must fire for a nested submenu when WM_INITMENUPOPUP targets its HMENU.");
 
-        Assert.Equal(1, nestedItem.MenuItems.Count);
+        Assert.Single(nestedItem.MenuItems);
         Assert.Equal("NestedDynamicItem", nestedItem.MenuItems[0].Text);
     }
 }
