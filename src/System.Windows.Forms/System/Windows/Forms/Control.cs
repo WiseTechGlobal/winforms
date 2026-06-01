@@ -1335,15 +1335,9 @@ public unsafe partial class Control :
                 return;
             }
 
-            if (oldValue is not null)
-            {
-                oldValue.Disposed -= DetachContextMenuStrip;
-            }
+            oldValue?.Disposed -= DetachContextMenuStrip;
 
-            if (value is not null)
-            {
-                value.Disposed += DetachContextMenuStrip;
-            }
+            value?.Disposed += DetachContextMenuStrip;
 
             OnContextMenuStripChanged(EventArgs.Empty);
         }
@@ -13114,15 +13108,9 @@ public unsafe partial class Control :
                 return;
             }
 
-            if (oldValue is not null)
-            {
-                oldValue.Disposed -= DetachContextMenu;
-            }
+            oldValue?.Disposed -= DetachContextMenu;
 
-            if (value is not null)
-            {
-                value.Disposed += DetachContextMenu;
-            }
+            value?.Disposed += DetachContextMenu;
 
             OnContextMenuChanged(EventArgs.Empty);
         }
