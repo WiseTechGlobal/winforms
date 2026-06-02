@@ -79,12 +79,10 @@ public class LazyMenuPopulationRegressionTests
         Assert.NotEqual(IntPtr.Zero, controlHandle);
         Assert.NotEqual(IntPtr.Zero, contextMenuHandle);
 
-        // "Grid Colors" is at index 0 in the context menu; it has children so Windows sets MF_POPUP.
+        // "Grid Colors" is at native index 0 in the context menu; it has children so Windows sets MF_POPUP.
         IntPtr wParam = unchecked((IntPtr)(0 | (MF_POPUP << 16)));
 
         // Act: simulate Windows delivering WM_MENUSELECT when the user hovers "Grid Colors".
-        // Before the fix, Control.WndProc fell through to DefWndProc; ProcessMenuSelect was
-        // never reached, MenuItem.Select never fired, and the placeholder items were not replaced.
         SendMessage(controlHandle, WM_MENUSELECT, wParam, contextMenuHandle);
 
         // Assert: the submenu must contain the live entries, not the original placeholders.
@@ -92,6 +90,53 @@ public class LazyMenuPopulationRegressionTests
         Assert.Equal("Standard*",     gridColorsItem.MenuItems[0].Text);
         Assert.Equal("Dark Theme",    gridColorsItem.MenuItems[1].Text);
         Assert.Equal("High Contrast", gridColorsItem.MenuItems[2].Text);
+    }
+
+    /// <summary>
+    ///  Regression test for the hidden-items index mismatch: when context menu items have
+    ///  <c>Visible = false</c>, the native menu skips them, so the native index differs from
+    ///  the managed <see cref="Menu.MenuItems"/> index.  The original ProcessMenuSelect used
+    ///  <c>MenuItems[nativeIndex]</c> which returned the wrong item.  The fix uses native
+    ///  Win32 APIs (GetMenuItemID, GetSubMenu) to navigate the actual menu structure.
+    /// </summary>
+    [StaFact]
+    public void GridColors_SelectHandler_WorksWithHiddenItems_WhenNativeIndexDiffersFromManaged()
+    {
+        using Control control = new() { Visible = true };
+
+        // Build a context menu with hidden items before Grid Colors to create index mismatch.
+        MenuItem viewItem = new("View");
+        MenuItem deactivateItem = new("Deactivate") { Visible = false };
+        MenuItem activateItem = new("Activate") { Visible = false };
+        MenuItem gridColorsItem = new("Grid Colors");
+        gridColorsItem.MenuItems.Add(new MenuItem("Placeholder"));
+
+        bool selectFired = false;
+        gridColorsItem.Select += (_, _) =>
+        {
+            selectFired = true;
+            gridColorsItem.MenuItems.Clear();
+            gridColorsItem.MenuItems.Add(new MenuItem("Scheme A"));
+            gridColorsItem.MenuItems.Add(new MenuItem("Scheme B"));
+        };
+
+        // Managed indices: View=0, Deactivate=1(hidden), Activate=2(hidden), GridColors=3
+        // Native indices:  View=0, GridColors=1 (hidden items skipped)
+        ContextMenu contextMenu = new(new[] { viewItem, deactivateItem, activateItem, gridColorsItem });
+        control.ContextMenu = contextMenu;
+
+        IntPtr controlHandle = control.Handle;
+        IntPtr contextMenuHandle = contextMenu.Handle;
+
+        // Grid Colors is at NATIVE index 1 (after View), not managed index 3.
+        IntPtr wParam = unchecked((IntPtr)(1 | (MF_POPUP << 16)));
+
+        SendMessage(controlHandle, WM_MENUSELECT, wParam, contextMenuHandle);
+
+        Assert.True(selectFired, "Select event should fire on Grid Colors despite hidden items shifting the native index.");
+        Assert.Equal(2, gridColorsItem.MenuItems.Count);
+        Assert.Equal("Scheme A", gridColorsItem.MenuItems[0].Text);
+        Assert.Equal("Scheme B", gridColorsItem.MenuItems[1].Text);
     }
 
     /// <summary>

@@ -112,6 +112,12 @@ internal static class LegacyMenuUnsafeNativeMethods
     [DllImport(Libraries.User32, ExactSpelling = true)]
     public static extern bool SetMenuDefaultItem(HandleRef hMenu, int uItem, bool fByPos);
 
+    [DllImport(Libraries.User32, ExactSpelling = true)]
+    public static extern int GetMenuItemID(IntPtr hMenu, int nPos);
+
+    [DllImport(Libraries.User32, ExactSpelling = true)]
+    public static extern IntPtr GetSubMenu(IntPtr hMenu, int nPos);
+
     public static bool GetMenuItemInfo(HandleRef hMenu, int uItem, bool fByPosition, LegacyMenuNativeMethods.MENUITEMINFO_T lpmii)
     {
         bool result = GetMenuItemInfo(hMenu.Handle, uItem, fByPosition, lpmii);
