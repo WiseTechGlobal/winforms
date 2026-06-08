@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Runtime.InteropServices;
@@ -121,6 +121,20 @@ internal static class LegacyMenuUnsafeNativeMethods
     public static bool GetMenuItemInfo(HandleRef hMenu, int uItem, bool fByPosition, LegacyMenuNativeMethods.MENUITEMINFO_T lpmii)
     {
         bool result = GetMenuItemInfo(hMenu.Handle, uItem, fByPosition, lpmii);
+        GC.KeepAlive(hMenu.Wrapper);
+        return result;
+    }
+
+    public static int GetMenuItemID(HandleRef hMenu, int nPos)
+    {
+        int result = GetMenuItemID(hMenu.Handle, nPos);
+        GC.KeepAlive(hMenu.Wrapper);
+        return result;
+    }
+
+    public static IntPtr GetSubMenu(HandleRef hMenu, int nPos)
+    {
+        IntPtr result = GetSubMenu(hMenu.Handle, nPos);
         GC.KeepAlive(hMenu.Wrapper);
         return result;
     }
