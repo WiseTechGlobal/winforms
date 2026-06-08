@@ -11277,14 +11277,34 @@ public unsafe partial class Control :
     /// </summary>
     private void WmMenuSelect(ref Message m)
     {
-#pragma warning disable WFDEV006 // Type or member is obsolete
-        if (Properties.TryGetValue(s_contextMenuProperty, out ContextMenu? contextMenu))
+        const int MF_POPUP = 0x0010;
+        const int MF_SYSMENU = 0x2000;
+
+        int item = PARAM.SignedLOWORD((nint)m.WParamInternal);
+        int flags = PARAM.SignedHIWORD((nint)m.WParamInternal);
+        IntPtr hmenu = m.LParamInternal;
+        MenuItem? menuItem = null;
+
+        if ((flags & MF_SYSMENU) != 0)
         {
-            contextMenu.ProcessMenuSelect(ref m);
+            // nothing
+        }
+        else if ((flags & MF_POPUP) == 0)
+        {
+            Command? command = Command.GetCommandFromID(item);
+            if (command?.Target is MenuItem.MenuItemData data)
+            {
+                menuItem = data.baseItem;
+            }
+        }
+        else
+        {
+            menuItem = GetMenuItemFromHandleId(hmenu, item);
         }
 
+        menuItem?.PerformSelect();
+
         DefWndProc(ref m);
-#pragma warning restore WFDEV006
     }
 
     /// <summary>
@@ -11293,15 +11313,52 @@ public unsafe partial class Control :
     /// </summary>
     private void WmExitMenuLoop(ref Message m)
     {
-#pragma warning disable WFDEV006 // Type or member is obsolete
-        if (m.WParamInternal != 0u &&
-            Properties.TryGetValue(s_contextMenuProperty, out ContextMenu? contextMenu))
+        if (m.WParamInternal != 0u)
         {
-            contextMenu.OnCollapse(EventArgs.Empty);
+            if (Properties.TryGetValue(s_contextMenuProperty, out ContextMenu? contextMenu))
+            {
+                contextMenu.OnCollapse(EventArgs.Empty);
+            }
         }
 
         DefWndProc(ref m);
-#pragma warning restore WFDEV006
+    }
+
+    private MenuItem? GetMenuItemFromHandleId(IntPtr hmenu, int item)
+    {
+        int id = LegacyMenuUnsafeNativeMethods.GetMenuItemID(hmenu, item);
+        if (id == unchecked((int)0xFFFFFFFF))
+        {
+            IntPtr childMenu = LegacyMenuUnsafeNativeMethods.GetSubMenu(hmenu, item);
+            int count = LegacyMenuUnsafeNativeMethods.GetMenuItemCount(new HandleRef(this, childMenu));
+            MenuItem? found = null;
+
+            for (int i = 0; i < count; i++)
+            {
+                found = GetMenuItemFromHandleId(childMenu, i);
+                if (found is not null)
+                {
+                    Menu parent = found.Parent;
+                    if (parent is MenuItem item1)
+                    {
+                        found = item1;
+                        break;
+                    }
+
+                    found = null;
+                }
+            }
+
+            return found;
+        }
+
+        Command? command = Command.GetCommandFromID(id);
+        if (command?.Target is MenuItem.MenuItemData data)
+        {
+            return data.baseItem;
+        }
+
+        return null;
     }
 
     /// <summary>
