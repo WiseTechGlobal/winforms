@@ -2,8 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
-namespace System.Windows.Forms.Tests;
+namespace System.Windows.Forms.Legacy.Tests;
 
 /// <summary>
 ///  Regression tests for WM_INITMENUPOPUP dispatch on a plain <see cref="Control"/> that
@@ -19,8 +20,8 @@ namespace System.Windows.Forms.Tests;
 ///  </para>
 ///  <para>
 ///   Without the fix in <see cref="Control.WndProc"/>, WM_INITMENUPOPUP falls through to
-///  DefWndProc, so <see cref="Menu.ProcessInitMenuPopup"/> is never reached,
-///  <see cref="MenuItem.Popup"/> never fires, and placeholder items are never replaced.
+///   DefWndProc (grouped with WM_EXITMENULOOP / default), so
+///   <see cref="MenuItem.Popup"/> never fires and placeholder items are never replaced.
 ///  </para>
 /// </remarks>
 public class ContextMenuSubMenuPopupTests
@@ -68,9 +69,9 @@ public class ContextMenuSubMenuPopupTests
 
         // Act: simulate Windows delivering WM_INITMENUPOPUP to the control's HWND for the submenu.
         //
-        // Before the fix, Control.WndProc fell through to DefWndProc —
-        // ContextMenu.ProcessInitMenuPopup is never reached, Popup never fires, and the
-        // placeholder is never replaced.
+        // Before the fix, Control.WndProc groups WM_INITMENUPOPUP with WM_EXITMENULOOP and calls
+        // DefWndProc — ContextMenu.ProcessInitMenuPopup is never reached, Popup never fires, and
+        // the placeholder is never replaced.
         SendMessage(controlHandle, WM_INITMENUPOPUP, subMenuHandle, IntPtr.Zero);
 
         // Assert
@@ -125,7 +126,7 @@ public class ContextMenuSubMenuPopupTests
             nestedPopupFired,
             "MenuItem.Popup must fire for a nested submenu when WM_INITMENUPOPUP targets its HMENU.");
 
-        Assert.Single(nestedItem.MenuItems);
+        Assert.Equal(1, nestedItem.MenuItems.Count);
         Assert.Equal("NestedDynamicItem", nestedItem.MenuItems[0].Text);
     }
 }
