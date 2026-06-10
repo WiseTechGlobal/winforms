@@ -182,9 +182,10 @@ internal class RelatedCurrencyManager : CurrencyManager
                 SetDataSource(_fieldInfo.GetValue(currencyManager.Current));
                 listposition = (Count > 0 ? 0 : -1);
             }
-            // WiseTech: RewireParentChangeHandler can result in this being called on collections that do not AllowNew 
-            // This results in the `currencyManager.AddNew();` line being trigger result in a NotSupportedException,
-            // As its is common to have collections that throw NotSupportedException on AddNew, if the collection is readonly.
+
+            // WiseTech: RewireParentChangeHandler can result in this method being called on collections that do not allow new rows.
+            // This would trigger the `currencyManager.AddNew();` call below and result in a NotSupportedException,
+            // as it is common for read-only collections to throw NotSupportedException on AddNew.
             else if (currencyManager.List is IBindingList { AllowNew: true })
             {
                 // APPCOMPAT: bring back the Everett behavior where the currency manager adds an item and
