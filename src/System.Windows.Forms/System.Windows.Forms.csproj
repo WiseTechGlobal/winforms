@@ -20,6 +20,7 @@
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
     <UsePublicApiAnalyzers>true</UsePublicApiAnalyzers>
     <StrongNameKeyId>ECMA</StrongNameKeyId>
+    <PackageReleaseNotes>HotFix - Guard against NotSupportedException for IBindingList that do not support AddNew.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
