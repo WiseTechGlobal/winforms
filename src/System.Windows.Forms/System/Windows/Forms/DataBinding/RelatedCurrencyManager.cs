@@ -184,31 +184,18 @@ internal class RelatedCurrencyManager : CurrencyManager
             }
             else
             {
-                // APPCOMPAT: bring back the Everett behavior where the currency manager adds an item and
-                // then it cancels the addition.
-                //
-                // really, really hocky.
-                // will throw if the list in the curManager is not IBindingList
-                // and this will fail if the IBindingList does not have list change notification. read on....
-                // when a new item will get added to an empty parent table,
-                // the table will fire OnCurrentChanged and this method will get executed again
-                // allowing us to set the data source to an object with the right properties (so we can show
-                // metadata at design time).
-                // we then call CancelCurrentEdit to remove the dummy row, but making sure to ignore any
-                // OnCurrentItemChanged that results from this action (to avoid infinite recursion)
-                currencyManager.AddNew();
-                try
-                {
-                    IgnoreItemChangedTable.Add(currencyManager);
-                    currencyManager.CancelCurrentEdit();
-                }
-                finally
-                {
-                    if (IgnoreItemChangedTable.Contains(currencyManager))
-                    {
-                        IgnoreItemChangedTable.Remove(currencyManager);
-                    }
-                }
+                // WiseTech (WI01068460): The stock "Everett appcompat" behaviour was to call
+                // currencyManager.AddNew() (then CancelCurrentEdit) to materialise a dummy row in an empty
+                // parent so child metadata could be shown at design time. On CargoWise business-object
+                // collections that dummy AddNew runs SetCollectionRelationships/SetDefaultsForNewChild against
+                // a child whose parent navigation is not yet wired (orphaned/detached in nested binding paths),
+                // producing a NullReferenceException; it also throws NotSupportedException for read-only or
+                // non-IBindingList parents. .NET Framework avoided this in ZBindingContext by pointing the child
+                // at an empty list instead of adding a row. Reproduce that here: no AddNew, just bind an empty
+                // source and reset the position. When the parent later gains a real current row, CurrentChanged
+                // re-enters this method through the Count > 0 branch and binds the genuine child list.
+                SetDataSource(new BindingList<object> { AllowNew = false, AllowEdit = false, AllowRemove = false });
+                listposition = -1;
             }
         }
         else
