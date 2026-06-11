@@ -321,6 +321,15 @@ public partial class BindingContext : ICollection
         }
     }
 
+    /// <summary>
+    ///  Optional factory supplying the placeholder list bound to a related currency manager whose parent is
+    ///  empty. When unset, a read-only <see cref="BindingList{T}"/> of <see cref="object"/> is used. Hosts can
+    ///  set this to a type-preserving empty list (for example one implementing the host's business-object
+    ///  collection contract) so bound data grids keep their column styles instead of binding to a column-less
+    ///  placeholder.
+    /// </summary>
+    public static Func<IBindingList>? EmptyParentPlaceholderFactory { get; set; }
+
     private static void CheckPropertyBindingCycles(BindingContext newBindingContext, Binding propBinding)
     {
         Debug.Assert(newBindingContext is not null, "Always called with a non-null BindingContext");

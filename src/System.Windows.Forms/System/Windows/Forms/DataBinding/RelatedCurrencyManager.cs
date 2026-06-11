@@ -185,7 +185,11 @@ internal class RelatedCurrencyManager : CurrencyManager
     {
         if (_parentManager is CurrencyManager parentCurrencyManager && parentCurrencyManager.Count == 0)
         {
-            SetDataSource(new BindingList<object> { AllowNew = false, AllowEdit = false, AllowRemove = false });
+            // Prefer a host-supplied placeholder (e.g. CargoWise's TempList, which keeps an IBusinessObjectCollection
+            // contract so bound grids retain their column styles). Fall back to a read-only BindingList<object>
+            // when no factory is registered.
+            SetDataSource(BindingContext.EmptyParentPlaceholderFactory?.Invoke()
+                ?? new BindingList<object> { AllowNew = false, AllowEdit = false, AllowRemove = false });
             listposition = -1;
 
             OnPositionChanged(EventArgs.Empty);
