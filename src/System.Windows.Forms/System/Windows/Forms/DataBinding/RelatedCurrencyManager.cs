@@ -138,11 +138,17 @@ internal class RelatedCurrencyManager : CurrencyManager
     // WiseTech: RelatedCurrencyManager normally refreshes its child list whenever the parent manager raises
     // CurrentItemChanged. In CargoWise that can be too broad: item-change notifications may be raised while
     // bindings/business collections are already reacting to the same edit or AddNew flow, and refreshing the
-    // child list from that path can re-enter the same notification chain until the stack overflows. ZBindingContext
-    // avoided this on .NET Framework by intercepting BindingContextHashtable.Add, removing the default
-    // CurrentItemChanged subscription, and refreshing the child only when the parent's CurrentChanged event fires
-    // (via ZBindingContext.ParentCurrentChangedHandler). BindingContext uses a Dictionary on .NET 10, so this
-    // helper gives subclasses the same event swap without reflecting over RelatedCurrencyManager internals.
+    // child list from that path can re-enter the same notification chain until the stack overflows.
+    //
+    // On .NET Framework — and on .NET 8, where the client runs on Winzor's System.Windows.Forms, which kept the
+    // same Hashtable-backed BindingContext — ZBindingContext reflection-replaced the private Hashtable store so
+    // its BindingContextHashtable.Add override (Hashtable.Add is virtual) intercepted every manager registration
+    // inside EnsureListManager: it removed the default CurrentItemChanged subscription and refreshed the child
+    // only from the parent's CurrentChanged event via ZBindingContext.ParentCurrentChangedHandler. On .NET 10
+    // BindingContext stores managers in a Dictionary<HashKey, WeakReference> — the field cannot hold a Hashtable
+    // subclass and Dictionary<,>.Add is not virtual — so that interception is impossible. This helper gives
+    // subclasses (via BindingContext.OnListManagerAdded) the same event swap without reflecting over
+    // RelatedCurrencyManager internals.
     //
     // Because EnsureListManager is recursive, every parent manager is registered (and rewired through
     // BindingContext.OnListManagerAdded) before the next child manager down is constructed. Replacing an empty
@@ -162,13 +168,16 @@ internal class RelatedCurrencyManager : CurrencyManager
         }
     }
 
-    // WiseTech (WI01068460): .NET 10 port of ZBindingContext.ParentCurrentChangedHandler.ParentCurrentChanged
-    // from .NET Framework. When the parent has a current row, the child refreshes through the standard
-    // ParentManager_CurrentItemChanged path (unchanged above). When the parent is EMPTY, the .NET Framework
-    // handler did SetDataSource(new TempList()); listposition = -1; and raised the position/current events —
-    // it never let the standard path run the Everett AddNew()/CancelCurrentEdit() dance. On CargoWise
-    // business-object collections that dummy AddNew materialises an orphaned business object whose
-    // SetDefaultsForNewChild/property getters dereference a null parent navigation (NullReferenceException).
+    // WiseTech (WI01068460): .NET 10 port of ZBindingContext.ParentCurrentChangedHandler.ParentCurrentChanged,
+    // which the .NET Framework and .NET 8 (Winzor) interception installed in place of the stock handler. When
+    // the parent has a current row, the child refreshes through the standard ParentManager_CurrentItemChanged
+    // path (unchanged above). When the parent is EMPTY, that handler did SetDataSource(new TempList());
+    // listposition = -1; and raised the position/current events — it never let the standard path run the Everett
+    // AddNew()/CancelCurrentEdit() dance. Because the .NET 10 rewire originally replicated only the event swap
+    // and not this empty-parent branch, that AddNew ran against real CargoWise collections for the first time:
+    // it materialises an orphaned business object whose SetDefaultsForNewChild/property getters dereference a
+    // null parent navigation (the Group 1 NullReferenceException failures, e.g. CusExitItemCollection
+    // .SetDefaultsForNewChild and GlbCompanyCampaignItem.get_TrackingStatusDescription).
     // The placeholder list reports AllowNew=false, so any standard-path refresh that still sees it also skips
     // the AddNew branch. Child column metadata is unaffected: GetItemProperties resolves through _fieldInfo and
     // the parent manager, not through the bound list instance.

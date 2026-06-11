@@ -296,9 +296,10 @@ public partial class BindingContext : ICollection
     /// </summary>
     /// <remarks>
     ///  <para>WiseTech: introduced for code that previously replaced the .NET Framework
-    ///  <see cref="System.Collections.Hashtable"/> backing store with a subclass and intercepted add operations.
-    ///  In .NET 10, <see cref="_listManagers"/> is Dictionary-typed, so this hook preserves that extension point
-    ///  without changing the base behavior.</para>
+    ///  <see cref="System.Collections.Hashtable"/> backing store with a subclass and intercepted add operations
+    ///  (Hashtable.Add is virtual). In .NET 10, <see cref="_listManagers"/> is Dictionary-typed — the field cannot
+    ///  hold a Hashtable subclass and Dictionary&lt;,&gt;.Add is not virtual — so this hook preserves that
+    ///  extension point without changing the base behavior.</para>
     /// </remarks>
     protected virtual void OnListManagerAdded(BindingManagerBase bindingManagerBase)
     {
