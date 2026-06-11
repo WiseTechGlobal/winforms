@@ -296,9 +296,10 @@ public partial class BindingContext : ICollection
     /// </summary>
     /// <remarks>
     ///  <para>WiseTech: introduced for code that previously replaced the .NET Framework
-    ///  <see cref="System.Collections.Hashtable"/> backing store with a subclass and intercepted add operations.
-    ///  In .NET 10, <see cref="_listManagers"/> is Dictionary-typed, so this hook preserves that extension point
-    ///  without changing the base behavior.</para>
+    ///  <see cref="System.Collections.Hashtable"/> backing store with a subclass and intercepted add operations
+    ///  (Hashtable.Add is virtual). In .NET 10, <see cref="_listManagers"/> is Dictionary-typed — the field cannot
+    ///  hold a Hashtable subclass and Dictionary&lt;,&gt;.Add is not virtual — so this hook preserves that
+    ///  extension point without changing the base behavior.</para>
     /// </remarks>
     protected virtual void OnListManagerAdded(BindingManagerBase bindingManagerBase)
     {
@@ -319,6 +320,15 @@ public partial class BindingContext : ICollection
             relatedCurrencyManager.RewireParentChangeHandler();
         }
     }
+
+    /// <summary>
+    ///  Optional factory supplying the placeholder list bound to a related currency manager whose parent is
+    ///  empty. When unset, a read-only <see cref="BindingList{T}"/> of <see cref="object"/> is used. Hosts can
+    ///  set this to a type-preserving empty list (for example one implementing the host's business-object
+    ///  collection contract) so bound data grids keep their column styles instead of binding to a column-less
+    ///  placeholder.
+    /// </summary>
+    public static Func<IBindingList>? EmptyParentPlaceholderFactory { get; set; }
 
     private static void CheckPropertyBindingCycles(BindingContext newBindingContext, Binding propBinding)
     {
