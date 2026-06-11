@@ -11274,7 +11274,7 @@ public unsafe partial class Control :
 
     /// <summary>
     ///  Handles the WM_MENUSELECT message.
-    ///  Original function: https://github.com/WiseTechGlobal/winforms/blob/net8.0_legacy/src/System.Windows.Forms/src/System/Windows/Forms/Control.cs#L221-L255
+    ///  Source location: https://github.com/WiseTechGlobal/winforms/blob/net8.0_legacy/src/System.Windows.Forms/src/System/Windows/Forms/Control.cs#L221-L255
     ///  WParam and User32 are obsolete, use WParamInternal and LegacyMenuUnsafeNativeMethods instead.
     ///  Optimize null-check formatting to avoid errors.
     /// </summary>
@@ -11313,7 +11313,7 @@ public unsafe partial class Control :
     /// <summary>
     ///  Handles the WM_EXITMENULOOP message. If this control has a context menu, its
     ///  Collapse event is raised.
-    ///  Original function: https://github.com/WiseTechGlobal/winforms/blob/net8.0_legacy/src/System.Windows.Forms/src/System/Windows/Forms/Control.cs#L12230-L12244
+    ///  Source location: https://github.com/WiseTechGlobal/winforms/blob/net8.0_legacy/src/System.Windows.Forms/src/System/Windows/Forms/Control.cs#L12230-L12244
     ///  Properties.GetObject is obsolete, use Properties.TryGetValue instead.
     ///  Optimize null-check formatting to avoid errors.
     /// </summary>
@@ -11331,8 +11331,8 @@ public unsafe partial class Control :
     }
 
     /// <summary>
-    ///  Original function: https://github.com/WiseTechGlobal/winforms/blob/net8.0_legacy/src/System.Windows.Forms/src/System/Windows/Forms/Control.cs#L316-L358
-    /// User32 is obsolete, use LegacyMenuUnsafeNativeMethods instead.
+    ///  Source location: https://github.com/WiseTechGlobal/winforms/blob/net8.0_legacy/src/System.Windows.Forms/src/System/Windows/Forms/Control.cs#L316-L358
+    ///  User32 is obsolete, use LegacyMenuUnsafeNativeMethods instead.
     ///  Optimize null-check formatting to avoid errors.
     /// </summary>
     private MenuItem? GetMenuItemFromHandleId(IntPtr hmenu, int item)
