@@ -138,20 +138,53 @@ internal class RelatedCurrencyManager : CurrencyManager
     // WiseTech: RelatedCurrencyManager normally refreshes its child list whenever the parent manager raises
     // CurrentItemChanged. In CargoWise that can be too broad: item-change notifications may be raised while
     // bindings/business collections are already reacting to the same edit or AddNew flow, and refreshing the
-    // child list from that path can re-enter the same notification chain until the stack overflows. ZBindingContext
-    // avoided this on .NET Framework by intercepting BindingContextHashtable.Add, removing the default
-    // CurrentItemChanged subscription, and refreshing the child only when the parent's CurrentChanged event fires.
-    // BindingContext uses a Dictionary on .NET 10, so this helper gives subclasses the same event swap without
-    // reflecting over RelatedCurrencyManager internals.
-    internal void RewireParentChangeHandler()
+    // child list from that path can re-enter the same notification chain until the stack overflows. Worse, the
+    // default empty-parent branch of ParentManager_CurrentItemChanged runs an AddNew/CancelCurrentEdit appcompat
+    // dance which, against a CargoWise business-object collection, actually adds and then deletes a real business
+    // object. ZBindingContext avoided this on .NET Framework by intercepting BindingContextHashtable.Add, removing
+    // the default CurrentItemChanged subscription, and driving the child from the parent's CurrentChanged event
+    // with CargoWise-owned policy (skip redundant refreshes; reset to a safe empty list instead of AddNew/Cancel).
+    // BindingContext uses a Dictionary on .NET 10, so the members below give that subclass the same mechanism
+    // (parent lookup, handler detach, refresh, safe empty reset) without reflecting over RelatedCurrencyManager
+    // internals. The when-to-refresh policy stays in ZBindingContext because it depends on CargoWise types.
+
+    /// <summary>
+    ///  The parent currency manager that drives this child, or <see langword="null"/> when the parent is not a
+    ///  <see cref="CurrencyManager"/>.
+    /// </summary>
+    internal CurrencyManager? ParentCurrencyManager => _parentManager as CurrencyManager;
+
+    /// <summary>
+    ///  Detaches the default <see cref="ParentManager_CurrentItemChanged"/> subscription that <see cref="Bind"/>
+    ///  wired onto the parent. Callers that drive the child from the parent's CurrentChanged event use this to
+    ///  avoid double refreshing.
+    /// </summary>
+    internal void DetachParentItemChangedHandler()
     {
-        if (_parentManager is CurrencyManager parentCurrencyManager)
+        if (_parentManager is not null)
         {
-            parentCurrencyManager.CurrentItemChanged -= ParentManager_CurrentItemChanged;
-            parentCurrencyManager.CurrentChanged -= ParentManager_CurrentItemChanged;
-            parentCurrencyManager.CurrentChanged += ParentManager_CurrentItemChanged;
-            ParentManager_CurrentItemChanged(parentCurrencyManager, EventArgs.Empty);
+            _parentManager.CurrentItemChanged -= ParentManager_CurrentItemChanged;
         }
+    }
+
+    /// <summary>
+    ///  Refreshes the child list from the parent's current row, exactly as the default CurrentItemChanged handler
+    ///  does.
+    /// </summary>
+    internal void RefreshFromParentCurrent() => ParentManager_CurrentItemChanged(_parentManager, EventArgs.Empty);
+
+    /// <summary>
+    ///  Resets this child to the supplied empty placeholder list and raises position/current change notifications,
+    ///  bypassing the AddNew/CancelCurrentEdit appcompat path that <see cref="ParentManager_CurrentItemChanged"/>
+    ///  runs when the parent is empty.
+    /// </summary>
+    internal void ResetToEmptyList(IList emptyList)
+    {
+        SetDataSource(emptyList);
+        listposition = -1;
+        OnPositionChanged(EventArgs.Empty);
+        OnCurrentChanged(EventArgs.Empty);
+        OnCurrentItemChanged(EventArgs.Empty);
     }
 
     private void ParentManager_CurrentItemChanged(object? sender, EventArgs e)

@@ -305,20 +305,49 @@ public partial class BindingContext : ICollection
     }
 
     /// <summary>
-    ///  Helper for subclasses overriding <see cref="OnListManagerAdded"/>: if the supplied manager is a
-    ///  child currency manager, detaches its parent's <see cref="BindingManagerBase.CurrentItemChanged"/>
-    ///  subscription and re-attaches it to <see cref="BindingManagerBase.CurrentChanged"/>, then primes the child
-    ///  once with the parent's current state. No-op for managers that are not <see cref="RelatedCurrencyManager"/>
-    ///  instances. Exposed because <see cref="RelatedCurrencyManager"/> is internal and cannot be referenced from
-    ///  subclasses in other assemblies.
+    ///  Helper for subclasses overriding <see cref="OnListManagerAdded"/>: returns the parent
+    ///  <see cref="CurrencyManager"/> that drives the supplied related (child) currency manager, or
+    ///  <see langword="null"/> when the manager is top-level or is not a child currency manager. Lets subclasses
+    ///  re-wire parent/child change notifications without reflecting over the internal
+    ///  <see cref="RelatedCurrencyManager"/> type.
     /// </summary>
-    protected static void RewireRelatedCurrencyManagerParent(BindingManagerBase bindingManagerBase)
-    {
-        if (bindingManagerBase is RelatedCurrencyManager relatedCurrencyManager)
-        {
-            relatedCurrencyManager.RewireParentChangeHandler();
-        }
-    }
+    protected static CurrencyManager? GetParentCurrencyManager(BindingManagerBase bindingManagerBase)
+        => (bindingManagerBase as RelatedCurrencyManager)?.ParentCurrencyManager;
+
+    /// <summary>
+    ///  Helper for subclasses overriding <see cref="OnListManagerAdded"/>: detaches the default
+    ///  <see cref="BindingManagerBase.CurrentItemChanged"/> subscription that a child currency manager wires onto
+    ///  its parent, so the subclass can drive the child from the parent's
+    ///  <see cref="BindingManagerBase.CurrentChanged"/> event instead. No-op for managers that are not
+    ///  <see cref="RelatedCurrencyManager"/> instances.
+    /// </summary>
+    protected static void DetachRelatedManagerFromParentItemChanged(BindingManagerBase bindingManagerBase)
+        => (bindingManagerBase as RelatedCurrencyManager)?.DetachParentItemChangedHandler();
+
+    /// <summary>
+    ///  Helper for subclasses overriding <see cref="OnListManagerAdded"/>: refreshes a child currency manager's
+    ///  list from its parent's current row, exactly as the default CurrentItemChanged handler would. No-op for
+    ///  managers that are not <see cref="RelatedCurrencyManager"/> instances.
+    /// </summary>
+    protected static void RefreshRelatedManagerFromParent(BindingManagerBase bindingManagerBase)
+        => (bindingManagerBase as RelatedCurrencyManager)?.RefreshFromParentCurrent();
+
+    /// <summary>
+    ///  Helper for subclasses overriding <see cref="OnListManagerAdded"/>: resets a child currency manager to the
+    ///  supplied empty placeholder list and raises position/current change events, without running the
+    ///  AddNew/CancelCurrentEdit appcompat path that the default empty-parent handling uses. No-op for managers
+    ///  that are not <see cref="RelatedCurrencyManager"/> instances.
+    /// </summary>
+    protected static void ResetRelatedManagerToEmptyList(BindingManagerBase bindingManagerBase, IList emptyList)
+        => (bindingManagerBase as RelatedCurrencyManager)?.ResetToEmptyList(emptyList);
+
+    /// <summary>
+    ///  Helper for subclasses: raises <see cref="BindingManagerBase.CurrentItemChanged"/> on a currency manager
+    ///  while suppressing the push of data back into bound controls, so the subclass can notify bindings that the
+    ///  current item has gone (position -1) without WinForms trying to push data into a row that no longer exists.
+    /// </summary>
+    protected static void RaiseCurrentItemChangedSuppressingPushData(CurrencyManager currencyManager, EventArgs e)
+        => currencyManager.RaiseCurrentItemChangedSuppressingPushData(e);
 
     private static void CheckPropertyBindingCycles(BindingContext newBindingContext, Binding propBinding)
     {

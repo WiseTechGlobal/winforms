@@ -880,6 +880,25 @@ public partial class CurrencyManager : BindingManagerBase
         _onCurrentItemChangedHandler?.Invoke(this, e);
     }
 
+    // WiseTech: raises CurrentItemChanged while suppressing the push of data back into bound controls, so callers
+    // can notify bindings that the current item has gone (position -1) without WinForms trying to push data into a
+    // row that no longer exists. Preserves the previous suspension flag. Used by ZBindingContext on .NET 10 in
+    // place of the .NET Framework reflection that toggled the removed suspendPushDataInCurrentChanged field.
+    internal void RaiseCurrentItemChangedSuppressingPushData(EventArgs e)
+    {
+        bool previouslySuppressed = _state.HasFlag(CurrencyManagerStates.SuspendPushDataInCurrentChanged);
+        _state.ChangeFlags(CurrencyManagerStates.SuspendPushDataInCurrentChanged, true);
+
+        try
+        {
+            OnCurrentItemChanged(e);
+        }
+        finally
+        {
+            _state.ChangeFlags(CurrencyManagerStates.SuspendPushDataInCurrentChanged, previouslySuppressed);
+        }
+    }
+
     protected virtual void OnItemChanged(ItemChangedEventArgs e)
     {
         // It is possible that CurrencyManager_PushData will change the position
