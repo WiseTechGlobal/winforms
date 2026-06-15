@@ -185,12 +185,7 @@ internal class RelatedCurrencyManager : CurrencyManager
     {
         if (_parentManager is CurrencyManager parentCurrencyManager && parentCurrencyManager.Count == 0)
         {
-            // Prefer a host-supplied placeholder (e.g. CargoWise's TempList, which keeps an IBusinessObjectCollection
-            // contract so bound grids retain their column styles). Fall back to a read-only BindingList<object>
-            // when no factory is registered.
-            SetDataSource(BindingContext.EmptyParentPlaceholderFactory?.Invoke()
-                ?? new BindingList<object> { AllowNew = false, AllowEdit = false, AllowRemove = false });
-            listposition = -1;
+            BindEmptyParentPlaceholder();
 
             OnPositionChanged(EventArgs.Empty);
             OnCurrentChanged(EventArgs.Empty);
@@ -199,6 +194,19 @@ internal class RelatedCurrencyManager : CurrencyManager
         }
 
         ParentManager_CurrentItemChanged(sender, e);
+    }
+
+    // WiseTech (WI01068460 / WI01086285): bind the empty-parent placeholder list. Prefer a host-supplied
+    // placeholder (e.g. CargoWise's TempList, which keeps an IBusinessObjectCollection contract so bound grids
+    // retain their column styles and resolve their table-style mapping); fall back to a read-only
+    // BindingList<object> when no factory is registered. Used both by the rewired CurrentChanged path
+    // (ParentManager_CurrentChanged) and by the priming/standard path (ParentManager_CurrentItemChanged) so the
+    // child is never left with a null data source when the parent is empty.
+    private void BindEmptyParentPlaceholder()
+    {
+        SetDataSource(BindingContext.EmptyParentPlaceholderFactory?.Invoke()
+            ?? new BindingList<object> { AllowNew = false, AllowEdit = false, AllowRemove = false });
+        listposition = -1;
     }
 
     private void ParentManager_CurrentItemChanged(object? sender, EventArgs e)
@@ -261,6 +269,19 @@ internal class RelatedCurrencyManager : CurrencyManager
                         IgnoreItemChangedTable.Remove(currencyManager);
                     }
                 }
+            }
+            else
+            {
+                // WiseTech (WI01086285): the parent is empty AND its list does not allow AddNew (e.g. a read-only
+                // or query-backed CargoWise collection), so the Everett dance above is skipped. Without this the
+                // child manager's data source would stay null and bound grids could not resolve their column
+                // metadata: a ZGrid maps its table style by list name, so a null list leaves the grid on its
+                // empty default table and the designer column styles never receive a PropertyDescriptor.
+                // Bind the same empty placeholder the rewired path uses so List is a valid (empty) list. This also
+                // covers related managers created through a plain BindingContext (e.g. a grid bound in a control
+                // constructor before it is parented to the form's ZBindingContext), which the OnListManagerAdded
+                // rewire never reaches.
+                BindEmptyParentPlaceholder();
             }
         }
         else
