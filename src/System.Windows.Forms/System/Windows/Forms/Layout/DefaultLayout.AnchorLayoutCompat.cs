@@ -66,11 +66,12 @@ internal partial class DefaultLayout
     {
         useSpecifiedDisplayRectangleForStretchRefresh = false;
 
-        if (!ScaleHelper.IsScalingRequirementMet || element.Container is not { } container)
+        if (element.Container is not { } container)
         {
             return false;
         }
 
+        bool isScalingRequirementMet = ScaleHelper.IsScalingRequirementMet;
         Rectangle specifiedContainerBounds = CommonProperties.GetSpecifiedBounds(container);
         Rectangle specifiedElementBounds = CommonProperties.GetSpecifiedBounds(element);
 
@@ -94,13 +95,15 @@ internal partial class DefaultLayout
             specifiedElementBounds.Height);
 
         if (hasDisplayRectangleGrowth
-            && IsSpecifiedDisplayRectangleLikelyStale(specifiedDisplayRect, anchorInfo.DisplayRectangle))
+            && IsSpecifiedDisplayRectangleLikelyStale(specifiedDisplayRect, anchorInfo.DisplayRectangle)
+            && IsSpecifiedDisplayRectangleLikelyStale(specifiedDisplayRect, displayRect))
         {
             return false;
         }
 
         bool hasStaleHorizontalStretchAnchor = IsAnchored(anchor, AnchorStyles.Left)
             && IsAnchored(anchor, AnchorStyles.Right)
+            && isScalingRequirementMet
             && anchorInfo.Right < 0
             && hasDisplayRectangleGrowth
             && IsProjectedStretchAnchorSmallerThanExpected(
@@ -112,6 +115,7 @@ internal partial class DefaultLayout
 
         bool hasStaleVerticalStretchAnchor = IsAnchored(anchor, AnchorStyles.Top)
             && IsAnchored(anchor, AnchorStyles.Bottom)
+            && isScalingRequirementMet
             && anchorInfo.Bottom < 0
             && hasDisplayRectangleGrowth
             && IsProjectedStretchAnchorSmallerThanExpected(
@@ -121,15 +125,54 @@ internal partial class DefaultLayout
                 effectiveSpecifiedHeight,
                 specifiedDisplayRect.Height);
 
-        bool hasOversizedHorizontalStretchAnchor = IsAnchored(anchor, AnchorStyles.Left)
+        bool hasOversizedHorizontalStretchAnchorWithPositiveTrailingOffset = IsAnchored(anchor, AnchorStyles.Left)
             && IsAnchored(anchor, AnchorStyles.Right)
+            && isScalingRequirementMet
             && anchorInfo.Right > 0
             && IsLargerThanExpectedStretchedSize(bounds.Width, specifiedElementBounds.Width, displayRect.Width, specifiedDisplayRect.Width);
 
-        bool hasOversizedVerticalStretchAnchor = IsAnchored(anchor, AnchorStyles.Top)
+        bool hasOversizedVerticalStretchAnchorWithPositiveTrailingOffset = IsAnchored(anchor, AnchorStyles.Top)
             && IsAnchored(anchor, AnchorStyles.Bottom)
+            && isScalingRequirementMet
             && anchorInfo.Bottom > 0
             && IsLargerThanExpectedStretchedSize(bounds.Height, specifiedElementBounds.Height, displayRect.Height, specifiedDisplayRect.Height);
+
+        bool hasOversizedHorizontalStretchAnchorWithNegativeTrailingOffset = IsAnchored(anchor, AnchorStyles.Left)
+            && IsAnchored(anchor, AnchorStyles.Right)
+            && anchorInfo.Right < 0
+            && hasDisplayRectangleGrowth
+            && IsSpecifiedDisplaySizeBetweenOriginalAndCurrent(
+                specifiedDisplayRect.Width,
+                anchorInfo.DisplayRectangle.Width,
+                displayRect.Width)
+            && IsProjectedStretchAnchorLargerThanExpected(
+                displayRect.Width,
+                anchorInfo.Left,
+                anchorInfo.Right,
+                effectiveSpecifiedWidth,
+                specifiedDisplayRect.Width);
+
+        bool hasOversizedVerticalStretchAnchorWithNegativeTrailingOffset = IsAnchored(anchor, AnchorStyles.Top)
+            && IsAnchored(anchor, AnchorStyles.Bottom)
+            && anchorInfo.Bottom < 0
+            && hasDisplayRectangleGrowth
+            && IsSpecifiedDisplaySizeBetweenOriginalAndCurrent(
+                specifiedDisplayRect.Height,
+                anchorInfo.DisplayRectangle.Height,
+                displayRect.Height)
+            && IsProjectedStretchAnchorLargerThanExpected(
+                displayRect.Height,
+                anchorInfo.Top,
+                anchorInfo.Bottom,
+                effectiveSpecifiedHeight,
+                specifiedDisplayRect.Height);
+
+        bool hasOversizedHorizontalStretchAnchor =
+            hasOversizedHorizontalStretchAnchorWithPositiveTrailingOffset
+            || hasOversizedHorizontalStretchAnchorWithNegativeTrailingOffset;
+        bool hasOversizedVerticalStretchAnchor =
+            hasOversizedVerticalStretchAnchorWithPositiveTrailingOffset
+            || hasOversizedVerticalStretchAnchorWithNegativeTrailingOffset;
 
         useSpecifiedDisplayRectangleForStretchRefresh = hasOversizedHorizontalStretchAnchor || hasOversizedVerticalStretchAnchor;
 
@@ -282,6 +325,37 @@ internal partial class DefaultLayout
         int projectedSize = Math.Max(0, currentDisplaySize + trailingAnchor - leadingAnchor);
 
         return IsSmallerThanExpectedStretchedSize(projectedSize, specifiedSize, currentDisplaySize, specifiedDisplaySize);
+    }
+
+    private static bool IsProjectedStretchAnchorLargerThanExpected(
+        int currentDisplaySize,
+        int leadingAnchor,
+        int trailingAnchor,
+        int specifiedSize,
+        int specifiedDisplaySize)
+    {
+        if (specifiedSize <= 0 || currentDisplaySize <= 0 || specifiedDisplaySize <= 0)
+        {
+            return false;
+        }
+
+        int projectedSize = Math.Max(0, currentDisplaySize + trailingAnchor - leadingAnchor);
+
+        return IsLargerThanExpectedStretchedSize(projectedSize, specifiedSize, currentDisplaySize, specifiedDisplaySize);
+    }
+
+    private static bool IsSpecifiedDisplaySizeBetweenOriginalAndCurrent(
+        int specifiedDisplaySize,
+        int originalDisplaySize,
+        int currentDisplaySize)
+    {
+        if (specifiedDisplaySize <= 0 || originalDisplaySize <= 0 || currentDisplaySize <= 0)
+        {
+            return false;
+        }
+
+        return specifiedDisplaySize > originalDisplaySize
+            && specifiedDisplaySize < currentDisplaySize;
     }
 
     private static int GetEffectiveSpecifiedSizeForStretchRefresh(
