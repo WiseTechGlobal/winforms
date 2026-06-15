@@ -324,31 +324,6 @@ public partial class BindingContext : ICollection
     protected static void DetachRelatedManagerFromParentItemChanged(BindingManagerBase bindingManagerBase)
         => (bindingManagerBase as RelatedCurrencyManager)?.DetachParentItemChangedHandler();
 
-    /// <summary>
-    ///  Helper for subclasses overriding <see cref="OnListManagerAdded"/>: refreshes a child currency manager's
-    ///  list from its parent's current row, exactly as the default CurrentItemChanged handler would. No-op for
-    ///  managers that are not <see cref="RelatedCurrencyManager"/> instances.
-    /// </summary>
-    protected static void RefreshRelatedManagerFromParent(BindingManagerBase bindingManagerBase)
-        => (bindingManagerBase as RelatedCurrencyManager)?.RefreshFromParentCurrent();
-
-    /// <summary>
-    ///  Helper for subclasses overriding <see cref="OnListManagerAdded"/>: resets a child currency manager to the
-    ///  supplied empty placeholder list and raises position/current change events, without running the
-    ///  AddNew/CancelCurrentEdit appcompat path that the default empty-parent handling uses. No-op for managers
-    ///  that are not <see cref="RelatedCurrencyManager"/> instances.
-    /// </summary>
-    protected static void ResetRelatedManagerToEmptyList(BindingManagerBase bindingManagerBase, IList emptyList)
-        => (bindingManagerBase as RelatedCurrencyManager)?.ResetToEmptyList(emptyList);
-
-    /// <summary>
-    ///  Helper for subclasses: raises <see cref="BindingManagerBase.CurrentItemChanged"/> on a currency manager
-    ///  while suppressing the push of data back into bound controls, so the subclass can notify bindings that the
-    ///  current item has gone (position -1) without WinForms trying to push data into a row that no longer exists.
-    /// </summary>
-    protected static void RaiseCurrentItemChangedSuppressingPushData(CurrencyManager currencyManager, EventArgs e)
-        => currencyManager.RaiseCurrentItemChangedSuppressingPushData(e);
-
     private static void CheckPropertyBindingCycles(BindingContext newBindingContext, Binding propBinding)
     {
         Debug.Assert(newBindingContext is not null, "Always called with a non-null BindingContext");
