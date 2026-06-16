@@ -161,7 +161,30 @@ internal class RelatedCurrencyManager : CurrencyManager
     /// </summary>
     internal void DetachParentItemChangedHandler()
     {
-        _parentManager?.CurrentItemChanged -= ParentManager_CurrentItemChanged;
+        if (_parentManager is not null)
+        {
+            _parentManager.CurrentItemChanged -= ParentManager_CurrentItemChanged;
+        }
+    }
+
+    /// <summary>
+    ///  Refreshes the child list from the parent's current row, exactly as the default CurrentItemChanged handler
+    ///  does.
+    /// </summary>
+    internal void RefreshFromParentCurrent() => ParentManager_CurrentItemChanged(_parentManager, EventArgs.Empty);
+
+    /// <summary>
+    ///  Resets this child to the supplied empty placeholder list and raises position/current change notifications,
+    ///  bypassing the AddNew/CancelCurrentEdit appcompat path that <see cref="ParentManager_CurrentItemChanged"/>
+    ///  runs when the parent is empty.
+    /// </summary>
+    internal void ResetToEmptyList(IList emptyList)
+    {
+        SetDataSource(emptyList);
+        listposition = -1;
+        OnPositionChanged(EventArgs.Empty);
+        OnCurrentChanged(EventArgs.Empty);
+        OnCurrentItemChanged(EventArgs.Empty);
     }
 
     private void ParentManager_CurrentItemChanged(object? sender, EventArgs e)
