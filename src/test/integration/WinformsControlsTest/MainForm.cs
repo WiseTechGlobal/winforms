@@ -226,6 +226,10 @@ public partial class MainForm : Form
         {
             MainFormControlsTabOrder.ScrollableControlsButton,
             new InitInfo("ScrollableControlsButton", (obj, e) => new ScrollableControls().Show(this))
+        },
+        {
+            MainFormControlsTabOrder.TreeViewAddRangeOrderButton,
+            new InitInfo("TreeView AddRange Order", (obj, e) => new TreeViewSortAddRangeTest().Show(this))
         }
     };
 
