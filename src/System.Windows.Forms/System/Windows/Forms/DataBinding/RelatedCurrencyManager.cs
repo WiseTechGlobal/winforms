@@ -173,7 +173,8 @@ internal class RelatedCurrencyManager : CurrencyManager
     // the parent has a current row, the child refreshes through the standard ParentManager_CurrentItemChanged
     // path (unchanged above). When the parent is EMPTY, that handler did SetDataSource(new TempList());
     // listposition = -1; and raised the position/current events — it never let the standard path run the Everett
-    // AddNew()/CancelCurrentEdit() dance. Because the .NET 10 rewire originally replicated only the event swap
+    // AddNew()/CancelCurrentEdit() dance. See the original implementation at
+    // Enterprise/Architecture/GUI/Enterprise.ZArchitecture.GUI/Forms/ZBindingContext.cs:156-182 (CargoWise repo). Because the .NET 10 rewire originally replicated only the event swap
     // and not this empty-parent branch, that AddNew ran against real CargoWise collections for the first time:
     // it materialises an orphaned business object whose SetDefaultsForNewChild/property getters dereference a
     // null parent navigation (the Group 1 NullReferenceException failures, e.g. CusExitItemCollection
