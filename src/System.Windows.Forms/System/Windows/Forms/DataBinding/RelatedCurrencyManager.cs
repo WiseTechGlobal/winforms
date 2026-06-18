@@ -199,7 +199,7 @@ internal class RelatedCurrencyManager : CurrencyManager
 
         if (_parentManager is CurrencyManager currencyManager)
         {
-             if (currencyManager.Count > 0)
+            if (currencyManager.Count > 0)
             {
                 // Parent list has a current row, so get the related list from the relevant property on that row.
                 SetDataSource(_fieldInfo.GetValue(currencyManager.Current));
