@@ -22,11 +22,9 @@ System.Windows.Forms.SystemColorMode.Classic = 0 -> System.Windows.Forms.SystemC
 System.Windows.Forms.SystemColorMode.Dark = 2 -> System.Windows.Forms.SystemColorMode
 System.Windows.Forms.SystemColorMode.System = 1 -> System.Windows.Forms.SystemColorMode
 System.Windows.Forms.VisualStyles.ComboBoxState.Focused = 5 -> System.Windows.Forms.VisualStyles.ComboBoxState
-static System.Windows.Forms.BindingContext.EmptyParentPlaceholderFactory.get -> System.Func<System.ComponentModel.IBindingList!>?
-static System.Windows.Forms.BindingContext.EmptyParentPlaceholderFactory.set -> void
-static System.Windows.Forms.BindingContext.RewireRelatedCurrencyManagerParent(System.Windows.Forms.BindingManagerBase! bindingManagerBase) -> void
 virtual System.Windows.Forms.BindingContext.OnListManagerAdded(System.Windows.Forms.BindingManagerBase! bindingManagerBase) -> void
 virtual System.Windows.Forms.Form.OnFormBorderColorChanged(System.EventArgs! e) -> void
 virtual System.Windows.Forms.Form.OnFormCaptionBackColorChanged(System.EventArgs! e) -> void
 virtual System.Windows.Forms.Form.OnFormCaptionTextColorChanged(System.EventArgs! e) -> void
 virtual System.Windows.Forms.Form.OnFormCornerPreferenceChanged(System.EventArgs! e) -> void
+virtual System.Windows.Forms.BindingContext.CreateInterceptedParentHandler(System.Windows.Forms.CurrencyManager! relatedManager) -> System.EventHandler?
