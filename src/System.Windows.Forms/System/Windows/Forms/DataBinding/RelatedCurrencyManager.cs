@@ -10,15 +10,27 @@ namespace System.Windows.Forms;
 ///  Represents the child version of the System.Windows.Forms.ListManager
 ///  that is used when a parent/child relationship exists in a System.Windows.Forms.DataSet.
 /// </summary>
-internal class RelatedCurrencyManager : CurrencyManager
+internal class RelatedCurrencyManager : CurrencyManager, BindingContext.IInterceptedRelatedManager
 {
     private BindingManagerBase _parentManager;
     private PropertyDescriptor _fieldInfo;
+    private readonly EventHandler? _interceptedParentHandler;
     private static List<BindingManagerBase> IgnoreItemChangedTable { get; } = [];
 
     internal RelatedCurrencyManager(BindingManagerBase parentManager, string dataField)
+        : this(parentManager, dataField, interceptedParentHandlerFactory: null)
+    {
+    }
+
+    internal RelatedCurrencyManager(
+        BindingManagerBase parentManager,
+        string dataField,
+        Func<RelatedCurrencyManager, EventHandler>? interceptedParentHandlerFactory)
         : base(dataSource: null)
     {
+        // The factory receives the fully-constructed child so a handler can close over it, mirroring
+        // `new ParentCurrentChangedHandler(cm)` on .NET Framework. It is built before Bind() primes.
+        _interceptedParentHandler = interceptedParentHandlerFactory?.Invoke(this);
         Bind(parentManager, dataField);
     }
 
@@ -43,14 +55,30 @@ internal class RelatedCurrencyManager : CurrencyManager
         // Wire new BindingManagerBase
         WireParentManager(_parentManager);
 
-        ParentManager_CurrentItemChanged(parentManager, EventArgs.Empty);
+        if (_interceptedParentHandler is null)
+        {
+            // DEFAULT PATH - identical to current behaviour.
+            ParentManager_CurrentItemChanged(parentManager, EventArgs.Empty);
+        }
+        else
+        {
+            // OPT-IN PATH - prime through the supplied handler (Framework parity); avoids constructor-time AddNew().
+            _interceptedParentHandler(parentManager, EventArgs.Empty);
+        }
     }
 
     private void UnwireParentManager(BindingManagerBase? bmb)
     {
         if (bmb is not null)
         {
-            bmb.CurrentItemChanged -= ParentManager_CurrentItemChanged;
+            if (_interceptedParentHandler is not null && bmb is CurrencyManager interceptedParent)
+            {
+                interceptedParent.CurrentChanged -= _interceptedParentHandler;
+            }
+            else
+            {
+                bmb.CurrentItemChanged -= ParentManager_CurrentItemChanged;
+            }
 
             if (bmb is CurrencyManager currencyManager)
             {
@@ -63,7 +91,15 @@ internal class RelatedCurrencyManager : CurrencyManager
     {
         if (bmb is not null)
         {
-            bmb.CurrentItemChanged += ParentManager_CurrentItemChanged;
+            if (_interceptedParentHandler is not null && bmb is CurrencyManager interceptedParent)
+            {
+                // Framework parity: drive the child via the parent's CurrentChanged + the supplied handler.
+                interceptedParent.CurrentChanged += _interceptedParentHandler;
+            }
+            else
+            {
+                bmb.CurrentItemChanged += ParentManager_CurrentItemChanged;
+            }
 
             if (bmb is CurrencyManager currencyManager)
             {
@@ -135,25 +171,6 @@ internal class RelatedCurrencyManager : CurrencyManager
         OnMetaDataChanged(e);
     }
 
-    // WiseTech: RelatedCurrencyManager normally refreshes its child list whenever the parent manager raises
-    // CurrentItemChanged. In CargoWise that can be too broad: item-change notifications may be raised while
-    // bindings/business collections are already reacting to the same edit or AddNew flow, and refreshing the
-    // child list from that path can re-enter the same notification chain until the stack overflows. ZBindingContext
-    // avoided this on .NET Framework by intercepting BindingContextHashtable.Add, removing the default
-    // CurrentItemChanged subscription, and refreshing the child only when the parent's CurrentChanged event fires.
-    // BindingContext uses a Dictionary on .NET 10, so this helper gives subclasses the same event swap without
-    // reflecting over RelatedCurrencyManager internals.
-    internal void RewireParentChangeHandler()
-    {
-        if (_parentManager is CurrencyManager parentCurrencyManager)
-        {
-            parentCurrencyManager.CurrentItemChanged -= ParentManager_CurrentItemChanged;
-            parentCurrencyManager.CurrentChanged -= ParentManager_CurrentItemChanged;
-            parentCurrencyManager.CurrentChanged += ParentManager_CurrentItemChanged;
-            ParentManager_CurrentItemChanged(parentCurrencyManager, EventArgs.Empty);
-        }
-    }
-
     private void ParentManager_CurrentItemChanged(object? sender, EventArgs e)
     {
         if (IgnoreItemChangedTable.Contains(_parentManager))
@@ -223,6 +240,25 @@ internal class RelatedCurrencyManager : CurrencyManager
             OnPositionChanged(EventArgs.Empty);
         }
 
+        OnCurrentChanged(EventArgs.Empty);
+        OnCurrentItemChanged(EventArgs.Empty);
+    }
+
+    // Explicit implementation of BindingContext.IInterceptedRelatedManager —
+    // exposes the members a custom handler in a derived BindingContext needs to drive this manager
+    // without reflection, mirroring the .NET Framework ParentCurrentChangedHandler targets.
+
+    bool BindingContext.IInterceptedRelatedManager.ParentHasRows
+        => _parentManager is CurrencyManager currencyManager && currencyManager.Count > 0;
+
+    void BindingContext.IInterceptedRelatedManager.RaiseParentCurrentItemChanged(object? sender, EventArgs e)
+        => ParentManager_CurrentItemChanged(sender, e);
+
+    void BindingContext.IInterceptedRelatedManager.BindToEmptyParentPlaceholder(IList placeholder)
+    {
+        SetDataSource(placeholder);
+        listposition = -1;
+        OnPositionChanged(EventArgs.Empty);
         OnCurrentChanged(EventArgs.Empty);
         OnCurrentItemChanged(EventArgs.Empty);
     }

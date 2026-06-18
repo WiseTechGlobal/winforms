@@ -1017,6 +1017,92 @@ public class BindingContextTests
         Assert.Throws<ArgumentNullException>("binding", () => BindingContext.UpdateBinding([], null));
     }
 
+    [Fact]
+    public void BindingContext_DefaultPath_SubscribesCurrentItemChangedAndPrimesOnce()
+    {
+        // Default (base) BindingContext must subscribe via CurrentItemChanged and call
+        // ParentManager_CurrentItemChanged exactly once during RelatedCurrencyManager construction.
+        BindingContext context = [];
+        List<IListDataSource> parentList = [new() { Property = [1, 2, 3] }];
+
+        // Access the related manager — this triggers EnsureListManager → new RelatedCurrencyManager
+        CurrencyManager parentManager = (CurrencyManager)context[parentList];
+        CurrencyManager relatedManager = (CurrencyManager)context[parentList, "Property"];
+
+        // With the default path, the related manager should have been primed with the current parent row's list
+        Assert.Equal(3, relatedManager.Count);
+    }
+
+    [Fact]
+    public void BindingContext_InterceptedHandler_InvokedForInitialPrime_EmptyParent()
+    {
+        // A derived BindingContext returning a non-null handler must use it for the initial prime;
+        // the empty-parent Everett AddNew()/CancelCurrentEdit() branch must NOT be reached.
+        List<IListDataSource> emptyParentList = [];
+        List<int> placeholder = [];
+
+        InterceptingBindingContext context = new(placeholder);
+        CurrencyManager parentManager = (CurrencyManager)context[emptyParentList];
+
+        // Access the related manager — handler should be installed and used for priming
+        CurrencyManager relatedManager = (CurrencyManager)context[emptyParentList, "Property"];
+
+        // The intercepted handler should have been invoked (initial prime call count >= 1)
+        Assert.True(context.HandlerInvokeCount >= 1, "Intercepted handler was not invoked during construction.");
+
+        // The placeholder was bound (not the Everett AddNew path), so data source == placeholder
+        Assert.Same(placeholder, relatedManager.List);
+    }
+
+    [Fact]
+    public void BindingContext_InterceptedHandler_InvokedForInitialPrime_NonEmptyParent()
+    {
+        // When the parent has rows and an intercepted handler is supplied, the handler is invoked and
+        // should delegate to RaiseParentCurrentItemChanged so the child refreshes normally.
+        List<IListDataSource> parentList = [new() { Property = [10, 20] }];
+
+        InterceptingBindingContext context = new(placeholder: null);
+        CurrencyManager parentManager = (CurrencyManager)context[parentList];
+        CurrencyManager relatedManager = (CurrencyManager)context[parentList, "Property"];
+
+        Assert.True(context.HandlerInvokeCount >= 1, "Intercepted handler was not invoked.");
+        Assert.Equal(2, relatedManager.Count);
+    }
+
+    /// <summary>
+    ///  A derived <see cref="BindingContext"/> that opts in to intercepted parent handling for testing.
+    ///  When the parent is empty it binds the child to the supplied placeholder (avoiding Everett AddNew);
+    ///  when the parent has rows it delegates to <see cref="BindingContext.IInterceptedRelatedManager.RaiseParentCurrentItemChanged"/>.
+    /// </summary>
+    private sealed class InterceptingBindingContext : BindingContext
+    {
+        private readonly IList? _placeholder;
+
+        public int HandlerInvokeCount { get; private set; }
+
+        public InterceptingBindingContext(IList? placeholder)
+        {
+            _placeholder = placeholder;
+        }
+
+        protected override EventHandler? CreateInterceptedParentHandler(IInterceptedRelatedManager relatedManager)
+        {
+            return (sender, e) =>
+            {
+                HandlerInvokeCount++;
+
+                if (relatedManager.ParentHasRows)
+                {
+                    relatedManager.RaiseParentCurrentItemChanged(sender, e);
+                }
+                else if (_placeholder is not null)
+                {
+                    relatedManager.BindToEmptyParentPlaceholder(_placeholder);
+                }
+            };
+        }
+    }
+
     private class ParentDataSource
     {
         public DataSource ParentProperty { get; set; }

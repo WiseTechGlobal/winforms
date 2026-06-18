@@ -267,7 +267,7 @@ public partial class BindingContext : ICollection
                 ?? throw new ArgumentException(string.Format(SR.RelatedListManagerChild, dataField));
 
             bindingManagerBase = typeof(IList).IsAssignableFrom(prop.PropertyType)
-                ? new RelatedCurrencyManager(formerManager, dataField)
+                ? CreateRelatedCurrencyManager(formerManager, dataField)
                 : new RelatedPropertyManager(formerManager, dataField);
         }
 
@@ -289,6 +289,74 @@ public partial class BindingContext : ICollection
     }
 
     /// <summary>
+    ///  Opt-in interface that exposes the members of an internal <see cref="RelatedCurrencyManager"/>
+    ///  that a custom handler supplied via <see cref="CreateInterceptedParentHandler"/> needs to drive
+    ///  the child manager without reflection. This is the public surface for .NET Framework-style
+    ///  interception from a derived <see cref="BindingContext"/> in another assembly.
+    /// </summary>
+    public interface IInterceptedRelatedManager
+    {
+        /// <summary>
+        ///  Gets a value indicating whether the parent currency manager currently has any rows.
+        /// </summary>
+        bool ParentHasRows { get; }
+
+        /// <summary>
+        ///  Invokes the default <c>ParentManager_CurrentItemChanged</c> handler on the related manager.
+        ///  Use this when the parent has rows so the child refreshes its list normally.
+        /// </summary>
+        void RaiseParentCurrentItemChanged(object? sender, EventArgs e);
+
+        /// <summary>
+        ///  Binds the related manager to the supplied <paramref name="placeholder"/> list and raises
+        ///  position/current notifications — without entering the Everett <c>AddNew()</c> /
+        ///  <c>CancelCurrentEdit()</c> app-compat branch. Use this when the parent has no rows.
+        /// </summary>
+        void BindToEmptyParentPlaceholder(IList placeholder);
+    }
+
+    /// <summary>
+    ///  Optional, opt-in factory that a derived <see cref="BindingContext"/> can override to supply a
+    ///  custom handler for a newly-created <see cref="RelatedCurrencyManager"/>. When a non-<see langword="null"/>
+    ///  handler is returned it is subscribed to the parent's <c>CurrentChanged</c> event (instead of the
+    ///  default <c>CurrentItemChanged</c> subscription), and is used for the initial prime during construction —
+    ///  reproducing the .NET Framework parent-change interception behaviour exactly.
+    /// </summary>
+    /// <remarks>
+    ///  <para>
+    ///   The base implementation returns <see langword="null"/>, leaving stock WinForms behaviour completely
+    ///   unchanged — no extra allocations occur on the base path.
+    ///  </para>
+    ///  <para>
+    ///   When a non-<see langword="null"/> handler is returned, the empty-parent Everett
+    ///   <c>AddNew()</c> / <c>CancelCurrentEdit()</c> app-compat branch in
+    ///   <c>ParentManager_CurrentItemChanged</c> is bypassed; the handler is responsible for calling
+    ///   <see cref="IInterceptedRelatedManager.BindToEmptyParentPlaceholder"/> when the parent has no rows.
+    ///  </para>
+    /// </remarks>
+    /// <param name="relatedManager">
+    ///  The newly-created related manager, exposed through <see cref="IInterceptedRelatedManager"/> so the
+    ///  returned handler can drive it without reflection.
+    /// </param>
+    /// <returns>
+    ///  A custom event handler, or <see langword="null"/> to use the default behaviour.
+    /// </returns>
+    protected virtual EventHandler? CreateInterceptedParentHandler(IInterceptedRelatedManager relatedManager)
+        => null;
+
+    private RelatedCurrencyManager CreateRelatedCurrencyManager(BindingManagerBase parentManager, string dataField)
+    {
+        // Only a derived BindingContext can supply an intercepted handler; the base class must remain identical to
+        // stock WinForms, so it does not even allocate the factory delegate.
+        Func<RelatedCurrencyManager, EventHandler>? interceptedParentHandlerFactory =
+            GetType() == typeof(BindingContext)
+                ? null
+                : relatedCurrencyManager => CreateInterceptedParentHandler(relatedCurrencyManager);
+
+        return new RelatedCurrencyManager(parentManager, dataField, interceptedParentHandlerFactory);
+    }
+
+    /// <summary>
     ///  Invoked from <see cref="EnsureListManager"/> immediately after a newly-created
     ///  <see cref="BindingManagerBase"/> has been inserted into the internal collection. The base implementation
     ///  is a no-op; subclasses can override to customize behavior equivalent to intercepting the backing store's
@@ -302,22 +370,6 @@ public partial class BindingContext : ICollection
     /// </remarks>
     protected virtual void OnListManagerAdded(BindingManagerBase bindingManagerBase)
     {
-    }
-
-    /// <summary>
-    ///  Helper for subclasses overriding <see cref="OnListManagerAdded"/>: if the supplied manager is a
-    ///  child currency manager, detaches its parent's <see cref="BindingManagerBase.CurrentItemChanged"/>
-    ///  subscription and re-attaches it to <see cref="BindingManagerBase.CurrentChanged"/>, then primes the child
-    ///  once with the parent's current state. No-op for managers that are not <see cref="RelatedCurrencyManager"/>
-    ///  instances. Exposed because <see cref="RelatedCurrencyManager"/> is internal and cannot be referenced from
-    ///  subclasses in other assemblies.
-    /// </summary>
-    protected static void RewireRelatedCurrencyManagerParent(BindingManagerBase bindingManagerBase)
-    {
-        if (bindingManagerBase is RelatedCurrencyManager relatedCurrencyManager)
-        {
-            relatedCurrencyManager.RewireParentChangeHandler();
-        }
     }
 
     private static void CheckPropertyBindingCycles(BindingContext newBindingContext, Binding propBinding)
