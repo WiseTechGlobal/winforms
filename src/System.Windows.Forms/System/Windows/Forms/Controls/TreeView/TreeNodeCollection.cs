@@ -316,7 +316,7 @@ public class TreeNodeCollection : IList
             }
         }
 
-        if (tv is not null && tv.Sorted)
+        if (tv is not null && tv.Sorted && _owner.Nodes.FixedIndex == -1)
         {
             return _owner.AddSorted(tv, node);
         }
@@ -344,7 +344,7 @@ public class TreeNodeCollection : IList
             tv.SelectedNode = node; // communicate this to the handle
         }
 
-        if (tv is not null && tv.TreeViewNodeSorter is not null)
+        if (tv is not null && tv.TreeViewNodeSorter is not null && _owner.Nodes.FixedIndex == -1)
         {
             tv.Sort();
         }

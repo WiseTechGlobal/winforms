@@ -7,6 +7,9 @@ using WinFormsControlsTest;
 // Set STAThread
 Thread.CurrentThread.SetApartmentState(ApartmentState.Unknown);
 Thread.CurrentThread.SetApartmentState(ApartmentState.STA);
+
+AppContext.SetSwitch(TreeViewSortAddRangeTest.SwitchName, false);
+
 ApplicationConfiguration.Initialize();
 
 Application.SetColorMode(SystemColorMode.Classic);
