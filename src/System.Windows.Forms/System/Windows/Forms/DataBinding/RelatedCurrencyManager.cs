@@ -186,7 +186,8 @@ internal class RelatedCurrencyManager : CurrencyManager
 
         int oldlistposition = listposition;
 
-        // Pull the data from the controls into the backend before changing the entire list.
+        // we only pull the data from the controls into the backEnd. we do not care about keeping the lastGoodKnownRow
+        // when we are about to change the entire list in this currencymanager.
         try
         {
             PullData();
@@ -198,15 +199,26 @@ internal class RelatedCurrencyManager : CurrencyManager
 
         if (_parentManager is CurrencyManager currencyManager)
         {
-            if (currencyManager.Count > 0)
+             if (currencyManager.Count > 0)
             {
+                // Parent list has a current row, so get the related list from the relevant property on that row.
                 SetDataSource(_fieldInfo.GetValue(currencyManager.Current));
-                listposition = Count > 0 ? 0 : -1;
+                listposition = (Count > 0 ? 0 : -1);
             }
             else
             {
-                // Stock Everett compatibility: create a temporary row so the child manager can
-                // discover metadata for an empty parent, then remove it without recursing.
+                // APPCOMPAT: bring back the Everett behavior where the currency manager adds an item and
+                // then it cancels the addition.
+                //
+                // really, really hocky.
+                // will throw if the list in the curManager is not IBindingList
+                // and this will fail if the IBindingList does not have list change notification. read on....
+                // when a new item will get added to an empty parent table,
+                // the table will fire OnCurrentChanged and this method will get executed again
+                // allowing us to set the data source to an object with the right properties (so we can show
+                // metadata at design time).
+                // we then call CancelCurrentEdit to remove the dummy row, but making sure to ignore any
+                // OnCurrentItemChanged that results from this action (to avoid infinite recursion)
                 currencyManager.AddNew();
                 try
                 {
@@ -224,8 +236,9 @@ internal class RelatedCurrencyManager : CurrencyManager
         }
         else
         {
+            // Case where the parent is not a list, but a single object
             SetDataSource(_fieldInfo.GetValue(_parentManager.Current));
-            listposition = Count > 0 ? 0 : -1;
+            listposition = (Count > 0 ? 0 : -1);
         }
 
         if (oldlistposition != listposition)
