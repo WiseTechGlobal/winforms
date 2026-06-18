@@ -320,12 +320,18 @@ public partial class BindingContext : ICollection
     ///  custom handler for a newly-created <see cref="RelatedCurrencyManager"/>. When a non-<see langword="null"/>
     ///  handler is returned it is subscribed to the parent's <c>CurrentChanged</c> event (instead of the
     ///  default <c>CurrentItemChanged</c> subscription), and is used for the initial prime during construction —
-    ///  reproducing the .NET Framework <c>ZBindingContext.ParentCurrentChangedHandler</c> behaviour exactly.
+    ///  reproducing the .NET Framework parent-change interception behaviour exactly.
     /// </summary>
     /// <remarks>
     ///  <para>
     ///   The base implementation returns <see langword="null"/>, leaving stock WinForms behaviour completely
     ///   unchanged — no extra allocations occur on the base path.
+    ///  </para>
+    ///  <para>
+    ///   When a non-<see langword="null"/> handler is returned, the empty-parent Everett
+    ///   <c>AddNew()</c> / <c>CancelCurrentEdit()</c> app-compat branch in
+    ///   <c>ParentManager_CurrentItemChanged</c> is bypassed; the handler is responsible for calling
+    ///   <see cref="IInterceptedRelatedManager.BindToEmptyParentPlaceholder"/> when the parent has no rows.
     ///  </para>
     /// </remarks>
     /// <param name="relatedManager">
