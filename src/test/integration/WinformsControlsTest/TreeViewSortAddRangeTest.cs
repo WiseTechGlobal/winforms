@@ -117,16 +117,16 @@ internal sealed class TreeViewSortAddRangeTest : Form
         _treeView.EndUpdate();
 
         string method = useAddRange ? "AddRange(nodes)" : "Add(node) in a loop";
-        string order = string.Join(", ", _treeView.Nodes.Cast<TreeNode>().Select(n => n.Text));
-        string input = string.Join(", ", nodes.Select(n => n.Text));
+        string output = JoinNodeText(_treeView.Nodes.Cast<TreeNode>());
+        string input = JoinNodeText(nodes);
 
         StringBuilder sb = new();
         sb.AppendLine(DescribeEffectiveSwitch());
         sb.AppendLine();
         sb.AppendLine($"Insert method : {method}");
-        sb.AppendLine($"Input order   : {input}");
-        sb.AppendLine($"Result order  : {order}");
-        sb.AppendLine($"Reversed?     : {(order == input ? "no (stable)" : "YES - equal nodes reversed")}");
+        sb.AppendLine($"Input:  {input}");
+        sb.AppendLine($"Output: {output}");
+        sb.AppendLine($"Reversed?     : {(output == input ? "no (stable)" : "YES - equal nodes reversed")}");
         _output.Text = sb.ToString();
     }
 
@@ -143,9 +143,8 @@ internal sealed class TreeViewSortAddRangeTest : Form
         sb.AppendLine("Each line below is produced by a SEPARATE child process of this exact build,");
         sb.AppendLine("so the AppContext switch is applied cleanly before the first AddRange call.");
         sb.AppendLine();
-        sb.AppendLine(RunChild(self, ReportArg));
-        sb.AppendLine(RunChild(self, $"{ReportArg} --switch:true"));
         sb.AppendLine(RunChild(self, $"{ReportArg} --switch:false"));
+        sb.AppendLine(RunChild(self, $"{ReportArg} --switch:true"));
         _output.Text = sb.ToString();
     }
 
@@ -224,12 +223,20 @@ internal sealed class TreeViewSortAddRangeTest : Form
         treeView.CreateControl();
         treeView.Nodes.AddRange(nodes);
 
-        string order = string.Join(", ", treeView.Nodes.Cast<TreeNode>().Select(n => n.Text));
-        string input = string.Join(", ", nodes.Select(n => n.Text));
-        string state = AppContext.TryGetSwitch(SwitchName, out bool v) ? v.ToString() : "<default:true>";
-        Console.Out.WriteLine($"switch={state,-12} input=[{input}] result=[{order}] reversed={(order != input)}");
+        string output = JoinNodeText(treeView.Nodes.Cast<TreeNode>());
+        string input = JoinNodeText(nodes);
+        string state = AppContext.TryGetSwitch(SwitchName, out bool v)
+            ? (v ? "ON" : "OFF")
+            : "<default:true>";
+
+        Console.Out.WriteLine($"switch {state} ->");
+        Console.Out.WriteLine($"Input:  {input}");
+        Console.Out.WriteLine($"Output: {output}");
+        Console.Out.WriteLine($"Reversed: {output != input}");
         return true;
     }
+
+    private static string JoinNodeText(IEnumerable<TreeNode> nodes) => string.Join(",", nodes.Select(n => n.Text));
 
     // A sorter that treats every node as equal, like several identically described items.
     private sealed class AlwaysEqualComparer : IComparer
