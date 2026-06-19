@@ -46,11 +46,14 @@ internal class RelatedCurrencyManager : CurrencyManager
     ///   (the .NET 10 replacement for the <c>ZBindingContext</c> reflection hack):
     ///  </para>
     ///  <code language="csharp">
-    ///   public ZBindingContext()
+    ///   public class ZBindingContext : BindingContext
     ///   {
-    ///       // .NET 10 replacement for the old reflection hack: drive related currency
-    ///       // managers off the parent's CurrentChanged event instead of CurrentItemChanged.
-    ///       RelatedCurrencyManager.UseParentCurrentChanged = true;
+    ///       public ZBindingContext()
+    ///       {
+    ///           // .NET 10 replacement for the old reflection hack: drive related currency
+    ///           // managers off the parent's CurrentChanged event instead of CurrentItemChanged.
+    ///           RelatedCurrencyManager.UseParentCurrentChanged = true;
+    ///       }
     ///   }
     ///  </code>
     /// </remarks>
