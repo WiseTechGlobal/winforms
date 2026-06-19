@@ -16,6 +16,32 @@ internal class RelatedCurrencyManager : CurrencyManager
     private PropertyDescriptor _fieldInfo;
     private static List<BindingManagerBase> IgnoreItemChangedTable { get; } = [];
 
+    /// <summary>
+    ///  Opt-in switch that controls which parent event drives the refresh of related
+    ///  currency managers.
+    /// </summary>
+    /// <remarks>
+    ///  <para>
+    ///   When <see langword="false"/> (the default) a <see cref="RelatedCurrencyManager"/>
+    ///   refreshes from the parent manager's <see cref="BindingManagerBase.CurrentItemChanged"/>
+    ///   event, which is the standard framework behavior.
+    ///  </para>
+    ///  <para>
+    ///   When set to <see langword="true"/> the related manager instead refreshes from the
+    ///   parent's <see cref="BindingManagerBase.CurrentChanged"/> event. This reproduces a
+    ///   behavior that consumers (for example CargoWise's <c>ZBindingContext</c>) previously
+    ///   achieved through reflection, which is no longer possible in .NET 10 because the
+    ///   <see cref="BindingContext"/> list-manager dictionary can no longer be intercepted.
+    ///  </para>
+    ///  <para>
+    ///   This switch must be set before related currency managers are created (for example in
+    ///   the binding context constructor) so that the desired event is wired up from the start.
+    ///   Changing it after managers have been created only affects managers created or rebound
+    ///   afterwards.
+    ///  </para>
+    /// </remarks>
+    internal static bool UseParentCurrentChanged { get; set; }
+
     internal RelatedCurrencyManager(BindingManagerBase parentManager, string dataField)
         : base(dataSource: null)
     {
@@ -50,7 +76,17 @@ internal class RelatedCurrencyManager : CurrencyManager
     {
         if (bmb is not null)
         {
-            bmb.CurrentItemChanged -= ParentManager_CurrentItemChanged;
+            // Detach from whichever parent event is being used to drive the refresh. The
+            // selection mirrors WireParentManager so that wire/unwire stay symmetrical even if
+            // the switch is toggled between calls.
+            if (UseParentCurrentChanged)
+            {
+                bmb.CurrentChanged -= ParentManager_CurrentItemChanged;
+            }
+            else
+            {
+                bmb.CurrentItemChanged -= ParentManager_CurrentItemChanged;
+            }
 
             if (bmb is CurrencyManager currencyManager)
             {
@@ -63,7 +99,19 @@ internal class RelatedCurrencyManager : CurrencyManager
     {
         if (bmb is not null)
         {
-            bmb.CurrentItemChanged += ParentManager_CurrentItemChanged;
+            // By default we refresh from CurrentItemChanged (standard framework behavior).
+            // When UseParentCurrentChanged is enabled we refresh from CurrentChanged instead,
+            // which only fires on parent position changes (not on item-value edits). This is the
+            // supported replacement for the reflection-based event swap previously performed by
+            // CargoWise's ZBindingContext.
+            if (UseParentCurrentChanged)
+            {
+                bmb.CurrentChanged += ParentManager_CurrentItemChanged;
+            }
+            else
+            {
+                bmb.CurrentItemChanged += ParentManager_CurrentItemChanged;
+            }
 
             if (bmb is CurrencyManager currencyManager)
             {
