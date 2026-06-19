@@ -24,21 +24,35 @@ internal class RelatedCurrencyManager : CurrencyManager
     ///  <para>
     ///   When <see langword="false"/> (the default) a <see cref="RelatedCurrencyManager"/>
     ///   refreshes from the parent manager's <see cref="BindingManagerBase.CurrentItemChanged"/>
-    ///   event, which is the standard framework behavior.
+    ///   event, which is the standard framework behavior. <see cref="BindingManagerBase.CurrentItemChanged"/>
+    ///   fires on both parent position changes and parent item-property edits.
     ///  </para>
     ///  <para>
     ///   When set to <see langword="true"/> the related manager instead refreshes from the
-    ///   parent's <see cref="BindingManagerBase.CurrentChanged"/> event. This reproduces a
-    ///   behavior that consumers (for example CargoWise's <c>ZBindingContext</c>) previously
-    ///   achieved through reflection, which is no longer possible in .NET 10 because the
-    ///   <see cref="BindingContext"/> list-manager dictionary can no longer be intercepted.
+    ///   parent's <see cref="BindingManagerBase.CurrentChanged"/> event, which fires only on
+    ///   parent position changes — not on item-property edits. This is the supported .NET 10
+    ///   replacement for a reflection-based event swap that consumers such as CargoWise's
+    ///   <c>ZBindingContext</c> previously performed, which is no longer viable because the
+    ///   <see cref="BindingContext"/> list-manager storage can no longer be intercepted.
     ///  </para>
     ///  <para>
-    ///   This switch must be set before related currency managers are created (for example in
-    ///   the binding context constructor) so that the desired event is wired up from the start.
-    ///   Changing it after managers have been created only affects managers created or rebound
-    ///   afterwards.
+    ///   This switch is process-wide and must be set before related currency managers are
+    ///   created (for example, in the binding context constructor) so that the desired event is
+    ///   wired up from the start. Changing it after managers have been created only affects
+    ///   managers that are created or rebound afterwards.
     ///  </para>
+    ///  <para>
+    ///   Example — setting the flag once in a custom binding context constructor
+    ///   (the .NET 10 replacement for the <c>ZBindingContext</c> reflection hack):
+    ///  </para>
+    ///  <code language="csharp">
+    ///   public ZBindingContext()
+    ///   {
+    ///       // .NET 10 replacement for the old reflection hack: drive related currency
+    ///       // managers off the parent's CurrentChanged event instead of CurrentItemChanged.
+    ///       RelatedCurrencyManager.UseParentCurrentChanged = true;
+    ///   }
+    ///  </code>
     /// </remarks>
     internal static bool UseParentCurrentChanged { get; set; }
 

@@ -15,3 +15,10 @@ using System.Runtime.CompilerServices;
 
 // This is needed in order to Moq internal interfaces for testing
 [assembly: InternalsVisibleTo($"DynamicProxyGenAssembly2, PublicKey={PublicKeys.Moq}")]
+
+// TODO: Confirm the actual WiseTech CargoWise assembly name and strong-name public key before shipping.
+//       Replace "WiseTech.CargoWise" with the real assembly name and add a "PublicKey={PublicKeys.*}"
+//       token (adding a new PublicKeys constant if needed) once the key is confirmed.
+//       This entry grants CargoWise access to RelatedCurrencyManager.UseParentCurrentChanged,
+//       the supported .NET 10 replacement for the ZBindingContext reflection hack.
+[assembly: InternalsVisibleTo("WiseTech.CargoWise")]
