@@ -14,23 +14,11 @@ internal class RelatedCurrencyManager : CurrencyManager
 {
     private BindingManagerBase _parentManager;
     private PropertyDescriptor _fieldInfo;
-    private readonly EventHandler? _interceptedParentHandler;
     private static List<BindingManagerBase> IgnoreItemChangedTable { get; } = [];
 
     internal RelatedCurrencyManager(BindingManagerBase parentManager, string dataField)
-        : this(parentManager, dataField, interceptedParentHandlerFactory: null)
-    {
-    }
-
-    internal RelatedCurrencyManager(
-        BindingManagerBase parentManager,
-        string dataField,
-        Func<RelatedCurrencyManager, EventHandler?>? interceptedParentHandlerFactory)
         : base(dataSource: null)
     {
-        // The factory receives the fully-constructed child so a handler can close over it, mirroring
-        // new ParentCurrentChangedHandler(cm) on .NET Framework. It is built before Bind() primes.
-        _interceptedParentHandler = interceptedParentHandlerFactory?.Invoke(this);
         Bind(parentManager, dataField);
     }
 
@@ -55,37 +43,14 @@ internal class RelatedCurrencyManager : CurrencyManager
         // Wire new BindingManagerBase
         WireParentManager(_parentManager);
 
-        if (UsesInterceptedHandler(parentManager))
-        {
-            // Opt-in path: prime through the supplied handler and avoid constructor-time AddNew().
-            _interceptedParentHandler!(parentManager, EventArgs.Empty);
-        }
-        else
-        {
-            // Default path: identical to current behaviour.
-            ParentManager_CurrentItemChanged(parentManager, EventArgs.Empty);
-        }
+        ParentManager_CurrentItemChanged(parentManager, EventArgs.Empty);
     }
-
-    // The intercepted handler drives this manager off the parent's CurrentChanged and assumes a
-    // CurrencyManager parent. A PropertyManager (single-object) parent always uses the stock path.
-    // Wiring, unwiring and the constructor-time prime must all agree on this, or the prime can invoke
-    // the handler against a parent it was not wired to.
-    private bool UsesInterceptedHandler(BindingManagerBase? parent)
-        => _interceptedParentHandler is not null && parent is CurrencyManager;
 
     private void UnwireParentManager(BindingManagerBase? bmb)
     {
         if (bmb is not null)
         {
-            if (UsesInterceptedHandler(bmb))
-            {
-                ((CurrencyManager)bmb).CurrentChanged -= _interceptedParentHandler;
-            }
-            else
-            {
-                bmb.CurrentItemChanged -= ParentManager_CurrentItemChanged;
-            }
+            bmb.CurrentItemChanged -= ParentManager_CurrentItemChanged;
 
             if (bmb is CurrencyManager currencyManager)
             {
@@ -98,14 +63,7 @@ internal class RelatedCurrencyManager : CurrencyManager
     {
         if (bmb is not null)
         {
-            if (UsesInterceptedHandler(bmb))
-            {
-                ((CurrencyManager)bmb).CurrentChanged += _interceptedParentHandler;
-            }
-            else
-            {
-                bmb.CurrentItemChanged += ParentManager_CurrentItemChanged;
-            }
+            bmb.CurrentItemChanged += ParentManager_CurrentItemChanged;
 
             if (bmb is CurrencyManager currencyManager)
             {
@@ -177,6 +135,25 @@ internal class RelatedCurrencyManager : CurrencyManager
         OnMetaDataChanged(e);
     }
 
+    // WiseTech: RelatedCurrencyManager normally refreshes its child list whenever the parent manager raises
+    // CurrentItemChanged. In CargoWise that can be too broad: item-change notifications may be raised while
+    // bindings/business collections are already reacting to the same edit or AddNew flow, and refreshing the
+    // child list from that path can re-enter the same notification chain until the stack overflows. ZBindingContext
+    // avoided this on .NET Framework by intercepting BindingContextHashtable.Add, removing the default
+    // CurrentItemChanged subscription, and refreshing the child only when the parent's CurrentChanged event fires.
+    // BindingContext uses a Dictionary on .NET 10, so this helper gives subclasses the same event swap without
+    // reflecting over RelatedCurrencyManager internals.
+    internal void RewireParentChangeHandler()
+    {
+        if (_parentManager is CurrencyManager parentCurrencyManager)
+        {
+            parentCurrencyManager.CurrentItemChanged -= ParentManager_CurrentItemChanged;
+            parentCurrencyManager.CurrentChanged -= ParentManager_CurrentItemChanged;
+            parentCurrencyManager.CurrentChanged += ParentManager_CurrentItemChanged;
+            ParentManager_CurrentItemChanged(parentCurrencyManager, EventArgs.Empty);
+        }
+    }
+
     private void ParentManager_CurrentItemChanged(object? sender, EventArgs e)
     {
         if (IgnoreItemChangedTable.Contains(_parentManager))
@@ -186,7 +163,8 @@ internal class RelatedCurrencyManager : CurrencyManager
 
         int oldlistposition = listposition;
 
-        // Pull the data from the controls into the backend before changing the entire list.
+        // we only pull the data from the controls into the backEnd. we do not care about keeping the lastGoodKnownRow
+        // when we are about to change the entire list in this currencymanager.
         try
         {
             PullData();
@@ -200,13 +178,24 @@ internal class RelatedCurrencyManager : CurrencyManager
         {
             if (currencyManager.Count > 0)
             {
+                // Parent list has a current row, so get the related list from the relevant property on that row.
                 SetDataSource(_fieldInfo.GetValue(currencyManager.Current));
-                listposition = Count > 0 ? 0 : -1;
+                listposition = (Count > 0 ? 0 : -1);
             }
             else
             {
-                // Stock Everett compatibility: create a temporary row so the child manager can
-                // discover metadata for an empty parent, then remove it without recursing.
+                // APPCOMPAT: bring back the Everett behavior where the currency manager adds an item and
+                // then it cancels the addition.
+                //
+                // really, really hocky.
+                // will throw if the list in the curManager is not IBindingList
+                // and this will fail if the IBindingList does not have list change notification. read on....
+                // when a new item will get added to an empty parent table,
+                // the table will fire OnCurrentChanged and this method will get executed again
+                // allowing us to set the data source to an object with the right properties (so we can show
+                // metadata at design time).
+                // we then call CancelCurrentEdit to remove the dummy row, but making sure to ignore any
+                // OnCurrentItemChanged that results from this action (to avoid infinite recursion)
                 currencyManager.AddNew();
                 try
                 {
@@ -224,8 +213,9 @@ internal class RelatedCurrencyManager : CurrencyManager
         }
         else
         {
+            // Case where the parent is not a list, but a single object
             SetDataSource(_fieldInfo.GetValue(_parentManager.Current));
-            listposition = Count > 0 ? 0 : -1;
+            listposition = (Count > 0 ? 0 : -1);
         }
 
         if (oldlistposition != listposition)

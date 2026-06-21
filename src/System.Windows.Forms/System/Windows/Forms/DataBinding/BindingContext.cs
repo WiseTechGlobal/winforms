@@ -267,7 +267,7 @@ public partial class BindingContext : ICollection
                 ?? throw new ArgumentException(string.Format(SR.RelatedListManagerChild, dataField));
 
             bindingManagerBase = typeof(IList).IsAssignableFrom(prop.PropertyType)
-                ? CreateRelatedCurrencyManager(formerManager, dataField)
+                ? new RelatedCurrencyManager(formerManager, dataField)
                 : new RelatedPropertyManager(formerManager, dataField);
         }
 
@@ -276,7 +276,7 @@ public partial class BindingContext : ICollection
         if (wRef is null)
         {
             _listManagers.Add(key, new WeakReference(bindingManagerBase, false));
-            OnListManagerAdded(bindingManagerBase);
+            OnListManagerAdded(new WeakReference(bindingManagerBase, false));
         }
         else
         {
@@ -289,47 +289,6 @@ public partial class BindingContext : ICollection
     }
 
     /// <summary>
-    ///  Optional, opt-in factory that a derived <see cref="BindingContext"/> can override to supply a
-    ///  custom handler for a newly-created <see cref="RelatedCurrencyManager"/>. When a non-<see langword="null"/>
-    ///  handler is returned it is subscribed to the parent's <c>CurrentChanged</c> event instead of the
-    ///  default <c>CurrentItemChanged</c> subscription, and is used for the initial prime during construction,
-    ///  matching .NET Framework parent-change interception behaviour.
-    /// </summary>
-    /// <remarks>
-    ///  <para>
-    ///   The base implementation returns <see langword="null"/>, leaving stock WinForms behaviour unchanged
-    ///   and avoiding extra allocations on the base path.
-    ///  </para>
-    ///  <para>
-    ///   When a non-<see langword="null"/> handler is returned, the empty-parent Everett
-    ///   <c>AddNew()</c> / <c>CancelCurrentEdit()</c> app-compat branch in
-    ///   <c>ParentManager_CurrentItemChanged</c> is bypassed; the handler is responsible for handling
-    ///   both populated and empty parent states.
-    ///  </para>
-    /// </remarks>
-    /// <param name="relatedManager">
-    ///  The newly-created related manager, typed as <see cref="CurrencyManager"/> because
-    ///  <see cref="RelatedCurrencyManager"/> is internal.
-    /// </param>
-    /// <returns>
-    ///  A custom event handler, or <see langword="null"/> to use the default behaviour.
-    /// </returns>
-    protected virtual EventHandler? CreateInterceptedParentHandler(CurrencyManager relatedManager)
-        => null;
-
-    private RelatedCurrencyManager CreateRelatedCurrencyManager(BindingManagerBase parentManager, string dataField)
-    {
-        // Only a derived BindingContext can supply an intercepted handler; the base class must remain identical to
-        // stock WinForms, so it does not even allocate the factory delegate.
-        Func<RelatedCurrencyManager, EventHandler?>? interceptedParentHandlerFactory =
-            GetType() == typeof(BindingContext)
-                ? null
-                : relatedCurrencyManager => CreateInterceptedParentHandler(relatedCurrencyManager);
-
-        return new RelatedCurrencyManager(parentManager, dataField, interceptedParentHandlerFactory);
-    }
-
-    /// <summary>
     ///  Invoked from <see cref="EnsureListManager"/> immediately after a newly-created
     ///  <see cref="BindingManagerBase"/> has been inserted into the internal collection. The base implementation
     ///  is a no-op; subclasses can override to customize behavior equivalent to intercepting the backing store's
@@ -337,13 +296,28 @@ public partial class BindingContext : ICollection
     /// </summary>
     /// <remarks>
     ///  <para>WiseTech: introduced for code that previously replaced the .NET Framework
-    ///  <see cref="System.Collections.Hashtable"/> backing store with a subclass and intercepted add operations
-    ///  (Hashtable.Add is virtual). In .NET 10, <see cref="_listManagers"/> is Dictionary-typed — the field cannot
-    ///  hold a Hashtable subclass and Dictionary&lt;,&gt;.Add is not virtual — so this hook preserves that
-    ///  extension point without changing the base behavior.</para>
+    ///  <see cref="System.Collections.Hashtable"/> backing store with a subclass and intercepted add operations.
+    ///  In .NET 10, <see cref="_listManagers"/> is Dictionary-typed, so this hook preserves that extension point
+    ///  without changing the base behavior.</para>
     /// </remarks>
-    protected virtual void OnListManagerAdded(BindingManagerBase bindingManagerBase)
+    protected virtual void OnListManagerAdded(WeakReference weakReference)
     {
+    }
+
+    /// <summary>
+    ///  Helper for subclasses overriding <see cref="OnListManagerAdded"/>: if the supplied manager is a
+    ///  child currency manager, detaches its parent's <see cref="BindingManagerBase.CurrentItemChanged"/>
+    ///  subscription and re-attaches it to <see cref="BindingManagerBase.CurrentChanged"/>, then primes the child
+    ///  once with the parent's current state. No-op for managers that are not <see cref="RelatedCurrencyManager"/>
+    ///  instances. Exposed because <see cref="RelatedCurrencyManager"/> is internal and cannot be referenced from
+    ///  subclasses in other assemblies.
+    /// </summary>
+    protected static void RewireRelatedCurrencyManagerParent(BindingManagerBase bindingManagerBase)
+    {
+        if (bindingManagerBase is RelatedCurrencyManager relatedCurrencyManager)
+        {
+            relatedCurrencyManager.RewireParentChangeHandler();
+        }
     }
 
     private static void CheckPropertyBindingCycles(BindingContext newBindingContext, Binding propBinding)
