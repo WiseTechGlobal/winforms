@@ -304,22 +304,6 @@ public partial class BindingContext : ICollection
     {
     }
 
-    /// <summary>
-    ///  Helper for subclasses overriding <see cref="OnListManagerAdded"/>: if the supplied manager is a
-    ///  child currency manager, detaches its parent's <see cref="BindingManagerBase.CurrentItemChanged"/>
-    ///  subscription and re-attaches it to <see cref="BindingManagerBase.CurrentChanged"/>, then primes the child
-    ///  once with the parent's current state. No-op for managers that are not <see cref="RelatedCurrencyManager"/>
-    ///  instances. Exposed because <see cref="RelatedCurrencyManager"/> is internal and cannot be referenced from
-    ///  subclasses in other assemblies.
-    /// </summary>
-    protected static void RewireRelatedCurrencyManagerParent(BindingManagerBase bindingManagerBase)
-    {
-        if (bindingManagerBase is RelatedCurrencyManager relatedCurrencyManager)
-        {
-            relatedCurrencyManager.RewireParentChangeHandler();
-        }
-    }
-
     private static void CheckPropertyBindingCycles(BindingContext newBindingContext, Binding propBinding)
     {
         Debug.Assert(newBindingContext is not null, "Always called with a non-null BindingContext");
