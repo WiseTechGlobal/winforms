@@ -275,8 +275,10 @@ public partial class BindingContext : ICollection
         // if wRef is not null, then the bindingManagerBase was GC'd at some point: keep the old wRef and change its target
         if (wRef is null)
         {
-            _listManagers.Add(key, new WeakReference(bindingManagerBase, false));
-            OnListManagerAdded(new WeakReference(bindingManagerBase, false));
+            var weakReference = new WeakReference(bindingManagerBase, false);
+
+            _listManagers.Add(key, weakReference);
+            OnListManagerAdded(weakReference);
         }
         else
         {
