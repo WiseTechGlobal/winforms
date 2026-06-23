@@ -275,7 +275,10 @@ public partial class BindingContext : ICollection
         // if wRef is not null, then the bindingManagerBase was GC'd at some point: keep the old wRef and change its target
         if (wRef is null)
         {
-            _listManagers.Add(key, new WeakReference(bindingManagerBase, false));
+            var weakReference = new WeakReference(bindingManagerBase, false);
+
+            _listManagers.Add(key, weakReference);
+            OnListManagerAdded(weakReference);
         }
         else
         {
@@ -285,6 +288,22 @@ public partial class BindingContext : ICollection
         ScrubWeakRefs();
         // Return the final binding manager
         return bindingManagerBase;
+    }
+
+    /// <summary>
+    ///  Invoked from <see cref="EnsureListManager"/> immediately after a newly-created
+    ///  <see cref="BindingManagerBase"/> has been inserted into the internal collection. The base implementation
+    ///  is a no-op; subclasses can override to customize behavior equivalent to intercepting the backing store's
+    ///  Add operation.
+    /// </summary>
+    /// <remarks>
+    ///  <para>WiseTech: introduced for code that previously replaced the .NET Framework
+    ///  <see cref="System.Collections.Hashtable"/> backing store with a subclass and intercepted add operations.
+    ///  In .NET 10, <see cref="_listManagers"/> is Dictionary-typed, so this hook preserves that extension point
+    ///  without changing the base behavior.</para>
+    /// </remarks>
+    protected virtual void OnListManagerAdded(WeakReference weakReference)
+    {
     }
 
     private static void CheckPropertyBindingCycles(BindingContext newBindingContext, Binding propBinding)
