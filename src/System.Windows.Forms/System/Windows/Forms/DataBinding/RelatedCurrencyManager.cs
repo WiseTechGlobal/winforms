@@ -14,6 +14,7 @@ internal class RelatedCurrencyManager : CurrencyManager
 {
     private BindingManagerBase _parentManager;
     private PropertyDescriptor _fieldInfo;
+    private bool _handlingCurrentItemChanged;
     private static List<BindingManagerBase> IgnoreItemChangedTable { get; } = [];
 
     internal RelatedCurrencyManager(BindingManagerBase parentManager, string dataField)
@@ -142,69 +143,82 @@ internal class RelatedCurrencyManager : CurrencyManager
             return;
         }
 
-        int oldlistposition = listposition;
+        if (_handlingCurrentItemChanged)
+        {
+            return;
+        }
 
-        // we only pull the data from the controls into the backEnd. we do not care about keeping the lastGoodKnownRow
-        // when we are about to change the entire list in this currencymanager.
+        _handlingCurrentItemChanged = true;
         try
         {
-            PullData();
-        }
-        catch (Exception ex)
-        {
-            OnDataError(ex);
-        }
+            int oldlistposition = listposition;
 
-        if (_parentManager is CurrencyManager currencyManager)
-        {
-            if (currencyManager.Count > 0)
+            // we only pull the data from the controls into the backEnd. we do not care about keeping the lastGoodKnownRow
+            // when we are about to change the entire list in this currencymanager.
+            try
             {
-                // Parent list has a current row, so get the related list from the relevant property on that row.
-                SetDataSource(_fieldInfo.GetValue(currencyManager.Current));
-                listposition = (Count > 0 ? 0 : -1);
+                PullData();
             }
-            else
+            catch (Exception ex)
             {
-                // APPCOMPAT: bring back the Everett behavior where the currency manager adds an item and
-                // then it cancels the addition.
-                //
-                // really, really hocky.
-                // will throw if the list in the curManager is not IBindingList
-                // and this will fail if the IBindingList does not have list change notification. read on....
-                // when a new item will get added to an empty parent table,
-                // the table will fire OnCurrentChanged and this method will get executed again
-                // allowing us to set the data source to an object with the right properties (so we can show
-                // metadata at design time).
-                // we then call CancelCurrentEdit to remove the dummy row, but making sure to ignore any
-                // OnCurrentItemChanged that results from this action (to avoid infinite recursion)
-                currencyManager.AddNew();
-                try
+                OnDataError(ex);
+            }
+
+            if (_parentManager is CurrencyManager currencyManager)
+            {
+                if (currencyManager.Count > 0)
                 {
-                    IgnoreItemChangedTable.Add(currencyManager);
-                    currencyManager.CancelCurrentEdit();
+                    // Parent list has a current row, so get the related list from the relevant property on that row.
+                    SetDataSource(_fieldInfo.GetValue(currencyManager.Current));
+                    listposition = (Count > 0 ? 0 : -1);
                 }
-                finally
+                else
                 {
-                    if (IgnoreItemChangedTable.Contains(currencyManager))
+                    // APPCOMPAT: bring back the Everett behavior where the currency manager adds an item and
+                    // then it cancels the addition.
+                    //
+                    // really, really hocky.
+                    // will throw if the list in the curManager is not IBindingList
+                    // and this will fail if the IBindingList does not have list change notification. read on....
+                    // when a new item will get added to an empty parent table,
+                    // the table will fire OnCurrentChanged and this method will get executed again
+                    // allowing us to set the data source to an object with the right properties (so we can show
+                    // metadata at design time).
+                    // we then call CancelCurrentEdit to remove the dummy row, but making sure to ignore any
+                    // OnCurrentItemChanged that results from this action (to avoid infinite recursion)
+                    currencyManager.AddNew();
+                    try
                     {
-                        IgnoreItemChangedTable.Remove(currencyManager);
+                        IgnoreItemChangedTable.Add(currencyManager);
+                        currencyManager.CancelCurrentEdit();
+                    }
+                    finally
+                    {
+                        if (IgnoreItemChangedTable.Contains(currencyManager))
+                        {
+                            IgnoreItemChangedTable.Remove(currencyManager);
+                        }
                     }
                 }
             }
-        }
-        else
-        {
-            // Case where the parent is not a list, but a single object
-            SetDataSource(_fieldInfo.GetValue(_parentManager.Current));
-            listposition = (Count > 0 ? 0 : -1);
-        }
+            else
+            {
+                // Case where the parent is not a list, but a single object
+                SetDataSource(_fieldInfo.GetValue(_parentManager.Current));
+                listposition = (Count > 0 ? 0 : -1);
+            }
 
-        if (oldlistposition != listposition)
-        {
-            OnPositionChanged(EventArgs.Empty);
-        }
+            if (oldlistposition != listposition)
+            {
+                OnPositionChanged(EventArgs.Empty);
+            }
 
-        OnCurrentChanged(EventArgs.Empty);
-        OnCurrentItemChanged(EventArgs.Empty);
+            OnCurrentChanged(EventArgs.Empty);
+            OnCurrentItemChanged(EventArgs.Empty);
+        }
+        finally
+        {
+            _handlingCurrentItemChanged = false;
+        }
     }
 }
