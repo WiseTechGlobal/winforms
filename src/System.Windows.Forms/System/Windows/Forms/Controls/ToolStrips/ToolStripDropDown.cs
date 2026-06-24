@@ -1099,6 +1099,24 @@ public partial class ToolStripDropDown : ToolStrip
     protected virtual void OnClosed(ToolStripDropDownClosedEventArgs e)
     {
         ((ToolStripDropDownClosedEventHandler?)Events[s_closedEvent])?.Invoke(this, e);
+
+        // A ToolStripDropDown keeps its window handle alive after it closes (the window is reused the
+        // next time the menu is shown). Once the drop-down has been shown and a UI Automation client has
+        // requested the accessibility object of the drop-down OR of any of its items, that object is kept
+        // alive by a COM-callable wrapper that is rooted with a strong GCHandle; the root is released only
+        // when the UIA provider is disconnected, which otherwise does not happen until the handle is
+        // destroyed (i.e. on Dispose). Because the accessible object references the item / control - and
+        // therefore the OwnerItem and the owning ToolStrip or Form - the whole object graph stays pinned on
+        // the managed heap for every drop-down the user merely opened and closed. Disconnect the providers
+        // now that the drop-down is closed; they are recreated on demand the next time it is shown.
+        if (IsHandleCreated && OsVersion.IsWindows8OrGreater())
+        {
+            // Release the item providers directly: ReleaseUiaProvider (ToolStrip override) early-returns
+            // when the drop-down's OWN accessible object was never created, but individual items can have
+            // realized providers regardless. ReleaseToolStripItemsProviders recurses into sub-menus.
+            ReleaseToolStripItemsProviders(Items);
+            ReleaseUiaProvider(HWNDInternal);
+        }
     }
 
     protected virtual void OnClosing(ToolStripDropDownClosingEventArgs e)
