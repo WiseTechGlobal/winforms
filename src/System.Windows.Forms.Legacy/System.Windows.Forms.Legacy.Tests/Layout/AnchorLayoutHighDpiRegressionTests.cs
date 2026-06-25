@@ -549,6 +549,59 @@ public class AnchorLayoutHighDpiRegressionTests
     }
 
     [StaFact]
+    public void StretchAnchoredControl_WithNegativeTrailingAnchorCapturedAgainstTransientSmallerParent_RefreshesFromSpecifiedBounds()
+    {
+        using StretchTestContainer parent = new()
+        {
+            Bounds = new Rectangle(0, 0, 1515, 448),
+            SimulatedDisplayRectangle = new Rectangle(0, 0, 1515, 448)
+        };
+        using Panel stretchControl = new()
+        {
+            Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right,
+            Bounds = new Rectangle(0, 0, 669, 448)
+        };
+        using GroupBox trailingSibling = new()
+        {
+            Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right,
+            Bounds = new Rectangle(1142, 0, 373, 448)
+        };
+
+        parent.Controls.Add(stretchControl);
+        parent.Controls.Add(trailingSibling);
+
+        // TR CargoWise trace shape: the stretch control's V1 anchor metadata was captured while
+        // the parent was transiently narrower than its design-time display rectangle. Projecting
+        // that negative trailing anchor into the final wider parent makes the control too wide.
+        SetSpecifiedBounds(parent, new Rectangle(0, 0, 1039, 448));
+        SetSpecifiedBounds(stretchControl, new Rectangle(0, 0, 669, 448));
+        SetSpecifiedBounds(trailingSibling, new Rectangle(679, 0, 373, 448));
+
+        DefaultLayout.SetAnchorInfo(
+            stretchControl,
+            CreateAnchorInfo(
+                left: 0,
+                top: 0,
+                right: -211,
+                bottom: 0,
+                displayRectangle: new Rectangle(0, 0, 880, 448)));
+
+        parent.PerformLayout();
+
+        DefaultLayout.AnchorInfo refreshedAnchorInfo = DefaultLayout.GetAnchorInfo(stretchControl)!;
+
+        Assert.Equal(-370, refreshedAnchorInfo.Right);
+
+        parent.PerformLayout();
+
+        Assert.Equal(new Rectangle(0, 0, 1145, 448), stretchControl.Bounds);
+        Assert.True(
+            stretchControl.Right <= trailingSibling.Left + 3,
+            $"Stretch control should no longer project to the stale transient width. "
+            + $"StretchControl={stretchControl.Bounds}, TrailingSibling={trailingSibling.Bounds}");
+    }
+
+    [StaFact]
     public void StretchAnchoredControl_WithStaleSpecifiedSizeAndHealthyAnchors_DoesNotRefreshAnchors()
     {
         using StretchTestContainer parent = new()
