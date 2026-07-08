@@ -301,7 +301,35 @@ public class AnchorLayoutHighDpiRegressionTests
     }
 
     [StaFact]
-    public void ShouldRefreshAnchorInfoForStalePositiveAnchors_RightAnchoredTrailingAxis_ReturnsTrue()
+    public void ShouldRefreshAnchorInfoForStalePositiveAnchors_RightAnchoredWithVerticalStretch_ReturnsFalse()
+    {
+        // CargoWise trace shape: the group box is anchored Top|Bottom|Right and overhangs
+        // the tab page by one pixel at capture time. That positive right offset represents
+        // the horizontal trailing relationship; refreshing it as stale also rewrites the
+        // vertical stretch anchors and leaves the group box at its original size.
+        DefaultLayout.AnchorInfo anchorInfo = CreateAnchorInfo(
+            left: -212,
+            top: 0,
+            right: 1,
+            bottom: -19,
+            displayRectangle: new Rectangle(0, 0, 600, 160));
+        Rectangle bounds = new(388, 0, 213, 141);
+        Rectangle currentDisplayRectangle = new(0, 0, 1916, 406);
+
+        bool shouldRefresh = ShouldRefreshAnchorInfoForStalePositiveAnchors(
+            anchorInfo,
+            bounds,
+            currentDisplayRectangle,
+            AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right);
+
+        Assert.False(
+            shouldRefresh,
+            $"A right-only positive anchor should not trigger stale-positive refresh when the vertical axis is stretch anchored. "
+            + $"Bounds={bounds}, DisplayRectangle={currentDisplayRectangle}, CachedRight={anchorInfo.Right}");
+    }
+
+    [StaFact]
+    public void ShouldRefreshAnchorInfoForStalePositiveAnchors_RightAnchoredTrailingAxisWithoutStretch_ReturnsTrue()
     {
         // Symmetric horizontal-axis case: Right without Left, stale positive right offset.
         // Captured right = 140 against a parent width of 100 (transient), parent has since grown to 300.
@@ -318,7 +346,7 @@ public class AnchorLayoutHighDpiRegressionTests
             anchorInfo,
             bounds,
             currentDisplayRectangle,
-            AnchorStyles.Right | AnchorStyles.Top | AnchorStyles.Bottom);
+            AnchorStyles.Right | AnchorStyles.Top);
 
         Assert.True(
             shouldRefresh,

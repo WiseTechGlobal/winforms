@@ -41,8 +41,12 @@ internal partial class DefaultLayout
 
     internal static bool ShouldRefreshAnchorInfoForStalePositiveAnchors(AnchorInfo anchorInfo, Rectangle bounds, Rectangle displayRect, AnchorStyles anchor)
     {
+        bool hasVerticalStretchAnchor = IsAnchored(anchor, AnchorStyles.Top)
+            && IsAnchored(anchor, AnchorStyles.Bottom);
+
         bool hasStaleRightAnchor = IsAnchored(anchor, AnchorStyles.Right)
             && !IsAnchored(anchor, AnchorStyles.Left)
+            && !hasVerticalStretchAnchor
             && anchorInfo.Right > 0
             && (bounds.Right - displayRect.X <= displayRect.Width
                 || displayRect.Width > anchorInfo.DisplayRectangle.Width);
