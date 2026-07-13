@@ -1018,19 +1018,19 @@ internal partial class DefaultLayout : LayoutEngine
         while (dictionary.Count > 0)
         {
 #endif
-        foreach (DictionaryEntry entry in dictionary)
-        {
-            IArrangedElement element = (IArrangedElement)entry.Key;
+            foreach (DictionaryEntry entry in dictionary)
+            {
+                IArrangedElement element = (IArrangedElement)entry.Key;
 
-            Debug.Assert(element.Container == container, "We have non-children in our containers cached bounds store.");
+                Debug.Assert(element.Container == container, "We have non-children in our containers cached bounds store.");
 #if DEBUG
                 // We are about to set the bounds to the cached value. We clear the cached value
                 // before SetBounds because some controls fiddle with the bounds on SetBounds
                 // and will callback InitLayout with a different bounds and BoundsSpecified.
                 dictionary.Remove(entry.Key);
 #endif
-            Rectangle bounds = (Rectangle)entry.Value!;
-            element.SetBounds(bounds, BoundsSpecified.None);
+                Rectangle bounds = (Rectangle)entry.Value!;
+                element.SetBounds(bounds, BoundsSpecified.None);
 #if DEBUG
                 break;
             }
