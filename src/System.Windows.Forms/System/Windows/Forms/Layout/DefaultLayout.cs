@@ -762,7 +762,7 @@ internal partial class DefaultLayout : LayoutEngine
         AnchorStyles anchor = GetAnchor(element);
         if (IsAnchored(anchor, AnchorStyles.Right))
         {
-            // This differs from the official WinForms implementation because we encountered an issue with DPI handling. See WI00955507.
+            // This differs from the official WinForms implementation because we encountered an issue with DPI handling. See WI01100144.
             anchorInfo.Right -= parentWidth;
 
             if (!IsAnchored(anchor, AnchorStyles.Left))
@@ -778,7 +778,7 @@ internal partial class DefaultLayout : LayoutEngine
 
         if (IsAnchored(anchor, AnchorStyles.Bottom))
         {
-            // This differs from the official WinForms implementation because we encountered an issue with DPI handling. See WI00955507.
+            // This differs from the official WinForms implementation because we encountered an issue with DPI handling. See WI01100144.
             anchorInfo.Bottom -= parentHeight;
 
             if (!IsAnchored(anchor, AnchorStyles.Top))
@@ -1022,19 +1022,19 @@ internal partial class DefaultLayout : LayoutEngine
         while (dictionary.Count > 0)
         {
 #endif
-            foreach (DictionaryEntry entry in dictionary)
-            {
-                IArrangedElement element = (IArrangedElement)entry.Key;
+        foreach (DictionaryEntry entry in dictionary)
+        {
+            IArrangedElement element = (IArrangedElement)entry.Key;
 
-                Debug.Assert(element.Container == container, "We have non-children in our containers cached bounds store.");
+            Debug.Assert(element.Container == container, "We have non-children in our containers cached bounds store.");
 #if DEBUG
                 // We are about to set the bounds to the cached value. We clear the cached value
                 // before SetBounds because some controls fiddle with the bounds on SetBounds
                 // and will callback InitLayout with a different bounds and BoundsSpecified.
                 dictionary.Remove(entry.Key);
 #endif
-                Rectangle bounds = (Rectangle)entry.Value!;
-                element.SetBounds(bounds, BoundsSpecified.None);
+            Rectangle bounds = (Rectangle)entry.Value!;
+            element.SetBounds(bounds, BoundsSpecified.None);
 #if DEBUG
                 break;
             }
