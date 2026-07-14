@@ -729,15 +729,6 @@ internal partial class DefaultLayout : LayoutEngine
             SetAnchorInfo(element, anchorInfo);
         }
 
-        Rectangle cachedBounds = GetCachedBounds(element);
-        AnchorInfo oldAnchorInfo = new()
-        {
-            Left = anchorInfo.Left,
-            Top = anchorInfo.Top,
-            Right = anchorInfo.Right,
-            Bottom = anchorInfo.Bottom
-        };
-
         Rectangle elementBounds = element.Bounds;
         anchorInfo.Left = elementBounds.Left;
         anchorInfo.Top = elementBounds.Top;
