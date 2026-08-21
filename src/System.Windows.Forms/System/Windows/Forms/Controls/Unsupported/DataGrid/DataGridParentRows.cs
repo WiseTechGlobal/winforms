@@ -1203,6 +1203,8 @@ namespace System.Windows.Forms
                 this.owner = owner;
             }
 
+            private protected override bool IsInternal => false;
+
             internal DataGridParentRows Owner
             {
                 get

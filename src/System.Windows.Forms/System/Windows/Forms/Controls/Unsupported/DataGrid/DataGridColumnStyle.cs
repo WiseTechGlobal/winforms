@@ -721,6 +721,8 @@ namespace System.Windows.Forms
             {
             }
 
+            private protected override bool IsInternal => false;
+
             public override Rectangle Bounds
             {
                 get

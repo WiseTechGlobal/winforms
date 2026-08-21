@@ -10099,6 +10099,8 @@ namespace System.Windows.Forms
             {
             }
 
+            private protected override bool IsInternal => false;
+
             internal DataGrid DataGrid
             {
                 get

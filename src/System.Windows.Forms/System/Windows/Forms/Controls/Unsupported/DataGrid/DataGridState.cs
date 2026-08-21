@@ -167,6 +167,8 @@ namespace System.Windows.Forms
                 this.owner = owner;
             }
 
+            private protected override bool IsInternal => false;
+
             public override Rectangle Bounds
             {
                 get

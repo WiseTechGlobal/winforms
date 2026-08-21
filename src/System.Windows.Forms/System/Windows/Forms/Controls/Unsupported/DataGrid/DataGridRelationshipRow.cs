@@ -1090,6 +1090,8 @@ namespace System.Windows.Forms
                 this.relationship = relationship;
             }
 
+            private protected override bool IsInternal => false;
+
             public override Rectangle Bounds
             {
                 get

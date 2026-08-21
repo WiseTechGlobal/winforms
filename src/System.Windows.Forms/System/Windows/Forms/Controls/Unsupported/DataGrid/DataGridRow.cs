@@ -780,6 +780,8 @@ namespace System.Windows.Forms
                 EnsureChildren();
             }
 
+            private protected override bool IsInternal => false;
+
             private void EnsureChildren()
             {
                 if (cells == null)
@@ -997,6 +999,8 @@ namespace System.Windows.Forms
                 this.column = column;
                 Debug.WriteLineIf(DataGrid.DataGridAcc.TraceVerbose, "Create cell accessible object");
             }
+
+            private protected override bool IsInternal => false;
 
             public override Rectangle Bounds
             {
