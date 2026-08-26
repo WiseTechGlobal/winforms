@@ -558,6 +558,31 @@ public class DataGridTests
     }
 
     [StaFact]
+    public void DataGrid_AccessibilityObjects_UseLegacyPropertyAccessors()
+    {
+        using Form form = new();
+        using DataGrid dataGrid = new();
+        using DataSet dataSet = CreateDemoDataSet();
+
+        form.Controls.Add(dataGrid);
+        dataGrid.SetDataBinding(dataSet, "Customers");
+        AddDemoTableStyles(form, dataGrid, dataSet);
+        form.Show();
+
+        AccessibleObject dataGridAccessibleObject = dataGrid.AccessibilityObject;
+        AccessibleObject parentRowsAccessibleObject = dataGridAccessibleObject.GetChild(0)!;
+        AccessibleObject columnHeaderAccessibleObject = dataGridAccessibleObject.GetChild(1)!;
+        AccessibleObject rowAccessibleObject = dataGridAccessibleObject.GetChild(3)!;
+        AccessibleObject cellAccessibleObject = rowAccessibleObject.GetChild(0)!;
+
+        AssertUsesLegacyPropertyAccessors(dataGridAccessibleObject);
+        AssertUsesLegacyPropertyAccessors(parentRowsAccessibleObject);
+        AssertUsesLegacyPropertyAccessors(columnHeaderAccessibleObject);
+        AssertUsesLegacyPropertyAccessors(rowAccessibleObject);
+        AssertUsesLegacyPropertyAccessors(cellAccessibleObject);
+    }
+
+    [StaFact]
     public void DataGrid_SetDataBinding_CurrentRowIndexStaysInSyncWithBindingManager()
     {
         using Form form = new();
@@ -717,6 +742,16 @@ public class DataGridTests
         public new ScrollBar HorizScrollBar => base.HorizScrollBar;
 
         public new ScrollBar VertScrollBar => base.VertScrollBar;
+    }
+
+    private static void AssertUsesLegacyPropertyAccessors(AccessibleObject accessibleObject)
+    {
+        Assert.False(accessibleObject.CanGetNameInternal);
+        Assert.False(accessibleObject.CanGetValueInternal);
+        Assert.False(accessibleObject.CanGetDefaultActionInternal);
+        Assert.False(accessibleObject.CanGetDescriptionInternal);
+        Assert.False(accessibleObject.CanGetHelpInternal);
+        Assert.False(accessibleObject.CanGetKeyboardShortcutInternal);
     }
 
     private static DataSet CreateDemoDataSet()
