@@ -959,6 +959,35 @@ public class BindingContextTests
     }
 
     [Fact]
+    public void BindingContext_UpdateBinding_RelatedManagerCurrentItemChangedDuringPullData_DoesNotReenter()
+    {
+        BindingContext context = [];
+        BindingList<ReentrantParentDataSource> parentList = null;
+        ReentrantChildDataSource child = new(() => parentList.ResetItem(0));
+        ReentrantParentDataSource parent = new(child);
+        parentList = [parent];
+
+        ReentrantBindableComponent component = new() { BindingContext = context };
+        Binding binding = component.DataBindings.Add(
+            nameof(ReentrantBindableComponent.Value),
+            parentList,
+            $"{nameof(ReentrantParentDataSource.Children)}.{nameof(ReentrantChildDataSource.Value)}");
+
+        CurrencyManager relatedManager = Assert.IsAssignableFrom<CurrencyManager>(context[parentList, nameof(ReentrantParentDataSource.Children)]);
+        Assert.Same(relatedManager, binding.BindingManagerBase);
+
+        Exception dataError = null;
+        relatedManager.DataError += (sender, e) => dataError = e.Exception;
+
+        component.Value = "updated";
+        parentList.ResetItem(0);
+
+        Assert.Null(dataError);
+        Assert.Equal(1, child.ValueSetCount);
+        Assert.Equal("updated", child.Value);
+    }
+
+    [Fact]
     public void BindingContext_InvokeCircularWithoutComponent_ThrowsArgumentException()
     {
         BindingContext context = [];
@@ -1040,6 +1069,67 @@ public class BindingContextTests
     private class ObjectDataSource
     {
         public object Property { get; set; }
+    }
+
+    private class ReentrantParentDataSource
+    {
+        public ReentrantParentDataSource(ReentrantChildDataSource child)
+        {
+            Children = [child];
+        }
+
+        public BindingList<ReentrantChildDataSource> Children { get; }
+    }
+
+    private class ReentrantChildDataSource
+    {
+        readonly Action valueSetCallback;
+        string value = "initial";
+
+        public ReentrantChildDataSource(Action valueSetCallback)
+        {
+            this.valueSetCallback = valueSetCallback;
+        }
+
+        public int ValueSetCount { get; private set; }
+
+        public string Value
+        {
+            get => value;
+            set
+            {
+                ValueSetCount++;
+                if (ValueSetCount > 1)
+                {
+                    throw new InvalidOperationException("Related manager pulled data re-entrantly.");
+                }
+
+                this.value = value;
+                valueSetCallback();
+            }
+        }
+    }
+
+    private class ReentrantBindableComponent : BindableComponent
+    {
+        string value;
+
+        public string Value
+        {
+            get => value;
+            set
+            {
+                if (this.value == value)
+                {
+                    return;
+                }
+
+                this.value = value;
+                ValueChanged?.Invoke(this, EventArgs.Empty);
+            }
+        }
+
+        public event EventHandler ValueChanged;
     }
 
     private class SubBindingContext : BindingContext
