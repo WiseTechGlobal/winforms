@@ -3859,7 +3859,7 @@ public partial class ControlTests
         IAsyncResult asyncResult = control.BeginInvoke(() => callbackInvoked = true);
         asyncResult.AsyncWaitHandle.Dispose();
 
-        control.TestAccessor.Dynamic.InvokeMarshaledCallbacks();
+        Application.DoEvents();
 
         Assert.True(callbackInvoked);
         Assert.True(asyncResult.IsCompleted);
