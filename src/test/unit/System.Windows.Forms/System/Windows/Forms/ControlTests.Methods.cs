@@ -3851,6 +3851,21 @@ public partial class ControlTests
     }
 
     [WinFormsFact]
+    public void Control_BeginInvoke_DisposedAsyncWaitHandle_CompletesCallback()
+    {
+        using Control control = new();
+        Assert.NotEqual(IntPtr.Zero, control.Handle);
+        bool callbackInvoked = false;
+        IAsyncResult asyncResult = control.BeginInvoke(() => callbackInvoked = true);
+        asyncResult.AsyncWaitHandle.Dispose();
+
+        Application.DoEvents();
+
+        Assert.True(callbackInvoked);
+        Assert.True(asyncResult.IsCompleted);
+    }
+
+    [WinFormsFact]
     public void Control_Invoke_Action_calls_correct_method()
     {
         using Control control = new();
